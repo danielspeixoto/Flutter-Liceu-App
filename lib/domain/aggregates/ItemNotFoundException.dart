@@ -1,0 +1,3 @@
+class ItemNotFoundException implements Exception {
+
+}
