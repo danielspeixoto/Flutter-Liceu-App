@@ -1,5 +1,5 @@
 import 'package:redux/redux.dart';
-import '../../State.dart';
+import '../../../State.dart';
 import 'Presenter.dart';
 
 class GenericViewModel {

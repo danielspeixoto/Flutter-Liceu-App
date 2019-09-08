@@ -1,7 +1,7 @@
-import 'package:app/presentation/generic/ViewModel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import '../../State.dart';
+import '../../../State.dart';
+import 'ViewModel.dart';
 
 
 class GenericPage extends StatelessWidget {

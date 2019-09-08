@@ -1,10 +1,12 @@
-import 'package:app/presentation/login/ViewModel.dart';
+import 'package:app/presentation/navigator/NavigatorActions.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
-import '../../State.dart';
+
+import '../../../State.dart';
+import 'ViewModel.dart';
 
 final List<String> imgList = [
   "assets/opinion0.jpeg",
@@ -12,6 +14,7 @@ final List<String> imgList = [
   "assets/opinion2.jpeg",
   "assets/opinion3.jpeg"
 ];
+
 
 class LoginPage extends StatelessWidget {
   @override

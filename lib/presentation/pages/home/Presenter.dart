@@ -1,9 +1,9 @@
 import 'package:redux/redux.dart';
-import '../../State.dart';
+import '../../../State.dart';
 import 'Reducer.dart';
 
-class GenericPresenter extends MiddlewareClass<AppState> {
-  GenericPresenter();
+class HomePresenter extends MiddlewareClass<AppState> {
+  HomePresenter();
 
   @override
   Future call(Store<AppState> store, dynamic action, NextDispatcher next) async {
@@ -11,7 +11,7 @@ class GenericPresenter extends MiddlewareClass<AppState> {
   }
 }
 
-class GenericAction {
-  GenericAction();
+class HomeAction {
+  HomeAction();
 }
 
