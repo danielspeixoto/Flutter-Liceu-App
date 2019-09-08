@@ -12,7 +12,6 @@ void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
   final Store<AppState> store = Store<AppState>(appReducer,
-      /* Function defined in the reducers file */
       initialState: AppState.initial(),
       middleware: [new LoggingMiddleware.printer(), LoginPresenter(loginUseCase)]);
 
