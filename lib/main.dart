@@ -1,9 +1,9 @@
 import 'package:app/presentation/navigator/NavigatorMiddleware.dart';
 import 'package:app/presentation/navigator/RouteObserver.dart';
 import 'package:app/presentation/navigator/routes/MainRoute.dart';
+import 'package:app/presentation/pages/create-post/View.dart';
 import 'package:app/presentation/pages/home/Presenter.dart';
 import 'package:app/presentation/pages/home/View.dart';
-import 'package:app/presentation/pages/login/Presenter.dart';
 import 'package:app/presentation/pages/login/View.dart';
 import 'package:app/presentation/pages/splash/View.dart';
 import 'package:app/presentation/reducers/user/Presenter.dart';
@@ -23,7 +23,6 @@ class MyApp extends StatelessWidget {
       initialState: AppState.initial(),
       middleware: [
         new LoggingMiddleware.printer(),
-        LoginPresenter(loginUseCase),
         HomePresenter(),
         UserPresenter(myInfoUseCase, isLoggedInUseCase),
         ...navigationMiddleware()
@@ -35,6 +34,8 @@ class MyApp extends StatelessWidget {
         return MainRoute(SplashPage(), settings: settings);
       case AppRoutes.home:
         return MainRoute(HomePage(), settings: settings);
+      case AppRoutes.createPost:
+        return MainRoute(CreatePostPage(), settings: settings);
       default:
         return MainRoute(LoginPage(), settings: settings);
     }
@@ -58,5 +59,6 @@ class MyApp extends StatelessWidget {
 class AppRoutes {
   static const splash = "/";
   static const home = "/home";
+  static const createPost = "/createPost";
   static const login = "/login";
 }

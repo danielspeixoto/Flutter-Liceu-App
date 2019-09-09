@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:app/data/util/ExceptionHandler.dart';
 import 'package:app/domain/boundary/PostBoundary.dart';
 import 'package:http/http.dart' as http;
@@ -11,14 +13,14 @@ class PostRepository implements IPostRepository {
 
   @override
   Future<void> create(String accessToken, String type, String text) async {
-    final response = await http.put(_url + "/", headers: {
+    final response = await http.post(_url + "/", headers: {
       apiKeyHeader: _apiKey,
       contentTypeHeader: contentTypeValueForJson,
       authHeader: accessToken
-    }, body: {
+    }, body: json.encode({
       "type": type,
       "description": text
-    });
+    }));
     if (response.statusCode == 200) {
       return;
     }

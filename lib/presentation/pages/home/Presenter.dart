@@ -10,4 +10,3 @@ class HomePresenter extends MiddlewareClass<AppState> {
     next(action);
   }
 }
-

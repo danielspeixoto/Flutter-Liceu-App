@@ -22,7 +22,13 @@ class HomePage extends StatelessWidget {
       builder: (BuildContext context, HomeViewModel viewModel) {
         return Liceu(
           selectedIdx: 0,
-          leading: new Icon(Icons.create),
+          leading: FlatButton(
+            onPressed: viewModel.onCreateButtonPressed,
+            child: new Icon(
+              Icons.create,
+              color: Colors.white,
+            ),
+          ),
           body: SingleChildScrollView(
             child: Column(
               children: <Widget>[
