@@ -1,6 +1,6 @@
 import 'package:app/domain/boundary/LoginBoundary.dart';
 import 'package:app/presentation/navigator/NavigatorActions.dart';
-import 'package:app/presentation/reducers/UserReducer.dart';
+import 'package:app/presentation/reducers/user/Reducer.dart';
 import 'package:redux/redux.dart';
 import '../../../State.dart';
 import '../../../main.dart';

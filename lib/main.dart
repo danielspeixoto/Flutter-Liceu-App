@@ -1,9 +1,11 @@
 import 'package:app/presentation/navigator/NavigatorMiddleware.dart';
 import 'package:app/presentation/navigator/RouteObserver.dart';
 import 'package:app/presentation/navigator/routes/MainRoute.dart';
+import 'package:app/presentation/pages/home/Presenter.dart';
 import 'package:app/presentation/pages/home/View.dart';
 import 'package:app/presentation/pages/login/Presenter.dart';
 import 'package:app/presentation/pages/login/View.dart';
+import 'package:app/presentation/reducers/user/Presenter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
@@ -19,9 +21,12 @@ class MyApp extends StatelessWidget {
   final Store<AppState> store = Store<AppState>(appReducer,
       initialState: AppState.initial(),
       middleware: [
-            new LoggingMiddleware.printer(),
-            LoginPresenter(loginUseCase),
-          ...navigationMiddleware()]);
+        new LoggingMiddleware.printer(),
+        LoginPresenter(loginUseCase),
+        HomePresenter(),
+        UserPresenter(myInfoUseCase),
+        ...navigationMiddleware()
+      ]);
 
   MaterialPageRoute _getRoute(RouteSettings settings) {
     switch (settings.name) {

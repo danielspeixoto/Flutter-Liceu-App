@@ -1,6 +1,6 @@
 import 'package:app/presentation/navigator/NavigatorReducer.dart';
 import 'package:app/presentation/pages/login/Reducer.dart';
-import 'package:app/presentation/reducers/UserReducer.dart';
+import 'package:app/presentation/reducers/user/Reducer.dart';
 
 class AppState {
   final UserState userState;

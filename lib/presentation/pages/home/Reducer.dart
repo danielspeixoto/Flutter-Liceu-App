@@ -1,18 +1,22 @@
 import 'package:redux/redux.dart';
 
 class HomePageState {
-  HomePageState();
 
-  factory HomePageState.initial() => HomePageState();
+  final bool isLoading;
+
+  HomePageState(this.isLoading);
+
+  factory HomePageState.initial() => HomePageState(true);
 }
 
-final Reducer<HomePageState> HomePageReducer = combineReducers<HomePageState>([
+final Reducer<HomePageState> homePageReducer = combineReducers<HomePageState>([
 ]);
 
 class HomePageIsLoading {
-  HomePageIsLoading();
+  final bool isLoading;
+  HomePageIsLoading(this.isLoading);
 }
 
-HomePageState pageIsLoading(HomePageState state, HomePageIsLoading action) {
-  return HomePageState();
+HomePageState homePageIsLoading(HomePageState state, HomePageIsLoading action) {
+  return HomePageState(action.isLoading);
 }

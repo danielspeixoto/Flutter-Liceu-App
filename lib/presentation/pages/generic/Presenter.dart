@@ -7,7 +7,7 @@ class GenericPresenter extends MiddlewareClass<AppState> {
 
   @override
   Future call(Store<AppState> store, dynamic action, NextDispatcher next) async {
-
+    next(action);
   }
 }
 
