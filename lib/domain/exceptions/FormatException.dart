@@ -1,0 +1,1 @@
+class FormatException implements Exception {}

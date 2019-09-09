@@ -10,7 +10,8 @@ class SetUserDescriptionUseCase implements ISetUserDescriptionUseCase {
   @override
   Future<void> run(String description) async {
     final accessToken = await this._localRepository.getCredentials();
-    await this._userRepository.setDescription(accessToken, description);
+    final id = await this._localRepository.getId();
+    await this._userRepository.setDescription(accessToken, id, description);
   }
 
 

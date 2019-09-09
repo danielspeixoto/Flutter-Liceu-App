@@ -4,7 +4,7 @@ import 'package:app/domain/aggregates/User.dart';
 
 abstract class IUserRepository {
   Future<User> id(String accessToken, String id);
-  Future<void> setDescription(String accessToken, String description);
+  Future<void> setDescription(String accessToken, String id, String description);
   Future<List<User>> search(String accessToken, String query, int amount);
   Future<void> follow(String accessToken, String producerId);
   Future<void> unfollow(String accessToken, String producerId);
