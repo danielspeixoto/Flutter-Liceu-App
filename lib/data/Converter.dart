@@ -39,12 +39,12 @@ Challenge fromMapToChallenge(data) {
       data["challenged"],
       data["scoreChallenged"],
       data["scoreChallenger"],
-      data["triviaQuestionsUsed"].map((d) => fromMapToChallengeQuestion(d))
+      data["triviaQuestionsUsed"].map((d) => fromMapToTrivia(d))
   );
 }
 
-ChallengeQuestion fromMapToChallengeQuestion(data) {
-  return ChallengeQuestion(
+Trivia fromMapToTrivia(data) {
+  return Trivia(
     data["userId"],
     data["question"],
     data["correctAnswer"],

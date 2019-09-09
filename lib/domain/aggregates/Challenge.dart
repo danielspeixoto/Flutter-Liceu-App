@@ -4,19 +4,19 @@ class Challenge {
   final String challenged;
   final int scoreChallenged;
   final int scoreChallenger;
-  final List<ChallengeQuestion> questions;
+  final List<Trivia> questions;
 
   Challenge(this.id, this.challenger, this.challenged, this.scoreChallenged,
       this.scoreChallenger, this.questions);
 }
 
-class ChallengeQuestion {
+class Trivia {
   final String authorId;
   final String question;
   final String correctAnswer;
   final String wrongAnswer;
   final List<String> tags;
 
-  ChallengeQuestion(this.authorId, this.question, this.correctAnswer,
+  Trivia(this.authorId, this.question, this.correctAnswer,
       this.wrongAnswer, this.tags);
 }

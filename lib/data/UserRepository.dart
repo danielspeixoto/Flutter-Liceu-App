@@ -106,6 +106,8 @@ class UserRepository implements IUserRepository {
       apiKeyHeader: _apiKey,
       contentTypeHeader: contentTypeValueForJson,
       authHeader: accessToken
+    }, body: {
+      "description": description
     });
     if (response.statusCode == 200) {
       return;
