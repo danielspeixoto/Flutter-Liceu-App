@@ -5,6 +5,7 @@ import 'package:app/presentation/pages/home/Presenter.dart';
 import 'package:app/presentation/pages/home/View.dart';
 import 'package:app/presentation/pages/login/Presenter.dart';
 import 'package:app/presentation/pages/login/View.dart';
+import 'package:app/presentation/pages/splash/View.dart';
 import 'package:app/presentation/reducers/user/Presenter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -24,12 +25,14 @@ class MyApp extends StatelessWidget {
         new LoggingMiddleware.printer(),
         LoginPresenter(loginUseCase),
         HomePresenter(),
-        UserPresenter(myInfoUseCase),
+        UserPresenter(myInfoUseCase, isLoggedInUseCase),
         ...navigationMiddleware()
       ]);
 
   MaterialPageRoute _getRoute(RouteSettings settings) {
     switch (settings.name) {
+      case AppRoutes.splash:
+        return MainRoute(SplashPage(), settings: settings);
       case AppRoutes.home:
         return MainRoute(HomePage(), settings: settings);
       default:
@@ -42,8 +45,10 @@ class MyApp extends StatelessWidget {
       store: store,
       child: MaterialApp(
         title: 'Liceu',
-        theme: ThemeData(primaryColorDark: new Color(0xFF0061A1)),
-        home: LoginPage(),
+        theme: ThemeData(
+            primaryColorDark: new Color(0xFF0061A1),
+            primaryColor: new Color(0xFF0061A1)
+        ),
         navigatorKey: navigatorKey,
         navigatorObservers: [routeObserver],
         onGenerateRoute: (RouteSettings settings) => _getRoute(settings),
@@ -51,7 +56,7 @@ class MyApp extends StatelessWidget {
 }
 
 class AppRoutes {
-//  static const splash = "/";
+  static const splash = "/";
   static const home = "/home";
-  static const login = "/";
+  static const login = "/login";
 }

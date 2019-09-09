@@ -7,3 +7,7 @@ abstract class IUserRepository {
 abstract class IMyInfoUseCase {
   Future<User> run();
 }
+
+abstract class IIsLoggedInUseCase {
+  Future<bool> run();
+}

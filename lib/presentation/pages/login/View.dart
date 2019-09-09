@@ -22,52 +22,53 @@ class LoginPage extends StatelessWidget {
       StoreConnector<AppState, LoginViewModel>(
           converter: (store) => LoginViewModel.create(store),
           builder: (BuildContext context, LoginViewModel viewModel) {
-            if(viewModel.isLoading) {
-              return Text("is loading");
+            Widget child = CircularProgressIndicator();
+            if(!viewModel.isLoading) {
+              child = Column(children: [
+                Expanded(
+                  child: CarouselSlider(
+                    autoPlay: true,
+                    aspectRatio: 0.5,
+                    viewportFraction: 1.0,
+                    pauseAutoPlayOnTouch: Duration(seconds: 10),
+                    items: imgList
+                        .map((path) => new Image(
+                      image: new AssetImage(path),
+                    ))
+                        .toList(),
+                  ),
+                ),
+                SignInButton(Buttons.Facebook,
+                    text: "Entrar com Facebook", onPressed: () async {
+                      try {
+                        final facebookLogin = FacebookLogin();
+                        final result = await facebookLogin
+                            .logInWithReadPermissions(['email']);
+                        switch (result.status) {
+                          case FacebookLoginStatus.loggedIn:
+                            var token = result.accessToken.token;
+                            viewModel.login(token, "facebook");
+                            break;
+                          case FacebookLoginStatus.cancelledByUser:
+                            print("cancelled");
+                            break;
+                          case FacebookLoginStatus.error:
+                            print("error");
+                            print(result.errorMessage);
+                            break;
+                        }
+                      } catch (e) {
+                        print(e);
+                      }
+                    })
+              ]);
             }
             return Scaffold(
                 body: Container(
                   child: Center(
-                    child: Column(children: [
-                      Expanded(
-                        child: CarouselSlider(
-                          autoPlay: true,
-                          aspectRatio: 0.5,
-                          viewportFraction: 1.0,
-                          pauseAutoPlayOnTouch: Duration(seconds: 10),
-                          items: imgList
-                              .map((path) => new Image(
-                                    image: new AssetImage(path),
-                                  ))
-                              .toList(),
-                        ),
-                      ),
-                      SignInButton(Buttons.Facebook,
-                          text: "Entrar com Facebook", onPressed: () async {
-                        try {
-                          final facebookLogin = FacebookLogin();
-                          final result = await facebookLogin
-                              .logInWithReadPermissions(['email']);
-                          switch (result.status) {
-                            case FacebookLoginStatus.loggedIn:
-                              var token = result.accessToken.token;
-                              viewModel.login(token, "facebook");
-                              break;
-                            case FacebookLoginStatus.cancelledByUser:
-                              print("cancelled");
-                              break;
-                            case FacebookLoginStatus.error:
-                              print("error");
-                              print(result.errorMessage);
-                              break;
-                          }
-                        } catch (e) {
-                          print(e);
-                        }
-                      })
-                    ]),
+                    child: child
                   ),
-                  color: new Color(0xFF0061A1),
+                  color: Theme.of(context).primaryColor,
                   padding: EdgeInsets.all(8),
                 ),
               );

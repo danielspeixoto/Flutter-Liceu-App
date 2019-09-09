@@ -26,9 +26,9 @@ class LoginPresenter extends MiddlewareClass<AppState> {
         }).whenComplete(() {
           store.dispatch(LoginPageIsLoading(false));
         });
-    } else {
-      next(action);
     }
+    next(action);
+
   }
 }
 

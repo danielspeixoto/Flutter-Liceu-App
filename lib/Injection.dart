@@ -3,6 +3,7 @@ import 'package:http/http.dart' as http;
 import 'data/LocalRepository.dart';
 import 'data/LoginRepository.dart';
 import 'data/UserRepository.dart';
+import 'domain/usecase/IsLoggedInUseCase.dart';
 import 'domain/usecase/LoginUseCase.dart';
 import 'domain/usecase/MyInfoUseCase.dart';
 
@@ -21,3 +22,4 @@ final userRepository = UserRepository(
 final localRepository = LocalRepository();
 final loginUseCase = LoginUseCase(loginRepository, localRepository);
 final myInfoUseCase = MyInfoUseCase(userRepository, localRepository);
+final isLoggedInUseCase = IsLoggedInUseCase(localRepository);

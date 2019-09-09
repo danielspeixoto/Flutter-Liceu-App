@@ -8,7 +8,7 @@ class UserState {
 
   UserState(this.isLoggedIn, this.name, this.picURL, this.bio);
 
-  factory UserState.initial() => UserState(false, "", "", "");
+  factory UserState.initial() => UserState(null, "", "", "");
 }
 
 final Reducer<UserState> userReducer = combineReducers<UserState>([

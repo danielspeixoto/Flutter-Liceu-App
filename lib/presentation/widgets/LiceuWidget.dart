@@ -23,6 +23,7 @@ class Liceu extends StatelessWidget {
   Widget build(BuildContext context) =>
       Scaffold(
         appBar: AppBar(
+          backgroundColor: Theme.of(context).primaryColor,
           centerTitle: true,
           elevation: 1.0,
           leading: new Icon(Icons.create),
