@@ -1,5 +1,5 @@
-import 'package:app/domain/usecase/IsLoggedInUseCase.dart';
-import 'package:app/domain/usecase/MyInfoUseCase.dart';
+import 'package:app/domain/usecase/user/IsLoggedInUseCase.dart';
+import 'package:app/domain/usecase/user/MyInfoUseCase.dart';
 import 'package:app/presentation/navigator/NavigatorActions.dart';
 import 'package:redux/redux.dart';
 import '../../../State.dart';

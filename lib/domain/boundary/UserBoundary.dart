@@ -25,13 +25,18 @@ abstract class ISetUserDescriptionUseCase {
 }
 
 abstract class ISearchForUserUseCase {
-  Future<void> run(String query, int amount);
+  Future<List<User>> run(String query, int amount);
 }
 
 abstract class IGetUserPostsUseCase {
   Future<List<Post>> run(String userId);
 }
 
+abstract class IMyPostsUseCase {
+  Future<List<Post>> run();
+}
+
 abstract class IGetUserChallengesUseCase {
   Future<List<Challenge>> run(String userId);
 }
+

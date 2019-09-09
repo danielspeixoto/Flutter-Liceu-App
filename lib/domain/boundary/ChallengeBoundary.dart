@@ -12,11 +12,11 @@ abstract class IGetChallengeUseCase {
   Future<Challenge> run();
 }
 
-abstract class ISubmitChallengeQuestion {
+abstract class ISubmitChallengeQuestionUseCase {
   Future<void> run(String question,
       String correctAnswer, String wrongAnswer, List<String> tags);
 }
 
-abstract class ISubmitChallengeAnswers {
+abstract class ISubmitChallengeAnswersUseCase {
   Future<void> run(String challengeId, List<String> answers);
 }

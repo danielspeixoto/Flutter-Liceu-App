@@ -3,9 +3,9 @@ import 'package:http/http.dart' as http;
 import 'data/LocalRepository.dart';
 import 'data/LoginRepository.dart';
 import 'data/UserRepository.dart';
-import 'domain/usecase/IsLoggedInUseCase.dart';
-import 'domain/usecase/LoginUseCase.dart';
-import 'domain/usecase/MyInfoUseCase.dart';
+import 'package:app/domain/usecase/user/IsLoggedInUseCase.dart';
+import 'package:app/domain/usecase/user/LoginUseCase.dart';
+import 'package:app/domain/usecase/user/MyInfoUseCase.dart';
 
 final baseURL =  "https://liceu-staging.herokuapp.com/v2";
 final client = new http.Client();
