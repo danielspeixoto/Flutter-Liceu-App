@@ -1,6 +1,9 @@
 import 'package:app/domain/boundary/PostBoundary.dart';
+import 'package:app/presentation/navigator/NavigatorActions.dart';
+import 'package:flutter/material.dart';
 import 'package:redux/redux.dart';
 import '../../../State.dart';
+import '../../../main.dart';
 
 class CreatePostViewModel {
 
@@ -14,6 +17,7 @@ class CreatePostViewModel {
         try {
           print(text);
           await createPostUseCase.run("text", text);
+          store.dispatch(NavigatePopAction());
         } catch(e) {
           print(e);
         }
