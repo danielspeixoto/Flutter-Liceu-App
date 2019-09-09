@@ -4,12 +4,12 @@ import '../../../State.dart';
 import 'ViewModel.dart';
 
 
-class GenericPage extends StatelessWidget {
+class CreatePostPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) =>
-      StoreConnector<AppState, GenericViewModel>(
-          converter: (store) => GenericViewModel.create(store),
-          builder: (BuildContext context, GenericViewModel viewModel) {
-              return Text("generic");
+      StoreConnector<AppState, CreatePostViewModel>(
+          converter: (store) => CreatePostViewModel.create(store),
+          builder: (BuildContext context, CreatePostViewModel viewModel) {
+              return Text("createPost");
           });
 }

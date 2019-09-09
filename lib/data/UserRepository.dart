@@ -1,6 +1,6 @@
 import 'dart:io';
 import 'dart:convert';
-import 'package:app/domain/aggregates/RequestException.dart';
+import 'package:app/domain/exceptions/RequestException.dart';
 import 'package:app/domain/aggregates/User.dart';
 import 'package:app/domain/boundary/UserBoundary.dart';
 import 'package:http/http.dart' as http;

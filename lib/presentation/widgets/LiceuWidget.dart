@@ -9,15 +9,14 @@ class TabData {
 
 class Liceu extends StatelessWidget {
   final tabs = [
-    TabData(Icons.home),
-    TabData(Icons.videogame_asset),
     TabData(Icons.account_circle)
   ];
 
   final int selectedIdx;
   final Widget body;
+  final Widget leading;
 
-  Liceu(this.selectedIdx, this.body);
+  Liceu({this.selectedIdx, this.leading, this.body});
 
   @override
   Widget build(BuildContext context) =>
@@ -26,7 +25,7 @@ class Liceu extends StatelessWidget {
           backgroundColor: Theme.of(context).primaryColor,
           centerTitle: true,
           elevation: 1.0,
-          leading: new Icon(Icons.create),
+          leading: this.leading,
           title: Text("Liceu"),
         ),
         body: this.body,
@@ -48,8 +47,7 @@ class Liceu extends StatelessWidget {
                             ),
                             color: idx == this.selectedIdx
                                 ? Colors.black12
-                                : Colors
-                                .white,
+                                : Colors.white,
                           ),
                         ));
                   }).values.toList(),

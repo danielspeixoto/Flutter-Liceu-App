@@ -5,7 +5,3 @@ abstract class ILoginRepository {
 abstract class ILoginUseCase {
   Future<void> run(String accessCode, String method);
 }
-
-abstract class IIsLoggedInUseCase {
-  Future<bool> run();
-}

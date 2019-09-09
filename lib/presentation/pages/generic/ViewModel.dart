@@ -2,12 +2,12 @@ import 'package:redux/redux.dart';
 import '../../../State.dart';
 import 'Presenter.dart';
 
-class GenericViewModel {
+class CreatePostViewModel {
 
-  GenericViewModel();
+  CreatePostViewModel();
 
-  factory GenericViewModel.create(Store<AppState> store) {
-    return GenericViewModel();
+  factory CreatePostViewModel.create(Store<AppState> store) {
+    return CreatePostViewModel();
   }
 }
 

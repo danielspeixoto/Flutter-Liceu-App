@@ -2,8 +2,8 @@ import 'package:redux/redux.dart';
 import '../../../State.dart';
 import 'Reducer.dart';
 
-class CreatePostPresenter extends MiddlewareClass<AppState> {
-  CreatePostPresenter();
+class GenericPresenter extends MiddlewareClass<AppState> {
+  GenericPresenter();
 
   @override
   Future call(Store<AppState> store, dynamic action, NextDispatcher next) async {
@@ -11,7 +11,7 @@ class CreatePostPresenter extends MiddlewareClass<AppState> {
   }
 }
 
-class CreatePostAction {
-  CreatePostAction();
+class GenericAction {
+  GenericAction();
 }
 
