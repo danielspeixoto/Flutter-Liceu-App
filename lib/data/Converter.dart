@@ -59,8 +59,9 @@ Post fromJsonToPost(String content) {
 }
 
 List<Post> fromJsonToListOfPosts(String content) {
-  final data = json.decode(content);
-  return data.map((d) => fromMapToPost(d));
+  final data = (json.decode(content) as List).cast<Map<String, dynamic>>();
+  final result = data.map((d) => fromMapToPost(d)).toList();
+  return result;
 }
 
 Post fromMapToPost(data) {
@@ -68,8 +69,8 @@ Post fromMapToPost(data) {
     data["id"],
     data["userId"],
     data["type"],
-    data["text"],
+    data["description"],
 //    TODO: Convert string representation do DateTime
-    data["submissionDate"]
+//    data["submissionDate"]
   );
 }

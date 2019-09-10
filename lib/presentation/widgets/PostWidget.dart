@@ -44,6 +44,7 @@ class PostWidget extends StatelessWidget {
               ],
             ),
             Container(
+              alignment: Alignment.centerLeft,
               child: Linkify(
                 onOpen: (link) => launch(link.url),
                 text:

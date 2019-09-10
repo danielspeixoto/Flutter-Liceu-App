@@ -1,18 +1,18 @@
 import 'package:redux/redux.dart';
 
-class CreatePostPageState {
-  CreatePostPageState();
+class GenericPageState {
+  GenericPageState();
 
-  factory CreatePostPageState.initial() => CreatePostPageState();
+  factory GenericPageState.initial() => GenericPageState();
 }
 
-final Reducer<CreatePostPageState> CreatePostPageReducer = combineReducers<CreatePostPageState>([
+final Reducer<GenericPageState> genericPageReducer = combineReducers<GenericPageState>([
 ]);
 
-class CreatePostPageIsLoading {
-  CreatePostPageIsLoading();
+class GenericPageIsLoading {
+  GenericPageIsLoading();
 }
 
-CreatePostPageState pageIsLoading(CreatePostPageState state, CreatePostPageIsLoading action) {
-  return CreatePostPageState();
+GenericPageState pageIsLoading(GenericPageState state, GenericPageIsLoading action) {
+  return GenericPageState();
 }

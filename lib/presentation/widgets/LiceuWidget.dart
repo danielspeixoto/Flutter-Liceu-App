@@ -8,9 +8,7 @@ class TabData {
 }
 
 class Liceu extends StatelessWidget {
-  final tabs = [
-    TabData(Icons.account_circle)
-  ];
+  final tabs = [TabData(Icons.account_circle)];
 
   final int selectedIdx;
   final Widget body;
@@ -19,8 +17,7 @@ class Liceu extends StatelessWidget {
   Liceu({this.selectedIdx, this.leading, this.body});
 
   @override
-  Widget build(BuildContext context) =>
-      Scaffold(
+  Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
           backgroundColor: Theme.of(context).primaryColor,
           centerTitle: true,
@@ -29,28 +26,35 @@ class Liceu extends StatelessWidget {
           title: Text("Liceu"),
         ),
         body: this.body,
-        bottomNavigationBar: new Container(
-            color: Colors.white,
-            height: 50,
-            alignment: Alignment.center,
-            child: BottomAppBar(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: tabs.asMap().map((idx, tab) {
-                    return MapEntry(
-                        idx,
-                        Expanded(
-                          child: Container(
-                            child: new IconButton(
-                              icon: Icon(tab.icon),
-                              onPressed: () {},
-                            ),
-                            color: idx == this.selectedIdx
-                                ? Colors.black12
-                                : Colors.white,
-                          ),
-                        ));
-                  }).values.toList(),
-                ))),
+//        bottomNavigationBar: new Container(
+//          color: Colors.white,
+//          height: 50,
+//          alignment: Alignment.center,
+//          child: BottomAppBar(
+//            child: Row(
+//              mainAxisAlignment: MainAxisAlignment.spaceAround,
+//              children: tabs
+//                  .asMap()
+//                  .map((idx, tab) {
+//                    return MapEntry(
+//                      idx,
+//                      Expanded(
+//                        child: Container(
+//                          child: new IconButton(
+//                            icon: Icon(tab.icon),
+//                            onPressed: () {},
+//                          ),
+//                          color: idx == this.selectedIdx
+//                              ? Colors.black12
+//                              : Colors.white,
+//                        ),
+//                      ),
+//                    );
+//                  })
+//                  .values
+//                  .toList(),
+//            ),
+//          ),
+//        ),
       );
 }

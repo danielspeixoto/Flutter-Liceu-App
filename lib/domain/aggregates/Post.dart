@@ -3,7 +3,7 @@ class Post {
   final String userId;
   final String type;
   final String text;
-  final DateTime submissionDate;
+//  final DateTime submissionDate;
 
-  Post(this.id, this.userId, this.type, this.text, this.submissionDate);
+  Post(this.id, this.userId, this.type, this.text);
 }

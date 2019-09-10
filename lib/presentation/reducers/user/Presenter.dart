@@ -1,3 +1,4 @@
+import 'package:app/domain/boundary/UserBoundary.dart';
 import 'package:app/domain/usecase/user/IsLoggedInUseCase.dart';
 import 'package:app/domain/usecase/user/MyInfoUseCase.dart';
 import 'package:app/presentation/navigator/NavigatorActions.dart';
@@ -7,10 +8,11 @@ import '../../../main.dart';
 import 'Reducer.dart';
 
 class UserPresenter extends MiddlewareClass<AppState> {
-  final MyInfoUseCase _myInfoUseCase;
-  final IsLoggedInUseCase _isLoggedInUseCase;
+  final IMyInfoUseCase _myInfoUseCase;
+  final IIsLoggedInUseCase _isLoggedInUseCase;
+  final IMyPostsUseCase _myPostsUseCase;
 
-  UserPresenter(this._myInfoUseCase, this._isLoggedInUseCase);
+  UserPresenter(this._myInfoUseCase, this._isLoggedInUseCase, this._myPostsUseCase);
 
   @override
   Future call(
@@ -32,6 +34,12 @@ class UserPresenter extends MiddlewareClass<AppState> {
       }).catchError((e) {
         print(e);
       });
+    } else if (action is GetMyPostsAction) {
+      this._myPostsUseCase.run().then((posts) {
+        store.dispatch(SetUserPosts(posts));
+      }).catchError((e) {
+        print(e);
+      });
     }
     next(action);
   }
@@ -43,4 +51,8 @@ class GetProfileAction {
 
 class CheckIfIsLoggedInAction {
   CheckIfIsLoggedInAction();
+}
+
+class GetMyPostsAction {
+  GetMyPostsAction();
 }

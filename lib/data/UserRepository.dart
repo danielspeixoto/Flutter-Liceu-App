@@ -44,7 +44,7 @@ class UserRepository implements IUserRepository {
   @override
   Future<List<Post>> posts(String accessToken, String userId) async {
     final response =
-        await _client.get(_url + "/" + userId + "/posts", headers: {
+        await _client.get("https://liceu-staging.herokuapp.com/v2/post/" + userId, headers: {
       apiKeyHeader: _apiKey,
       contentTypeHeader: contentTypeValueForJson,
       authHeader: accessToken

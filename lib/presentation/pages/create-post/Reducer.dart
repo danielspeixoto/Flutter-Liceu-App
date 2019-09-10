@@ -6,7 +6,7 @@ class CreatePostPageState {
   factory CreatePostPageState.initial() => CreatePostPageState();
 }
 
-final Reducer<CreatePostPageState> CreatePostPageReducer = combineReducers<CreatePostPageState>([
+final Reducer<CreatePostPageState> createPostPageReducer = combineReducers<CreatePostPageState>([
 ]);
 
 class CreatePostPageIsLoading {

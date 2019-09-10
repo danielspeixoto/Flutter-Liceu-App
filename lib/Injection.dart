@@ -9,6 +9,7 @@ import 'package:app/domain/usecase/user/LoginUseCase.dart';
 import 'package:app/domain/usecase/user/MyInfoUseCase.dart';
 
 import 'domain/usecase/post/CreatePostUseCase.dart';
+import 'domain/usecase/user/MyPostsUseCase.dart';
 
 final baseURL =  "https://liceu-staging.herokuapp.com/v2";
 final client = new http.Client();
@@ -29,5 +30,6 @@ final postRepository = PostRepository(
 final localRepository = LocalRepository();
 final loginUseCase = LoginUseCase(loginRepository, localRepository);
 final myInfoUseCase = MyInfoUseCase(userRepository, localRepository);
+final myPostsUseCase = MyPostsUseCase(localRepository, userRepository);
 final isLoggedInUseCase = IsLoggedInUseCase(localRepository);
 final createPostUseCase = CreatePostUseCase(localRepository, postRepository);

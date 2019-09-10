@@ -2,7 +2,6 @@ import 'package:app/presentation/navigator/NavigatorMiddleware.dart';
 import 'package:app/presentation/navigator/RouteObserver.dart';
 import 'package:app/presentation/navigator/routes/MainRoute.dart';
 import 'package:app/presentation/pages/create-post/View.dart';
-import 'package:app/presentation/pages/home/Presenter.dart';
 import 'package:app/presentation/pages/home/View.dart';
 import 'package:app/presentation/pages/login/View.dart';
 import 'package:app/presentation/pages/splash/View.dart';
@@ -23,8 +22,7 @@ class MyApp extends StatelessWidget {
       initialState: AppState.initial(),
       middleware: [
         new LoggingMiddleware.printer(),
-        HomePresenter(),
-        UserPresenter(myInfoUseCase, isLoggedInUseCase),
+        UserPresenter(myInfoUseCase, isLoggedInUseCase, myPostsUseCase),
         ...navigationMiddleware()
       ]);
 

@@ -6,7 +6,7 @@ class SplashPageState {
   factory SplashPageState.initial() => SplashPageState();
 }
 
-final Reducer<SplashPageState> SplashPageReducer = combineReducers<SplashPageState>([
+final Reducer<SplashPageState> splashPageReducer = combineReducers<SplashPageState>([
 ]);
 
 class SplashPageIsLoading {
