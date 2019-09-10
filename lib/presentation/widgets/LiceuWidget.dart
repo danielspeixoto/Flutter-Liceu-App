@@ -23,7 +23,14 @@ class Liceu extends StatelessWidget {
           centerTitle: true,
           elevation: 1.0,
           leading: this.leading,
-          title: Text("Liceu"),
+          title: Text(
+            "Liceu",
+            style: TextStyle(
+              fontFamily: "LobsterTwo",
+              fontSize: 28,
+              fontWeight: FontWeight.bold
+            ),
+          ),
         ),
         body: this.body,
 //        bottomNavigationBar: new Container(

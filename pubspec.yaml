@@ -51,7 +51,13 @@ dev_dependencies:
 # The following section is specific to Flutter.
 flutter:
   uses-material-design: true
-
+  fonts:
+    - family: LobsterTwo
+      fonts:
+        - asset: fonts/LobsterTwo-Regular.otf
+        - asset: fonts/LobsterTwo-Bold.otf
+        - asset: fonts/LobsterTwo-Italic.otf
+        - asset: fonts/LobsterTwo-BoldItalic.otf
   assets:
     - assets/
 

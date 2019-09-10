@@ -28,7 +28,7 @@ class CreatePostPage extends StatelessWidget {
                     ),
                   ),
                 ],
-                title: Text("Liceu"),
+                title: Text("Escreva seu post"),
               ),
               body: Column(
                 children: <Widget>[
