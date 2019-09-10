@@ -16,10 +16,7 @@ class TabData {
 }
 
 class HomePage extends StatelessWidget {
-
-  final _refreshController =
-      RefreshController(initialRefresh: false);
-
+  final _refreshController = RefreshController(initialRefresh: false);
 
   @override
   Widget build(BuildContext context) => StoreConnector<AppState, HomeViewModel>(
@@ -35,7 +32,6 @@ class HomePage extends StatelessWidget {
             onPressed: viewModel.onCreateButtonPressed,
             child: new Icon(
               Icons.create,
-              color: Colors.white,
             ),
           ),
           body: SmartRefresher(
@@ -46,32 +42,42 @@ class HomePage extends StatelessWidget {
             },
             controller: _refreshController,
             child: SingleChildScrollView(
-              child: Column(
-                children: <Widget>[
-                  Row(
-                    children: <Widget>[
-                      RoundedImage(pictureURL: viewModel.userPic, size: 80.0),
-                      Text(
-                        viewModel.userName,
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 16),
+              child: Container(
+                child: Column(
+                  children: <Widget>[
+                    Row(
+                      children: <Widget>[
+                        RoundedImage(pictureURL: viewModel.userPic, size: 80.0),
+                        Text(
+                          viewModel.userName,
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 16),
+                        ),
+                      ],
+                    ),
+                    viewModel.userBio != null
+                        ? Container(
+                            child: TextWithLinks(
+                              text: viewModel.userBio,
+                            ),
+                            margin: const EdgeInsets.all(8.0),
+                          )
+                        : Container(),
+                    Divider(
+                      color: Colors.black54,
+                      indent: 16,
+                      endIndent: 16,
+                    ),
+                    Container(
+                      child: Column(
+                        children: viewModel.posts
+                            .map((post) => PostWidget(viewModel.userName,
+                                viewModel.userPic, post.text))
+                            .toList(),
                       ),
-                    ],
-                  ),
-                  viewModel.userBio != null
-                      ? Container(
-                          child: TextWithLinks(
-                            text: viewModel.userBio,
-                          ),
-                          margin: const EdgeInsets.all(8.0),
-                        )
-                      : Container(),
-                  Divider(),
-                  ...viewModel.posts
-                      .map((post) => PostWidget(
-                          viewModel.userName, viewModel.userPic, post.text))
-                      .toList(),
-                ],
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

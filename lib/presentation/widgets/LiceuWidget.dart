@@ -19,13 +19,14 @@ class Liceu extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
-          backgroundColor: Theme.of(context).primaryColor,
+          backgroundColor: Colors.white,
           centerTitle: true,
           elevation: 1.0,
           leading: this.leading,
           title: Text(
             "Liceu",
             style: TextStyle(
+              color: Colors.black,
               fontFamily: "LobsterTwo",
               fontSize: 28,
               fontWeight: FontWeight.bold

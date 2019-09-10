@@ -4,6 +4,8 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import 'RoundedImage.dart';
+
 class TabData {
   final IconData icon;
 
@@ -11,7 +13,6 @@ class TabData {
 }
 
 class PostWidget extends StatelessWidget {
-
   final String userPic;
   final String userName;
   final String postContent;
@@ -19,24 +20,19 @@ class PostWidget extends StatelessWidget {
   PostWidget(this.userName, this.userPic, this.postContent);
 
   @override
-  Widget build(BuildContext context) =>
-      Card(
+  Widget build(BuildContext context) => Card(
+        shape: RoundedRectangleBorder(
+          side: BorderSide(
+            width: 0.1,
+          ),
+          borderRadius: BorderRadius.all(Radius.circular(4))
+        ),
+        elevation: 4,
         child: Column(
           children: <Widget>[
             Row(
               children: <Widget>[
-                new Container(
-                  width: 36.0,
-                  height: 36.0,
-                  decoration: new BoxDecoration(
-                    shape: BoxShape.circle,
-                    image: new DecorationImage(
-                        fit: BoxFit.fill,
-                        image: new NetworkImage(
-                            this.userPic)),
-                  ),
-                  margin: const EdgeInsets.all(16.0),
-                ),
+                RoundedImage(pictureURL: this.userPic, size: 36,),
                 Text(
                   this.userName,
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
@@ -47,17 +43,10 @@ class PostWidget extends StatelessWidget {
               alignment: Alignment.centerLeft,
               child: Linkify(
                 onOpen: (link) => launch(link.url),
-                text:
-                this.postContent,
+                text: this.postContent,
               ),
-              margin: const EdgeInsets.fromLTRB(
-                  8.0,
-                  0.0,
-                  8.0,
-                  8.0
-              ),
+              margin: const EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 8.0),
             )
-
           ],
         ),
       );
