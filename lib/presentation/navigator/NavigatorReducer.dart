@@ -4,7 +4,7 @@ import 'package:app/presentation/navigator/NavigatorActions.dart';
 final navigationReducer = combineReducers<List<String>>([
   TypedReducer<List<String>, NavigateReplaceAction>(_navigateReplace),
   TypedReducer<List<String>, NavigatePushAction>(_navigatePush),
-  TypedReducer<List<String>, NavigatePopAction>(_navigatePop),
+  TypedReducer<List<String>, NavigatePopStackAction>(_navigatePop),
 ]);
 
 List<String> _navigateReplace(
@@ -17,7 +17,7 @@ List<String> _navigatePush(List<String> route, NavigatePushAction action) {
   return result;
 }
 
-List<String> _navigatePop(List<String> route, NavigatePopAction action) {
+List<String> _navigatePop(List<String> route, NavigatePopStackAction action) {
   var result = List<String>.from(route);
   if (result.isNotEmpty) {
     result.removeLast();

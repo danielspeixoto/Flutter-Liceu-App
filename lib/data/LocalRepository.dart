@@ -2,7 +2,6 @@ import 'package:app/domain/exceptions/ItemNotFoundException.dart';
 import 'package:app/domain/exceptions/NotLoggedInException.dart';
 import 'package:app/domain/boundary/LocalBoundary.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:corsac_jwt/corsac_jwt.dart';
 import 'dart:convert';
 
 class LocalRepository implements ILocalRepository {

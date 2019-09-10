@@ -10,13 +10,12 @@ import 'constants.dart';
 class UserRepository implements IUserRepository {
   final String _apiKey;
   final String _url;
-  final http.Client _client;
 
-  UserRepository(this._url, this._apiKey, this._client);
+  UserRepository(this._url, this._apiKey);
 
   @override
   Future<User> id(String accessToken, String id) async {
-    final response = await _client.get(_url + "/" + id, headers: {
+    final response = await http.get(_url + "/" + id, headers: {
       apiKeyHeader: _apiKey,
       contentTypeHeader: contentTypeValueForJson,
       authHeader: accessToken
@@ -30,7 +29,7 @@ class UserRepository implements IUserRepository {
   @override
   Future<List<Challenge>> challenges(String accessToken, String userId) async {
     final response =
-        await _client.get(_url + "/" + userId + "/challenges", headers: {
+        await http.get(_url + "/" + userId + "/challenge", headers: {
       apiKeyHeader: _apiKey,
       contentTypeHeader: contentTypeValueForJson,
       authHeader: accessToken
@@ -44,7 +43,7 @@ class UserRepository implements IUserRepository {
   @override
   Future<List<Post>> posts(String accessToken, String userId) async {
     final response =
-        await _client.get("https://liceu-staging.herokuapp.com/v2/post/" + userId, headers: {
+        await http.get(_url + "/" + userId + "/posts", headers: {
       apiKeyHeader: _apiKey,
       contentTypeHeader: contentTypeValueForJson,
       authHeader: accessToken
@@ -58,7 +57,7 @@ class UserRepository implements IUserRepository {
   @override
   Future<void> unfollow(String accessToken, String producerId) async {
     final response =
-    await _client.delete(_url + "/" + producerId + "/followers", headers: {
+    await http.delete(_url + "/" + producerId + "/followers", headers: {
       apiKeyHeader: _apiKey,
       contentTypeHeader: contentTypeValueForJson,
       authHeader: accessToken
@@ -72,7 +71,7 @@ class UserRepository implements IUserRepository {
   @override
   Future<void> follow(String accessToken, String producerId) async {
     final response =
-    await _client.put(_url + "/" + producerId + "/followers", headers: {
+    await http.put(_url + "/" + producerId + "/followers", headers: {
       apiKeyHeader: _apiKey,
       contentTypeHeader: contentTypeValueForJson,
       authHeader: accessToken
@@ -86,7 +85,7 @@ class UserRepository implements IUserRepository {
   @override
   Future<List<User>> search(
       String accessToken, String query, int amount) async {
-    final response = await _client.get(
+    final response = await http.get(
         _url + "?name=" + query + "&amount=" + amount.toString(),
         headers: {
           apiKeyHeader: _apiKey,
@@ -102,7 +101,7 @@ class UserRepository implements IUserRepository {
   Future<void> setDescription(
       String accessToken, String id, String description) async {
     final response =
-    await _client.put(_url + "/" + id + "/description", headers: {
+    await http.put(_url + "/" + id + "/description", headers: {
       apiKeyHeader: _apiKey,
       contentTypeHeader: contentTypeValueForJson,
       authHeader: accessToken

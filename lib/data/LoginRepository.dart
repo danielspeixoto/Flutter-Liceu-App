@@ -7,15 +7,14 @@ import 'package:http/http.dart' as http;
 class LoginRepository implements ILoginRepository {
   final String _apiKey;
   final String _url;
-  final http.Client _client;
 
-  LoginRepository(this._url, this._apiKey, this._client);
+  LoginRepository(this._url, this._apiKey);
 
   final String authHeader = "authorization";
 
   @override
   Future<String> auth(String accessCode, String method) async {
-    var response = await _client.post(_url,
+    var response = await http.post(_url,
         headers: {"API_KEY": _apiKey, "Content-Type": "application/json"},
         body: json.encode({"accessToken": accessCode}));
 

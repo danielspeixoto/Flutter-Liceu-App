@@ -28,14 +28,14 @@ class MyApp extends StatelessWidget {
 
   MaterialPageRoute _getRoute(RouteSettings settings) {
     switch (settings.name) {
-      case AppRoutes.splash:
-        return MainRoute(SplashPage(), settings: settings);
+      case AppRoutes.login:
+        return MainRoute(LoginPage(), settings: settings);
       case AppRoutes.home:
         return MainRoute(HomePage(), settings: settings);
       case AppRoutes.createPost:
         return MainRoute(CreatePostPage(), settings: settings);
       default:
-        return MainRoute(LoginPage(), settings: settings);
+        return MainRoute(SplashPage(), settings: settings);
     }
   }
 

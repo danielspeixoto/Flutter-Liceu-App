@@ -7,3 +7,7 @@ class Post {
 
   Post(this.id, this.userId, this.type, this.text);
 }
+
+enum PostType {
+  TEXT
+}

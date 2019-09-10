@@ -10,4 +10,10 @@ class NavigatePushAction {
   NavigatePushAction(this.routeName);
 }
 
-class NavigatePopAction {}
+class NavigatePopAction {
+  NavigatePopAction();
+}
+
+class NavigatePopStackAction {
+  NavigatePopStackAction();
+}

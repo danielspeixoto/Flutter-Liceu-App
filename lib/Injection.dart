@@ -11,23 +11,15 @@ import 'package:app/domain/usecase/user/MyInfoUseCase.dart';
 import 'domain/usecase/post/CreatePostUseCase.dart';
 import 'domain/usecase/user/MyPostsUseCase.dart';
 
-final baseURL =  "https://liceu-staging.herokuapp.com/v2";
+final baseURL = "https://liceu-staging.herokuapp.com/v2";
+final apiKey = "2VsYHwfQKtjiAdLs8Z2fTLwuLpofSXWy";
 final client = new http.Client();
-final loginRepository = LoginRepository(
-    baseURL + "/login",
-    "2VsYHwfQKtjiAdLs8Z2fTLwuLpofSXWy",
-    client
-);
-final userRepository = UserRepository(
-    baseURL + "/user",
-    "2VsYHwfQKtjiAdLs8Z2fTLwuLpofSXWy",
-    client
-);
-final postRepository = PostRepository(
-    baseURL + "/post",
-    "2VsYHwfQKtjiAdLs8Z2fTLwuLpofSXWy"
-);
+// Repositories
+final loginRepository = LoginRepository(baseURL + "/login", apiKey);
+final userRepository = UserRepository(baseURL + "/user", apiKey);
+final postRepository = PostRepository(baseURL + "/post", apiKey);
 final localRepository = LocalRepository();
+// Use Cases
 final loginUseCase = LoginUseCase(loginRepository, localRepository);
 final myInfoUseCase = MyInfoUseCase(userRepository, localRepository);
 final myPostsUseCase = MyPostsUseCase(localRepository, userRepository);
