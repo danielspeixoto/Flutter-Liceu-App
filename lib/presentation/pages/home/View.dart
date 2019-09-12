@@ -47,7 +47,7 @@ class HomePage extends StatelessWidget {
                   children: <Widget>[
                     Row(
                       children: <Widget>[
-                        RoundedImage(pictureURL: viewModel.userPic, size: 80.0),
+                        RoundedImage(pictureURL: viewModel.user.content.picURL, size: 80.0),
                         Text(
                           viewModel.userName,
                           style: TextStyle(

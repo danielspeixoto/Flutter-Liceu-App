@@ -12,20 +12,22 @@ class UserPresenter extends MiddlewareClass<AppState> {
   final IIsLoggedInUseCase _isLoggedInUseCase;
   final IMyPostsUseCase _myPostsUseCase;
 
-  UserPresenter(this._myInfoUseCase, this._isLoggedInUseCase, this._myPostsUseCase);
+  UserPresenter(
+      this._myInfoUseCase, this._isLoggedInUseCase, this._myPostsUseCase);
 
   @override
   Future call(
       Store<AppState> store, dynamic action, NextDispatcher next) async {
     if (action is FetchMyInfoAction) {
       _myInfoUseCase.run().then((user) {
-        store.dispatch(SetUserAction(user.name, user.picURL, user.bio));
+        store.dispatch(SetUserAction(user));
       }).catchError((e) {
         print(e);
       });
     } else if (action is CheckIfIsLoggedInAction) {
+      store.dispatch(LoginAction());
       _isLoggedInUseCase.run().then((isLogged) {
-        store.dispatch(LoginSuccessAction(isLogged));
+        store.dispatch(LoginSuccessAction());
         if (isLogged) {
           store.dispatch(NavigateReplaceAction(AppRoutes.home));
         } else {

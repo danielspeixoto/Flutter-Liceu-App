@@ -1,7 +1,6 @@
 import 'package:app/domain/aggregates/Post.dart';
 import 'package:app/domain/aggregates/User.dart';
 import 'package:redux/redux.dart';
-
 import '../Data.dart';
 
 class UserState {

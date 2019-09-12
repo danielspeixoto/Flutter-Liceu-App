@@ -4,7 +4,6 @@ import 'package:app/presentation/reducers/user/Reducer.dart';
 import 'package:redux/redux.dart';
 import '../../../State.dart';
 import '../../../main.dart';
-import 'Reducer.dart';
 
 class LoginViewModel {
   final Function(String, String) login;
@@ -17,16 +16,12 @@ class LoginViewModel {
     var state = store.state.loginScreenState;
     return LoginViewModel(
         login: (String accessCode, String method) {
-          store.dispatch(LoginPageIsLoading(true));
+          store.dispatch(LoginAction());
           _loginUseCase.run(accessCode, method).then((_) {
-            store.dispatch(LoginSuccessAction(true));
-            store.dispatch(LoginPageIsLoading(false));
+            store.dispatch(LoginSuccessAction());
             store.dispatch(NavigateReplaceAction(AppRoutes.home));
           }).catchError((e) {
             print(e);
-            store.dispatch(LoginSuccessAction(false));
-          }).whenComplete(() {
-            store.dispatch(LoginPageIsLoading(false));
           });
         },
         isLoading: state.isLoading);
