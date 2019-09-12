@@ -32,8 +32,8 @@ class HomeViewModel {
           store.dispatch(NavigatePushAction(AppRoutes.createPost)),
       posts: userState.posts,
       refresh: () {
-        store.dispatch(GetProfileAction());
-        store.dispatch(GetMyPostsAction());
+        store.dispatch(FetchMyInfoAction());
+        store.dispatch(FetchMyPostsAction());
       },
     );
   }

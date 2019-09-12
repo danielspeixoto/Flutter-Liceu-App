@@ -17,15 +17,15 @@ class UserPresenter extends MiddlewareClass<AppState> {
   @override
   Future call(
       Store<AppState> store, dynamic action, NextDispatcher next) async {
-    if (action is GetProfileAction) {
+    if (action is FetchMyInfoAction) {
       _myInfoUseCase.run().then((user) {
-        store.dispatch(SetProfileData(user.name, user.picURL, user.bio));
+        store.dispatch(SetUserAction(user.name, user.picURL, user.bio));
       }).catchError((e) {
         print(e);
       });
     } else if (action is CheckIfIsLoggedInAction) {
       _isLoggedInUseCase.run().then((isLogged) {
-        store.dispatch(UpdateLoggedStatus(isLogged));
+        store.dispatch(LoginSuccessAction(isLogged));
         if (isLogged) {
           store.dispatch(NavigateReplaceAction(AppRoutes.home));
         } else {
@@ -34,9 +34,9 @@ class UserPresenter extends MiddlewareClass<AppState> {
       }).catchError((e) {
         print(e);
       });
-    } else if (action is GetMyPostsAction) {
+    } else if (action is FetchMyPostsAction) {
       this._myPostsUseCase.run().then((posts) {
-        store.dispatch(SetUserPosts(posts));
+        store.dispatch(SetUserPostsAction(posts));
       }).catchError((e) {
         print(e);
       });
@@ -45,14 +45,14 @@ class UserPresenter extends MiddlewareClass<AppState> {
   }
 }
 
-class GetProfileAction {
-  GetProfileAction();
+class FetchMyInfoAction {
+  FetchMyInfoAction();
 }
 
 class CheckIfIsLoggedInAction {
   CheckIfIsLoggedInAction();
 }
 
-class GetMyPostsAction {
-  GetMyPostsAction();
+class FetchMyPostsAction {
+  FetchMyPostsAction();
 }

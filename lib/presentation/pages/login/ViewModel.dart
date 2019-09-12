@@ -19,12 +19,12 @@ class LoginViewModel {
         login: (String accessCode, String method) {
           store.dispatch(LoginPageIsLoading(true));
           _loginUseCase.run(accessCode, method).then((_) {
-            store.dispatch(UpdateLoggedStatus(true));
+            store.dispatch(LoginSuccessAction(true));
             store.dispatch(LoginPageIsLoading(false));
             store.dispatch(NavigateReplaceAction(AppRoutes.home));
           }).catchError((e) {
             print(e);
-            store.dispatch(UpdateLoggedStatus(false));
+            store.dispatch(LoginSuccessAction(false));
           }).whenComplete(() {
             store.dispatch(LoginPageIsLoading(false));
           });

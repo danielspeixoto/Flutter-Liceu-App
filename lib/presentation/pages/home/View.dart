@@ -21,8 +21,8 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) => StoreConnector<AppState, HomeViewModel>(
       onInit: (store) {
-        store.dispatch(GetProfileAction());
-        store.dispatch(GetMyPostsAction());
+        store.dispatch(FetchMyInfoAction());
+        store.dispatch(FetchMyPostsAction());
       },
       converter: (store) => HomeViewModel.create(store),
       builder: (BuildContext context, HomeViewModel viewModel) {
