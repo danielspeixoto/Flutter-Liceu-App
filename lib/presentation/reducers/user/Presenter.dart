@@ -12,20 +12,22 @@ class UserPresenter extends MiddlewareClass<AppState> {
   final IIsLoggedInUseCase _isLoggedInUseCase;
   final IMyPostsUseCase _myPostsUseCase;
 
-  UserPresenter(this._myInfoUseCase, this._isLoggedInUseCase, this._myPostsUseCase);
+  UserPresenter(
+      this._myInfoUseCase, this._isLoggedInUseCase, this._myPostsUseCase);
 
   @override
   Future call(
       Store<AppState> store, dynamic action, NextDispatcher next) async {
-    if (action is GetProfileAction) {
+    if (action is FetchMyInfoAction) {
       _myInfoUseCase.run().then((user) {
-        store.dispatch(SetProfileData(user.name, user.picURL, user.bio));
+        store.dispatch(SetUserAction(user));
       }).catchError((e) {
         print(e);
       });
     } else if (action is CheckIfIsLoggedInAction) {
+      store.dispatch(LoginAction());
       _isLoggedInUseCase.run().then((isLogged) {
-        store.dispatch(UpdateLoggedStatus(isLogged));
+        store.dispatch(LoginSuccessAction());
         if (isLogged) {
           store.dispatch(NavigateReplaceAction(AppRoutes.home));
         } else {
@@ -34,9 +36,9 @@ class UserPresenter extends MiddlewareClass<AppState> {
       }).catchError((e) {
         print(e);
       });
-    } else if (action is GetMyPostsAction) {
+    } else if (action is FetchMyPostsAction) {
       this._myPostsUseCase.run().then((posts) {
-        store.dispatch(SetUserPosts(posts));
+        store.dispatch(SetUserPostsAction(posts));
       }).catchError((e) {
         print(e);
       });
@@ -45,14 +47,14 @@ class UserPresenter extends MiddlewareClass<AppState> {
   }
 }
 
-class GetProfileAction {
-  GetProfileAction();
+class FetchMyInfoAction {
+  FetchMyInfoAction();
 }
 
 class CheckIfIsLoggedInAction {
   CheckIfIsLoggedInAction();
 }
 
-class GetMyPostsAction {
-  GetMyPostsAction();
+class FetchMyPostsAction {
+  FetchMyPostsAction();
 }

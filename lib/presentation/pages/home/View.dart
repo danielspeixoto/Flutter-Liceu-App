@@ -21,8 +21,8 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) => StoreConnector<AppState, HomeViewModel>(
       onInit: (store) {
-        store.dispatch(GetProfileAction());
-        store.dispatch(GetMyPostsAction());
+        store.dispatch(FetchMyInfoAction());
+        store.dispatch(FetchMyPostsAction());
       },
       converter: (store) => HomeViewModel.create(store),
       builder: (BuildContext context, HomeViewModel viewModel) {
@@ -47,7 +47,7 @@ class HomePage extends StatelessWidget {
                   children: <Widget>[
                     Row(
                       children: <Widget>[
-                        RoundedImage(pictureURL: viewModel.userPic, size: 80.0),
+                        RoundedImage(pictureURL: viewModel.user.content.picURL, size: 80.0),
                         Text(
                           viewModel.userName,
                           style: TextStyle(
