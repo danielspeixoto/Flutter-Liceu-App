@@ -27,7 +27,7 @@ class PostWidget extends StatelessWidget {
           ),
           borderRadius: BorderRadius.all(Radius.circular(4))
         ),
-        elevation: 4,
+        elevation: 2,
         child: Column(
           children: <Widget>[
             Row(
@@ -46,6 +46,7 @@ class PostWidget extends StatelessWidget {
                 text: this.postContent,
               ),
               margin: const EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 8.0),
+              padding: EdgeInsets.only(bottom: 4),
             )
           ],
         ),
