@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:app/presentation/reducers/Data.dart';
 import 'package:redux/redux.dart';
 
@@ -53,10 +55,13 @@ class SetUserEditFieldAction {
 
 EditProfilePageState setUserEditFieldAction(
     EditProfilePageState state, SetUserEditFieldAction action) {
+
+  final bio = action.bio.substring(0, min(300, action.bio.length));
+
   return EditProfilePageState(
     data: state.data.copyWith(
       content: state.data.content.copyWith(
-        bio: action.bio,
+        bio: bio,
       ),
     ),
   );

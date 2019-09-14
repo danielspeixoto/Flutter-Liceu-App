@@ -16,6 +16,14 @@ class EditProfilePage extends StatelessWidget {
           converter: (store) =>
               EditProfileViewModel.create(store, setUserDescriptionUseCase),
           builder: (BuildContext context, EditProfileViewModel viewModel) {
+            final content = viewModel.editData.content;
+            final TextEditingController bioTextController =
+                TextEditingController(
+              text: content.bio,
+            );
+            bioTextController.selection = TextSelection.fromPosition(
+              TextPosition(offset: content.bio.length),
+            );
             return LiceuPage(
               actions: <Widget>[
                 FlatButton(
@@ -31,21 +39,31 @@ class EditProfilePage extends StatelessWidget {
                 children: <Widget>[
                   Container(
                     margin: EdgeInsets.all(8),
-                    child: TextField(
-                      controller: TextEditingController(text: viewModel.editData.content.bio),
-                      onChanged: viewModel.onBioTextChanged,
-                      decoration: InputDecoration(
-                        prefixIcon: Icon(Icons.account_circle),
-                        border: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            width: 0.1,
+                    child: Column(
+                      children: [
+                        TextField(
+                          controller: bioTextController,
+                          onChanged: (text) {
+                            viewModel.onBioTextChanged(text);
+                          },
+                          decoration: InputDecoration(
+                            prefixIcon: Icon(Icons.account_circle),
+                            border: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                width: 0.1,
+                              ),
+                            ),
+                            hintText: "Fale sobre você",
                           ),
+                          minLines: null,
+                          maxLines: 5,
+                          keyboardType: TextInputType.multiline,
                         ),
-                        hintText: "Fale sobre você",
-                      ),
-                      minLines: null,
-                      maxLines: 5,
-                      keyboardType: TextInputType.multiline,
+                        Container(
+                          margin: EdgeInsets.all(4),
+                          child: Text(content.bio.length.toString() + "/300"),
+                        ),
+                      ],
                     ),
                   ),
                 ],
