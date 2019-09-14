@@ -1,4 +1,5 @@
 import 'package:app/presentation/reducers/user/Presenter.dart';
+import 'package:app/presentation/widgets/FetcherWidget.dart';
 import 'package:app/presentation/widgets/LiceuWidget.dart';
 import 'package:app/presentation/widgets/PostWidget.dart';
 import 'package:app/presentation/widgets/RoundedImage.dart';
@@ -26,6 +27,7 @@ class HomePage extends StatelessWidget {
       },
       converter: (store) => HomeViewModel.create(store),
       builder: (BuildContext context, HomeViewModel viewModel) {
+        final user = viewModel.user.content;
         return Liceu(
           selectedIdx: 0,
           leading: FlatButton(
@@ -37,7 +39,6 @@ class HomePage extends StatelessWidget {
           body: SmartRefresher(
             onRefresh: () async {
               viewModel.refresh();
-              await Future.delayed(Duration(milliseconds: 1000));
               _refreshController.refreshCompleted();
             },
             controller: _refreshController,
@@ -45,35 +46,64 @@ class HomePage extends StatelessWidget {
               child: Container(
                 child: Column(
                   children: <Widget>[
-                    Row(
-                      children: <Widget>[
-                        RoundedImage(pictureURL: viewModel.user.content.picURL, size: 80.0),
-                        Text(
-                          viewModel.userName,
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 16),
-                        ),
-                      ],
-                    ),
-                    viewModel.userBio != null
-                        ? Container(
-                            child: TextWithLinks(
-                              text: viewModel.userBio,
+                    FetcherWidget(
+                      isLoading: viewModel.user.isLoading,
+                      errorMessage: viewModel.user.errorMessage,
+                      child: () => Container(
+                        child: Column(
+                          children: <Widget>[
+                            Row(
+                              children: <Widget>[
+                                RoundedImage(
+                                    pictureURL: user.picURL, size: 80.0),
+                                Text(
+                                  user.name,
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 16),
+                                ),
+                              ],
                             ),
-                            margin: const EdgeInsets.all(8.0),
-                          )
-                        : Container(),
+                            user.bio != null
+                                ? Container(
+                                    child: TextWithLinks(
+                                      text: user.bio,
+                                    ),
+                                    margin: const EdgeInsets.all(8.0),
+                                  )
+                                : Container(),
+                          ],
+                        ),
+                      ),
+                    ),
                     Divider(
-                      color: Colors.black54,
+                      color: ,
                       indent: 16,
                       endIndent: 16,
                     ),
-                    Container(
-                      child: Column(
-                        children: viewModel.posts
-                            .map((post) => PostWidget(viewModel.userName,
-                                viewModel.userPic, post.text))
-                            .toList(),
+                    FetcherWidget(
+                      isLoading:
+                          viewModel.posts.isLoading || viewModel.user.isLoading,
+                      errorMessage: viewModel.posts.errorMessage,
+                      child: () => Container(
+                        child: viewModel.posts.content.length == 0
+                            ? Container(
+                                margin: EdgeInsets.all(16),
+                                child: Column(
+                                  children: <Widget>[
+                                    Text("Você ainda não tem nenhuma postagem"),
+                                  ],
+                                ),
+                              )
+                            : Column(
+                                children: viewModel.posts.content
+                                    .map((post) => PostWidget(
+                                          user.name,
+                                          user.picURL,
+                                          post.text,
+                                        ))
+                                    .toList(),
+                              ),
                       ),
                     ),
                   ],

@@ -5,15 +5,16 @@ class Data<T> {
 
   Data({
     this.content,
-    this.isLoading = false,
+    this.isLoading = true,
     this.errorMessage = "",
   });
 
   Data copyWith({T content, bool isLoading, String errorMessage}) {
-    return Data(
+    final data = Data(
       content: content ?? this.content,
       isLoading: isLoading ?? this.isLoading,
       errorMessage: errorMessage ?? this.errorMessage,
     );
+    return data;
   }
 }

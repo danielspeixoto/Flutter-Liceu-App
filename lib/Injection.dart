@@ -11,8 +11,8 @@ import 'package:app/domain/usecase/user/MyInfoUseCase.dart';
 import 'domain/usecase/post/CreatePostUseCase.dart';
 import 'domain/usecase/user/MyPostsUseCase.dart';
 
-final baseURL = "https://protected-river-16209.herokuapp.com/v2";
-final apiKey = "8y/B?E(H+MbQeThWmYq3t6w9z\$C&F)J@";
+final baseURL = "https://liceu-staging.herokuapp.com/v2";
+final apiKey = "2VsYHwfQKtjiAdLs8Z2fTLwuLpofSXWy";
 final client = new http.Client();
 // Repositories
 final loginRepository = LoginRepository(baseURL + "/login", apiKey);

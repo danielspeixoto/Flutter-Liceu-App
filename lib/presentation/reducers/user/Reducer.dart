@@ -21,18 +21,20 @@ class UserState {
     Data<User> user,
     Data<List<Post>> posts,
   }) {
-    return UserState(
+    final state = UserState(
       isLoggedIn ?? this.isLoggedIn,
       user ?? this.user,
       posts ?? this.posts,
     );
+    return state;
   }
 }
 
 final Reducer<UserState> userReducer = combineReducers<UserState>([
 //  Login
   TypedReducer<UserState, LoginSuccessAction>(loginSuccess),
-  TypedReducer<UserState, LoginAction>(attemptLogin),
+  TypedReducer<UserState, LoginFailedAction>(loginFailed),
+  TypedReducer<UserState, IsLoggingInAction>(login),
 //  Personal Data
   TypedReducer<UserState, SetUserAction>(setProfileData),
   TypedReducer<UserState, FetchingUserAction>(fetchingUser),
@@ -51,11 +53,21 @@ UserState loginSuccess(UserState state, LoginSuccessAction action) {
   );
 }
 
-class LoginAction {
-  LoginAction();
+class LoginFailedAction {
+  LoginFailedAction();
 }
 
-UserState attemptLogin(UserState state, LoginAction action) {
+UserState loginFailed(UserState state, LoginFailedAction action) {
+  return state.copyWith(
+    isLoggedIn: state.isLoggedIn.copyWith(content: false, isLoading: false),
+  );
+}
+
+class IsLoggingInAction {
+  IsLoggingInAction();
+}
+
+UserState login(UserState state, IsLoggingInAction action) {
   return state.copyWith(
     isLoggedIn: Data(isLoading: true),
   );
@@ -68,13 +80,14 @@ class SetUserAction {
 }
 
 UserState setProfileData(UserState state, SetUserAction action) {
-  return state.copyWith(user: Data(content: action.user));
+  return state.copyWith(user: Data(content: action.user, isLoading: false));
 }
 
 class FetchingUserAction {}
 
 UserState fetchingUser(UserState state, FetchingUserAction action) {
-  return state.copyWith(user: state.user.copyWith(isLoading: true));
+  final s = state.copyWith(user: Data(isLoading: true));
+  return s;
 }
 
 class SetUserPostsAction {
@@ -83,7 +96,7 @@ class SetUserPostsAction {
 }
 
 UserState setUserPosts(UserState state, SetUserPostsAction action) {
-  return state.copyWith(posts: Data(content: action.posts));
+  return state.copyWith(posts: Data(content: action.posts, isLoading: false));
 }
 
 class FetchingMyPostsAction {}

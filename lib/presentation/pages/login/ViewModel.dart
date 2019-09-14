@@ -13,17 +13,19 @@ class LoginViewModel {
 
   factory LoginViewModel.create(
       Store<AppState> store, ILoginUseCase _loginUseCase) {
-    var state = store.state.loginScreenState;
     return LoginViewModel(
-        login: (String accessCode, String method) {
-          store.dispatch(LoginAction());
-          _loginUseCase.run(accessCode, method).then((_) {
-            store.dispatch(LoginSuccessAction());
-            store.dispatch(NavigateReplaceAction(AppRoutes.home));
-          }).catchError((e) {
+      login: (String accessCode, String method) {
+        store.dispatch(IsLoggingInAction());
+        _loginUseCase.run(accessCode, method).then((_) {
+          store.dispatch(LoginSuccessAction());
+          store.dispatch(NavigateReplaceAction(AppRoutes.home));
+        }).catchError(
+          (e) {
             print(e);
-          });
-        },
-        isLoading: state.isLoading);
+          },
+        );
+      },
+      isLoading: store.state.userState.isLoggedIn.isLoading,
+    );
   }
 }

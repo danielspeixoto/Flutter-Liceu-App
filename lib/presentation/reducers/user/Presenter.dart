@@ -19,18 +19,20 @@ class UserPresenter extends MiddlewareClass<AppState> {
   Future call(
       Store<AppState> store, dynamic action, NextDispatcher next) async {
     if (action is FetchMyInfoAction) {
+      store.dispatch(FetchingUserAction());
       _myInfoUseCase.run().then((user) {
         store.dispatch(SetUserAction(user));
       }).catchError((e) {
         print(e);
       });
     } else if (action is CheckIfIsLoggedInAction) {
-      store.dispatch(LoginAction());
+      store.dispatch(IsLoggingInAction());
       _isLoggedInUseCase.run().then((isLogged) {
-        store.dispatch(LoginSuccessAction());
         if (isLogged) {
+          store.dispatch(LoginSuccessAction());
           store.dispatch(NavigateReplaceAction(AppRoutes.home));
         } else {
+          store.dispatch(LoginFailedAction());
           store.dispatch(NavigateReplaceAction(AppRoutes.login));
         }
       }).catchError((e) {
