@@ -10,6 +10,7 @@ import 'package:app/domain/usecase/user/MyInfoUseCase.dart';
 
 import 'domain/usecase/post/CreatePostUseCase.dart';
 import 'domain/usecase/user/MyPostsUseCase.dart';
+import 'domain/usecase/user/SetUserDescriptionUseCase.dart';
 
 final baseURL = "https://liceu-staging.herokuapp.com/v2";
 final apiKey = "2VsYHwfQKtjiAdLs8Z2fTLwuLpofSXWy";
@@ -25,3 +26,4 @@ final myInfoUseCase = MyInfoUseCase(userRepository, localRepository);
 final myPostsUseCase = MyPostsUseCase(localRepository, userRepository);
 final isLoggedInUseCase = IsLoggedInUseCase(localRepository);
 final createPostUseCase = CreatePostUseCase(localRepository, postRepository);
+final setUserDescriptionUseCase = SetUserDescriptionUseCase(localRepository, userRepository);

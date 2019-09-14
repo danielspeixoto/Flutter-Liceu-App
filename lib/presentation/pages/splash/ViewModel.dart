@@ -1,5 +1,5 @@
 import 'package:redux/redux.dart';
-import '../../../State.dart';
+import '../../../redux.dart';
 
 class SplashViewModel {
   SplashViewModel();

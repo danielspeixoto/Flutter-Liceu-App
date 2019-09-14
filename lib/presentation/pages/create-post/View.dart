@@ -1,7 +1,8 @@
+import 'package:app/presentation/widgets/LiceuPage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import '../../../Injection.dart';
-import '../../../State.dart';
+import '../../../injection.dart';
+import '../../../redux.dart';
 import 'ViewModel.dart';
 
 class CreatePostPage extends StatelessWidget {
@@ -13,23 +14,18 @@ class CreatePostPage extends StatelessWidget {
           converter: (store) =>
               CreatePostViewModel.create(store, createPostUseCase),
           builder: (BuildContext context, CreatePostViewModel viewModel) {
-            return Scaffold(
-              appBar: AppBar(
-                backgroundColor: Theme.of(context).primaryColor,
-                centerTitle: true,
-                elevation: 1.0,
-                actions: <Widget>[
-                  FlatButton(
-                    onPressed: () =>
-                        viewModel.onPostSubmitted(inputController.text),
-                    child: new Icon(
-                      Icons.done,
-                      color: Colors.white,
-                    ),
+            return LiceuPage(
+              actions: <Widget>[
+                FlatButton(
+                  onPressed: () =>
+                      viewModel.onPostSubmitted(inputController.text),
+                  child: new Icon(
+                    Icons.send,
+                    color: Colors.black,
                   ),
-                ],
-                title: Text("Escreva seu post"),
-              ),
+                ),
+              ],
+              title: "Escreva seu post",
               body: Column(
                 children: <Widget>[
                   Container(

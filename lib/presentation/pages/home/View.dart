@@ -1,13 +1,13 @@
 import 'package:app/presentation/reducers/user/Presenter.dart';
 import 'package:app/presentation/widgets/FetcherWidget.dart';
-import 'package:app/presentation/widgets/LiceuWidget.dart';
+import 'package:app/presentation/widgets/LiceuScaffold.dart';
 import 'package:app/presentation/widgets/PostWidget.dart';
 import 'package:app/presentation/widgets/RoundedImage.dart';
 import 'package:app/presentation/widgets/TextWithLinks.dart';
 import 'package:flutter/material.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import '../../../State.dart';
+import '../../../redux.dart';
 import 'ViewModel.dart';
 
 class TabData {
@@ -28,7 +28,7 @@ class HomePage extends StatelessWidget {
       converter: (store) => HomeViewModel.create(store),
       builder: (BuildContext context, HomeViewModel viewModel) {
         final user = viewModel.user.content;
-        return Liceu(
+        return LiceuScaffold(
           selectedIdx: 0,
           leading: FlatButton(
             onPressed: viewModel.onCreateButtonPressed,
@@ -55,12 +55,30 @@ class HomePage extends StatelessWidget {
                             Row(
                               children: <Widget>[
                                 RoundedImage(
-                                    pictureURL: user.picURL, size: 80.0),
-                                Text(
-                                  user.name,
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 16),
+                                    pictureURL: user.picURL, size: 80.0,),
+                                Expanded(
+                                  child: Column(
+                                    children: <Widget>[
+                                      Container(
+                                        child: Text(
+                                          user.name,
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 16,
+                                          ),
+                                        ),
+                                        margin: EdgeInsets.all(8),
+                                      ),
+                                      RaisedButton(
+                                        onPressed: viewModel.onEditProfileButtonPressed,
+                                        color: Colors.white,
+                                        child: Text(
+                                          "Editar Perfil",
+                                          style: TextStyle(fontSize: 12,),
+                                        ),
+                                      )
+                                    ],
+                                  ),
                                 ),
                               ],
                             ),
@@ -69,7 +87,7 @@ class HomePage extends StatelessWidget {
                                     child: TextWithLinks(
                                       text: user.bio,
                                     ),
-                                    margin: const EdgeInsets.all(8.0),
+                                    margin: const EdgeInsets.symmetric(horizontal: 16.0),
                                   )
                                 : Container(),
                           ],
@@ -77,7 +95,7 @@ class HomePage extends StatelessWidget {
                       ),
                     ),
                     Divider(
-                      color: ,
+                      color: Colors.black54,
                       indent: 16,
                       endIndent: 16,
                     ),

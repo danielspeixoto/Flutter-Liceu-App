@@ -5,8 +5,8 @@ import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
 
-import '../../../Injection.dart';
-import '../../../State.dart';
+import '../../../injection.dart';
+import '../../../redux.dart';
 import 'ViewModel.dart';
 
 final List<String> imgList = [

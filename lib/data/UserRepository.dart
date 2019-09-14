@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:app/data/util/ExceptionHandler.dart';
 import 'package:app/domain/aggregates/Challenge.dart';
 import 'package:app/domain/aggregates/Post.dart';
@@ -105,9 +107,9 @@ class UserRepository implements IUserRepository {
       apiKeyHeader: _apiKey,
       contentTypeHeader: contentTypeValueForJson,
       authHeader: accessToken
-    }, body: {
+    }, body: json.encode({
       "description": description
-    });
+    }));
     if (response.statusCode == 200) {
       return;
     }

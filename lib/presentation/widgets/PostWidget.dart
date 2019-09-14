@@ -1,4 +1,4 @@
-import 'package:app/presentation/widgets/LiceuWidget.dart';
+import 'package:app/presentation/widgets/LiceuScaffold.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_linkify/flutter_linkify.dart';
