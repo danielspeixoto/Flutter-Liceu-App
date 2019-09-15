@@ -1,4 +1,5 @@
 import 'package:app/presentation/redux/actions/UserActions.dart';
+import 'package:app/presentation/redux/app_state.dart';
 import 'package:app/presentation/widgets/FetcherWidget.dart';
 import 'package:app/presentation/widgets/LiceuScaffold.dart';
 import 'package:app/presentation/widgets/PostWidget.dart';
@@ -9,8 +10,6 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:url_launcher/url_launcher.dart';
-
-import '../../../redux.dart';
 import 'ViewModel.dart';
 
 class TabData {

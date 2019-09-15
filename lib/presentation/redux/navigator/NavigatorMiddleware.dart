@@ -1,8 +1,7 @@
 import 'dart:developer' as developer;
 import 'package:redux/redux.dart';
-
-import '../../../main.dart';
-import '../../../redux.dart';
+import '../../app.dart';
+import '../app_state.dart';
 import 'NavigatorActions.dart';
 
 List<Middleware<AppState>> navigationMiddleware() {

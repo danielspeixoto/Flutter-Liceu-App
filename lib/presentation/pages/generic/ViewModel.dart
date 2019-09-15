@@ -1,6 +1,5 @@
+import 'package:app/presentation/redux/app_state.dart';
 import 'package:redux/redux.dart';
-
-import '../../../redux.dart';
 
 class GenericViewModel {
   GenericViewModel();

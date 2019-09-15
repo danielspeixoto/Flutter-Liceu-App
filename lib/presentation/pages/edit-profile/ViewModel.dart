@@ -1,7 +1,6 @@
+import 'package:app/presentation/redux/actions/UserActions.dart';
+import 'package:app/presentation/redux/app_state.dart';
 import 'package:redux/redux.dart';
-
-import '../../../redux.dart';
-import 'Actions.dart';
 
 class EditProfileViewModel {
   final bool isLoading;
@@ -21,10 +20,10 @@ class EditProfileViewModel {
   });
 
   factory EditProfileViewModel.create(Store<AppState> store) {
-    final state = store.state.editProfilePageState;
+    final state = store.state.editMyInfoState;
 
     return EditProfileViewModel(
-        isLoading: store.state.editProfilePageState.isLoading ||
+        isLoading: store.state.editMyInfoState.isLoading ||
             store.state.userState.user.isLoading,
         bio: state.bio,
         instagram: state.instagram,

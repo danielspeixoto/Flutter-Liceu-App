@@ -1,14 +1,19 @@
 import 'package:app/domain/boundary/PostBoundary.dart';
 import 'package:app/presentation/redux/actions/PostActions.dart';
+import 'package:app/presentation/redux/navigator/NavigatorActions.dart';
 import 'package:redux/redux.dart';
 
-import '../../../redux.dart';
+import '../../../main.dart';
+import '../../app.dart';
+import '../app_state.dart';
 
 class PostMiddleware extends MiddlewareClass<AppState> {
   final IDeletePostUseCase _deletePostUseCase;
+  final ICreatePostUseCase _createPostUseCase;
 
   PostMiddleware(
     this._deletePostUseCase,
+    this._createPostUseCase,
   );
 
   @override
@@ -18,6 +23,17 @@ class PostMiddleware extends MiddlewareClass<AppState> {
       this._deletePostUseCase.run(action.postId).catchError((e) {
         print(e);
       });
+    } else if (action is CreatePostAction) {
+      try {
+        await _createPostUseCase.run(action.postType, action.text);
+        store.dispatch(PostCreatedAction());
+      } catch (e) {
+        print(e);
+      }
+    } else if (action is PostCreatedAction) {
+      if (store.state.route.last == AppRoutes.createPost) {
+        store.dispatch(NavigatePopAction());
+      }
     }
     next(action);
   }

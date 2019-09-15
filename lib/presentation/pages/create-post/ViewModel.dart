@@ -1,8 +1,7 @@
 import 'package:app/domain/aggregates/Post.dart';
+import 'package:app/presentation/redux/actions/PostActions.dart';
+import 'package:app/presentation/redux/app_state.dart';
 import 'package:redux/redux.dart';
-
-import '../../../redux.dart';
-import 'Actions.dart';
 
 class CreatePostViewModel {
   final Function(String) onPostSubmitted;

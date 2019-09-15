@@ -1,4 +1,4 @@
-import 'package:app/presentation/pages/login/Actions.dart';
+import 'package:app/presentation/redux/actions/LoginActions.dart';
 import 'package:redux/redux.dart';
 
 import 'Data.dart';
@@ -22,7 +22,7 @@ class LoginState {
   }
 }
 
-final Reducer<LoginState> userReducer = combineReducers<LoginState>([
+final Reducer<LoginState> loginReducer = combineReducers<LoginState>([
 //  Login
   TypedReducer<LoginState, LoginSuccessAction>(loginSuccess),
   TypedReducer<LoginState, NotLoggedInAction>(loginFailed),

@@ -1,6 +1,6 @@
+import 'package:app/presentation/redux/actions/LoginActions.dart';
+import 'package:app/presentation/redux/app_state.dart';
 import 'package:redux/redux.dart';
-import '../../../redux.dart';
-import 'Actions.dart';
 
 class LoginViewModel {
   final Function(String, String) login;
@@ -14,7 +14,7 @@ class LoginViewModel {
       login: (String accessCode, String method) {
         store.dispatch(LoginAction(accessCode, method));
       },
-      isLoading: store.state.userState.isLoggedIn.isLoading,
+      isLoading: store.state.loginState.isLoggedIn.isLoading,
     );
   }
 }

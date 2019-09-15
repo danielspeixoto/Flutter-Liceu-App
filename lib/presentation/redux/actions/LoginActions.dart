@@ -1,3 +1,7 @@
+class CheckIfIsLoggedInAction {
+  CheckIfIsLoggedInAction();
+}
+
 class LoginAction {
   final String accessToken;
   final String method;

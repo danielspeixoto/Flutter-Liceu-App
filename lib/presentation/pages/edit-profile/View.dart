@@ -1,9 +1,8 @@
+import 'package:app/presentation/redux/app_state.dart';
 import 'package:app/presentation/widgets/LiceuPage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-
-import '../../../redux.dart';
 import 'ViewModel.dart';
 
 class EditProfilePage extends StatelessWidget {
