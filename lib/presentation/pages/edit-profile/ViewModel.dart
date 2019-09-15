@@ -1,44 +1,40 @@
-import 'package:app/domain/boundary/UserBoundary.dart';
-import 'package:app/presentation/navigator/NavigatorActions.dart';
-import 'package:app/presentation/reducers/Data.dart';
-import 'package:app/presentation/reducers/user/Presenter.dart';
 import 'package:redux/redux.dart';
 
 import '../../../redux.dart';
-import 'Reducer.dart';
+import 'Actions.dart';
 
 class EditProfileViewModel {
-  final Data<EditData> editData;
+  final bool isLoading;
+  final String bio;
+  final String instagram;
   final Function(String text) onBioTextChanged;
   final Function(String text) onInstagramTextChanged;
   final Function() save;
 
   EditProfileViewModel({
-    this.editData,
+    this.isLoading,
+    this.bio,
+    this.instagram,
     this.save,
     this.onBioTextChanged,
     this.onInstagramTextChanged,
   });
 
-  factory EditProfileViewModel.create(
-    Store<AppState> store,
-    ISetUserDescriptionUseCase setUserDescriptionUseCase,
-    ISetUserInstagramUseCase setUserInstagramUseCase,
-  ) {
-    final data = store.state.editProfilePageState.data;
+  factory EditProfileViewModel.create(Store<AppState> store) {
+    final state = store.state.editProfilePageState;
 
     return EditProfileViewModel(
-        editData: data,
+        isLoading: store.state.editProfilePageState.isLoading ||
+            store.state.userState.user.isLoading,
+        bio: state.bio,
+        instagram: state.instagram,
         save: () async {
-          try {
-            store.dispatch(SetLoadingEditPageAction(true));
-            await setUserDescriptionUseCase.run(data.content.bio);
-            await setUserInstagramUseCase.run(data.content.instagram);
-            store.dispatch(FetchMyInfoAction());
-            store.dispatch(NavigatePopAction());
-          } catch (e) {
-            print(e);
-          }
+          store.dispatch(
+            SubmitUserProfileChangesAction(
+              bio: state.bio,
+              instagram: state.instagram,
+            ),
+          );
         },
         onBioTextChanged: (text) {
           store.dispatch(SetUserEditFieldAction(bio: text));

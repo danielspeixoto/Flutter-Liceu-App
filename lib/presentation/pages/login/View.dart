@@ -4,7 +4,6 @@ import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
 
-import '../../../injection.dart';
 import '../../../redux.dart';
 import 'ViewModel.dart';
 
@@ -19,7 +18,7 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) =>
       StoreConnector<AppState, LoginViewModel>(
-          converter: (store) => LoginViewModel.create(store, loginUseCase),
+          converter: (store) => LoginViewModel.create(store),
           builder: (BuildContext context, LoginViewModel viewModel) {
             Widget child = CircularProgressIndicator();
             if (!viewModel.isLoading) {

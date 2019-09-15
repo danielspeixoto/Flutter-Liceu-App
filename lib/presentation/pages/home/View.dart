@@ -1,4 +1,4 @@
-import 'package:app/presentation/reducers/user/Presenter.dart';
+import 'package:app/presentation/redux/actions/UserActions.dart';
 import 'package:app/presentation/widgets/FetcherWidget.dart';
 import 'package:app/presentation/widgets/LiceuScaffold.dart';
 import 'package:app/presentation/widgets/PostWidget.dart';

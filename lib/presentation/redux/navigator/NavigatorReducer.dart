@@ -1,5 +1,6 @@
-import 'package:app/presentation/navigator/NavigatorActions.dart';
 import 'package:redux/redux.dart';
+
+import 'NavigatorActions.dart';
 
 final navigationReducer = combineReducers<List<String>>([
   TypedReducer<List<String>, NavigateReplaceAction>(_navigateReplace),

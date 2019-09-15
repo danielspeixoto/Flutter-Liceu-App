@@ -1,9 +1,7 @@
-import 'package:app/presentation/navigator/NavigatorMiddleware.dart';
-import 'package:app/presentation/navigator/NavigatorReducer.dart';
 import 'package:app/presentation/pages/edit-profile/Middleware.dart';
 import 'package:app/presentation/pages/edit-profile/Reducer.dart';
-import 'package:app/presentation/reducers/user/Presenter.dart';
-import 'package:app/presentation/reducers/user/Reducer.dart';
+import 'package:app/presentation/redux/navigator/NavigatorReducer.dart';
+import 'package:app/presentation/redux/reducers/UserReducer.dart';
 import 'package:redux_logging/redux_logging.dart';
 
 import 'injection.dart';

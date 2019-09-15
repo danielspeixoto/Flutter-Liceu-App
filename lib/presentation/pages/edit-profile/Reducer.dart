@@ -1,42 +1,29 @@
 import 'dart:math';
 
-import 'package:app/presentation/reducers/Data.dart';
+import 'package:app/presentation/redux/actions/UserActions.dart';
 import 'package:redux/redux.dart';
 
-class EditData {
-  final String bio;
-  final String instagram;
-
-  EditData({
-    this.bio = "",
-    this.instagram = "",
-  });
-
-  EditData copyWith({String bio, String instagram}) {
-    final state = EditData(
-      bio: bio ?? this.bio,
-      instagram: instagram ?? this.instagram,
-    );
-    return state;
-  }
-}
+import 'Actions.dart';
 
 class EditProfilePageState {
-  final Data<EditData> data;
+  final String bio;
+  final String instagram;
+  final bool isLoading;
 
-  EditProfilePageState({this.data});
+  EditProfilePageState({
+    this.bio = "",
+    this.instagram = "",
+    this.isLoading = true,
+  });
 
-  factory EditProfilePageState.initial() => EditProfilePageState(
-        data: Data(
-          content: EditData(),
-        ),
-      );
+  factory EditProfilePageState.initial() => EditProfilePageState();
 
-  EditProfilePageState copyWith({
-    Data<EditData> data,
-  }) {
+  EditProfilePageState copyWith(
+      {String bio, String instagram, bool isLoading}) {
     final state = EditProfilePageState(
-      data: data ?? this.data,
+      bio: bio ?? this.bio,
+      instagram: instagram ?? this.instagram,
+      isLoading: isLoading ?? this.isLoading,
     );
     return state;
   }
@@ -46,41 +33,41 @@ final Reducer<EditProfilePageState> editProfilePageReducer =
     combineReducers<EditProfilePageState>([
   TypedReducer<EditProfilePageState, SetUserEditFieldAction>(
       setUserEditFieldAction),
-  TypedReducer<EditProfilePageState, SetLoadingEditPageAction>(
+  TypedReducer<EditProfilePageState, SetUserAction>(
+      updateEditFieldsOnUserUpdate),
+  TypedReducer<EditProfilePageState, SubmitUserProfileChangesAction>(
       setLoadingEditPage),
 ]);
 
-class SetUserEditFieldAction {
-  final String bio;
-  final String instagram;
+String _limitBioSize(String bio) {
+  return bio == null ? null : bio.substring(0, min(300, bio.length));
+}
 
-  SetUserEditFieldAction({this.bio, this.instagram});
+String _limitInstagramSize(String instagram) {
+  return instagram == null
+      ? null
+      : instagram.substring(0, min(60, instagram.length));
 }
 
 EditProfilePageState setUserEditFieldAction(
     EditProfilePageState state, SetUserEditFieldAction action) {
-  final bio = action.bio == null
-      ? null
-      : action.bio.substring(0, min(300, action.bio.length));
-  final instagram = action.instagram == null
-      ? null
-      : action.instagram.substring(0, min(300, action.instagram.length));
-
-  return EditProfilePageState(
-    data: state.data.copyWith(
-      content: state.data.content.copyWith(bio: bio, instagram: instagram),
-    ),
+  return state.copyWith(
+    bio: _limitBioSize(action.bio),
+    instagram: _limitInstagramSize(action.instagram),
   );
 }
 
-class SetLoadingEditPageAction {
-  final bool isLoading;
-
-  SetLoadingEditPageAction(this.isLoading);
+EditProfilePageState updateEditFieldsOnUserUpdate(
+    EditProfilePageState state, SetUserAction action) {
+  return state.copyWith(
+    bio: _limitBioSize(action.user.bio),
+    instagram: _limitInstagramSize(action.user.instagramProfile),
+  );
 }
 
 EditProfilePageState setLoadingEditPage(
-    EditProfilePageState state, SetLoadingEditPageAction action) {
-  return EditProfilePageState(
-      data: state.data.copyWith(isLoading: action.isLoading));
+    EditProfilePageState state, SubmitUserProfileChangesAction action) {
+  return state.copyWith(
+    isLoading: true,
+  );
 }

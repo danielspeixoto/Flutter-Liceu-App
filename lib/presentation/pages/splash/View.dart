@@ -1,8 +1,7 @@
-import 'package:app/presentation/reducers/user/Presenter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-
 import '../../../redux.dart';
+import 'Actions.dart';
 import 'ViewModel.dart';
 
 class SplashPage extends StatelessWidget {

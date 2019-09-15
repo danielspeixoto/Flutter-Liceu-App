@@ -1,10 +1,10 @@
 import 'package:app/domain/aggregates/Post.dart';
 import 'package:app/domain/aggregates/User.dart';
-import 'package:app/presentation/navigator/NavigatorActions.dart';
-import 'package:app/presentation/reducers/Data.dart';
-import 'package:app/presentation/reducers/user/Presenter.dart';
+import 'package:app/presentation/redux/actions/UserActions.dart';
+import 'package:app/presentation/pages/login/Actions.dart';
+import 'package:app/presentation/redux/navigator/NavigatorActions.dart';
+import 'package:app/presentation/redux/reducers/Data.dart';
 import 'package:redux/redux.dart';
-
 import '../../../main.dart';
 import '../../../redux.dart';
 
@@ -15,12 +15,14 @@ class HomeViewModel {
   final Function() onEditProfileButtonPressed;
   final Function() onLogoutPressed;
   final Function() refresh;
+  final Function(String postId) onDeletePostPressed;
 
   HomeViewModel({
     this.user,
     this.onCreateButtonPressed,
     this.onEditProfileButtonPressed,
     this.onLogoutPressed,
+    this.onDeletePostPressed,
     this.posts,
     this.refresh,
   });
@@ -28,19 +30,23 @@ class HomeViewModel {
   factory HomeViewModel.create(Store<AppState> store) {
     final userState = store.state.userState;
     return HomeViewModel(
-        user: userState.user,
-        posts: userState.posts,
-        onCreateButtonPressed: () =>
-            store.dispatch(NavigatePushAction(AppRoutes.createPost)),
-        refresh: () {
-          store.dispatch(FetchMyInfoAction());
-          store.dispatch(FetchMyPostsAction());
-        },
-        onEditProfileButtonPressed: () {
-          store.dispatch(NavigatePushAction(AppRoutes.editProfile));
-        },
-        onLogoutPressed: () {
-          store.dispatch(LogoutAction());
-        });
+      user: userState.user,
+      posts: userState.posts,
+      onCreateButtonPressed: () =>
+          store.dispatch(NavigatePushAction(AppRoutes.createPost)),
+      refresh: () {
+        store.dispatch(FetchMyInfoAction());
+        store.dispatch(FetchMyPostsAction());
+      },
+      onEditProfileButtonPressed: () {
+        store.dispatch(NavigatePushAction(AppRoutes.editProfile));
+      },
+      onLogoutPressed: () {
+        store.dispatch(LogOutAction());
+      },
+      onDeletePostPressed: (String postId) {
+
+      },
+    );
   }
 }

@@ -3,41 +3,31 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import '../../../injection.dart';
 import '../../../redux.dart';
-import 'Middleware.dart';
 import 'ViewModel.dart';
 
 class EditProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) =>
       StoreConnector<AppState, EditProfileViewModel>(
-          onInit: (store) {
-            store.dispatch(FillUserFieldsInEditPageAction());
-          },
-          converter: (store) => EditProfileViewModel.create(
-                store,
-                setUserDescriptionUseCase,
-                setUserInstagramUseCase,
-              ),
+          converter: (store) => EditProfileViewModel.create(store),
           builder: (BuildContext context, EditProfileViewModel viewModel) {
-            final content = viewModel.editData.content;
 //            Bio Controller
             final TextEditingController bioTextController =
                 TextEditingController(
-              text: content.bio,
+              text: viewModel.bio,
             );
             bioTextController.selection = TextSelection.fromPosition(
-              TextPosition(offset: content.bio.length),
+              TextPosition(offset: viewModel.bio.length),
             );
 // Instagram
             final TextEditingController instagramTextController =
                 TextEditingController(
-              text: content.instagram,
+              text: viewModel.instagram,
             );
             instagramTextController.selection = TextSelection.fromPosition(
               TextPosition(
-                offset: content.instagram.length,
+                offset: viewModel.instagram.length,
               ),
             );
             return LiceuPage(
@@ -77,7 +67,7 @@ class EditProfilePage extends StatelessWidget {
                         ),
                         Container(
                           margin: EdgeInsets.all(4),
-                          child: Text(content.bio.length.toString() + "/300"),
+                          child: Text(viewModel.bio.length.toString() + "/300"),
                         ),
                         TextField(
                           controller: instagramTextController,

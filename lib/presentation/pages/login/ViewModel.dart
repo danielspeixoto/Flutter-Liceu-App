@@ -1,10 +1,6 @@
-import 'package:app/domain/boundary/LoginBoundary.dart';
-import 'package:app/presentation/navigator/NavigatorActions.dart';
-import 'package:app/presentation/reducers/user/Reducer.dart';
 import 'package:redux/redux.dart';
-
-import '../../../main.dart';
 import '../../../redux.dart';
+import 'Actions.dart';
 
 class LoginViewModel {
   final Function(String, String) login;
@@ -13,18 +9,10 @@ class LoginViewModel {
   LoginViewModel({this.login, this.isLoading});
 
   factory LoginViewModel.create(
-      Store<AppState> store, ILoginUseCase loginUseCase) {
+      Store<AppState> store) {
     return LoginViewModel(
       login: (String accessCode, String method) {
-        store.dispatch(IsLoggingInAction());
-        loginUseCase.run(accessCode, method).then((_) {
-          store.dispatch(LoginSuccessAction());
-          store.dispatch(NavigateReplaceAction(AppRoutes.home));
-        }).catchError(
-          (e) {
-            print(e);
-          },
-        );
+        store.dispatch(LoginAction(accessCode, method));
       },
       isLoading: store.state.userState.isLoggedIn.isLoading,
     );

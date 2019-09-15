@@ -1,26 +1,24 @@
 import 'package:app/domain/aggregates/Post.dart';
-import 'package:app/domain/boundary/PostBoundary.dart';
-import 'package:app/presentation/navigator/NavigatorActions.dart';
-import 'package:app/presentation/reducers/user/Presenter.dart';
 import 'package:redux/redux.dart';
 
 import '../../../redux.dart';
+import 'Actions.dart';
 
 class CreatePostViewModel {
   final Function(String) onPostSubmitted;
 
   CreatePostViewModel({this.onPostSubmitted});
 
-  factory CreatePostViewModel.create(
-      Store<AppState> store, ICreatePostUseCase createPostUseCase) {
-    return CreatePostViewModel(onPostSubmitted: (text) async {
-      try {
-        await createPostUseCase.run(PostType.TEXT, text);
-        store.dispatch(FetchMyPostsAction());
-        store.dispatch(NavigatePopAction());
-      } catch (e) {
-        print(e);
-      }
-    });
+  factory CreatePostViewModel.create(Store<AppState> store) {
+    return CreatePostViewModel(
+      onPostSubmitted: (text) async {
+        store.dispatch(
+          CreatePostAction(
+            PostType.TEXT,
+            text,
+          ),
+        );
+      },
+    );
   }
 }
