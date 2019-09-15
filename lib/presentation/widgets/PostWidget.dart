@@ -29,10 +29,13 @@ class PostWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Card(
         shape: RoundedRectangleBorder(
-            side: BorderSide(
-              width: 0.1,
-            ),
-            borderRadius: BorderRadius.all(Radius.circular(4))),
+          side: BorderSide(
+            width: 0.1,
+          ),
+          borderRadius: BorderRadius.all(
+            Radius.circular(4),
+          ),
+        ),
         elevation: 0,
         child: Column(
           children: <Widget>[

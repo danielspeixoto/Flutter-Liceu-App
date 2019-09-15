@@ -25,6 +25,16 @@ class LiceuScaffold extends StatelessWidget {
         ).build(context),
         body: this.body,
         endDrawer: drawer,
+
+
+
+
+
+
+
+
+
+
 //        bottomNavigationBar: new Container(
 //          color: Colors.white,
 //          height: 50,
