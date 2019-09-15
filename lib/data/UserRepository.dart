@@ -115,4 +115,21 @@ class UserRepository implements IUserRepository {
     }
     throw handleNetworkException(response.statusCode);
   }
+
+  @override
+  Future<void> setInstagram(
+      String accessToken, String id, String instagram) async {
+    final response =
+    await http.put(_url + "/" + id + "/instagram", headers: {
+      apiKeyHeader: _apiKey,
+      contentTypeHeader: contentTypeValueForJson,
+      authHeader: accessToken
+    }, body: json.encode({
+      "instagramProfile": instagram
+    }));
+    if (response.statusCode == 200) {
+      return;
+    }
+    throw handleNetworkException(response.statusCode);
+  }
 }

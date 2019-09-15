@@ -19,7 +19,9 @@ User fromMapToUser(data) {
       data["id"],
       data["name"],
       data["picture"]["url"],
-      data["description"]);
+      data["description"],
+      data["instagramProfile"],
+  );
 }
 
 Challenge fromJsonToChallenge(String content) {

@@ -24,6 +24,7 @@ class UserPresenter extends MiddlewareClass<AppState> {
         store.dispatch(SetUserAction(user));
       }).catchError((e) {
         print(e);
+        store.dispatch(FetchingUserErrorAction());
       });
     } else if (action is CheckIfIsLoggedInAction) {
       store.dispatch(IsLoggingInAction());
@@ -37,12 +38,15 @@ class UserPresenter extends MiddlewareClass<AppState> {
         }
       }).catchError((e) {
         print(e);
+        store.dispatch(LoginFailedAction());
+        store.dispatch(NavigateReplaceAction(AppRoutes.login));
       });
     } else if (action is FetchMyPostsAction) {
       this._myPostsUseCase.run().then((posts) {
         store.dispatch(SetUserPostsAction(posts));
       }).catchError((e) {
         print(e);
+        store.dispatch(FetchingMyPostsErrorAction());
       });
     }
     next(action);

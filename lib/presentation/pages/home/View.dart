@@ -7,8 +7,10 @@ import 'package:app/presentation/widgets/TextWithLinks.dart';
 import 'package:flutter/material.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../../../redux.dart';
 import 'ViewModel.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class TabData {
   final IconData icon;
@@ -33,7 +35,7 @@ class HomePage extends StatelessWidget {
           leading: FlatButton(
             onPressed: viewModel.onCreateButtonPressed,
             child: new Icon(
-              Icons.create,
+              FontAwesomeIcons.edit,
             ),
           ),
           body: SmartRefresher(
@@ -55,7 +57,9 @@ class HomePage extends StatelessWidget {
                             Row(
                               children: <Widget>[
                                 RoundedImage(
-                                    pictureURL: user.picURL, size: 80.0,),
+                                  pictureURL: user.picURL,
+                                  size: 80.0,
+                                ),
                                 Expanded(
                                   child: Column(
                                     children: <Widget>[
@@ -70,11 +74,14 @@ class HomePage extends StatelessWidget {
                                         margin: EdgeInsets.all(8),
                                       ),
                                       RaisedButton(
-                                        onPressed: viewModel.onEditProfileButtonPressed,
+                                        onPressed: viewModel
+                                            .onEditProfileButtonPressed,
                                         color: Colors.white,
                                         child: Text(
                                           "Editar Perfil",
-                                          style: TextStyle(fontSize: 12,),
+                                          style: TextStyle(
+                                            fontSize: 12,
+                                          ),
                                         ),
                                       )
                                     ],
@@ -82,12 +89,42 @@ class HomePage extends StatelessWidget {
                                 ),
                               ],
                             ),
+                            user.instagramProfile != null
+                                ? Container(
+                                    child: FlatButton(
+                                      onPressed: () {
+                                        launch("https://www.instagram.com/" +
+                                            user.instagramProfile);
+                                      },
+                                      child: Row(
+                                        children: <Widget>[
+                                          Container(
+                                            child: Icon(
+                                              FontAwesomeIcons.instagram,
+                                              size: 18,
+                                            ),
+                                            margin: EdgeInsets.only(right: 8),
+                                          ),
+                                          Center(
+                                            child: Text(
+                                              user.instagramProfile,
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  )
+                                : Container(),
                             user.bio != null
                                 ? Container(
+                                    width: double.infinity,
                                     child: TextWithLinks(
                                       text: user.bio,
                                     ),
-                                    margin: const EdgeInsets.symmetric(horizontal: 16.0),
+                                    margin: const EdgeInsets.symmetric(
+                                        horizontal: 8.0),
                                   )
                                 : Container(),
                           ],
@@ -96,8 +133,8 @@ class HomePage extends StatelessWidget {
                     ),
                     Divider(
                       color: Colors.black54,
-                      indent: 16,
-                      endIndent: 16,
+                      indent: 32,
+                      endIndent: 32,
                     ),
                     FetcherWidget(
                       isLoading:

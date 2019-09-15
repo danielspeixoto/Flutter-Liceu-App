@@ -69,7 +69,7 @@ class LoginPage extends StatelessWidget {
                   child: Center(
                     child: child
                   ),
-                  color: Theme.of(context).primaryColor,
+                  color: new Color(0xFF0061A1),
                   padding: EdgeInsets.all(8),
                 ),
               );

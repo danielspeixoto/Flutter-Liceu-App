@@ -5,14 +5,17 @@ import 'package:redux/redux.dart';
 
 class EditData {
   final String bio;
+  final String instagram;
 
-  EditData({this.bio=""});
+  EditData({
+    this.bio = "",
+    this.instagram = "",
+  });
 
-  EditData copyWith({
-    String bio,
-  }) {
+  EditData copyWith({String bio, String instagram}) {
     final state = EditData(
       bio: bio ?? this.bio,
+      instagram: instagram ?? this.instagram,
     );
     return state;
   }
@@ -49,20 +52,22 @@ final Reducer<EditProfilePageState> editProfilePageReducer =
 
 class SetUserEditFieldAction {
   final String bio;
+  final String instagram;
 
-  SetUserEditFieldAction({this.bio});
+  SetUserEditFieldAction({this.bio, this.instagram});
 }
 
 EditProfilePageState setUserEditFieldAction(
     EditProfilePageState state, SetUserEditFieldAction action) {
-
-  final bio = action.bio.substring(0, min(300, action.bio.length));
+  final bio = action.bio == null
+      ? null : action.bio.substring(0, min(300, action.bio.length));
+  final instagram = action.instagram == null
+      ? null
+      : action.instagram.substring(0, min(300, action.instagram.length));
 
   return EditProfilePageState(
     data: state.data.copyWith(
-      content: state.data.content.copyWith(
-        bio: bio,
-      ),
+      content: state.data.content.copyWith(bio: bio, instagram: instagram),
     ),
   );
 }

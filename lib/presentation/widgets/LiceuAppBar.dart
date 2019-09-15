@@ -14,8 +14,9 @@ class LiceuAppBar {
   final Widget leading;
   final List<Widget> actions;
   final String title;
+  final String fontFamily;
 
-  LiceuAppBar({this.leading, this.actions, this.title = "Liceu"});
+  LiceuAppBar({this.leading, this.actions, this.title = "Liceu", this.fontFamily="LobsterTwo"});
 
   AppBar build(BuildContext context) => AppBar(
         backgroundColor: Colors.white,
@@ -30,8 +31,8 @@ class LiceuAppBar {
           title,
           style: TextStyle(
               color: Colors.black,
-              fontFamily: "LobsterTwo",
-              fontSize: 28,
+              fontFamily: this.fontFamily,
+              fontSize: 24,
               fontWeight: FontWeight.bold),
         ),
       );

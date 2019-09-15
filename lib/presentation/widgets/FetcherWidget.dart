@@ -16,13 +16,20 @@ class FetcherWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return isLoading ?
-        Container(
-          child: Center(
-            child: CircularProgressIndicator(),
-          ),
-          margin: EdgeInsets.all(16),
-        )
-        : errorMessage != "" ? Text(errorMessage) : this.child();
+    return isLoading
+        ? Container(
+            child: Center(
+              child: CircularProgressIndicator(),
+            ),
+            margin: EdgeInsets.all(16),
+          )
+        : errorMessage != ""
+            ? Container(
+                child: Center(
+                  child: Text(errorMessage),
+                ),
+                margin: EdgeInsets.all(16),
+              )
+            : this.child();
   }
 }

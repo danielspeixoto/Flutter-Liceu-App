@@ -4,6 +4,7 @@ class User {
   final String name;
   final String picURL;
   final String bio;
+  final String instagramProfile;
 
-  User(this.id, this.name, this.picURL, this.bio);
+  User(this.id, this.name, this.picURL, this.bio, this.instagramProfile);
 }

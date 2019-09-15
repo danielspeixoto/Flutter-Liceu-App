@@ -4,11 +4,20 @@ import 'package:app/domain/aggregates/User.dart';
 
 abstract class IUserRepository {
   Future<User> id(String accessToken, String id);
-  Future<void> setDescription(String accessToken, String id, String description);
+
+  Future<void> setDescription(
+      String accessToken, String id, String description);
+
+  Future<void> setInstagram(String accessToken, String id, String instagram);
+
   Future<List<User>> search(String accessToken, String query, int amount);
+
   Future<void> follow(String accessToken, String producerId);
+
   Future<void> unfollow(String accessToken, String producerId);
+
   Future<List<Post>> posts(String accessToken, String userId);
+
   Future<List<Challenge>> challenges(String accessToken, String userId);
 }
 
@@ -22,6 +31,10 @@ abstract class IIsLoggedInUseCase {
 
 abstract class ISetUserDescriptionUseCase {
   Future<void> run(String description);
+}
+
+abstract class ISetUserInstagramUseCase {
+  Future<void> run(String instagram);
 }
 
 abstract class ISearchForUserUseCase {
@@ -39,4 +52,3 @@ abstract class IMyPostsUseCase {
 abstract class IGetUserChallengesUseCase {
   Future<List<Challenge>> run(String userId);
 }
-
