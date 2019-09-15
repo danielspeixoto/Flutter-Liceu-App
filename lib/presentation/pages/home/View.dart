@@ -24,166 +24,170 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => StoreConnector<AppState, HomeViewModel>(
-      onInit: (store) {
-        store.dispatch(FetchMyInfoAction());
-        store.dispatch(FetchMyPostsAction());
-      },
-      converter: (store) => HomeViewModel.create(store),
-      builder: (BuildContext context, HomeViewModel viewModel) {
-        final user = viewModel.user.content;
-        return LiceuScaffold(
-          drawer: Drawer(
-            child: ListView(
-              children: <Widget>[
-                Container(
-                  child: FlatButton(
-                    padding: EdgeInsets.all(16),
-                    onPressed: () {
-                      launch("https://www.instagram.com/liceu.co");
-                    },
-                    child: Column(
-                      children: <Widget>[
-                        Icon(FontAwesomeIcons.instagram),
-                        Text("@liceu.co")
-                      ],
+        onInit: (store) {
+          store.dispatch(FetchMyInfoAction());
+          store.dispatch(FetchMyPostsAction());
+        },
+        converter: (store) => HomeViewModel.create(store),
+        builder: (BuildContext context, HomeViewModel viewModel) {
+          final user = viewModel.user.content;
+          return LiceuScaffold(
+            drawer: Drawer(
+              child: ListView(
+                children: <Widget>[
+                  Container(
+                    child: FlatButton(
+                      padding: EdgeInsets.all(16),
+                      onPressed: () {
+                        launch("https://www.instagram.com/liceu.co");
+                      },
+                      child: Column(
+                        children: <Widget>[
+                          Icon(FontAwesomeIcons.instagram),
+                          Text("@liceu.co")
+                        ],
+                      ),
                     ),
                   ),
-                ),
-                ListTile(
-                  title: Text('Editar Perfil'),
-                  onTap: viewModel.onEditProfileButtonPressed,
-                ),
-                ListTile(
-                  title: Text('Sair desta conta'),
-                  onTap: viewModel.onLogoutPressed,
-                ),
-              ],
+                  ListTile(
+                    title: Text('Editar Perfil'),
+                    onTap: viewModel.onEditProfileButtonPressed,
+                  ),
+                  ListTile(
+                    title: Text('Sair desta conta'),
+                    onTap: viewModel.onLogoutPressed,
+                  ),
+                ],
+              ),
             ),
-          ),
-          selectedIdx: 0,
-          leading: FlatButton(
-            onPressed: viewModel.onCreateButtonPressed,
-            child: new Icon(
-              FontAwesomeIcons.edit,
+            selectedIdx: 0,
+            leading: FlatButton(
+              onPressed: viewModel.onCreateButtonPressed,
+              child: new Icon(
+                FontAwesomeIcons.edit,
+              ),
             ),
-          ),
-          body: SmartRefresher(
-            onRefresh: () async {
-              viewModel.refresh();
-              _refreshController.refreshCompleted();
-            },
-            controller: _refreshController,
-            child: SingleChildScrollView(
-              child: Container(
-                child: Column(
-                  children: <Widget>[
-                    FetcherWidget(
-                      isLoading: viewModel.user.isLoading,
-                      errorMessage: viewModel.user.errorMessage,
-                      child: () => Container(
-                        child: Column(
-                          children: <Widget>[
-                            Row(
-                              children: <Widget>[
-                                RoundedImage(
+            body: SmartRefresher(
+              onRefresh: () async {
+                viewModel.refresh();
+                _refreshController.refreshCompleted();
+              },
+              controller: _refreshController,
+              child: ListView(
+                children: <Widget>[
+                  FetcherWidget(
+                    isLoading: viewModel.user.isLoading,
+                    errorMessage: viewModel.user.errorMessage,
+                    child: () => Container(
+                      child: Column(
+                        children: <Widget>[
+                          Row(
+                            children: <Widget>[
+                              Container(
+                                child: RoundedImage(
                                   pictureURL: user.picURL,
                                   size: 80.0,
                                 ),
-                                Expanded(
-                                  child: Column(
-                                    children: <Widget>[
-                                      Container(
-                                        child: Text(
-                                          user.name,
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 16,
-                                          ),
-                                        ),
-                                        margin: EdgeInsets.all(8),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                            user.instagramProfile != null
-                                ? Container(
-                                    child: FlatButton(
-                                      onPressed: () {
-                                        launch("https://www.instagram.com/" +
-                                            user.instagramProfile);
-                                      },
-                                      child: Row(
-                                        children: <Widget>[
-                                          Container(
-                                            child: Icon(
-                                              FontAwesomeIcons.instagram,
-                                              size: 18,
-                                            ),
-                                            margin: EdgeInsets.only(right: 8),
-                                          ),
-                                          Center(
-                                            child: Text(
-                                              user.instagramProfile,
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.bold),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  )
-                                : Container(),
-                            user.bio != null
-                                ? Container(
-                                    width: double.infinity,
-                                    child: TextWithLinks(
-                                      text: user.bio,
-                                    ),
-                                    margin: const EdgeInsets.symmetric(
-                                        horizontal: 8.0),
-                                  )
-                                : Container(),
-                          ],
-                        ),
-                      ),
-                    ),
-                    Divider(
-                      color: Colors.black54,
-                      indent: 32,
-                      endIndent: 32,
-                    ),
-                    FetcherWidget(
-                      isLoading:
-                          viewModel.posts.isLoading || viewModel.user.isLoading,
-                      errorMessage: viewModel.posts.errorMessage,
-                      child: () => Container(
-                        child: viewModel.posts.content.length == 0
-                            ? Container(
-                                margin: EdgeInsets.all(16),
+                                margin: EdgeInsets.all(8),
+                              ),
+                              Expanded(
                                 child: Column(
                                   children: <Widget>[
-                                    Text("Você ainda não tem nenhuma postagem"),
+                                    Container(
+                                      child: Text(
+                                        user.name,
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 16,
+                                        ),
+                                      ),
+                                      margin: EdgeInsets.all(8),
+                                    ),
                                   ],
                                 ),
-                              )
-                            : Column(
-                                children: viewModel.posts.content
-                                    .map((post) => PostWidget(
-                                          user.name,
-                                          user.picURL,
-                                          post.text,
-                                        ))
-                                    .toList(),
                               ),
+                            ],
+                          ),
+                          user.instagramProfile != null
+                              ? Container(
+                                  child: FlatButton(
+                                    onPressed: () {
+                                      launch("https://www.instagram.com/" +
+                                          user.instagramProfile);
+                                    },
+                                    child: Row(
+                                      children: <Widget>[
+                                        Container(
+                                          child: Icon(
+                                            FontAwesomeIcons.instagram,
+                                            size: 18,
+                                          ),
+                                          margin: EdgeInsets.only(right: 8),
+                                        ),
+                                        Center(
+                                          child: Text(
+                                            user.instagramProfile,
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                )
+                              : Container(),
+                          user.bio != null
+                              ? Container(
+                                  width: double.infinity,
+                                  child: TextWithLinks(
+                                    text: user.bio,
+                                  ),
+                                  margin: const EdgeInsets.symmetric(
+                                      horizontal: 8.0),
+                                )
+                              : Container(),
+                        ],
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                  Divider(
+                    color: Colors.black54,
+                    indent: 32,
+                    endIndent: 32,
+                  ),
+                  FetcherWidget(
+                    isLoading:
+                        viewModel.posts.isLoading || viewModel.user.isLoading,
+                    errorMessage: viewModel.posts.errorMessage,
+                    child: () => Container(
+                      child: viewModel.posts.content.length == 0
+                          ? Container(
+                              margin: EdgeInsets.all(16),
+                              child: Column(
+                                children: <Widget>[
+                                  Text("Você ainda não tem nenhuma postagem"),
+                                ],
+                              ),
+                            )
+                          : Column(
+                              children: viewModel.posts.content
+                                  .map(
+                                    (post) => PostWidget(
+                                      userName: user.name,
+                                      userPic: user.picURL,
+                                      postContent: post.text,
+                                      onSharePressed: () {},
+                                      onDeletePressed: () {},
+                                    ),
+                                  )
+                                  .toList(),
+                            ),
+                    ),
+                  ),
+                ],
               ),
             ),
-          ),
-        );
-      });
+          );
+        },
+      );
 }

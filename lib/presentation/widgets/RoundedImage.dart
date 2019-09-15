@@ -20,6 +20,5 @@ class RoundedImage extends StatelessWidget {
           image: new DecorationImage(
               fit: BoxFit.fill, image: new NetworkImage(this.pictureURL)),
         ),
-        margin: const EdgeInsets.all(16.0),
       );
 }
