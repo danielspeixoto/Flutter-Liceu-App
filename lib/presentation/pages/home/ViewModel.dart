@@ -6,7 +6,9 @@ import 'package:app/presentation/redux/actions/UserActions.dart';
 import 'package:app/presentation/redux/app_state.dart';
 import 'package:app/presentation/redux/navigator/NavigatorActions.dart';
 import 'package:app/presentation/redux/reducers/Data.dart';
+import 'package:app/presentation/util/text.dart';
 import 'package:redux/redux.dart';
+import 'package:share/share.dart';
 
 import '../../app.dart';
 
@@ -18,6 +20,7 @@ class HomeViewModel {
   final Function() onLogoutPressed;
   final Function() refresh;
   final Function(String postId) onDeletePostPressed;
+  final Function(String text) onSharePostPressed;
 
   HomeViewModel({
     this.user,
@@ -25,6 +28,7 @@ class HomeViewModel {
     this.onEditProfileButtonPressed,
     this.onLogoutPressed,
     this.onDeletePostPressed,
+    this.onSharePostPressed,
     this.posts,
     this.refresh,
   });
@@ -48,6 +52,10 @@ class HomeViewModel {
       },
       onDeletePostPressed: (String postId) {
         store.dispatch(DeletePostAction(postId));
+      },
+      onSharePostPressed: (String text) {
+        Share.share(summarize(text, 200) +
+            "\n\nConfira mais no nosso app!\nhttps://bit.ly/BaixarLiceu");
       },
     );
   }

@@ -176,7 +176,9 @@ class HomePage extends StatelessWidget {
                                       userName: user.name,
                                       userPic: user.picURL,
                                       postContent: post.text,
-                                      onSharePressed: () {},
+                                      onSharePressed: () {
+                                        viewModel.onSharePostPressed(post.text);
+                                      },
                                       onDeletePressed: () => viewModel
                                           .onDeletePostPressed(post.id),
                                     ),

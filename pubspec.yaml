@@ -37,6 +37,7 @@ dependencies:
   pull_to_refresh: ^1.5.6
   flutter_dotenv: ^2.0.2
   font_awesome_flutter: ^8.5.0
+  share: ^0.6.2+1
 
 
 dev_dependencies:
