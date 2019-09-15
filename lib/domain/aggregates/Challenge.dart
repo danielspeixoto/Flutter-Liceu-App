@@ -17,6 +17,6 @@ class Trivia {
   final String wrongAnswer;
   final List<String> tags;
 
-  Trivia(this.authorId, this.question, this.correctAnswer,
-      this.wrongAnswer, this.tags);
+  Trivia(this.authorId, this.question, this.correctAnswer, this.wrongAnswer,
+      this.tags);
 }

@@ -3,7 +3,6 @@ import 'package:app/domain/boundary/ChallengeBoundary.dart';
 import 'package:app/domain/boundary/LocalBoundary.dart';
 
 class GetChallengeUseCase implements IGetChallengeUseCase {
-
   final IChallengeRepository _challengeRepository;
   final ILocalRepository _localRepository;
 
@@ -15,5 +14,4 @@ class GetChallengeUseCase implements IGetChallengeUseCase {
     final challenge = await _challengeRepository.get(cred);
     return challenge;
   }
-
 }

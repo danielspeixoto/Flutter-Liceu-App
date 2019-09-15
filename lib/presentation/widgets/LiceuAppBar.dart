@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/diagnostics.dart';
-import 'package:flutter_redux/flutter_redux.dart';
 
 class TabData {
   final IconData icon;
@@ -16,7 +14,11 @@ class LiceuAppBar {
   final String title;
   final String fontFamily;
 
-  LiceuAppBar({this.leading, this.actions, this.title = "Liceu", this.fontFamily="LobsterTwo"});
+  LiceuAppBar(
+      {this.leading,
+      this.actions,
+      this.title = "Liceu",
+      this.fontFamily = "LobsterTwo"});
 
   AppBar build(BuildContext context) => AppBar(
         backgroundColor: Colors.white,

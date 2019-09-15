@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+
 import '../../../redux.dart';
 import 'ViewModel.dart';
-
 
 class GenericPage extends StatelessWidget {
   @override
@@ -10,6 +10,6 @@ class GenericPage extends StatelessWidget {
       StoreConnector<AppState, GenericViewModel>(
           converter: (store) => GenericViewModel.create(store),
           builder: (BuildContext context, GenericViewModel viewModel) {
-              return Text("generic");
+            return Text("generic");
           });
 }

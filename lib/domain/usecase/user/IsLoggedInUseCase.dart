@@ -2,7 +2,6 @@ import 'package:app/domain/boundary/LocalBoundary.dart';
 import 'package:app/domain/boundary/UserBoundary.dart';
 
 class IsLoggedInUseCase implements IIsLoggedInUseCase {
-
   final ILocalRepository _localRepository;
 
   IsLoggedInUseCase(this._localRepository);

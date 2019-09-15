@@ -16,11 +16,11 @@ List<User> fromJsonToListOfUsers(String content) {
 
 User fromMapToUser(data) {
   return User(
-      data["id"],
-      data["name"],
-      data["picture"]["url"],
-      data["description"],
-      data["instagramProfile"],
+    data["id"],
+    data["name"],
+    data["picture"]["url"],
+    data["description"],
+    data["instagramProfile"],
   );
 }
 
@@ -41,8 +41,7 @@ Challenge fromMapToChallenge(data) {
       data["challenged"],
       data["scoreChallenged"],
       data["scoreChallenger"],
-      data["triviaQuestionsUsed"].map((d) => fromMapToTrivia(d))
-  );
+      data["triviaQuestionsUsed"].map((d) => fromMapToTrivia(d)));
 }
 
 Trivia fromMapToTrivia(data) {

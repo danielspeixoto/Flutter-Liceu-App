@@ -1,11 +1,11 @@
-import 'package:app/domain/exceptions/ItemNotFoundException.dart';
-import 'package:app/domain/exceptions/NotLoggedInException.dart';
-import 'package:app/domain/boundary/LocalBoundary.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'dart:convert';
 
-class LocalRepository implements ILocalRepository {
+import 'package:app/domain/boundary/LocalBoundary.dart';
+import 'package:app/domain/exceptions/ItemNotFoundException.dart';
+import 'package:app/domain/exceptions/NotLoggedInException.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
+class LocalRepository implements ILocalRepository {
   final FlutterSecureStorage _storage = new FlutterSecureStorage();
   static const String TOKEN_KEY = "token";
   String credentials = "";
@@ -14,16 +14,23 @@ class LocalRepository implements ILocalRepository {
   LocalRepository();
 
   @override
+  // ignore: missing_return
   Future<void> saveCredentials(String credentials) {
     _storage.write(key: TOKEN_KEY, value: credentials);
   }
 
   @override
+  // ignore: missing_return
+  Future<void> logOut() {
+    _storage.delete(key: TOKEN_KEY);
+  }
+
+  @override
   Future<bool> isLoggedIn() async {
-    if(credentials == "") {
+    if (credentials == "") {
       try {
         await getCredentials();
-      } catch(e) {
+      } catch (e) {
         print(e);
         return false;
       }
@@ -33,10 +40,10 @@ class LocalRepository implements ILocalRepository {
 
   @override
   Future<String> getId() async {
-    if(id != "") {
+    if (id != "") {
       return id;
     }
-    if(credentials == "") {
+    if (credentials == "") {
       throw NotLoggedInException();
     }
     final payload = parseJwt(credentials);
@@ -46,11 +53,11 @@ class LocalRepository implements ILocalRepository {
 
   @override
   Future<String> getCredentials() async {
-    if(credentials != "") {
+    if (credentials != "") {
       return credentials;
     }
     var cred = await _storage.read(key: TOKEN_KEY);
-    if(cred == null) {
+    if (cred == null) {
       throw ItemNotFoundException();
     }
     credentials = cred;

@@ -5,12 +5,13 @@ import 'package:app/presentation/widgets/PostWidget.dart';
 import 'package:app/presentation/widgets/RoundedImage.dart';
 import 'package:app/presentation/widgets/TextWithLinks.dart';
 import 'package:flutter/material.dart';
-import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:url_launcher/url_launcher.dart';
+
 import '../../../redux.dart';
 import 'ViewModel.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class TabData {
   final IconData icon;
@@ -31,6 +32,34 @@ class HomePage extends StatelessWidget {
       builder: (BuildContext context, HomeViewModel viewModel) {
         final user = viewModel.user.content;
         return LiceuScaffold(
+          drawer: Drawer(
+            child: ListView(
+              children: <Widget>[
+                Container(
+                  child: FlatButton(
+                    padding: EdgeInsets.all(16),
+                    onPressed: () {
+                      launch("https://www.instagram.com/liceu.co");
+                    },
+                    child: Column(
+                      children: <Widget>[
+                        Icon(FontAwesomeIcons.instagram),
+                        Text("@liceu.co")
+                      ],
+                    ),
+                  ),
+                ),
+                ListTile(
+                  title: Text('Editar Perfil'),
+                  onTap: viewModel.onEditProfileButtonPressed,
+                ),
+                ListTile(
+                  title: Text('Sair desta conta'),
+                  onTap: viewModel.onLogoutPressed,
+                ),
+              ],
+            ),
+          ),
           selectedIdx: 0,
           leading: FlatButton(
             onPressed: viewModel.onCreateButtonPressed,
@@ -73,17 +102,6 @@ class HomePage extends StatelessWidget {
                                         ),
                                         margin: EdgeInsets.all(8),
                                       ),
-                                      RaisedButton(
-                                        onPressed: viewModel
-                                            .onEditProfileButtonPressed,
-                                        color: Colors.white,
-                                        child: Text(
-                                          "Editar Perfil",
-                                          style: TextStyle(
-                                            fontSize: 12,
-                                          ),
-                                        ),
-                                      )
                                     ],
                                   ),
                                 ),

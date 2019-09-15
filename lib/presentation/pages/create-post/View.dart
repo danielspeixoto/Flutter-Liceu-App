@@ -2,6 +2,7 @@ import 'package:app/presentation/widgets/LiceuPage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
 import '../../../injection.dart';
 import '../../../redux.dart';
 import 'ViewModel.dart';
@@ -38,7 +39,7 @@ class CreatePostPage extends StatelessWidget {
                         decoration: InputDecoration(
                             border: InputBorder.none,
                             hintText:
-                            "Clique aqui para começar à escrever seu post."),
+                                "Clique aqui para começar à escrever seu post."),
                         minLines: null,
                         maxLines: null,
                         keyboardType: TextInputType.multiline,

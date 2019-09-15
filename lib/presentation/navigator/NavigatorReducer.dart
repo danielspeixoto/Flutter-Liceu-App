@@ -1,5 +1,5 @@
-import 'package:redux/redux.dart';
 import 'package:app/presentation/navigator/NavigatorActions.dart';
+import 'package:redux/redux.dart';
 
 final navigationReducer = combineReducers<List<String>>([
   TypedReducer<List<String>, NavigateReplaceAction>(_navigateReplace),
@@ -8,7 +8,7 @@ final navigationReducer = combineReducers<List<String>>([
 ]);
 
 List<String> _navigateReplace(
-    List<String> route, NavigateReplaceAction action) =>
+        List<String> route, NavigateReplaceAction action) =>
     [action.routeName];
 
 List<String> _navigatePush(List<String> route, NavigatePushAction action) {
@@ -24,4 +24,3 @@ List<String> _navigatePop(List<String> route, NavigatePopStackAction action) {
   }
   return result;
 }
-

@@ -2,8 +2,9 @@ import 'package:app/domain/boundary/LoginBoundary.dart';
 import 'package:app/presentation/navigator/NavigatorActions.dart';
 import 'package:app/presentation/reducers/user/Reducer.dart';
 import 'package:redux/redux.dart';
-import '../../../redux.dart';
+
 import '../../../main.dart';
+import '../../../redux.dart';
 
 class LoginViewModel {
   final Function(String, String) login;

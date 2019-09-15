@@ -4,20 +4,23 @@ import 'package:app/presentation/navigator/NavigatorActions.dart';
 import 'package:app/presentation/reducers/Data.dart';
 import 'package:app/presentation/reducers/user/Presenter.dart';
 import 'package:redux/redux.dart';
-import '../../../redux.dart';
+
 import '../../../main.dart';
+import '../../../redux.dart';
 
 class HomeViewModel {
   final Data<User> user;
   final Data<List<Post>> posts;
   final Function() onCreateButtonPressed;
   final Function() onEditProfileButtonPressed;
+  final Function() onLogoutPressed;
   final Function() refresh;
 
   HomeViewModel({
     this.user,
     this.onCreateButtonPressed,
     this.onEditProfileButtonPressed,
+    this.onLogoutPressed,
     this.posts,
     this.refresh,
   });
@@ -25,17 +28,19 @@ class HomeViewModel {
   factory HomeViewModel.create(Store<AppState> store) {
     final userState = store.state.userState;
     return HomeViewModel(
-      user: userState.user,
-      posts: userState.posts,
-      onCreateButtonPressed: () =>
-          store.dispatch(NavigatePushAction(AppRoutes.createPost)),
-      refresh: () {
-        store.dispatch(FetchMyInfoAction());
-        store.dispatch(FetchMyPostsAction());
-      },
-      onEditProfileButtonPressed: () {
-        store.dispatch(NavigatePushAction(AppRoutes.editProfile));
-      }
-    );
+        user: userState.user,
+        posts: userState.posts,
+        onCreateButtonPressed: () =>
+            store.dispatch(NavigatePushAction(AppRoutes.createPost)),
+        refresh: () {
+          store.dispatch(FetchMyInfoAction());
+          store.dispatch(FetchMyPostsAction());
+        },
+        onEditProfileButtonPressed: () {
+          store.dispatch(NavigatePushAction(AppRoutes.editProfile));
+        },
+        onLogoutPressed: () {
+          store.dispatch(LogoutAction());
+        });
   }
 }

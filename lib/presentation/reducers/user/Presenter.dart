@@ -1,19 +1,23 @@
 import 'package:app/domain/boundary/UserBoundary.dart';
-import 'package:app/domain/usecase/user/IsLoggedInUseCase.dart';
-import 'package:app/domain/usecase/user/MyInfoUseCase.dart';
 import 'package:app/presentation/navigator/NavigatorActions.dart';
 import 'package:redux/redux.dart';
-import '../../../redux.dart';
+
 import '../../../main.dart';
+import '../../../redux.dart';
 import 'Reducer.dart';
 
 class UserPresenter extends MiddlewareClass<AppState> {
   final IMyInfoUseCase _myInfoUseCase;
   final IIsLoggedInUseCase _isLoggedInUseCase;
   final IMyPostsUseCase _myPostsUseCase;
+  final ILogOutUseCase _logoutUseCase;
 
   UserPresenter(
-      this._myInfoUseCase, this._isLoggedInUseCase, this._myPostsUseCase);
+    this._myInfoUseCase,
+    this._isLoggedInUseCase,
+    this._myPostsUseCase,
+    this._logoutUseCase,
+  );
 
   @override
   Future call(
@@ -48,6 +52,13 @@ class UserPresenter extends MiddlewareClass<AppState> {
         print(e);
         store.dispatch(FetchingMyPostsErrorAction());
       });
+    } else if (action is LogoutAction) {
+      this._logoutUseCase.run().then((_) {
+        store.dispatch(LoginFailedAction());
+        store.dispatch(NavigateReplaceAction(AppRoutes.login));
+      }).catchError((e) {
+        print(e);
+      });
     }
     next(action);
   }
@@ -59,6 +70,10 @@ class FetchMyInfoAction {
 
 class CheckIfIsLoggedInAction {
   CheckIfIsLoggedInAction();
+}
+
+class LogoutAction {
+  LogoutAction();
 }
 
 class FetchMyPostsAction {

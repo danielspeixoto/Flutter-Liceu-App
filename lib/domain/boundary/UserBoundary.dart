@@ -29,6 +29,10 @@ abstract class IIsLoggedInUseCase {
   Future<bool> run();
 }
 
+abstract class ILogOutUseCase {
+  Future<void> run();
+}
+
 abstract class ISetUserDescriptionUseCase {
   Future<void> run(String description);
 }

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_redux/flutter_redux.dart';
 
 import 'LiceuAppBar.dart';
 
@@ -10,7 +9,6 @@ class TabData {
 }
 
 class LiceuPage extends StatelessWidget {
-
   final Widget body;
   final List<Widget> actions;
   final String title;
@@ -19,7 +17,7 @@ class LiceuPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-    appBar: LiceuAppBar(actions: actions, title: title).build(context),
-    body: this.body,
-  );
+        appBar: LiceuAppBar(actions: actions, title: title).build(context),
+        body: this.body,
+      );
 }

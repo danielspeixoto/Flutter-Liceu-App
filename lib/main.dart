@@ -12,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
 import 'package:redux_logging/redux_logging.dart';
+
 import 'injection.dart';
 import 'redux.dart';
 
@@ -26,7 +27,7 @@ class MyApp extends StatelessWidget {
     middleware: [
       new LoggingMiddleware.printer(),
       EditProfilePageMiddleware(),
-      UserPresenter(myInfoUseCase, isLoggedInUseCase, myPostsUseCase),
+      UserPresenter(myInfoUseCase, isLoggedInUseCase, myPostsUseCase, logoutUseCase),
       ...navigationMiddleware()
     ],
   );

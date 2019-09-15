@@ -1,8 +1,10 @@
-import 'package:redux/redux.dart';
 import 'dart:developer' as developer;
-import '../../redux.dart';
-import '../../main.dart';
+
 import 'package:app/presentation/navigator/NavigatorActions.dart';
+import 'package:redux/redux.dart';
+
+import '../../main.dart';
+import '../../redux.dart';
 
 List<Middleware<AppState>> navigationMiddleware() {
   return [
@@ -13,9 +15,7 @@ List<Middleware<AppState>> navigationMiddleware() {
 }
 
 _navigateReplace(Store<AppState> store, action, NextDispatcher next) {
-  developer.postEvent("navigate_replace", {
-    "route": store.state.route
-  });
+  developer.postEvent("navigate_replace", {"route": store.state.route});
   final routeName = (action as NavigateReplaceAction).routeName;
   if (store.state.route.last != routeName) {
     navigatorKey.currentState.pushReplacementNamed(routeName);
@@ -23,8 +23,12 @@ _navigateReplace(Store<AppState> store, action, NextDispatcher next) {
   next(action); //This need to be after name checks
 }
 
-_navigatePush(Store<AppState> store, NavigatePushAction action, NextDispatcher next) {
-  developer.log("navigate_push " + action.routeName + " to " + store.state.route.toString());
+_navigatePush(
+    Store<AppState> store, NavigatePushAction action, NextDispatcher next) {
+  developer.log("navigate_push " +
+      action.routeName +
+      " to " +
+      store.state.route.toString());
   final routeName = action.routeName;
   if (store.state.route.last != routeName) {
     navigatorKey.currentState.pushNamed(routeName);
@@ -35,7 +39,7 @@ _navigatePush(Store<AppState> store, NavigatePushAction action, NextDispatcher n
 _navigatePop(Store<AppState> store, action, NextDispatcher next) {
   developer.log("navigate_pop " + store.state.route.toString());
 
-  if(navigatorKey.currentState.canPop()) {
+  if (navigatorKey.currentState.canPop()) {
     navigatorKey.currentState.pop();
 //    store.dispatch(NavigatePopStackAction());
   }

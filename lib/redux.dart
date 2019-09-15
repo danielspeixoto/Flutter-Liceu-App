@@ -25,12 +25,5 @@ class AppState {
 AppState appReducer(AppState state, action) => AppState(
     userState: userReducer(state.userState, action),
     route: navigationReducer(state.route, action),
-    editProfilePageState: editProfilePageReducer(state.editProfilePageState, action)
-);
-
-final reduxMiddleware = [
-  new LoggingMiddleware.printer(),
-  EditProfilePageMiddleware(),
-  UserPresenter(myInfoUseCase, isLoggedInUseCase, myPostsUseCase),
-  ...navigationMiddleware()
-];
+    editProfilePageState:
+        editProfilePageReducer(state.editProfilePageState, action));

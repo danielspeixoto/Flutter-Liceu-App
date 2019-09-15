@@ -13,6 +13,4 @@ class SetUserInstagramUseCase implements ISetUserInstagramUseCase {
     final id = await this._localRepository.getId();
     await this._userRepository.setInstagram(accessToken, id, instagram);
   }
-
-
 }

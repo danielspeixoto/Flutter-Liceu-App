@@ -3,7 +3,6 @@ import 'package:app/domain/boundary/LocalBoundary.dart';
 import 'package:app/domain/boundary/UserBoundary.dart';
 
 class MyInfoUseCase implements IMyInfoUseCase {
-
   final IUserRepository _userRepository;
   final ILocalRepository _localRepository;
 

@@ -6,6 +6,7 @@ import 'package:app/domain/aggregates/Post.dart';
 import 'package:app/domain/aggregates/User.dart';
 import 'package:app/domain/boundary/UserBoundary.dart';
 import 'package:http/http.dart' as http;
+
 import 'Converter.dart';
 import 'constants.dart';
 
@@ -44,8 +45,7 @@ class UserRepository implements IUserRepository {
 
   @override
   Future<List<Post>> posts(String accessToken, String userId) async {
-    final response =
-        await http.get(_url + "/" + userId + "/posts", headers: {
+    final response = await http.get(_url + "/" + userId + "/posts", headers: {
       apiKeyHeader: _apiKey,
       contentTypeHeader: contentTypeValueForJson,
       authHeader: accessToken
@@ -59,7 +59,7 @@ class UserRepository implements IUserRepository {
   @override
   Future<void> unfollow(String accessToken, String producerId) async {
     final response =
-    await http.delete(_url + "/" + producerId + "/followers", headers: {
+        await http.delete(_url + "/" + producerId + "/followers", headers: {
       apiKeyHeader: _apiKey,
       contentTypeHeader: contentTypeValueForJson,
       authHeader: accessToken
@@ -73,7 +73,7 @@ class UserRepository implements IUserRepository {
   @override
   Future<void> follow(String accessToken, String producerId) async {
     final response =
-    await http.put(_url + "/" + producerId + "/followers", headers: {
+        await http.put(_url + "/" + producerId + "/followers", headers: {
       apiKeyHeader: _apiKey,
       contentTypeHeader: contentTypeValueForJson,
       authHeader: accessToken
@@ -89,10 +89,7 @@ class UserRepository implements IUserRepository {
       String accessToken, String query, int amount) async {
     final response = await http.get(
         _url + "?name=" + query + "&amount=" + amount.toString(),
-        headers: {
-          apiKeyHeader: _apiKey,
-           authHeader: accessToken
-        });
+        headers: {apiKeyHeader: _apiKey, authHeader: accessToken});
     if (response.statusCode == 200) {
       return fromJsonToListOfUsers(response.body);
     }
@@ -102,14 +99,13 @@ class UserRepository implements IUserRepository {
   @override
   Future<void> setDescription(
       String accessToken, String id, String description) async {
-    final response =
-    await http.put(_url + "/" + id + "/description", headers: {
-      apiKeyHeader: _apiKey,
-      contentTypeHeader: contentTypeValueForJson,
-      authHeader: accessToken
-    }, body: json.encode({
-      "description": description
-    }));
+    final response = await http.put(_url + "/" + id + "/description",
+        headers: {
+          apiKeyHeader: _apiKey,
+          contentTypeHeader: contentTypeValueForJson,
+          authHeader: accessToken
+        },
+        body: json.encode({"description": description}));
     if (response.statusCode == 200) {
       return;
     }
@@ -119,14 +115,13 @@ class UserRepository implements IUserRepository {
   @override
   Future<void> setInstagram(
       String accessToken, String id, String instagram) async {
-    final response =
-    await http.put(_url + "/" + id + "/instagram", headers: {
-      apiKeyHeader: _apiKey,
-      contentTypeHeader: contentTypeValueForJson,
-      authHeader: accessToken
-    }, body: json.encode({
-      "instagramProfile": instagram
-    }));
+    final response = await http.put(_url + "/" + id + "/instagram",
+        headers: {
+          apiKeyHeader: _apiKey,
+          contentTypeHeader: contentTypeValueForJson,
+          authHeader: accessToken
+        },
+        body: json.encode({"instagramProfile": instagram}));
     if (response.statusCode == 200) {
       return;
     }

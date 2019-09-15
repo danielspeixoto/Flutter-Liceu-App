@@ -1,6 +1,7 @@
 import 'package:app/data/util/ExceptionHandler.dart';
 import 'package:app/domain/boundary/TriviaBoundary.dart';
 import 'package:http/http.dart' as http;
+
 import 'constants.dart';
 
 class TriviaRepository implements ITriviaRepository {

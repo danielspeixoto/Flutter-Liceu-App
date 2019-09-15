@@ -60,7 +60,8 @@ class SetUserEditFieldAction {
 EditProfilePageState setUserEditFieldAction(
     EditProfilePageState state, SetUserEditFieldAction action) {
   final bio = action.bio == null
-      ? null : action.bio.substring(0, min(300, action.bio.length));
+      ? null
+      : action.bio.substring(0, min(300, action.bio.length));
   final instagram = action.instagram == null
       ? null
       : action.instagram.substring(0, min(300, action.instagram.length));

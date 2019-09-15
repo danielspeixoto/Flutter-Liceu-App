@@ -1,4 +1,3 @@
-import 'package:app/presentation/reducers/Data.dart';
 import 'package:flutter/material.dart';
 
 class TabData {

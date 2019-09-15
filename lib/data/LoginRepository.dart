@@ -1,7 +1,7 @@
-import 'dart:io';
 import 'dart:convert';
-import 'package:app/domain/exceptions/RequestException.dart';
+
 import 'package:app/domain/boundary/LoginBoundary.dart';
+import 'package:app/domain/exceptions/RequestException.dart';
 import 'package:http/http.dart' as http;
 
 class LoginRepository implements ILoginRepository {

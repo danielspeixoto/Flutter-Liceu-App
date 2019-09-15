@@ -3,7 +3,6 @@ import 'package:app/domain/boundary/LocalBoundary.dart';
 import 'package:app/domain/boundary/PostBoundary.dart';
 
 class CreatePostUseCase implements ICreatePostUseCase {
-
   final IPostRepository _postRepository;
   final ILocalRepository _localRepository;
 
@@ -14,6 +13,4 @@ class CreatePostUseCase implements ICreatePostUseCase {
     final accessToken = await this._localRepository.getCredentials();
     await this._postRepository.create(accessToken, type, text);
   }
-
-
 }

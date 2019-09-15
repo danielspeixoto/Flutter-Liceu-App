@@ -1,6 +1,4 @@
-import 'package:app/presentation/widgets/LiceuScaffold.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -22,17 +20,19 @@ class PostWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Card(
         shape: RoundedRectangleBorder(
-          side: BorderSide(
-            width: 0.1,
-          ),
-          borderRadius: BorderRadius.all(Radius.circular(4))
-        ),
+            side: BorderSide(
+              width: 0.1,
+            ),
+            borderRadius: BorderRadius.all(Radius.circular(4))),
         elevation: 2,
         child: Column(
           children: <Widget>[
             Row(
               children: <Widget>[
-                RoundedImage(pictureURL: this.userPic, size: 36,),
+                RoundedImage(
+                  pictureURL: this.userPic,
+                  size: 36,
+                ),
                 Text(
                   this.userName,
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12),

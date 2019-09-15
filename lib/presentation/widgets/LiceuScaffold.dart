@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_redux/flutter_redux.dart';
 
 import 'LiceuAppBar.dart';
 
@@ -15,13 +14,17 @@ class LiceuScaffold extends StatelessWidget {
   final int selectedIdx;
   final Widget body;
   final Widget leading;
+  final Widget drawer;
 
-  LiceuScaffold({this.selectedIdx, this.leading, this.body});
+  LiceuScaffold({this.selectedIdx, this.leading, this.body, this.drawer});
 
   @override
   Widget build(BuildContext context) => Scaffold(
-        appBar: LiceuAppBar(leading: leading,).build(context),
+        appBar: LiceuAppBar(
+          leading: leading,
+        ).build(context),
         body: this.body,
+        endDrawer: drawer,
 //        bottomNavigationBar: new Container(
 //          color: Colors.white,
 //          height: 50,

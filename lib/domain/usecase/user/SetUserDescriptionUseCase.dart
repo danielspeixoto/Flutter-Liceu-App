@@ -13,6 +13,4 @@ class SetUserDescriptionUseCase implements ISetUserDescriptionUseCase {
     final id = await this._localRepository.getId();
     await this._userRepository.setDescription(accessToken, id, description);
   }
-
-
 }

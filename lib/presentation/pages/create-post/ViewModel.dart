@@ -3,6 +3,7 @@ import 'package:app/domain/boundary/PostBoundary.dart';
 import 'package:app/presentation/navigator/NavigatorActions.dart';
 import 'package:app/presentation/reducers/user/Presenter.dart';
 import 'package:redux/redux.dart';
+
 import '../../../redux.dart';
 
 class CreatePostViewModel {

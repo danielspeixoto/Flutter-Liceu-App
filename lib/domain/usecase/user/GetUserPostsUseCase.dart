@@ -1,4 +1,3 @@
-import 'package:app/domain/aggregates/Challenge.dart';
 import 'package:app/domain/aggregates/Post.dart';
 import 'package:app/domain/boundary/LocalBoundary.dart';
 import 'package:app/domain/boundary/UserBoundary.dart';
@@ -15,5 +14,4 @@ class GetUserPostsUseCase implements IGetUserPostsUseCase {
     final posts = await this._userRepository.posts(accessToken, userId);
     return posts;
   }
-
 }

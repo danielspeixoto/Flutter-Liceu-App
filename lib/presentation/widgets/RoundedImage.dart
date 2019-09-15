@@ -14,7 +14,7 @@ class RoundedImage extends StatelessWidget {
           shape: CircleBorder(
             side: BorderSide(
               color: Colors.black12,
-              width: size/48,
+              width: size / 48,
             ),
           ),
           image: new DecorationImage(

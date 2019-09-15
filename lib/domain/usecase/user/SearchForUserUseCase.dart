@@ -14,6 +14,4 @@ class SearchForUserUseCase implements ISearchForUserUseCase {
     final users = await this._userRepository.search(accessToken, query, amount);
     return users;
   }
-
-
 }

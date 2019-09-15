@@ -1,6 +1,7 @@
 import 'package:app/domain/aggregates/Post.dart';
 import 'package:app/domain/aggregates/User.dart';
 import 'package:redux/redux.dart';
+
 import '../../constants.dart';
 import '../Data.dart';
 
@@ -96,16 +97,18 @@ UserState fetchingUser(UserState state, FetchingUserAction action) {
 class FetchingUserErrorAction {
   final String error;
 
-  FetchingUserErrorAction({this.error=DEFAULT_ERROR_MESSAGE});
+  FetchingUserErrorAction({this.error = DEFAULT_ERROR_MESSAGE});
 }
 
 UserState fetchingUserError(UserState state, FetchingUserErrorAction action) {
-  final s = state.copyWith(user: Data(errorMessage: action.error, isLoading: false));
+  final s =
+      state.copyWith(user: Data(errorMessage: action.error, isLoading: false));
   return s;
 }
 
 class SetUserPostsAction {
   final List<Post> posts;
+
   SetUserPostsAction(this.posts);
 }
 
@@ -124,10 +127,12 @@ UserState fetchingMyPosts(UserState state, FetchingMyPostsAction action) {
 class FetchingMyPostsErrorAction {
   final String error;
 
-  FetchingMyPostsErrorAction({this.error=DEFAULT_ERROR_MESSAGE});
+  FetchingMyPostsErrorAction({this.error = DEFAULT_ERROR_MESSAGE});
 }
 
-UserState fetchingMyPostsError(UserState state, FetchingMyPostsErrorAction action) {
-  final s = state.copyWith(posts: Data(errorMessage: action.error, isLoading: false));
+UserState fetchingMyPostsError(
+    UserState state, FetchingMyPostsErrorAction action) {
+  final s =
+      state.copyWith(posts: Data(errorMessage: action.error, isLoading: false));
   return s;
 }
