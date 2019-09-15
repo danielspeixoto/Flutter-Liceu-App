@@ -79,7 +79,7 @@ UserState deletePost(UserState state, DeletePostAction action) {
   }
   final posts = state.posts.content.where((post) {
     return post.id != action.postId;
-  });
+  }).toList();
   return state.copyWith(
     posts: state.posts.copyWith(
       content: posts,

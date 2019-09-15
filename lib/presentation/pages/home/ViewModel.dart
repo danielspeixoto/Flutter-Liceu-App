@@ -1,6 +1,7 @@
 import 'package:app/domain/aggregates/Post.dart';
 import 'package:app/domain/aggregates/User.dart';
 import 'package:app/presentation/redux/actions/LoginActions.dart';
+import 'package:app/presentation/redux/actions/PostActions.dart';
 import 'package:app/presentation/redux/actions/UserActions.dart';
 import 'package:app/presentation/redux/app_state.dart';
 import 'package:app/presentation/redux/navigator/NavigatorActions.dart';
@@ -46,7 +47,7 @@ class HomeViewModel {
         store.dispatch(LogOutAction());
       },
       onDeletePostPressed: (String postId) {
-
+        store.dispatch(DeletePostAction(postId));
       },
     );
   }

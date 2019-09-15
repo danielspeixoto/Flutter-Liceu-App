@@ -32,6 +32,12 @@ class PostMiddleware extends MiddlewareClass<AppState> {
       if (store.state.route.last == AppRoutes.createPost) {
         store.dispatch(NavigatePopAction());
       }
+    } else if (action is DeletePostAction) {
+      try {
+        await this._deletePostUseCase.run(action.postId);
+      } catch (e) {
+        print(e);
+      }
     }
     next(action);
   }

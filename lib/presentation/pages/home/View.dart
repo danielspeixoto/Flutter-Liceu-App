@@ -10,6 +10,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:url_launcher/url_launcher.dart';
+
 import 'ViewModel.dart';
 
 class TabData {
@@ -176,7 +177,8 @@ class HomePage extends StatelessWidget {
                                       userPic: user.picURL,
                                       postContent: post.text,
                                       onSharePressed: () {},
-                                      onDeletePressed: () {},
+                                      onDeletePressed: () => viewModel
+                                          .onDeletePostPressed(post.id),
                                     ),
                                   )
                                   .toList(),
