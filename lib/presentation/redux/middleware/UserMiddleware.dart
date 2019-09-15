@@ -4,7 +4,6 @@ import 'package:app/presentation/redux/actions/UserActions.dart';
 import 'package:app/presentation/redux/navigator/NavigatorActions.dart';
 import 'package:redux/redux.dart';
 
-import '../../../main.dart';
 import '../../app.dart';
 import '../app_state.dart';
 
@@ -43,6 +42,9 @@ class UserMiddleware extends MiddlewareClass<AppState> {
       store.dispatch(FetchMyPostsAction());
     } else if (action is MyProfileInfoWasChangedAction) {
       store.dispatch(FetchMyInfoAction());
+      if (store.state.route.last == AppRoutes.editProfile) {
+        store.dispatch(NavigatePopAction());
+      }
     } else if (action is SubmitUserProfileChangesAction) {
       try {
         await setUserDescriptionUseCase.run(action.bio);
@@ -55,10 +57,6 @@ class UserMiddleware extends MiddlewareClass<AppState> {
         );
       } catch (e) {
         print(e);
-      }
-    } else if (action is MyProfileInfoWasChangedAction) {
-      if(store.state.route.last == AppRoutes.editProfile) {
-        store.dispatch(NavigatePopAction());
       }
     }
     next(action);

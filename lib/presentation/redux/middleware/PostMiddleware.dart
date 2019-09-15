@@ -2,8 +2,6 @@ import 'package:app/domain/boundary/PostBoundary.dart';
 import 'package:app/presentation/redux/actions/PostActions.dart';
 import 'package:app/presentation/redux/navigator/NavigatorActions.dart';
 import 'package:redux/redux.dart';
-
-import '../../../main.dart';
 import '../../app.dart';
 import '../app_state.dart';
 

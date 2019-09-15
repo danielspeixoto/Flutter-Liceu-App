@@ -1,4 +1,3 @@
-import 'package:app/domain/aggregates/Post.dart';
 import 'package:app/domain/boundary/LocalBoundary.dart';
 import 'package:app/domain/boundary/PostBoundary.dart';
 

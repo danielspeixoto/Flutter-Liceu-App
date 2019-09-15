@@ -3,19 +3,19 @@ import 'package:app/presentation/pages/edit-profile/View.dart';
 import 'package:app/presentation/pages/home/View.dart';
 import 'package:app/presentation/pages/login/View.dart';
 import 'package:app/presentation/pages/splash/View.dart';
+import 'package:app/presentation/redux/app_state.dart';
 import 'package:app/presentation/redux/navigator/RouteObserver.dart';
 import 'package:app/presentation/redux/navigator/routes/MainRoute.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:redux/redux.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = new GlobalKey<NavigatorState>();
 
 class MyApp extends StatelessWidget {
 
-  final Store store;
+//  final Store store;
 
-  const MyApp({Key key, this.store}) : super(key: key);
+  const MyApp({Key key}) : super(key: key);
 
 
   MaterialPageRoute _getRoute(RouteSettings settings) {
