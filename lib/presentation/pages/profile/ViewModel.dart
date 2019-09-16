@@ -54,7 +54,7 @@ class ProfileViewModel {
         store.dispatch(DeletePostAction(postId));
       },
       onSharePostPressed: (String text) {
-        Share.share(summarize(text, 200) +
+        Share.share(summarize(text, 300) +
             "\n\nConfira mais no nosso app!\nhttps://bit.ly/BaixarLiceu");
       },
     );

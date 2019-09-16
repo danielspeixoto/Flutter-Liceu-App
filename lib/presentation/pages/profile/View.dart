@@ -1,6 +1,6 @@
-import 'package:app/presentation/redux/actions/UserActions.dart';
 import 'package:app/presentation/redux/app_state.dart';
 import 'package:app/presentation/widgets/FetcherWidget.dart';
+import 'package:app/presentation/widgets/LiceuDivider.dart';
 import 'package:app/presentation/widgets/LiceuScaffold.dart';
 import 'package:app/presentation/widgets/PostWidget.dart';
 import 'package:app/presentation/widgets/RoundedImage.dart';
@@ -23,7 +23,8 @@ class ProfilePage extends StatelessWidget {
   final _refreshController = RefreshController(initialRefresh: false);
 
   @override
-  Widget build(BuildContext context) => StoreConnector<AppState, ProfileViewModel>(
+  Widget build(BuildContext context) =>
+      StoreConnector<AppState, ProfileViewModel>(
         converter: (store) => ProfileViewModel.create(store),
         builder: (BuildContext context, ProfileViewModel viewModel) {
           final user = viewModel.user.content;
@@ -56,7 +57,6 @@ class ProfilePage extends StatelessWidget {
                 ],
               ),
             ),
-            selectedIdx: 0,
             leading: FlatButton(
               onPressed: viewModel.onCreateButtonPressed,
               child: new Icon(
@@ -146,11 +146,7 @@ class ProfilePage extends StatelessWidget {
                       ),
                     ),
                   ),
-                  Divider(
-                    color: Colors.black54,
-                    indent: 32,
-                    endIndent: 32,
-                  ),
+                  LiceuDivider(),
                   FetcherWidget(
                     isLoading:
                         viewModel.posts.isLoading || viewModel.user.isLoading,
