@@ -48,19 +48,21 @@ class GamePage extends StatelessWidget {
                                 color: Colors.white),
                           ),
                         ),
-                        Container(
-                          child: Column(
-                            children: [
-                              MatchHistory(),
-                              LiceuDivider(),
-                              MatchHistory(),
-                              LiceuDivider(),
-                              MatchHistory(),
-                              LiceuDivider(),
-                              MatchHistory(),
-                            ],
-                          ),
-                        ),
+                        viewModel.challenges.content == null
+                            ? Container()
+                            : Container(
+                                child: Column(
+                                  children: viewModel.challenges.content
+                                      .map((challenge) {
+                                    return Column(
+                                      children: <Widget>[
+                                        MatchHistory(challenge),
+                                        LiceuDivider()
+                                      ],
+                                    );
+                                  }).toList(),
+                                ),
+                              ),
                       ],
                     ),
                   ),

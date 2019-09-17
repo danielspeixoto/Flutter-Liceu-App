@@ -54,6 +54,8 @@ final Store<AppState> store = Store<AppState>(
       myPostsUseCase,
       setUserDescriptionUseCase,
       setUserInstagramUseCase,
+      myChallengesUseCase,
+      getUserByIdUseCase
     ),
     PostMiddleware(
       deletePostUseCase,

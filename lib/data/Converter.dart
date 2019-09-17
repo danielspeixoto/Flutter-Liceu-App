@@ -10,8 +10,9 @@ User fromJsonToUser(String content) {
 }
 
 List<User> fromJsonToListOfUsers(String content) {
-  final data = json.decode(content);
-  return data.map((d) => fromMapToUser(d));
+  final data = (json.decode(content) as List).cast<Map<String, dynamic>>();
+  final result = data.map((d) => fromMapToUser(d)).toList();
+  return result;
 }
 
 User fromMapToUser(data) {
@@ -30,18 +31,26 @@ Challenge fromJsonToChallenge(String content) {
 }
 
 List<Challenge> fromJsonToListOfChallenges(String content) {
-  final data = json.decode(content);
-  return data.map((d) => fromMapToChallenge(d));
+  final data = (json.decode(content) as List).cast<Map<String, dynamic>>();
+  final result = data.map((d) => fromMapToChallenge(d)).toList();
+  return result;
 }
 
 Challenge fromMapToChallenge(data) {
   return Challenge(
-      data["id"],
-      data["challenger"],
-      data["challenged"],
-      data["scoreChallenged"],
-      data["scoreChallenger"],
-      data["triviaQuestionsUsed"].map((d) => fromMapToTrivia(d)));
+    data["id"],
+    data["challenger"],
+    data["challenged"],
+    data["scoreChallenged"],
+    data["scoreChallenger"],
+    fromJsonToListOfTrivias(data["triviaQuestionsUsed"])
+  );
+}
+
+List<Trivia> fromJsonToListOfTrivias(content) {
+  final l = new List<Trivia>.generate(content.length, (i) => fromMapToTrivia(content[i]));
+  return l;
+
 }
 
 Trivia fromMapToTrivia(data) {
@@ -50,7 +59,6 @@ Trivia fromMapToTrivia(data) {
     data["question"],
     data["correctAnswer"],
     data["wrongAnswer"],
-    data["tags"],
   );
 }
 

@@ -20,6 +20,7 @@ class HomePage extends StatelessWidget {
       onInit: (store) {
         store.dispatch(FetchMyInfoAction());
         store.dispatch(FetchMyPostsAction());
+        store.dispatch(FetchMyChallengesAction());
       },
       converter: (store) => HomeViewModel.create(store),
       builder: (BuildContext context, HomeViewModel viewModel) {

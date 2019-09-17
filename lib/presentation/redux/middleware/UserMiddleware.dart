@@ -1,4 +1,5 @@
 import 'package:app/domain/boundary/UserBoundary.dart';
+import 'package:app/presentation/aggregates/ChallengeData.dart';
 import 'package:app/presentation/redux/actions/PostActions.dart';
 import 'package:app/presentation/redux/actions/UserActions.dart';
 import 'package:app/presentation/redux/navigator/NavigatorActions.dart';
@@ -12,12 +13,16 @@ class UserMiddleware extends MiddlewareClass<AppState> {
   final IMyPostsUseCase _myPostsUseCase;
   final ISetUserDescriptionUseCase setUserDescriptionUseCase;
   final ISetUserInstagramUseCase setUserInstagramUseCase;
+  final IMyChallengesUseCase _myChallengesUseCase;
+  final IGetUserByIdUseCase _getUserById;
 
   UserMiddleware(
     this._myInfoUseCase,
     this._myPostsUseCase,
     this.setUserDescriptionUseCase,
     this.setUserInstagramUseCase,
+    this._myChallengesUseCase,
+    this._getUserById,
   );
 
   @override
@@ -37,6 +42,32 @@ class UserMiddleware extends MiddlewareClass<AppState> {
       }).catchError((e) {
         print(e);
         store.dispatch(FetchingMyPostsErrorAction());
+      });
+    } else if (action is FetchMyChallengesAction) {
+      this._myChallengesUseCase.run().then((challenges) async {
+        final futures = challenges.map((challenge) async {
+          final challenger = await _getUserById.run(challenge.challenger);
+          final challenged = challenge.challenged == null
+              ? null
+              : await _getUserById.run(challenge.challenged);
+          return ChallengeData(
+            challenge.id,
+            challenger,
+            challenged,
+            challenge.scoreChallenger,
+            challenge.scoreChallenged,
+            challenge.questions,
+          );
+        });
+        try {
+          final challengeDataList = await Future.wait(futures);
+          store.dispatch(SetUserChallengesAction(challengeDataList));
+        } catch (e) {
+          print(e);
+        }
+      }).catchError((e) {
+        print(e);
+        store.dispatch(FetchingMyChallengesErrorAction());
       });
     } else if (action is PostCreatedAction) {
       store.dispatch(FetchMyPostsAction());

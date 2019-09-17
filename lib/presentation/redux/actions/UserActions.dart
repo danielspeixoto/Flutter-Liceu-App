@@ -1,5 +1,7 @@
+import 'package:app/domain/aggregates/Challenge.dart';
 import 'package:app/domain/aggregates/Post.dart';
 import 'package:app/domain/aggregates/User.dart';
+import 'package:app/presentation/aggregates/ChallengeData.dart';
 
 import '../../constants.dart';
 
@@ -9,6 +11,10 @@ class FetchMyInfoAction {
 
 class FetchMyPostsAction {
   FetchMyPostsAction();
+}
+
+class FetchMyChallengesAction {
+  FetchMyChallengesAction();
 }
 
 class SetUserAction {
@@ -25,6 +31,12 @@ class FetchingUserErrorAction {
   FetchingUserErrorAction({this.error = DEFAULT_ERROR_MESSAGE});
 }
 
+class CacheUserAction {
+  final User user;
+
+  CacheUserAction(this.user);
+}
+
 class SetUserPostsAction {
   final List<Post> posts;
 
@@ -37,6 +49,20 @@ class FetchingMyPostsErrorAction {
   final String error;
 
   FetchingMyPostsErrorAction({this.error = DEFAULT_ERROR_MESSAGE});
+}
+
+class SetUserChallengesAction {
+  final List<ChallengeData> challenges;
+
+  SetUserChallengesAction(this.challenges);
+}
+
+class FetchingMyChallengesAction {}
+
+class FetchingMyChallengesErrorAction {
+  final String error;
+
+  FetchingMyChallengesErrorAction({this.error = DEFAULT_ERROR_MESSAGE});
 }
 
 class SetUserEditFieldAction {

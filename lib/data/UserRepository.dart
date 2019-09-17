@@ -18,15 +18,20 @@ class UserRepository implements IUserRepository {
 
   @override
   Future<User> id(String accessToken, String id) async {
-    final response = await http.get(_url + "/" + id, headers: {
-      apiKeyHeader: _apiKey,
-      contentTypeHeader: contentTypeValueForJson,
-      authHeader: accessToken
-    });
-    if (response.statusCode == 200) {
-      return fromJsonToUser(response.body);
+    try {
+      final response = await http.get(_url + "/" + id, headers: {
+        apiKeyHeader: _apiKey,
+        contentTypeHeader: contentTypeValueForJson,
+        authHeader: accessToken
+      });
+      if (response.statusCode == 200) {
+        return fromJsonToUser(response.body);
+      }
+      throw handleNetworkException(response.statusCode);
+    } catch (e) {
+      print(e);
+      throw e;
     }
-    throw handleNetworkException(response.statusCode);
   }
 
   @override

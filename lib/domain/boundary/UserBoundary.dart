@@ -21,6 +21,10 @@ abstract class IUserRepository {
   Future<List<Challenge>> challenges(String accessToken, String userId);
 }
 
+abstract class IGetUserByIdUseCase {
+  Future<User> run(String id);
+}
+
 abstract class IMyInfoUseCase {
   Future<User> run();
 }
@@ -55,4 +59,8 @@ abstract class IMyPostsUseCase {
 
 abstract class IGetUserChallengesUseCase {
   Future<List<Challenge>> run(String userId);
+}
+
+abstract class IMyChallengesUseCase {
+  Future<List<Challenge>> run();
 }

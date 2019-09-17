@@ -10,6 +10,8 @@ import 'data/PostRepository.dart';
 import 'data/UserRepository.dart';
 import 'domain/usecase/post/CreatePostUseCase.dart';
 import 'domain/usecase/post/DeletePostUseCase.dart';
+import 'domain/usecase/user/GetUserByIdUseCase.dart';
+import 'domain/usecase/user/MyChallengesUseCase.dart';
 import 'domain/usecase/user/MyPostsUseCase.dart';
 import 'domain/usecase/user/SetUserDescriptionUseCase.dart';
 import 'domain/usecase/user/SetUserInstagramUseCase.dart';
@@ -28,7 +30,9 @@ final localRepository = LocalRepository();
 // Use Cases
 final loginUseCase = LoginUseCase(loginRepository, localRepository);
 final myInfoUseCase = MyInfoUseCase(userRepository, localRepository);
+final getUserByIdUseCase = GetUserByIdUseCase(userRepository, localRepository);
 final myPostsUseCase = MyPostsUseCase(localRepository, userRepository);
+final myChallengesUseCase = MyChallengesUseCase(localRepository, userRepository);
 final isLoggedInUseCase = IsLoggedInUseCase(localRepository);
 final logoutUseCase = LogOutUseCase(localRepository);
 final createPostUseCase = CreatePostUseCase(localRepository, postRepository);
