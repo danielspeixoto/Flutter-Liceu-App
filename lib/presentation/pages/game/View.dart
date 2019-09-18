@@ -60,15 +60,24 @@ class GamePage extends StatelessWidget {
                             child: () {
                               return Container(
                                 child: Column(
-                                  children: viewModel.challenges.content
-                                      .map((challenge) {
-                                    return Column(
-                                      children: <Widget>[
-                                        MatchHistory(challenge),
-                                        LiceuDivider()
-                                      ],
-                                    );
-                                  }).toList(),
+                                  children:
+                                      viewModel.challenges.content.length == 0
+                                          ? [
+                                              Container(
+                                                child: Text(
+                                                    "Você ainda não participou de nenhuma partida"),
+                                                margin: EdgeInsets.all(16),
+                                              )
+                                            ]
+                                          : viewModel.challenges.content
+                                              .map((challenge) {
+                                              return Column(
+                                                children: <Widget>[
+                                                  MatchHistory(challenge),
+                                                  LiceuDivider()
+                                                ],
+                                              );
+                                            }).toList(),
                                 ),
                               );
                             }),

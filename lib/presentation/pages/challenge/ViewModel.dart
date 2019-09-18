@@ -29,7 +29,7 @@ class ChallengeViewModel {
       return ChallengeViewModel(isLoading: challenge.isLoading);
     }
     final trivia = content.questions[store.state.challengeState.currentQuestion];
-    final rand = Random().nextInt(1);
+    final rand = Random().nextInt(2);
     return ChallengeViewModel(
       question: trivia.question,
       answer1: rand == 0 ? trivia.correctAnswer : trivia.wrongAnswer,

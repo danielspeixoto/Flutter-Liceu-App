@@ -38,8 +38,7 @@ final Reducer<ChallengeState> challengeReducer =
 
 ChallengeState startChallenge(
     ChallengeState state, StartChallengeAction action) {
-  return state.copyWith(
-      challenge: Data(content: action.challenge, isLoading: false));
+  return ChallengeState.initial().copyWith(challenge: Data(content: action.challenge, isLoading: false));
 }
 
 ChallengeState resetChallenge(ChallengeState state, GetChallengeAction action) {
