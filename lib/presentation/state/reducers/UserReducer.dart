@@ -1,7 +1,7 @@
 import 'package:app/domain/aggregates/Challenge.dart';
 import 'package:app/domain/aggregates/Post.dart';
 import 'package:app/domain/aggregates/User.dart';
-import 'package:app/presentation/state/aggregates/ChallengeData.dart';
+import 'package:app/presentation/state/aggregates/ChallengeHistoryData.dart';
 import 'package:app/presentation/state/actions/PostActions.dart';
 import 'package:app/presentation/state/actions/UserActions.dart';
 import 'package:redux/redux.dart';
@@ -11,7 +11,7 @@ import 'Data.dart';
 class UserState {
   final Data<User> user;
   final Data<List<Post>> posts;
-  final Data<List<ChallengeData>> challenges;
+  final Data<List<ChallengeHistoryData>> challenges;
 
   UserState(this.user, this.posts, this.challenges);
 
@@ -24,7 +24,7 @@ class UserState {
   UserState copyWith({
     Data<User> user,
     Data<List<Post>> posts,
-    Data<List<ChallengeData>> challenges,
+    Data<List<ChallengeHistoryData>> challenges,
   }) {
     final state = UserState(
       user ?? this.user,
@@ -47,7 +47,7 @@ final Reducer<UserState> userReducer = combineReducers<UserState>([
   TypedReducer<UserState, DeletePostAction>(deletePost),
 //  Challenges
   TypedReducer<UserState, SetUserChallengesAction>(setUserChallenges),
-  TypedReducer<UserState, FetchingMyChallengesAction>(fetchingMyChallenges),
+  TypedReducer<UserState, FetchMyChallengesAction>(fetchingMyChallenges),
   TypedReducer<UserState, FetchingMyChallengesErrorAction>(fetchingMyChallengesError),
 ]);
 
@@ -101,7 +101,7 @@ UserState setUserChallenges(UserState state, SetUserChallengesAction action) {
   return state.copyWith(challenges: Data(content: action.challenges, isLoading: false));
 }
 
-UserState fetchingMyChallenges(UserState state, FetchingMyChallengesAction action) {
+UserState fetchingMyChallenges(UserState state, FetchMyChallengesAction action) {
   return state.copyWith(
     challenges: state.challenges.copyWith(isLoading: true),
   );

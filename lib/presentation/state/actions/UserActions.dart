@@ -1,6 +1,6 @@
 import 'package:app/domain/aggregates/Post.dart';
 import 'package:app/domain/aggregates/User.dart';
-import 'package:app/presentation/state/aggregates/ChallengeData.dart';
+import 'package:app/presentation/state/aggregates/ChallengeHistoryData.dart';
 
 import '../../constants.dart';
 
@@ -45,7 +45,7 @@ class FetchingMyPostsErrorAction {
 }
 
 class SetUserChallengesAction {
-  final List<ChallengeData> challenges;
+  final List<ChallengeHistoryData> challenges;
 
   SetUserChallengesAction(this.challenges);
 }

@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:app/data/util/ExceptionHandler.dart';
 import 'package:app/domain/aggregates/Challenge.dart';
 import 'package:app/domain/boundary/ChallengeBoundary.dart';
@@ -32,9 +34,9 @@ class ChallengeRepository implements IChallengeRepository {
       apiKeyHeader: _apiKey,
       contentTypeHeader: contentTypeValueForJson,
       authHeader: accessToken
-    }, body: {
+    }, body: json.encode({
       "answers": answers
-    });
+    }));
     if (response.statusCode == 200) {
       return fromJsonToChallenge(response.body);
     }

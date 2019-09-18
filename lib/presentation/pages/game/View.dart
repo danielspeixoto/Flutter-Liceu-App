@@ -1,5 +1,7 @@
+import 'package:app/presentation/state/actions/ChallengeActions.dart';
 import 'package:app/presentation/state/app_state.dart';
 import 'package:app/presentation/widgets/ActionCard.dart';
+import 'package:app/presentation/widgets/FetcherWidget.dart';
 import 'package:app/presentation/widgets/LiceuDivider.dart';
 import 'package:app/presentation/widgets/LiceuScaffold.dart';
 import 'package:app/presentation/widgets/MatchHistory.dart';
@@ -23,14 +25,19 @@ class GamePage extends StatelessWidget {
               body: SmartRefresher(
             controller: _refreshController,
             onRefresh: () async {
-//                  viewModel.refresh();
+              viewModel.refresh();
               _refreshController.refreshCompleted();
             },
             child: ListView(
               children: <Widget>[
-                ActionCard(FontAwesomeIcons.gamepad, "Desafio Rápido"),
-                ActionCard(FontAwesomeIcons.trophy, "Torneio"),
-                ActionCard(FontAwesomeIcons.userGraduate, "Treinamento"),
+                ActionCard(
+                    FontAwesomeIcons.gamepad,
+                    "Desafio Rápido",
+                    () => store.dispatch(
+                          GetChallengeAction(),
+                        )),
+//                ActionCard(FontAwesomeIcons.trophy, "Torneio"),
+//                ActionCard(FontAwesomeIcons.userGraduate, "Treinamento"),
                 Container(
                   child: Card(
                     child: Column(
@@ -48,10 +55,10 @@ class GamePage extends StatelessWidget {
                                 color: Colors.white),
                           ),
                         ),
-
-                        viewModel.challenges.content == null
-                            ? Container()
-                            : Container(
+                        FetcherWidget(
+                            isLoading: viewModel.challenges.isLoading,
+                            child: () {
+                              return Container(
                                 child: Column(
                                   children: viewModel.challenges.content
                                       .map((challenge) {
@@ -63,7 +70,8 @@ class GamePage extends StatelessWidget {
                                     );
                                   }).toList(),
                                 ),
-                              ),
+                              );
+                            }),
                       ],
                     ),
                   ),

@@ -12,6 +12,7 @@ List<Middleware<AppState>> postMiddleware(
 ) {
   void deletePost(Store<AppState> store, DeletePostAction action,
       NextDispatcher next) async {
+    next(action);
     try {
       deletePostUseCase.run(action.postId);
     } catch (e) {
@@ -21,6 +22,7 @@ List<Middleware<AppState>> postMiddleware(
 
   void createPost(Store<AppState> store, CreatePostAction action,
       NextDispatcher next) async {
+    next(action);
     try {
       await createPostUseCase.run(action.postType, action.text);
       store.dispatch(PostCreatedAction());
@@ -31,6 +33,7 @@ List<Middleware<AppState>> postMiddleware(
 
   void postCreated(Store<AppState> store, PostCreatedAction action,
       NextDispatcher next) async {
+    next(action);
     if (store.state.route.last == AppRoutes.createPost) {
       store.dispatch(NavigatePopAction());
     }

@@ -1,3 +1,4 @@
+import 'package:app/presentation/state/reducers/ChallengeReducer.dart';
 import 'package:app/presentation/state/reducers/EditMyInfoReducer.dart';
 import 'package:app/presentation/state/reducers/LoginReducer.dart';
 import 'package:app/presentation/state/reducers/TournamentReducer.dart';
@@ -6,6 +7,7 @@ import 'package:redux/redux.dart';
 import 'package:redux_logging/redux_logging.dart';
 
 import '../../injection.dart';
+import 'middleware/ChallengeMiddleware.dart';
 import 'middleware/LoginMiddleware.dart';
 import 'middleware/PostMiddleware.dart';
 import 'middleware/TournamentMiddleware.dart';
@@ -18,6 +20,7 @@ class AppState {
   final LoginState loginState;
   final TournamentState tournamentState;
   final EditMyInfoState editMyInfoState;
+  final ChallengeState challengeState;
   final List<String> route;
 
   AppState({
@@ -26,6 +29,7 @@ class AppState {
     this.editMyInfoState,
     this.loginState,
     this.tournamentState,
+    this.challengeState,
   });
 
   factory AppState.initial() => AppState(
@@ -33,7 +37,8 @@ class AppState {
         userState: UserState.initial(),
         loginState: LoginState.initial(),
         tournamentState: TournamentState.initial(),
-        editMyInfoState: EditMyInfoState.initial(),
+    challengeState: ChallengeState.initial(),
+    editMyInfoState: EditMyInfoState.initial(),
       );
 }
 
@@ -42,6 +47,7 @@ AppState appReducer(AppState state, action) => AppState(
       userState: userReducer(state.userState, action),
       loginState: loginReducer(state.loginState, action),
       tournamentState: tournamentReducer(state.tournamentState, action),
+      challengeState: challengeReducer(state.challengeState, action),
       editMyInfoState: editMyInfoReducer(state.editMyInfoState, action),
     );
 
@@ -55,8 +61,14 @@ final Store<AppState> store = Store<AppState>(
       loginUseCase,
       isLoggedInUseCase,
     ),
-    UserMiddleware(myInfoUseCase, myPostsUseCase, setUserDescriptionUseCase,
-        setUserInstagramUseCase, myChallengesUseCase, getUserByIdUseCase),
+    UserMiddleware(
+      myInfoUseCase,
+      myPostsUseCase,
+      setUserDescriptionUseCase,
+      setUserInstagramUseCase,
+      myChallengesUseCase,
+      getUserByIdUseCase,
+    ),
     ...postMiddleware(
       createPostUseCase,
       deletePostUseCase,
@@ -64,6 +76,11 @@ final Store<AppState> store = Store<AppState>(
     ...tournamentMiddleware(
       getRankingUseCase,
       getUserByIdUseCase,
+    ),
+    ...challengeMiddleware(
+      getChallengeUseCase,
+      getUserByIdUseCase,
+      submitChallengeAnswersUseCase,
     ),
     ...navigationMiddleware()
   ],

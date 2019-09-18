@@ -13,6 +13,7 @@ List<Middleware<AppState>> tournamentMiddleware(
 
   void fetchRanking(Store<AppState> store, FetchRankingAction action,
       NextDispatcher next) async {
+    next(action);
     try {
       final ranking = await getRankingUseCase.run(30);
       final futures = ranking.games.map((game) async {

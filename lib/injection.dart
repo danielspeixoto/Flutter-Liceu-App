@@ -1,14 +1,17 @@
+import 'package:app/domain/usecase/challenge/GetChallengeUseCase.dart';
 import 'package:app/domain/usecase/user/IsLoggedInUseCase.dart';
 import 'package:app/domain/usecase/user/LogOutUseCase.dart';
 import 'package:app/domain/usecase/user/LoginUseCase.dart';
 import 'package:app/domain/usecase/user/MyInfoUseCase.dart';
 import 'package:http/http.dart' as http;
 
+import 'data/ChallengeRepository.dart';
 import 'data/LocalRepository.dart';
 import 'data/LoginRepository.dart';
 import 'data/PostRepository.dart';
 import 'data/RankingRepository.dart';
 import 'data/UserRepository.dart';
+import 'domain/usecase/challenge/SubmitChallengeAnswers.dart';
 import 'domain/usecase/post/CreatePostUseCase.dart';
 import 'domain/usecase/post/DeletePostUseCase.dart';
 import 'domain/usecase/tournament/GetRankingUseCase.dart';
@@ -29,6 +32,7 @@ final loginRepository = LoginRepository(baseURL + "/login", apiKey);
 final userRepository = UserRepository(baseURL + "/user", apiKey);
 final postRepository = PostRepository(baseURL + "/post", apiKey);
 final rankingRepository = RankingRepository(baseURL + "/ranking", apiKey);
+final challengeRepository = ChallengeRepository(baseURL + "/challenge", apiKey);
 final localRepository = LocalRepository();
 // Use Cases
 final loginUseCase = LoginUseCase(loginRepository, localRepository);
@@ -45,3 +49,5 @@ final setUserDescriptionUseCase =
     SetUserDescriptionUseCase(localRepository, userRepository);
 final setUserInstagramUseCase =
     SetUserInstagramUseCase(localRepository, userRepository);
+final getChallengeUseCase = GetChallengeUseCase(localRepository, challengeRepository);
+final submitChallengeAnswersUseCase = SubmitChallengeAnswersUseCase(localRepository, challengeRepository);

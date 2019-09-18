@@ -1,3 +1,4 @@
+import 'package:app/presentation/pages/challenge/View.dart';
 import 'package:app/presentation/pages/create-post/View.dart';
 import 'package:app/presentation/pages/edit-profile/View.dart';
 import 'package:app/presentation/pages/home/View.dart';
@@ -28,6 +29,8 @@ class MyApp extends StatelessWidget {
         return MainRoute(EditProfilePage(), settings: settings);
       case AppRoutes.createPost:
         return MainRoute(CreatePostPage(), settings: settings);
+      case AppRoutes.challenge:
+        return MainRoute(ChallengePage(), settings: settings);
       default:
         return MainRoute(SplashPage(), settings: settings);
     }
@@ -51,5 +54,6 @@ class AppRoutes {
   static const home = "/home";
   static const editProfile = "/editProfile";
   static const createPost = "/createPost";
+  static const challenge = "/challenge";
   static const login = "/login";
 }

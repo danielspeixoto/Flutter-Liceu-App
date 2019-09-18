@@ -11,7 +11,7 @@ class FetcherWidget extends StatelessWidget {
   final String errorMessage;
   final Widget Function() child;
 
-  FetcherWidget({this.isLoading, this.errorMessage, this.child});
+  FetcherWidget({this.isLoading, this.errorMessage="", this.child});
 
   @override
   Widget build(BuildContext context) {

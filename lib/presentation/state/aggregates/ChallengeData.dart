@@ -1,20 +1,11 @@
-import 'package:app/domain/aggregates/Challenge.dart';
-import 'package:app/domain/aggregates/User.dart';
+import 'TriviaData.dart';
 
 class ChallengeData {
   final String id;
-  final User challenger;
-  final User challenged;
-  final int scoreChallenger;
-  final int scoreChallenged;
-  final List<Trivia> questions;
+  final List<TriviaData> questions;
 
   ChallengeData(
     this.id,
-    this.challenger,
-    this.challenged,
-    this.scoreChallenged,
-    this.scoreChallenger,
     this.questions,
   );
 }

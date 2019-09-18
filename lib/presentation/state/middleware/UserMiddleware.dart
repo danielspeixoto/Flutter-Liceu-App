@@ -1,5 +1,5 @@
 import 'package:app/domain/boundary/UserBoundary.dart';
-import 'package:app/presentation/state/aggregates/ChallengeData.dart';
+import 'package:app/presentation/state/aggregates/ChallengeHistoryData.dart';
 import 'package:app/presentation/state/actions/PostActions.dart';
 import 'package:app/presentation/state/actions/UserActions.dart';
 import 'package:app/presentation/state/navigator/NavigatorActions.dart';
@@ -50,7 +50,7 @@ class UserMiddleware extends MiddlewareClass<AppState> {
           final challenged = challenge.challenged == null
               ? null
               : await _getUserById.run(challenge.challenged);
-          return ChallengeData(
+          return ChallengeHistoryData(
             challenge.id,
             challenger,
             challenged,

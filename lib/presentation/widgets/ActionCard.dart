@@ -5,13 +5,14 @@ class ActionCard extends StatelessWidget {
 
   final IconData iconData;
   final String title;
+  final Function onPressed;
 
-  ActionCard(this.iconData, this.title);
+  ActionCard(this.iconData, this.title, this.onPressed);
 
   @override
   Widget build(BuildContext context) => FlatButton(
     padding: EdgeInsets.all(0),
-    onPressed: () {},
+    onPressed: this.onPressed,
     child: Card(
           child: Container(
             child: Row(
