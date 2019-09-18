@@ -1,7 +1,7 @@
 import 'package:app/domain/boundary/LoginBoundary.dart';
 import 'package:app/domain/boundary/UserBoundary.dart';
-import 'package:app/presentation/redux/actions/LoginActions.dart';
-import 'package:app/presentation/redux/navigator/NavigatorActions.dart';
+import 'package:app/presentation/state/actions/LoginActions.dart';
+import 'package:app/presentation/state/navigator/NavigatorActions.dart';
 import 'package:redux/redux.dart';
 
 import '../../app.dart';
@@ -27,6 +27,7 @@ class LoginMiddleware extends MiddlewareClass<AppState> {
       }).catchError((e) {
         print(e);
       });
+//
     } else if (action is LoginAction) {
       store.dispatch(IsLoggingInAction());
       _loginUseCase.run(action.accessToken, action.method).then((_) {
@@ -37,6 +38,7 @@ class LoginMiddleware extends MiddlewareClass<AppState> {
           print(e);
         },
       );
+//
     } else if (action is CheckIfIsLoggedInAction) {
       store.dispatch(IsLoggingInAction());
       _isLoggedInUseCase.run().then((isLogged) {
@@ -49,8 +51,10 @@ class LoginMiddleware extends MiddlewareClass<AppState> {
         print(e);
         store.dispatch(NotLoggedInAction());
       });
+//
     } else if (action is LoginSuccessAction) {
       store.dispatch(NavigateReplaceAction(AppRoutes.home));
+//
     } else if (action is NotLoggedInAction) {
       store.dispatch(NavigateReplaceAction(AppRoutes.login));
     }

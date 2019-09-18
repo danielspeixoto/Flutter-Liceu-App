@@ -1,6 +1,6 @@
-import 'package:app/presentation/aggregates/ChallengeData.dart';
-import 'package:app/presentation/redux/app_state.dart';
-import 'package:app/presentation/redux/reducers/Data.dart';
+import 'package:app/presentation/state/aggregates/ChallengeData.dart';
+import 'package:app/presentation/state/app_state.dart';
+import 'package:app/presentation/state/reducers/Data.dart';
 import 'package:redux/redux.dart';
 
 class GameViewModel {

@@ -1,4 +1,4 @@
-import 'package:app/presentation/redux/app_state.dart';
+import 'package:app/presentation/state/app_state.dart';
 import 'package:app/presentation/widgets/ActionCard.dart';
 import 'package:app/presentation/widgets/LiceuDivider.dart';
 import 'package:app/presentation/widgets/LiceuScaffold.dart';
@@ -48,6 +48,7 @@ class GamePage extends StatelessWidget {
                                 color: Colors.white),
                           ),
                         ),
+
                         viewModel.challenges.content == null
                             ? Container()
                             : Container(

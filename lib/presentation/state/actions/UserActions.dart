@@ -1,7 +1,6 @@
-import 'package:app/domain/aggregates/Challenge.dart';
 import 'package:app/domain/aggregates/Post.dart';
 import 'package:app/domain/aggregates/User.dart';
-import 'package:app/presentation/aggregates/ChallengeData.dart';
+import 'package:app/presentation/state/aggregates/ChallengeData.dart';
 
 import '../../constants.dart';
 
@@ -29,12 +28,6 @@ class FetchingUserErrorAction {
   final String error;
 
   FetchingUserErrorAction({this.error = DEFAULT_ERROR_MESSAGE});
-}
-
-class CacheUserAction {
-  final User user;
-
-  CacheUserAction(this.user);
 }
 
 class SetUserPostsAction {

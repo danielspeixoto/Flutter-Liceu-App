@@ -1,4 +1,4 @@
-import 'package:app/presentation/redux/actions/LoginActions.dart';
+import 'package:app/presentation/state/actions/LoginActions.dart';
 import 'package:redux/redux.dart';
 
 import 'Data.dart';

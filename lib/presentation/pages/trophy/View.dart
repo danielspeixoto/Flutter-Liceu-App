@@ -1,11 +1,10 @@
-import 'package:app/presentation/redux/app_state.dart';
-import 'package:app/presentation/widgets/ActionCard.dart';
+import 'package:app/presentation/state/app_state.dart';
+import 'package:app/presentation/widgets/FetcherWidget.dart';
 import 'package:app/presentation/widgets/LiceuDivider.dart';
 import 'package:app/presentation/widgets/LiceuScaffold.dart';
 import 'package:app/presentation/widgets/RankingPosition.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 import 'ViewModel.dart';
@@ -36,20 +35,23 @@ class TrophyPage extends StatelessWidget {
                     textAlign: TextAlign.center,
                   ),
                 ),
-                Card(
-                  child: Column(
-                    children: <Widget>[
-                      RankingPosition(),
-                      LiceuDivider(),
-                      RankingPosition(),
-                      LiceuDivider(),
-                      RankingPosition(),
-                      LiceuDivider(),
-                      RankingPosition(),
-                      LiceuDivider(),
-                      RankingPosition(),
-                    ],
-                  ),
+                FetcherWidget(
+                  isLoading: viewModel.rankingData.isLoading,
+                  errorMessage: viewModel.rankingData.errorMessage,
+                  child: () {
+                    return Card(
+                      child: Column(
+                          children:
+                              viewModel.rankingData.content.map((game) {
+                        return Column(
+                          children: <Widget>[
+                            RankingPosition(game),
+                            LiceuDivider(),
+                          ],
+                        );
+                      }).toList()),
+                    );
+                  },
                 ),
               ],
             ),

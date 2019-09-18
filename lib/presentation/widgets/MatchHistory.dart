@@ -1,5 +1,5 @@
 import 'package:app/domain/aggregates/User.dart';
-import 'package:app/presentation/aggregates/ChallengeData.dart';
+import 'package:app/presentation/state/aggregates/ChallengeData.dart';
 import 'package:app/presentation/widgets/RoundedImage.dart';
 import 'package:flutter/material.dart';
 
@@ -11,14 +11,18 @@ class MatchHistory extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Row(
         children: <Widget>[
-          user(context, challenge.challenger),
+          Expanded(child: user(context, challenge.challenger)),
           Expanded(
             child: Text(
-              "4 X 4",
+              challenge.scoreChallenger.toString() +
+                  "   X   " +
+                  (challenge.scoreChallenged == null
+                      ? "-"
+                      : challenge.scoreChallenged.toString()),
               textAlign: TextAlign.center,
             ),
           ),
-          user(context, challenge.challenged)
+          Expanded(child: user(context, challenge.challenged))
         ],
       );
 

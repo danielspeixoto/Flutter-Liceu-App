@@ -1,7 +1,7 @@
 import 'package:app/domain/aggregates/Challenge.dart';
 import 'package:app/domain/aggregates/Post.dart';
-import 'package:app/presentation/aggregates/ChallengeData.dart';
-import 'package:app/presentation/aggregates/TriviaData.dart';
+import 'package:app/presentation/state/aggregates/ChallengeData.dart';
+import 'package:app/presentation/state/aggregates/TriviaData.dart';
 import 'package:redux/redux.dart';
 
 import 'Data.dart';

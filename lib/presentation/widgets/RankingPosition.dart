@@ -1,25 +1,29 @@
+import 'package:app/presentation/pages/trophy/ViewModel.dart';
 import 'package:app/presentation/widgets/RoundedImage.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class RankingPosition extends StatelessWidget {
-  RankingPosition();
+
+  final TrophyEntry game;
+
+  RankingPosition(this.game);
 
   @override
   Widget build(BuildContext context) => Container(
         padding: EdgeInsets.all(8),
         child: Row(
           children: <Widget>[
-            Text("1º"),
+            Text(game.position.toString() + "º"),
             Container(
               margin: EdgeInsets.all(8),
               child: RoundedImage(
                 pictureURL:
-                    "https://static.thenounproject.com/png/17241-200.png",
+                    game.pictureURL,
                 size: 36,
               ),
             ),
-            Text("Daniel Peixoto"),
+            Text(game.name),
             Spacer(),
             Column(
               children: <Widget>[
@@ -29,7 +33,7 @@ class RankingPosition extends StatelessWidget {
                       Icon(FontAwesomeIcons.check),
                       Container(
                         margin: EdgeInsets.all(8),
-                        child: Text("3"),
+                        child: Text(game.score),
                       ),
                     ],
                   ),
@@ -40,7 +44,7 @@ class RankingPosition extends StatelessWidget {
                       Icon(FontAwesomeIcons.clock),
                       Container(
                         margin: EdgeInsets.all(8),
-                        child: Text("3:01"),
+                        child: Text(game.timeSpent),
                       ),
                     ],
                   ),

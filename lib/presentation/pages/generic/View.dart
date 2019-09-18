@@ -1,4 +1,4 @@
-import 'package:app/presentation/redux/app_state.dart';
+import 'package:app/presentation/state/app_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'ViewModel.dart';

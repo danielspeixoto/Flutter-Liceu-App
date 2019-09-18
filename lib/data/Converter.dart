@@ -1,7 +1,9 @@
 import 'dart:convert';
 
 import 'package:app/domain/aggregates/Challenge.dart';
+import 'package:app/domain/aggregates/Game.dart';
 import 'package:app/domain/aggregates/Post.dart';
+import 'package:app/domain/aggregates/Ranking.dart';
 import 'package:app/domain/aggregates/User.dart';
 
 User fromJsonToUser(String content) {
@@ -81,5 +83,28 @@ Post fromMapToPost(data) {
     data["description"],
 //    TODO: Convert string representation do DateTime
 //    data["submissionDate"]
+  );
+}
+
+Ranking fromJsonToRanking(content) {
+  final data = (json.decode(content) as List).cast<Map<String, dynamic>>();
+  final result = data.map((d) => fromMapToGame(d)).toList();
+  return Ranking(result);
+}
+
+Game fromMapToGame(data) {
+  return Game(
+    data["id"],
+    data["userId"],
+    List<Answer>.generate(data["answers"].length, (i) => fromMapToAnswer(data["answers"][i])),
+    data["timeSpent"],
+  );
+}
+
+Answer fromMapToAnswer(data) {
+  return Answer(
+    data["questionId"],
+    data["correctAnswer"],
+    data["selectedAnswer"],
   );
 }

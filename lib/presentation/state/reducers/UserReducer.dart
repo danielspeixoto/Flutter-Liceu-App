@@ -1,9 +1,9 @@
 import 'package:app/domain/aggregates/Challenge.dart';
 import 'package:app/domain/aggregates/Post.dart';
 import 'package:app/domain/aggregates/User.dart';
-import 'package:app/presentation/aggregates/ChallengeData.dart';
-import 'package:app/presentation/redux/actions/PostActions.dart';
-import 'package:app/presentation/redux/actions/UserActions.dart';
+import 'package:app/presentation/state/aggregates/ChallengeData.dart';
+import 'package:app/presentation/state/actions/PostActions.dart';
+import 'package:app/presentation/state/actions/UserActions.dart';
 import 'package:redux/redux.dart';
 
 import 'Data.dart';

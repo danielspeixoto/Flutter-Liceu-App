@@ -1,11 +1,11 @@
 import 'package:app/domain/aggregates/Post.dart';
 import 'package:app/domain/aggregates/User.dart';
-import 'package:app/presentation/redux/actions/LoginActions.dart';
-import 'package:app/presentation/redux/actions/PostActions.dart';
-import 'package:app/presentation/redux/actions/UserActions.dart';
-import 'package:app/presentation/redux/app_state.dart';
-import 'package:app/presentation/redux/navigator/NavigatorActions.dart';
-import 'package:app/presentation/redux/reducers/Data.dart';
+import 'package:app/presentation/state/actions/LoginActions.dart';
+import 'package:app/presentation/state/actions/PostActions.dart';
+import 'package:app/presentation/state/actions/UserActions.dart';
+import 'package:app/presentation/state/app_state.dart';
+import 'package:app/presentation/state/navigator/NavigatorActions.dart';
+import 'package:app/presentation/state/reducers/Data.dart';
 import 'package:app/presentation/util/text.dart';
 import 'package:redux/redux.dart';
 import 'package:share/share.dart';
