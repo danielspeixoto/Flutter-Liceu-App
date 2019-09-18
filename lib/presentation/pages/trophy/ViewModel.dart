@@ -40,12 +40,17 @@ class TrophyViewModel {
                     }
                   });
 
+                  var seconds = (game.timeSpent % 60).floor().toString();
+                  if(seconds.length == 1) {
+                    seconds = "0" + seconds;
+                  }
+
                   return TrophyEntry(
                     summarize(game.user.name, 25),
                     game.user.picURL,
                     (game.timeSpent / 60).floor().toString() +
                         ":" +
-                        (game.timeSpent % 60).floor().toString(),
+                        seconds,
                     score.toString(),
                     position++
                   );
