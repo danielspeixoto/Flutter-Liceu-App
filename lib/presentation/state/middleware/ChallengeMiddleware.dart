@@ -1,6 +1,7 @@
 import 'package:app/domain/boundary/ChallengeBoundary.dart';
 import 'package:app/domain/boundary/UserBoundary.dart';
 import 'package:app/presentation/state/actions/ChallengeActions.dart';
+import 'package:app/presentation/state/actions/UserActions.dart';
 import 'package:app/presentation/state/aggregates/ChallengeData.dart';
 import 'package:app/presentation/state/aggregates/TriviaData.dart';
 import 'package:app/presentation/state/navigator/NavigatorActions.dart';
@@ -58,6 +59,7 @@ List<Middleware<AppState>> challengeMiddleware(
       store.dispatch(NavigatePopAction());
       await submitChallengeAnswersUseCase.run(
           challengeState.challenge.content.id, challengeState.answers);
+      store.dispatch(FetchMyChallengesAction());
     } catch (e) {
       print(e);
     }

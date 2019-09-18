@@ -1,0 +1,64 @@
+{
+  "project_info": {
+    "project_number": "891493215578",
+    "firebase_url": "https://deffish-703b8.firebaseio.com",
+    "project_id": "deffish-703b8",
+    "storage_bucket": "deffish-703b8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:891493215578:android:65c6fe4a94422d80",
+        "android_client_info": {
+          "package_name": "com.deffish"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "891493215578-2b6ebt4nv2ku2oakehknt3632on8tmqn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.deffish",
+            "certificate_hash": "e3a55400b7ffc31a78894ffb40c1feb989ad4751"
+          }
+        },
+        {
+          "client_id": "891493215578-pg9r42odgqu3lsphh45bfphvtqra6q3o.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.deffish",
+            "certificate_hash": "386269258a8747be57f8402ce4d4931b64d42d8b"
+          }
+        },
+        {
+          "client_id": "891493215578-khn55e9sjpnmiql9a4ej5is1h8g55q2h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAofkfL1ml3vS9twpUDlut2jtQqK2qpfMI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "891493215578-khn55e9sjpnmiql9a4ej5is1h8g55q2h.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "891493215578-auk7gtabk3mdofcj3mfc2tc91vqkmqk9.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.deffish",
+                "app_store_id": "1458243226"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

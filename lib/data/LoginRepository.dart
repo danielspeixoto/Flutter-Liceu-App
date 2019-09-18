@@ -16,7 +16,10 @@ class LoginRepository implements ILoginRepository {
   Future<String> auth(String accessCode, String method) async {
     var response = await http.post(_url,
         headers: {"API_KEY": _apiKey, "Content-Type": "application/json"},
-        body: json.encode({"accessToken": accessCode}));
+        body: json.encode({
+          "accessToken": accessCode,
+          "method": method,
+        }));
 
     if (response.statusCode == 200 &&
         response.headers.containsKey(authHeader)) {

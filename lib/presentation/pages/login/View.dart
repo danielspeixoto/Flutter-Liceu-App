@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'ViewModel.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 final List<String> imgList = [
   "assets/opinion0.jpeg",
@@ -57,7 +59,22 @@ class LoginPage extends StatelessWidget {
                   } catch (e) {
                     print(e);
                   }
-                })
+                }),
+                FlatButton(
+                  child: Icon(FontAwesomeIcons.google, color: Colors.white,),
+                  onPressed: () async {
+                    GoogleSignIn _googleSignIn = GoogleSignIn(
+                      scopes: [
+                        'email'
+                      ],
+                    );
+                    final account = await _googleSignIn.signIn();
+                    final auth = (await account.authentication);
+                    final token = auth.idToken;
+
+                    viewModel.login(token, "google");
+                  },
+                )
               ]);
             }
             return Scaffold(
