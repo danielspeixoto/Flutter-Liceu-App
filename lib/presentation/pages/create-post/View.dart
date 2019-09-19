@@ -1,3 +1,4 @@
+import 'package:app/presentation/state/actions/PageActions.dart';
 import 'package:app/presentation/state/app_state.dart';
 import 'package:app/presentation/widgets/LiceuPage.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +12,7 @@ class CreatePostPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) =>
       StoreConnector<AppState, CreatePostViewModel>(
+          onInit: (store) => store.dispatch(PageInitAction("create_post")),
           converter: (store) => CreatePostViewModel.create(store),
           builder: (BuildContext context, CreatePostViewModel viewModel) {
             return LiceuPage(

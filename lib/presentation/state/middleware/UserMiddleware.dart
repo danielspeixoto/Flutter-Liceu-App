@@ -3,6 +3,7 @@ import 'package:app/presentation/state/aggregates/ChallengeHistoryData.dart';
 import 'package:app/presentation/state/actions/PostActions.dart';
 import 'package:app/presentation/state/actions/UserActions.dart';
 import 'package:app/presentation/state/navigator/NavigatorActions.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:redux/redux.dart';
 
 import '../../app.dart';
@@ -15,6 +16,7 @@ class UserMiddleware extends MiddlewareClass<AppState> {
   final ISetUserInstagramUseCase setUserInstagramUseCase;
   final IMyChallengesUseCase _myChallengesUseCase;
   final IGetUserByIdUseCase _getUserById;
+  final analytics = FirebaseAnalytics();
 
   UserMiddleware(
     this._myInfoUseCase,
@@ -89,6 +91,8 @@ class UserMiddleware extends MiddlewareClass<AppState> {
       } catch (e) {
         print(e);
       }
+    } else if (action is SetUserAction) {
+      analytics.setUserProperty(name: "name", value: action.user.name);
     }
     next(action);
   }

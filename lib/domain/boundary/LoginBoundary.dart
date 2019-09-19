@@ -3,5 +3,5 @@ abstract class ILoginRepository {
 }
 
 abstract class ILoginUseCase {
-  Future<void> run(String accessCode, String method);
+  Future<String> run(String accessCode, String method);
 }

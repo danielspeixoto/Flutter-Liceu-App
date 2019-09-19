@@ -1,3 +1,4 @@
+import 'package:app/presentation/state/actions/PageActions.dart';
 import 'package:app/presentation/state/app_state.dart';
 import 'package:app/presentation/widgets/ActionCard.dart';
 import 'package:app/presentation/widgets/ChallegeAnswerCard.dart';
@@ -16,6 +17,7 @@ class ChallengePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) =>
       StoreConnector<AppState, ChallengeViewModel>(
+          onInit: (store) => store.dispatch(PageInitAction("challenge")),
           converter: (store) => ChallengeViewModel.create(store),
           builder: (BuildContext context, ChallengeViewModel viewModel) {
             return LiceuPage(

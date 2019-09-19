@@ -7,6 +7,7 @@ import 'package:redux/redux.dart';
 import 'package:redux_logging/redux_logging.dart';
 
 import '../../injection.dart';
+import 'middleware/AnalyticsMiddleware.dart';
 import 'middleware/ChallengeMiddleware.dart';
 import 'middleware/LoginMiddleware.dart';
 import 'middleware/PostMiddleware.dart';
@@ -56,6 +57,7 @@ final Store<AppState> store = Store<AppState>(
   initialState: AppState.initial(),
   middleware: [
     new LoggingMiddleware.printer(),
+    AnalyticsMiddleware(),
     LoginMiddleware(
       logoutUseCase,
       loginUseCase,

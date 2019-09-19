@@ -1,3 +1,4 @@
+import 'package:app/presentation/state/actions/PageActions.dart';
 import 'package:app/presentation/state/app_state.dart';
 import 'package:app/presentation/widgets/FetcherWidget.dart';
 import 'package:app/presentation/widgets/LiceuDivider.dart';
@@ -25,6 +26,7 @@ class ProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) =>
       StoreConnector<AppState, ProfileViewModel>(
+        onInit: (store) => store.dispatch(PageInitAction("profile")),
         converter: (store) => ProfileViewModel.create(store),
         builder: (BuildContext context, ProfileViewModel viewModel) {
           final user = viewModel.user.content;
@@ -169,7 +171,11 @@ class ProfilePage extends StatelessWidget {
                                       userPic: user.picURL,
                                       postContent: post.text,
                                       onSharePressed: () {
-                                        viewModel.onSharePostPressed(post.text);
+                                        viewModel.onSharePostPressed(
+                                          post.id,
+                                          post.type,
+                                          post.text,
+                                        );
                                       },
                                       onDeletePressed: () => viewModel
                                           .onDeletePostPressed(post.id),

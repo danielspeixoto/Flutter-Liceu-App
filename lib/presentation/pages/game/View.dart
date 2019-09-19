@@ -1,4 +1,5 @@
 import 'package:app/presentation/state/actions/ChallengeActions.dart';
+import 'package:app/presentation/state/actions/PageActions.dart';
 import 'package:app/presentation/state/app_state.dart';
 import 'package:app/presentation/widgets/ActionCard.dart';
 import 'package:app/presentation/widgets/FetcherWidget.dart';
@@ -19,6 +20,7 @@ class GamePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => StoreConnector<AppState, GameViewModel>(
+    onInit: (store) => store.dispatch(PageInitAction("game")),
         converter: (store) => GameViewModel.create(store),
         builder: (BuildContext context, GameViewModel viewModel) {
           return LiceuScaffold(

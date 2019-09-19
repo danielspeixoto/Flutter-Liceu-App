@@ -1,6 +1,7 @@
 import 'package:app/presentation/pages/game/View.dart';
 import 'package:app/presentation/pages/profile/View.dart';
 import 'package:app/presentation/pages/trophy/View.dart';
+import 'package:app/presentation/state/actions/PageActions.dart';
 import 'package:app/presentation/state/actions/TournamentActions.dart';
 import 'package:app/presentation/state/actions/UserActions.dart';
 import 'package:app/presentation/state/app_state.dart';
@@ -11,12 +12,10 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'ViewModel.dart';
 
 class HomePage extends StatelessWidget {
-
   HomePage();
 
   @override
   Widget build(BuildContext context) {
-
     return StoreConnector<AppState, HomeViewModel>(
       onInit: (store) {
         store.dispatch(FetchMyInfoAction());

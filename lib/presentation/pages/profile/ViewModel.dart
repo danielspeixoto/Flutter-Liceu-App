@@ -20,7 +20,7 @@ class ProfileViewModel {
   final Function() onLogoutPressed;
   final Function() refresh;
   final Function(String postId) onDeletePostPressed;
-  final Function(String text) onSharePostPressed;
+  final Function(String postId, String type, String text) onSharePostPressed;
 
   ProfileViewModel({
     this.user,
@@ -53,7 +53,8 @@ class ProfileViewModel {
       onDeletePostPressed: (String postId) {
         store.dispatch(DeletePostAction(postId));
       },
-      onSharePostPressed: (String text) {
+      onSharePostPressed: (String postId, String type, String text) {
+        analytics.logShare(contentType: type, itemId: postId, method: "copy");
         Share.share(summarize(text, 300) +
             "\n\nConfira mais no nosso app!\nhttps://bit.ly/BaixarLiceu");
       },

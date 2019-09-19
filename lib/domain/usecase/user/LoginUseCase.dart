@@ -8,9 +8,10 @@ class LoginUseCase implements ILoginUseCase {
   LoginUseCase(this._loginRepository, this._localRepository);
 
   @override
-  Future<void> run(String accessCode, String method) async {
+  Future<String> run(String accessCode, String method) async {
     var serverAccessToken =
         await this._loginRepository.auth(accessCode, method);
     await this._localRepository.saveCredentials(serverAccessToken);
+    return await this._localRepository.getId();
   }
 }

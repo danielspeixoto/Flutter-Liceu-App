@@ -5,10 +5,13 @@ import 'package:app/presentation/state/actions/UserActions.dart';
 import 'package:app/presentation/state/aggregates/ChallengeData.dart';
 import 'package:app/presentation/state/aggregates/TriviaData.dart';
 import 'package:app/presentation/state/navigator/NavigatorActions.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:redux/redux.dart';
 
 import '../../app.dart';
 import '../app_state.dart';
+
+final analytics = FirebaseAnalytics();
 
 List<Middleware<AppState>> challengeMiddleware(
   IGetChallengeUseCase getChallengeUseCase,
@@ -56,7 +59,14 @@ List<Middleware<AppState>> challengeMiddleware(
     next(action);
     final challengeState = store.state.challengeState;
     try {
+      var score = 0;
+      for(var i = 0; i < challengeState.challenge.content.questions.length; i++) {
+        if(challengeState.challenge.content.questions[i].correctAnswer == challengeState.answers[i]) {
+          score++;
+        }
+      }
       store.dispatch(NavigatePopAction());
+      analytics.logPostScore(score: score);
       await submitChallengeAnswersUseCase.run(
           challengeState.challenge.content.id, challengeState.answers);
       store.dispatch(FetchMyChallengesAction());

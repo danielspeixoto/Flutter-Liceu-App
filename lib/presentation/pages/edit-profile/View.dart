@@ -1,3 +1,4 @@
+import 'package:app/presentation/state/actions/PageActions.dart';
 import 'package:app/presentation/state/app_state.dart';
 import 'package:app/presentation/widgets/LiceuPage.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +10,7 @@ class EditProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) =>
       StoreConnector<AppState, EditProfileViewModel>(
+          onInit: (store) => store.dispatch(PageInitAction("edit_profile")),
           converter: (store) => EditProfileViewModel.create(store),
           builder: (BuildContext context, EditProfileViewModel viewModel) {
 //            Bio Controller

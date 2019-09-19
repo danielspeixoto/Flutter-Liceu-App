@@ -7,10 +7,12 @@ import 'package:app/presentation/pages/splash/View.dart';
 import 'package:app/presentation/state/app_state.dart';
 import 'package:app/presentation/state/navigator/RouteObserver.dart';
 import 'package:app/presentation/state/navigator/routes/MainRoute.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = new GlobalKey<NavigatorState>();
+final analytics = FirebaseAnalytics();
 
 class MyApp extends StatelessWidget {
 
@@ -36,17 +38,21 @@ class MyApp extends StatelessWidget {
     }
   }
 
+
   @override
-  Widget build(BuildContext context) => StoreProvider(
-      store: store,
-      child: MaterialApp(
-        title: 'Liceu',
-        theme: ThemeData(
-            primaryColorDark: Colors.black, primaryColor: Colors.black),
-        navigatorKey: navigatorKey,
-        navigatorObservers: [routeObserver],
-        onGenerateRoute: (RouteSettings settings) => _getRoute(settings),
-      ));
+  Widget build(BuildContext context) {
+    final analytics = FirebaseAnalytics();
+    return StoreProvider(
+        store: store,
+        child: MaterialApp(
+          title: 'Liceu',
+          theme: ThemeData(
+              primaryColorDark: Colors.black, primaryColor: Colors.black),
+          navigatorKey: navigatorKey,
+          navigatorObservers: [routeObserver],
+          onGenerateRoute: (RouteSettings settings) => _getRoute(settings),
+        ));
+  }
 }
 
 class AppRoutes {

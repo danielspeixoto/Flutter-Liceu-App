@@ -1,3 +1,4 @@
+import 'package:app/presentation/state/actions/PageActions.dart';
 import 'package:app/presentation/state/app_state.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
@@ -19,6 +20,7 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) =>
       StoreConnector<AppState, LoginViewModel>(
+          onInit: (store) => store.dispatch(PageInitAction("login")),
           converter: (store) => LoginViewModel.create(store),
           builder: (BuildContext context, LoginViewModel viewModel) {
             Widget child = CircularProgressIndicator();
@@ -48,7 +50,7 @@ class LoginPage extends StatelessWidget {
                         text: "Entrar com Google",
                         onPressed: () async {
                           GoogleSignIn _googleSignIn = GoogleSignIn(
-                            scopes: ['email'],
+                            scopes: ['email', "profile", "https://www.googleapis.com/auth/userinfo.profile"],
                           );
                           final account = await _googleSignIn.signIn();
                           final auth = (await account.authentication);
