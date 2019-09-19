@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'ViewModel.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+
+import 'ViewModel.dart';
 
 final List<String> imgList = [
   "assets/opinion0.jpeg",
@@ -37,51 +37,58 @@ class LoginPage extends StatelessWidget {
                         .toList(),
                   ),
                 ),
-                SignInButton(Buttons.Facebook, text: "Entrar com Facebook",
-                    onPressed: () async {
-                  try {
-                    final facebookLogin = FacebookLogin();
-                    final result =
-                        await facebookLogin.logInWithReadPermissions(['email']);
-                    switch (result.status) {
-                      case FacebookLoginStatus.loggedIn:
-                        var token = result.accessToken.token;
-                        viewModel.login(token, "facebook");
-                        break;
-                      case FacebookLoginStatus.cancelledByUser:
-                        print("cancelled");
-                        break;
-                      case FacebookLoginStatus.error:
-                        print("error");
-                        print(result.errorMessage);
-                        break;
-                    }
-                  } catch (e) {
-                    print(e);
-                  }
-                }),
-                FlatButton(
-                  child: Icon(FontAwesomeIcons.google, color: Colors.white,),
-                  onPressed: () async {
-                    GoogleSignIn _googleSignIn = GoogleSignIn(
-                      scopes: [
-                        'email'
-                      ],
-                    );
-                    final account = await _googleSignIn.signIn();
-                    final auth = (await account.authentication);
-                    final token = auth.idToken;
+                Container(
+                  width: double.infinity,
+                  padding: EdgeInsets.all(4),
 
-                    viewModel.login(token, "google");
-                  },
-                )
+                  child: Column(
+                    children: <Widget>[
+                      SignInButton(
+                        Buttons.GoogleDark,
+                        text: "Entrar com Google",
+                        onPressed: () async {
+                          GoogleSignIn _googleSignIn = GoogleSignIn(
+                            scopes: ['email'],
+                          );
+                          final account = await _googleSignIn.signIn();
+                          final auth = (await account.authentication);
+                          final token = auth.idToken;
+
+                          viewModel.login(token, "google");
+                        },
+                      ),
+                      SignInButton(Buttons.Facebook,
+                          text: "Entrar com Facebook", onPressed: () async {
+                        try {
+                          final facebookLogin = FacebookLogin();
+                          final result = await facebookLogin
+                              .logInWithReadPermissions(['email']);
+                          switch (result.status) {
+                            case FacebookLoginStatus.loggedIn:
+                              var token = result.accessToken.token;
+                              viewModel.login(token, "facebook");
+                              break;
+                            case FacebookLoginStatus.cancelledByUser:
+                              print("cancelled");
+                              break;
+                            case FacebookLoginStatus.error:
+                              print("error");
+                              print(result.errorMessage);
+                              break;
+                          }
+                        } catch (e) {
+                          print(e);
+                        }
+                      }),
+                    ],
+                  ),
+                ),
               ]);
             }
             return Scaffold(
               body: Container(
                 child: Center(child: child),
                 color: new Color(0xFF0061A1),
-                padding: EdgeInsets.all(8),
               ),
             );
           });
