@@ -6,7 +6,7 @@ import 'package:redux/redux.dart';
 
 import 'Data.dart';
 
-const TRIVIA_TIME_TO_ANSWER = 3;
+const TRIVIA_TIME_TO_ANSWER = 10;
 
 class ChallengeState {
   final Data<ChallengeData> challenge;
@@ -52,7 +52,7 @@ final Reducer<ChallengeState> challengeReducer =
     combineReducers<ChallengeState>([
   TypedReducer<ChallengeState, StartChallengeAction>(startChallenge),
   TypedReducer<ChallengeState, NextTriviaAction>(nextTrivia),
-  TypedReducer<ChallengeState, GetChallengeAction>(resetChallenge),
+  TypedReducer<ChallengeState, ChallengeAction>(resetChallenge),
   TypedReducer<ChallengeState, AnswerTriviaAction>(answerTrivia),
   TypedReducer<ChallengeState, TriviaTimerDecrementAction>(decrementTime),
 ]);
@@ -69,7 +69,7 @@ ChallengeState startChallenge(
   );
 }
 
-ChallengeState resetChallenge(ChallengeState state, GetChallengeAction action) {
+ChallengeState resetChallenge(ChallengeState state, ChallengeAction action) {
   return state.copyWith(challenge: Data(isLoading: true));
 }
 

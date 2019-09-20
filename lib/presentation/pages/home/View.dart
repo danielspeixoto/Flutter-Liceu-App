@@ -1,7 +1,9 @@
+import 'package:app/presentation/pages/explore/View.dart';
 import 'package:app/presentation/pages/game/View.dart';
 import 'package:app/presentation/pages/profile/View.dart';
 import 'package:app/presentation/pages/trophy/View.dart';
 import 'package:app/presentation/state/actions/PageActions.dart';
+import 'package:app/presentation/state/actions/PostActions.dart';
 import 'package:app/presentation/state/actions/TournamentActions.dart';
 import 'package:app/presentation/state/actions/UserActions.dart';
 import 'package:app/presentation/state/app_state.dart';
@@ -22,11 +24,12 @@ class HomePage extends StatelessWidget {
         store.dispatch(FetchMyPostsAction());
         store.dispatch(FetchMyChallengesAction());
         store.dispatch(FetchRankingAction());
+        store.dispatch(ExplorePostsAction());
       },
       converter: (store) => HomeViewModel.create(store),
       builder: (BuildContext context, HomeViewModel viewModel) {
         return DefaultTabController(
-          length: 3,
+          length: 4,
           child: Scaffold(
             bottomNavigationBar: Container(
               decoration: BoxDecoration(
@@ -36,6 +39,14 @@ class HomePage extends StatelessWidget {
               ),
               child: TabBar(
                 tabs: [
+                  Container(
+                    padding: EdgeInsets.all(8),
+                    child: Icon(
+                      FontAwesomeIcons.bookOpen,
+                      color: Colors.black,
+                      size: 18,
+                    ),
+                  ),
                   Container(
                     padding: EdgeInsets.all(8),
                     child: Icon(
@@ -65,6 +76,7 @@ class HomePage extends StatelessWidget {
             ),
             body: TabBarView(
               children: [
+                ExplorePage(),
                 GamePage(),
                 TrophyPage(),
                 ProfilePage(),

@@ -1,6 +1,7 @@
 import 'package:app/presentation/state/reducers/ChallengeReducer.dart';
 import 'package:app/presentation/state/reducers/EditMyInfoReducer.dart';
 import 'package:app/presentation/state/reducers/LoginReducer.dart';
+import 'package:app/presentation/state/reducers/PostsReducer.dart';
 import 'package:app/presentation/state/reducers/TournamentReducer.dart';
 import 'package:app/presentation/state/reducers/UserReducer.dart';
 import 'package:redux/redux.dart';
@@ -18,6 +19,7 @@ import 'navigator/NavigatorReducer.dart';
 
 class AppState {
   final UserState userState;
+  final PostState postState;
   final LoginState loginState;
   final TournamentState tournamentState;
   final EditMyInfoState editMyInfoState;
@@ -26,6 +28,7 @@ class AppState {
 
   AppState({
     this.userState,
+    this.postState,
     this.route,
     this.editMyInfoState,
     this.loginState,
@@ -36,16 +39,18 @@ class AppState {
   factory AppState.initial() => AppState(
         route: ["/"],
         userState: UserState.initial(),
+        postState: PostState.initial(),
         loginState: LoginState.initial(),
         tournamentState: TournamentState.initial(),
-    challengeState: ChallengeState.initial(),
-    editMyInfoState: EditMyInfoState.initial(),
+        challengeState: ChallengeState.initial(),
+        editMyInfoState: EditMyInfoState.initial(),
       );
 }
 
 AppState appReducer(AppState state, action) => AppState(
       route: navigationReducer(state.route, action),
       userState: userReducer(state.userState, action),
+      postState: postReducer(state.postState, action),
       loginState: loginReducer(state.loginState, action),
       tournamentState: tournamentReducer(state.tournamentState, action),
       challengeState: challengeReducer(state.challengeState, action),
@@ -74,6 +79,8 @@ final Store<AppState> store = Store<AppState>(
     ...postMiddleware(
       createPostUseCase,
       deletePostUseCase,
+      getExplorePostsUseCase,
+      getUserByIdUseCase,
     ),
     ...tournamentMiddleware(
       getRankingUseCase,

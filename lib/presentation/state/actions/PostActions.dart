@@ -1,4 +1,5 @@
 import 'package:app/domain/aggregates/Post.dart';
+import 'package:app/presentation/state/aggregates/PostData.dart';
 
 class DeletePostAction {
   final String postId;
@@ -14,5 +15,19 @@ class CreatePostAction {
 }
 
 class PostCreatedAction {
+
+}
+
+class ExplorePostsAction {
+
+}
+
+class ExplorePostsRetrievedAction {
+  final List<PostData> post;
+
+  ExplorePostsRetrievedAction(this.post);
+}
+
+class ExplorePostsErrorAction {
 
 }

@@ -12,8 +12,8 @@ class AnswerChallengeAction {
   AnswerChallengeAction(this.challengeId);
 }
 
-class GetChallengeAction {
-  GetChallengeAction();
+class ChallengeAction {
+  ChallengeAction();
 }
 
 class AnswerTriviaAction {

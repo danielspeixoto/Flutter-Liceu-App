@@ -18,7 +18,7 @@ List<Middleware<AppState>> challengeMiddleware(
   IGetUserByIdUseCase getUserByIdUseCase,
   ISubmitChallengeAnswersUseCase submitChallengeAnswersUseCase,
 ) {
-  void getRandomChallenge(Store<AppState> store, GetChallengeAction action,
+  void getRandomChallenge(Store<AppState> store, ChallengeAction action,
       NextDispatcher next) async {
     next(action);
     try {
@@ -114,7 +114,7 @@ List<Middleware<AppState>> challengeMiddleware(
   }
 
   return [
-    TypedMiddleware<AppState, GetChallengeAction>(getRandomChallenge),
+    TypedMiddleware<AppState, ChallengeAction>(getRandomChallenge),
     TypedMiddleware<AppState, AnswerTriviaAction>(onAnswer),
     TypedMiddleware<AppState, NextTriviaAction>(nextTriviaAction),
     TypedMiddleware<AppState, ChallengeFinishedAction>(onFinished),
