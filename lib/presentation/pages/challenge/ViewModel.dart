@@ -12,6 +12,9 @@ class ChallengeViewModel {
   final String answer2;
   final User author;
   final bool isLoading;
+  final int timeLeft;
+  final bool showAnswer;
+  final int correctAnswer;
 
   ChallengeViewModel({
     this.question,
@@ -20,6 +23,9 @@ class ChallengeViewModel {
     this.author,
     this.onAnswer,
     this.isLoading,
+    this.timeLeft,
+    this.showAnswer,
+    this.correctAnswer,
   });
 
   factory ChallengeViewModel.create(Store<AppState> store) {
@@ -29,14 +35,16 @@ class ChallengeViewModel {
       return ChallengeViewModel(isLoading: challenge.isLoading);
     }
     final trivia = content.questions[store.state.challengeState.currentQuestion];
-    final rand = Random().nextInt(2);
     return ChallengeViewModel(
       question: trivia.question,
-      answer1: rand == 0 ? trivia.correctAnswer : trivia.wrongAnswer,
-      answer2: rand == 0 ? trivia.wrongAnswer : trivia.correctAnswer,
+      answer1: store.state.challengeState.randomNum == 0 ? trivia.correctAnswer : trivia.wrongAnswer,
+      answer2: store.state.challengeState.randomNum == 0 ? trivia.wrongAnswer : trivia.correctAnswer,
       author: trivia.author,
       isLoading: challenge.isLoading,
       onAnswer: (String answer) => store.dispatch(AnswerTriviaAction(answer)),
+      timeLeft: store.state.challengeState.timeLeft,
+      showAnswer: !store.state.challengeState.isTimerRunning,
+      correctAnswer: store.state.challengeState.randomNum,
     );
   }
 }

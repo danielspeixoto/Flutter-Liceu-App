@@ -1,6 +1,5 @@
 import 'package:app/presentation/state/actions/PageActions.dart';
 import 'package:app/presentation/state/app_state.dart';
-import 'package:app/presentation/widgets/ActionCard.dart';
 import 'package:app/presentation/widgets/ChallegeAnswerCard.dart';
 import 'package:app/presentation/widgets/FetcherWidget.dart';
 import 'package:app/presentation/widgets/LiceuPage.dart';
@@ -32,7 +31,6 @@ class ChallengePage extends StatelessWidget {
                           margin: EdgeInsets.all(16),
                           child: Column(
                             children: <Widget>[
-
                               Text(
                                 viewModel.question,
                                 style: TextStyle(fontSize: 16),
@@ -47,7 +45,7 @@ class ChallengePage extends StatelessWidget {
                                         Container(
                                           child: RoundedImage(
                                               pictureURL:
-                                              viewModel.author.picURL,
+                                                  viewModel.author.picURL,
                                               size: 20),
                                           margin: EdgeInsets.symmetric(
                                               horizontal: 8),
@@ -68,12 +66,31 @@ class ChallengePage extends StatelessWidget {
                       ChallengeAnswerCard(
                         FontAwesomeIcons.arrowAltCircleRight,
                         viewModel.answer1,
-                          () => viewModel.onAnswer(viewModel.answer1),
+                        () => viewModel.onAnswer(viewModel.answer1),
+                          viewModel.showAnswer ? viewModel.correctAnswer == 0 ? Colors.green : Colors.red : null
                       ),
                       ChallengeAnswerCard(
-                          FontAwesomeIcons.arrowAltCircleRight,
-                          viewModel.answer2,
-                            () => viewModel.onAnswer(viewModel.answer2),
+                        FontAwesomeIcons.arrowAltCircleRight,
+                        viewModel.answer2,
+                        () => viewModel.onAnswer(viewModel.answer2),
+                        viewModel.showAnswer ? viewModel.correctAnswer == 1 ? Colors.green : Colors.red : null
+                      ),
+                      Container(
+                        margin: EdgeInsets.all(16),
+                        child: Row(
+                          children: [
+                            Spacer(),
+                            Container(
+                              child: Icon(FontAwesomeIcons.clock),
+                              margin: EdgeInsets.symmetric(horizontal: 16),
+                            ),
+                            Text(
+                              viewModel.timeLeft.toString(),
+                              style: TextStyle(fontSize: 24),
+                            ),
+                            Spacer(),
+                          ],
+                        ),
                       ),
                     ],
                   );

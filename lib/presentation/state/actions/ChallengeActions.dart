@@ -25,3 +25,11 @@ class AnswerTriviaAction {
 class ChallengeFinishedAction {
 
 }
+
+class TriviaTimerDecrementAction {
+
+}
+
+class NextTriviaAction {
+  
+}
