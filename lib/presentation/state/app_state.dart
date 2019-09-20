@@ -1,4 +1,5 @@
 import 'package:app/presentation/state/reducers/ChallengeReducer.dart';
+import 'package:app/presentation/state/reducers/CreatePostReducer.dart';
 import 'package:app/presentation/state/reducers/EditMyInfoReducer.dart';
 import 'package:app/presentation/state/reducers/LoginReducer.dart';
 import 'package:app/presentation/state/reducers/PostsReducer.dart';
@@ -20,6 +21,7 @@ import 'navigator/NavigatorReducer.dart';
 class AppState {
   final UserState userState;
   final PostState postState;
+  final CreatePostState createPostState;
   final LoginState loginState;
   final TournamentState tournamentState;
   final EditMyInfoState editMyInfoState;
@@ -29,6 +31,7 @@ class AppState {
   AppState({
     this.userState,
     this.postState,
+    this.createPostState,
     this.route,
     this.editMyInfoState,
     this.loginState,
@@ -40,6 +43,7 @@ class AppState {
         route: ["/"],
         userState: UserState.initial(),
         postState: PostState.initial(),
+        createPostState: CreatePostState.initial(),
         loginState: LoginState.initial(),
         tournamentState: TournamentState.initial(),
         challengeState: ChallengeState.initial(),
@@ -51,6 +55,7 @@ AppState appReducer(AppState state, action) => AppState(
       route: navigationReducer(state.route, action),
       userState: userReducer(state.userState, action),
       postState: postReducer(state.postState, action),
+      createPostState: createPostReducer(state.createPostState, action),
       loginState: loginReducer(state.loginState, action),
       tournamentState: tournamentReducer(state.tournamentState, action),
       challengeState: challengeReducer(state.challengeState, action),

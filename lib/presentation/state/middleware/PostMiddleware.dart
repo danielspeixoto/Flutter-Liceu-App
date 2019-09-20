@@ -8,10 +8,12 @@ import 'package:redux/redux.dart';
 import '../../app.dart';
 import '../app_state.dart';
 
-List<Middleware<AppState>> postMiddleware(ICreatePostUseCase createPostUseCase,
-    IDeletePostUseCase deletePostUseCase,
-    IExplorePostUseCase explorePostUseCase,
-    IGetUserByIdUseCase getUserByIdUseCase,) {
+List<Middleware<AppState>> postMiddleware(
+  ICreatePostUseCase createPostUseCase,
+  IDeletePostUseCase deletePostUseCase,
+  IExplorePostUseCase explorePostUseCase,
+  IGetUserByIdUseCase getUserByIdUseCase,
+) {
   void deletePost(Store<AppState> store, DeletePostAction action,
       NextDispatcher next) async {
     next(action);
@@ -26,9 +28,6 @@ List<Middleware<AppState>> postMiddleware(ICreatePostUseCase createPostUseCase,
       NextDispatcher next) async {
     next(action);
     try {
-      if (store.state.route.last == AppRoutes.createPost) {
-        store.dispatch(NavigatePopAction());
-      }
       await createPostUseCase.run(action.postType, action.text);
       store.dispatch(PostCreatedAction());
     } catch (e) {
@@ -39,6 +38,9 @@ List<Middleware<AppState>> postMiddleware(ICreatePostUseCase createPostUseCase,
   void postCreated(Store<AppState> store, PostCreatedAction action,
       NextDispatcher next) async {
     next(action);
+    if (store.state.route.last == AppRoutes.createPost) {
+      store.dispatch(NavigatePopAction());
+    }
   }
 
   void explorePosts(Store<AppState> store, ExplorePostsAction action,
@@ -62,8 +64,15 @@ List<Middleware<AppState>> postMiddleware(ICreatePostUseCase createPostUseCase,
     }
   }
 
+  void postCreation(Store<AppState> store, PostCreationAction action,
+      NextDispatcher next) async {
+    next(action);
+    store.dispatch(NavigatePushAction(AppRoutes.createPost));
+  }
+
   return [
     TypedMiddleware<AppState, DeletePostAction>(deletePost),
+    TypedMiddleware<AppState, PostCreationAction>(postCreation),
     TypedMiddleware<AppState, CreatePostAction>(createPost),
     TypedMiddleware<AppState, PostCreatedAction>(postCreated),
     TypedMiddleware<AppState, ExplorePostsAction>(explorePosts),

@@ -14,6 +14,8 @@ class CreatePostAction {
   CreatePostAction(this.postType, this.text);
 }
 
+class PostCreationAction {}
+
 class PostCreatedAction {
 
 }
