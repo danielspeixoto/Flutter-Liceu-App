@@ -55,3 +55,11 @@ class AnswerTournamentQuestionAction {
 }
 
 class SubmitTournamentGameAction {}
+
+class ReviewTournamentGameAction {
+  final int score;
+  final int timeSpent;
+
+  ReviewTournamentGameAction(this.score, this.timeSpent);
+}
+

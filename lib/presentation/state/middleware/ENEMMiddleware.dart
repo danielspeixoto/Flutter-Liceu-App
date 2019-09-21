@@ -73,22 +73,32 @@ List<Middleware<AppState>> ENEMMiddleware(
       SubmitTournamentGameAction action, NextDispatcher next) async {
     next(action);
     try {
-      store.dispatch(NavigateReplaceAction(AppRoutes.tournamentReview));
       final timeSpent = DateTime.now()
           .difference(store.state.enemState.tournamentStartTime)
           .inSeconds;
+      int score = 0;
       final answers =
           store.state.enemState.tournamentQuestions.content.map((question) {
+        if (question.answer == question.selectedAnswer) {
+          score++;
+        }
         return ENEMAnswer(
           question.id,
           question.answer,
           question.selectedAnswer,
         );
       });
+      store.dispatch(ReviewTournamentGameAction(score, timeSpent));
       await submitGameUseCase.run(answers, timeSpent);
     } catch (e) {
       print(e);
     }
+  }
+
+  void reviewTournament(Store<AppState> store,
+      ReviewTournamentGameAction action, NextDispatcher next) {
+    next(action);
+    store.dispatch(NavigateReplaceAction(AppRoutes.tournamentReview));
   }
 
   void tournament(Store<AppState> store, TournamentAction action,
@@ -124,6 +134,9 @@ List<Middleware<AppState>> ENEMMiddleware(
     TypedMiddleware<AppState, FilterTrainingQuestions>(trainingFilterAction),
     TypedMiddleware<AppState, SubmitTournamentGameAction>(
       submitTournament,
+    ),
+    TypedMiddleware<AppState, ReviewTournamentGameAction>(
+      reviewTournament,
     ),
     TypedMiddleware<AppState, TournamentAction>(
       tournament,

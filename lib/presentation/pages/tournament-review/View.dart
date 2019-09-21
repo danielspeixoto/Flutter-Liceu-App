@@ -7,6 +7,7 @@ import 'package:app/presentation/widgets/FetcherWidget.dart';
 import 'package:app/presentation/widgets/LiceuScaffold.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'ViewModel.dart';
 
@@ -21,10 +22,45 @@ class TournamentReviewPage extends StatelessWidget {
               body: ListView(
                 children: <Widget>[
                   Container(
-                    margin: EdgeInsets.all(8),
-                    child: Text(
-                      "Confira o resultado da sua partida",
-                      textAlign: TextAlign.center,
+                    margin: EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+                    width: double.infinity,
+                    child: Column(
+                      children: <Widget>[
+                        Container(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Container(
+                                child: Icon(FontAwesomeIcons.chartBar),
+                              ),
+                              Container(
+                                margin: EdgeInsets.all(8),
+                                child: Text(
+                                  "${viewModel.score} questões certas!",
+                                  style: TextStyle(fontSize: 20),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Container(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Container(
+                                child: Icon(FontAwesomeIcons.userClock),
+                              ),
+                              Container(
+                                margin: EdgeInsets.all(8),
+                                child: Text(
+                                  "Tarefa concluída em ${(viewModel.timeSpent / 60).floor()}:${(viewModel.timeSpent % 60) < 10 ? "0" : ""}${(viewModel.timeSpent % 60).floor()} minutos",
+                                  style: TextStyle(fontSize: 16),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                   FetcherWidget(

@@ -13,15 +13,25 @@ class ENEMState {
   final Data<List<ENEMQuestionData>> tournamentQuestions;
   final DateTime tournamentStartTime;
   final QuestionDomain domain;
+  final int score;
+  final int timeSpent;
 
-  ENEMState(this.ranking, this.trainingQuestions, this.domain,
-      this.tournamentQuestions, this.tournamentStartTime);
+  ENEMState(
+      this.ranking,
+      this.trainingQuestions,
+      this.domain,
+      this.tournamentQuestions,
+      this.tournamentStartTime,
+      this.score,
+      this.timeSpent);
 
   factory ENEMState.initial() => ENEMState(
         Data(),
         Data(),
         null,
         Data(),
+        null,
+        null,
         null,
       );
 
@@ -31,6 +41,8 @@ class ENEMState {
     QuestionDomain domain,
     Data<List<ENEMQuestionData>> tournamentQuestions,
     DateTime tournamentStartTime,
+    int score,
+    int timeSpent,
   }) {
     final state = ENEMState(
       ranking ?? this.ranking,
@@ -38,6 +50,8 @@ class ENEMState {
       domain ?? this.domain,
       tournamentQuestions ?? this.tournamentQuestions,
       tournamentStartTime ?? this.tournamentStartTime,
+      score ?? this.score,
+      timeSpent ?? this.timeSpent,
     );
     return state;
   }
@@ -69,6 +83,9 @@ final Reducer<ENEMState> enemReducer = combineReducers<ENEMState>([
   ),
   TypedReducer<ENEMState, SubmitTournamentGameAction>(
     submitTournament,
+  ),
+  TypedReducer<ENEMState, ReviewTournamentGameAction>(
+    reviewTournament,
   ),
   TypedReducer<ENEMState, TournamentAction>(
     tournament,
@@ -167,4 +184,8 @@ ENEMState submitTournament(ENEMState state, SubmitTournamentGameAction action) {
 
 ENEMState tournament(ENEMState state, TournamentAction action) {
   return state.copyWith(tournamentQuestions: Data());
+}
+
+ENEMState reviewTournament(ENEMState state, ReviewTournamentGameAction action) {
+  return state.copyWith(score: action.score, timeSpent: action.timeSpent);
 }
