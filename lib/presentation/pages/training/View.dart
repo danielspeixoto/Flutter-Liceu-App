@@ -32,7 +32,7 @@ class TrainingPage extends StatelessWidget {
                     Container(
                       margin: EdgeInsets.all(8),
                       child: Text(
-                        "Olha as questões que escolhemos para você!",
+                        "Olha a questão que escolhemos para você!",
                         textAlign: TextAlign.center,
                       ),
                     ),
@@ -41,31 +41,52 @@ class TrainingPage extends StatelessWidget {
                       errorMessage: viewModel.questions.errorMessage,
                       child: () => Container(
                         child: Column(
-                            children: viewModel.questions.content.map(
-                          (question) {
-                            var status = [
-                              AnswerStatus.DEFAULT,
-                              AnswerStatus.DEFAULT,
-                              AnswerStatus.DEFAULT,
-                              AnswerStatus.DEFAULT,
-                              AnswerStatus.DEFAULT,
-                            ];
-                            if(question.selectedAnswer != -1) {
-                              status[question.selectedAnswer] = AnswerStatus.WRONG;
-                              status[question.answer] = AnswerStatus.CORRECT;
-                            }
-                            return ENEMQuestionWidget(
-                              (int idx) {
-                                viewModel.onAnswer(question.id, idx);
+                          children: [
+                            ...viewModel.questions.content.map(
+                              (question) {
+                                var status = [
+                                  AnswerStatus.DEFAULT,
+                                  AnswerStatus.DEFAULT,
+                                  AnswerStatus.DEFAULT,
+                                  AnswerStatus.DEFAULT,
+                                  AnswerStatus.DEFAULT,
+                                ];
+                                if (question.selectedAnswer != -1) {
+                                  status[question.selectedAnswer] =
+                                      AnswerStatus.WRONG;
+                                  status[question.answer] =
+                                      AnswerStatus.CORRECT;
+                                }
+                                return ENEMQuestionWidget(
+                                  (int idx) {
+                                    viewModel.onAnswer(question.id, idx);
+                                  },
+                                  question.imageURL,
+                                  question.width,
+                                  question.height,
+                                  question.videos,
+                                  status,
+                                );
                               },
-                              question.imageURL,
-                              question.width,
-                              question.height,
-                              question.videos,
-                              status,
-                            );
-                          },
-                        ).toList()),
+                            ).toList(),
+                            Container(
+                              padding: EdgeInsets.all(8),
+                              child: FlatButton(
+                                onPressed: () {
+                                  viewModel.refresh();
+                                },
+                                child: Text(
+                                  "Trocar questão",
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    color: Color(0xFF0061A1),
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ],

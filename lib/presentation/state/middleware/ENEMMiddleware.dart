@@ -47,7 +47,7 @@ List<Middleware<AppState>> ENEMMiddleware(
       store.dispatch(NavigatePushAction(AppRoutes.training));
     }
     try {
-      final questions = await getQuestionsUseCase.run(10, [action.domain]);
+      final questions = await getQuestionsUseCase.run(1, [action.domain]);
       final futures = questions.map((question) async {
         final videos = await videosUseCase.run(question.id);
         return ENEMQuestionData(

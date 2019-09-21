@@ -90,7 +90,7 @@ class LoginPage extends StatelessWidget {
             return Scaffold(
               body: Container(
                 child: Center(child: child),
-                color: new Color(0xFF0061A1),
+                color: Color(0xFF0061A1),
               ),
             );
           });
