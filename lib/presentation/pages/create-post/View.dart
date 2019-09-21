@@ -29,7 +29,7 @@ class CreatePostPage extends StatelessWidget {
                   ),
                 ),
               ],
-              title: "Escreva seu post",
+              title: "Coloque aqui um resumo da sua matéria preferida!",
               body: FetcherWidget(
                 isLoading: viewModel.isLoading,
                 child: () => SingleChildScrollView(

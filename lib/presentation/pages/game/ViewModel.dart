@@ -1,5 +1,5 @@
 import 'package:app/presentation/state/actions/ChallengeActions.dart';
-import 'package:app/presentation/state/actions/TrainingActions.dart';
+import 'package:app/presentation/state/actions/ENEMActions.dart';
 import 'package:app/presentation/state/actions/UserActions.dart';
 import 'package:app/presentation/state/aggregates/ChallengeHistoryData.dart';
 import 'package:app/presentation/state/app_state.dart';

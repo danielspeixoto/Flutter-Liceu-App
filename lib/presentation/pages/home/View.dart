@@ -4,7 +4,7 @@ import 'package:app/presentation/pages/profile/View.dart';
 import 'package:app/presentation/pages/trophy/View.dart';
 import 'package:app/presentation/state/actions/PageActions.dart';
 import 'package:app/presentation/state/actions/PostActions.dart';
-import 'package:app/presentation/state/actions/TournamentActions.dart';
+import 'package:app/presentation/state/actions/ENEMActions.dart';
 import 'package:app/presentation/state/actions/UserActions.dart';
 import 'package:app/presentation/state/app_state.dart';
 import 'package:flutter/material.dart';
@@ -50,14 +50,6 @@ class HomePage extends StatelessWidget {
                   Container(
                     padding: EdgeInsets.all(8),
                     child: Icon(
-                      FontAwesomeIcons.gamepad,
-                      color: Colors.black,
-                      size: 20,
-                    ),
-                  ),
-                  Container(
-                    padding: EdgeInsets.all(8),
-                    child: Icon(
                       FontAwesomeIcons.trophy,
                       color: Colors.black,
                       size: 20,
@@ -66,7 +58,24 @@ class HomePage extends StatelessWidget {
                   Container(
                     padding: EdgeInsets.all(8),
                     child: Icon(
-                      FontAwesomeIcons.home,
+                      FontAwesomeIcons.gamepad,
+                      color: Colors.black,
+                      size: 20,
+                    ),
+                  ),
+
+//                  Container(
+//                    padding: EdgeInsets.all(8),
+//                    child: Icon(
+//                      FontAwesomeIcons.archive,
+//                      color: Colors.black,
+//                      size: 18,
+//                    ),
+//                  ),
+                  Container(
+                    padding: EdgeInsets.all(8),
+                    child: Icon(
+                      FontAwesomeIcons.userGraduate,
                       color: Colors.black,
                       size: 20,
                     ),
@@ -77,8 +86,9 @@ class HomePage extends StatelessWidget {
             body: TabBarView(
               children: [
                 ExplorePage(),
-                GamePage(),
                 TrophyPage(),
+                GamePage(),
+//                ExplorePage(),
                 ProfilePage(),
               ],
             ),

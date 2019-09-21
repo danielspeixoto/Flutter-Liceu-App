@@ -4,6 +4,8 @@ import 'package:app/presentation/pages/edit-profile/View.dart';
 import 'package:app/presentation/pages/home/View.dart';
 import 'package:app/presentation/pages/login/View.dart';
 import 'package:app/presentation/pages/splash/View.dart';
+import 'package:app/presentation/pages/training-filter/View.dart';
+import 'package:app/presentation/pages/training/View.dart';
 import 'package:app/presentation/state/app_state.dart';
 import 'package:app/presentation/state/navigator/RouteObserver.dart';
 import 'package:app/presentation/state/navigator/routes/MainRoute.dart';
@@ -33,6 +35,10 @@ class MyApp extends StatelessWidget {
         return MainRoute(CreatePostPage(), settings: settings);
       case AppRoutes.challenge:
         return MainRoute(ChallengePage(), settings: settings);
+      case AppRoutes.trainingFilter:
+        return MainRoute(TrainingFilterPage(), settings: settings);
+      case AppRoutes.training:
+        return MainRoute(TrainingPage(), settings: settings);
       default:
         return MainRoute(SplashPage(), settings: settings);
     }
@@ -61,5 +67,7 @@ class AppRoutes {
   static const editProfile = "/editProfile";
   static const createPost = "/createPost";
   static const challenge = "/challenge";
+  static const trainingFilter = "/trainingFilter";
+  static const training = "/training";
   static const login = "/login";
 }

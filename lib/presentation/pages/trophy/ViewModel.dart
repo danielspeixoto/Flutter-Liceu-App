@@ -22,7 +22,7 @@ class TrophyViewModel {
   TrophyViewModel({this.rankingData});
 
   factory TrophyViewModel.create(Store<AppState> store) {
-    final ranking = store.state.tournamentState.ranking;
+    final ranking = store.state.enemState.ranking;
 
     var position = 1;
 

@@ -47,9 +47,11 @@ List<Middleware<AppState>> challengeMiddleware(
     try {
       if (challengeState.answers.length ==
           challengeState.challenge.content.questions.length) {
-        store.dispatch(ChallengeFinishedAction());
+        new Future.delayed(const Duration(seconds: 3), () {
+          store.dispatch(ChallengeFinishedAction());
+        });
       } else {
-        new Future.delayed(const Duration(seconds: 4), () {
+        new Future.delayed(const Duration(seconds: 3), () {
           store.dispatch(NextTriviaAction());
         });
       }

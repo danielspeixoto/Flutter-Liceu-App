@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:app/domain/aggregates/Challenge.dart';
+import 'package:app/domain/aggregates/ENEMQuestion.dart';
 import 'package:app/domain/aggregates/Game.dart';
 import 'package:app/domain/aggregates/Post.dart';
 import 'package:app/domain/aggregates/Ranking.dart';
@@ -106,5 +107,21 @@ Answer fromMapToAnswer(data) {
     data["questionId"],
     data["correctAnswer"],
     data["selectedAnswer"],
+  );
+}
+
+List<ENEMQuestion> fromJsonToListOfQuestions(String content) {
+  final data = (json.decode(content) as List).cast<Map<String, dynamic>>();
+  final result = List<ENEMQuestion>.generate(data.length, (i) => fromMapToENEMQuestion(data[i]));
+  return result;
+}
+
+fromMapToENEMQuestion(Map<String, dynamic> data) {
+  return ENEMQuestion(
+    data["id"],
+    data["answer"],
+    data["view"],
+    data["width"],
+    data["height"],
   );
 }

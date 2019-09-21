@@ -3,7 +3,7 @@ import 'package:app/presentation/state/reducers/CreatePostReducer.dart';
 import 'package:app/presentation/state/reducers/EditMyInfoReducer.dart';
 import 'package:app/presentation/state/reducers/LoginReducer.dart';
 import 'package:app/presentation/state/reducers/PostsReducer.dart';
-import 'package:app/presentation/state/reducers/TournamentReducer.dart';
+import 'package:app/presentation/state/reducers/ENEMReducer.dart';
 import 'package:app/presentation/state/reducers/UserReducer.dart';
 import 'package:redux/redux.dart';
 import 'package:redux_logging/redux_logging.dart';
@@ -13,7 +13,7 @@ import 'middleware/AnalyticsMiddleware.dart';
 import 'middleware/ChallengeMiddleware.dart';
 import 'middleware/LoginMiddleware.dart';
 import 'middleware/PostMiddleware.dart';
-import 'middleware/TournamentMiddleware.dart';
+import 'middleware/ENEMMiddleware.dart';
 import 'middleware/UserMiddleware.dart';
 import 'navigator/NavigatorMiddleware.dart';
 import 'navigator/NavigatorReducer.dart';
@@ -23,7 +23,7 @@ class AppState {
   final PostState postState;
   final CreatePostState createPostState;
   final LoginState loginState;
-  final TournamentState tournamentState;
+  final ENEMState enemState;
   final EditMyInfoState editMyInfoState;
   final ChallengeState challengeState;
   final List<String> route;
@@ -35,7 +35,7 @@ class AppState {
     this.route,
     this.editMyInfoState,
     this.loginState,
-    this.tournamentState,
+    this.enemState,
     this.challengeState,
   });
 
@@ -45,7 +45,7 @@ class AppState {
         postState: PostState.initial(),
         createPostState: CreatePostState.initial(),
         loginState: LoginState.initial(),
-        tournamentState: TournamentState.initial(),
+        enemState: ENEMState.initial(),
         challengeState: ChallengeState.initial(),
         editMyInfoState: EditMyInfoState.initial(),
       );
@@ -57,7 +57,7 @@ AppState appReducer(AppState state, action) => AppState(
       postState: postReducer(state.postState, action),
       createPostState: createPostReducer(state.createPostState, action),
       loginState: loginReducer(state.loginState, action),
-      tournamentState: tournamentReducer(state.tournamentState, action),
+      enemState: enemReducer(state.enemState, action),
       challengeState: challengeReducer(state.challengeState, action),
       editMyInfoState: editMyInfoReducer(state.editMyInfoState, action),
     );
@@ -87,9 +87,10 @@ final Store<AppState> store = Store<AppState>(
       getExplorePostsUseCase,
       getUserByIdUseCase,
     ),
-    ...tournamentMiddleware(
+    ...ENEMMiddleware(
       getRankingUseCase,
       getUserByIdUseCase,
+      getENEMQuestionsUseCase,
     ),
     ...challengeMiddleware(
       getChallengeUseCase,

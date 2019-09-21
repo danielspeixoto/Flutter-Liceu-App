@@ -37,11 +37,11 @@ class GamePage extends StatelessWidget {
                   () => viewModel.onChallengePressed(),
                 ),
 //                ActionCard(FontAwesomeIcons.trophy, "Torneio"),
-//                ActionCard(
-//                  FontAwesomeIcons.userGraduate,
-//                  "Treinamento",
-//                  () => viewModel.onTrainingPressed(),
-//                ),
+                ActionCard(
+                  FontAwesomeIcons.userGraduate,
+                  "Treinamento",
+                  () => viewModel.onTrainingPressed(),
+                ),
                 Container(
                   child: Card(
                     child: Column(
