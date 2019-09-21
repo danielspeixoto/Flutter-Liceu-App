@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:app/domain/aggregates/Game.dart';
+import 'package:app/domain/aggregates/ENEMGame.dart';
 import 'package:app/presentation/state/app_state.dart';
 import 'package:app/presentation/state/reducers/Data.dart';
 import 'package:app/presentation/util/text.dart';
@@ -34,7 +34,7 @@ class TrophyViewModel {
               ? null
               : ranking.content.games.map((game) {
                   var score = 0;
-                  game.answers.forEach((Answer answer) {
+                  game.answers.forEach((ENEMAnswer answer) {
                     if (answer.correctAnswer == answer.selectedAnswer) {
                       score++;
                     }

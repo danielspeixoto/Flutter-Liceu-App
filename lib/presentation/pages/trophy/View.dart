@@ -13,12 +13,10 @@ import 'ViewModel.dart';
 class TrophyPage extends StatelessWidget {
   TrophyPage();
 
-  final _refreshController = RefreshController(initialRefresh: false);
-
   @override
   Widget build(BuildContext context) =>
       StoreConnector<AppState, TrophyViewModel>(
-        onInit: (store) => store.dispatch(PageInitAction("trophy")),
+        onInit: (store) => store.dispatch(PageInitAction("Trophy")),
         converter: (store) => TrophyViewModel.create(store),
         builder: (BuildContext context, TrophyViewModel viewModel) {
           return LiceuScaffold(

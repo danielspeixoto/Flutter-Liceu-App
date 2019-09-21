@@ -6,6 +6,7 @@ import 'package:app/domain/usecase/user/MyInfoUseCase.dart';
 import 'package:http/http.dart' as http;
 
 import 'data/ChallengeRepository.dart';
+import 'data/ENEMGameRepository.dart';
 import 'data/ExploreRepository.dart';
 import 'data/LocalRepository.dart';
 import 'data/LoginRepository.dart';
@@ -16,6 +17,7 @@ import 'data/UserRepository.dart';
 import 'domain/usecase/challenge/SubmitChallengeAnswers.dart';
 import 'domain/usecase/enem/GetENEMVideosUseCase.dart';
 import 'domain/usecase/enem/GetQuestionsUseCase.dart';
+import 'domain/usecase/enem/SubmitGameUseCase.dart';
 import 'domain/usecase/post/CreatePostUseCase.dart';
 import 'domain/usecase/post/DeletePostUseCase.dart';
 import 'domain/usecase/post/ExplorePostsUseCase.dart';
@@ -37,6 +39,7 @@ final loginRepository = LoginRepository(baseURL + "/login", apiKey);
 final userRepository = UserRepository(baseURL + "/user", apiKey);
 final postRepository = PostRepository(baseURL + "/post", apiKey);
 final questionRepository = ENEMQuestionRepository(baseURL + "/question", apiKey);
+final gameRepository = ENEMGameRepository(baseURL + "/game", apiKey);
 final exploreRepository = ExploreRepository(baseURL + "/explore", apiKey);
 final rankingRepository = RankingRepository(baseURL + "/ranking", apiKey);
 final challengeRepository = ChallengeRepository(baseURL + "/challenge", apiKey);
@@ -61,3 +64,4 @@ final submitChallengeAnswersUseCase = SubmitChallengeAnswersUseCase(localReposit
 final getExplorePostsUseCase = ExplorePostsUseCase(exploreRepository, localRepository);
 final getENEMQuestionsUseCase = GetQuestionsUseCase(localRepository, questionRepository);
 final getENEMQuestionsVideosUseCase = GetENEMQuestionsVideosUseCase(localRepository, questionRepository);
+final submitENEMGamesUseCase = SubmitGameUseCase(localRepository, gameRepository);

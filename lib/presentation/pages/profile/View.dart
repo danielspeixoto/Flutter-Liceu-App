@@ -26,7 +26,7 @@ class ProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) =>
       StoreConnector<AppState, ProfileViewModel>(
-        onInit: (store) => store.dispatch(PageInitAction("profile")),
+        onInit: (store) => store.dispatch(PageInitAction("Profile")),
         converter: (store) => ProfileViewModel.create(store),
         builder: (BuildContext context, ProfileViewModel viewModel) {
           final user = viewModel.user.content;

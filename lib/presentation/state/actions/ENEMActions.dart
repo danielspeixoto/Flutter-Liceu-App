@@ -21,6 +21,7 @@ class RankingRetrievedAction {
 }
 
 class TrainingAction {}
+class TournamentAction {}
 
 class FilterTrainingQuestions {
   final QuestionDomain domain;
@@ -33,6 +34,11 @@ class TrainingQuestionsRetrievedAction {
 
   TrainingQuestionsRetrievedAction(this.questions);
 }
+class TournamentQuestionsRetrievedAction {
+  final List<ENEMQuestionData> questions;
+
+  TournamentQuestionsRetrievedAction(this.questions);
+}
 
 class AnswerTrainingQuestionAction {
   final String questionId;
@@ -40,3 +46,12 @@ class AnswerTrainingQuestionAction {
 
   AnswerTrainingQuestionAction(this.questionId, this.answer);
 }
+
+class AnswerTournamentQuestionAction {
+  final String questionId;
+  final int answer;
+
+  AnswerTournamentQuestionAction(this.questionId, this.answer);
+}
+
+class SubmitTournamentGameAction {}

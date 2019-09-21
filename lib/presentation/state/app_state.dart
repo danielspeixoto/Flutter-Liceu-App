@@ -92,6 +92,7 @@ final Store<AppState> store = Store<AppState>(
       getUserByIdUseCase,
       getENEMQuestionsUseCase,
       getENEMQuestionsVideosUseCase,
+      submitENEMGamesUseCase,
     ),
     ...challengeMiddleware(
       getChallengeUseCase,

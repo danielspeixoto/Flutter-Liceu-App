@@ -9,8 +9,11 @@ final navigationReducer = combineReducers<List<String>>([
 ]);
 
 List<String> _navigateReplace(
-        List<String> route, NavigateReplaceAction action) =>
-    [action.routeName];
+        List<String> route, NavigateReplaceAction action) {
+  final list = List<String>.from(route);
+  final result = [...list.sublist(0, list.length - 1), action.routeName];
+  return result;
+}
 
 List<String> _navigatePush(List<String> route, NavigatePushAction action) {
   var result = List<String>.from(route);

@@ -1,3 +1,4 @@
+import 'package:app/domain/aggregates/ENEMGame.dart';
 import 'package:app/domain/boundary/ENEMBoundary.dart';
 import 'package:app/domain/boundary/RankingBoundary.dart';
 import 'package:app/domain/boundary/UserBoundary.dart';
@@ -17,6 +18,7 @@ List<Middleware<AppState>> ENEMMiddleware(
   IGetUserByIdUseCase getUserById,
   IGetENEMQuestionsUseCase getQuestionsUseCase,
   IGetENEMQuestionsVideosUseCase videosUseCase,
+  ISubmitGameUseCase submitGameUseCase,
 ) {
   void fetchRanking(Store<AppState> store, FetchRankingAction action,
       NextDispatcher next) async {
@@ -43,7 +45,7 @@ List<Middleware<AppState>> ENEMMiddleware(
   void trainingFilterAction(Store<AppState> store,
       FilterTrainingQuestions action, NextDispatcher next) async {
     next(action);
-    if(store.state.route.last != AppRoutes.training) {
+    if (store.state.route.last != AppRoutes.training) {
       store.dispatch(NavigatePushAction(AppRoutes.training));
     }
     try {
@@ -67,9 +69,64 @@ List<Middleware<AppState>> ENEMMiddleware(
     }
   }
 
+  void submitTournament(Store<AppState> store,
+      SubmitTournamentGameAction action, NextDispatcher next) async {
+    next(action);
+    try {
+      store.dispatch(NavigateReplaceAction(AppRoutes.tournamentReview));
+      final timeSpent = DateTime.now()
+          .difference(store.state.enemState.tournamentStartTime)
+          .inSeconds;
+      final answers =
+          store.state.enemState.tournamentQuestions.content.map((question) {
+        return ENEMAnswer(
+          question.id,
+          question.answer,
+          question.selectedAnswer,
+        );
+      });
+      await submitGameUseCase.run(answers, timeSpent);
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  void tournament(Store<AppState> store, TournamentAction action,
+      NextDispatcher next) async {
+    next(action);
+    if (store.state.route.last != AppRoutes.tournament) {
+      store.dispatch(NavigatePushAction(AppRoutes.tournament));
+    }
+    try {
+      final questions = await getQuestionsUseCase.run(10);
+      final futures = questions.map((question) async {
+        final videos = await videosUseCase.run(question.id);
+        return ENEMQuestionData(
+          question.id,
+          question.imageURL,
+          question.correctAnswer,
+          videos,
+          question.width,
+          question.height,
+          -1,
+        );
+      }).toList();
+      final questionsData = await Future.wait(futures);
+      store.dispatch(TournamentQuestionsRetrievedAction(questionsData));
+    } catch (e) {
+      print(e);
+    }
+  }
+
   return [
     TypedMiddleware<AppState, FetchRankingAction>(fetchRanking),
     TypedMiddleware<AppState, TrainingAction>(trainingAction),
     TypedMiddleware<AppState, FilterTrainingQuestions>(trainingFilterAction),
+    TypedMiddleware<AppState, SubmitTournamentGameAction>(
+      submitTournament,
+    ),
+    TypedMiddleware<AppState, TournamentAction>(
+      tournament,
+    ),
   ];
 }

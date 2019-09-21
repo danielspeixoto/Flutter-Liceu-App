@@ -10,7 +10,7 @@ class EditProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) =>
       StoreConnector<AppState, EditProfileViewModel>(
-          onInit: (store) => store.dispatch(PageInitAction("edit_profile")),
+          onInit: (store) => store.dispatch(PageInitAction("EditProfile")),
           converter: (store) => EditProfileViewModel.create(store),
           builder: (BuildContext context, EditProfileViewModel viewModel) {
 //            Bio Controller

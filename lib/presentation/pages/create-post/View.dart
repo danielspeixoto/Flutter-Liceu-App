@@ -14,7 +14,7 @@ class CreatePostPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) =>
       StoreConnector<AppState, CreatePostViewModel>(
-          onInit: (store) => store.dispatch(PageInitAction("create_post")),
+          onInit: (store) => store.dispatch(PageInitAction("CreatePost")),
           converter: (store) => CreatePostViewModel.create(store),
           builder: (BuildContext context, CreatePostViewModel viewModel) {
             return LiceuPage(

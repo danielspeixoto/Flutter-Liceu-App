@@ -1,7 +1,7 @@
-import 'Game.dart';
+import 'ENEMGame.dart';
 
 class Ranking {
-  final List<Game> games;
+  final List<ENEMGame> games;
 
   Ranking(this.games);
 }

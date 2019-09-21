@@ -16,7 +16,7 @@ class ChallengePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) =>
       StoreConnector<AppState, ChallengeViewModel>(
-          onInit: (store) => store.dispatch(PageInitAction("challenge")),
+          onInit: (store) => store.dispatch(PageInitAction("Challenge")),
           converter: (store) => ChallengeViewModel.create(store),
           builder: (BuildContext context, ChallengeViewModel viewModel) {
             return LiceuPage(

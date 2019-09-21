@@ -19,7 +19,7 @@ class GamePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => StoreConnector<AppState, GameViewModel>(
-        onInit: (store) => store.dispatch(PageInitAction("game")),
+        onInit: (store) => store.dispatch(PageInitAction("Game")),
         converter: (store) => GameViewModel.create(store),
         builder: (BuildContext context, GameViewModel viewModel) {
           return LiceuScaffold(
@@ -36,7 +36,11 @@ class GamePage extends StatelessWidget {
                   "Desafio Rápido",
                   () => viewModel.onChallengePressed(),
                 ),
-//                ActionCard(FontAwesomeIcons.trophy, "Torneio"),
+                ActionCard(
+                  FontAwesomeIcons.trophy,
+                  "Torneio",
+                  () => viewModel.onTournamentPressed(),
+                ),
                 ActionCard(
                   FontAwesomeIcons.userGraduate,
                   "Treinamento",

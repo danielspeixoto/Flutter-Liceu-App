@@ -2,6 +2,7 @@ import 'package:app/presentation/state/actions/PageActions.dart';
 import 'package:app/presentation/state/app_state.dart';
 import 'package:app/presentation/widgets/ENEMQuestion.dart';
 import 'package:app/presentation/widgets/ENEMQuestionAnswer.dart';
+import 'package:app/presentation/widgets/ENEMVideoWidget.dart';
 import 'package:app/presentation/widgets/FetcherWidget.dart';
 import 'package:app/presentation/widgets/LiceuScaffold.dart';
 import 'package:flutter/material.dart';
@@ -57,15 +58,21 @@ class TrainingPage extends StatelessWidget {
                                   status[question.answer] =
                                       AnswerStatus.CORRECT;
                                 }
-                                return ENEMQuestionWidget(
-                                  (int idx) {
-                                    viewModel.onAnswer(question.id, idx);
-                                  },
-                                  question.imageURL,
-                                  question.width,
-                                  question.height,
-                                  question.videos,
-                                  status,
+                                return Card(
+                                  child: Column(
+                                    children: <Widget>[
+                                      ENEMQuestionWidget(
+                                        (int idx) {
+                                          viewModel.onAnswer(question.id, idx);
+                                        },
+                                        question.imageURL,
+                                        question.width,
+                                        question.height,
+                                        status,
+                                      ),
+                                      ENEMVideoWidget(question.videos),
+                                    ],
+                                  ),
                                 );
                               },
                             ).toList(),

@@ -20,7 +20,7 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) =>
       StoreConnector<AppState, LoginViewModel>(
-          onInit: (store) => store.dispatch(PageInitAction("login")),
+          onInit: (store) => store.dispatch(PageInitAction("Login")),
           converter: (store) => LoginViewModel.create(store),
           builder: (BuildContext context, LoginViewModel viewModel) {
             Widget child = CircularProgressIndicator();

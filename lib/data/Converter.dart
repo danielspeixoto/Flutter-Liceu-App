@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:app/domain/aggregates/Challenge.dart';
 import 'package:app/domain/aggregates/ENEMQuestion.dart';
 import 'package:app/domain/aggregates/ENEMVideo.dart';
-import 'package:app/domain/aggregates/Game.dart';
+import 'package:app/domain/aggregates/ENEMGame.dart';
 import 'package:app/domain/aggregates/Post.dart';
 import 'package:app/domain/aggregates/Ranking.dart';
 import 'package:app/domain/aggregates/User.dart';
@@ -94,17 +94,17 @@ Ranking fromJsonToRanking(content) {
   return Ranking(result);
 }
 
-Game fromMapToGame(data) {
-  return Game(
+ENEMGame fromMapToGame(data) {
+  return ENEMGame(
     data["id"],
     data["userId"],
-    List<Answer>.generate(data["answers"].length, (i) => fromMapToAnswer(data["answers"][i])),
+    List<ENEMAnswer>.generate(data["answers"].length, (i) => fromMapToAnswer(data["answers"][i])),
     data["timeSpent"],
   );
 }
 
-Answer fromMapToAnswer(data) {
-  return Answer(
+ENEMAnswer fromMapToAnswer(data) {
+  return ENEMAnswer(
     data["questionId"],
     data["correctAnswer"],
     data["selectedAnswer"],

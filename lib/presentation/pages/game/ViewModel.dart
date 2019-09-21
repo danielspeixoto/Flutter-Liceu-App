@@ -11,12 +11,14 @@ class GameViewModel {
   final Function refresh;
   final Function onChallengePressed;
   final Function onTrainingPressed;
+  final Function onTournamentPressed;
 
   GameViewModel({
     this.challenges,
     this.refresh,
     this.onChallengePressed,
     this.onTrainingPressed,
+    this.onTournamentPressed,
   });
 
   factory GameViewModel.create(Store<AppState> store) {
@@ -25,6 +27,7 @@ class GameViewModel {
       refresh: () => store.dispatch(FetchMyChallengesAction()),
       onChallengePressed: () => store.dispatch(ChallengeAction()),
       onTrainingPressed: () => store.dispatch(TrainingAction()),
+      onTournamentPressed: () => store.dispatch(TournamentAction()),
     );
   }
 }
