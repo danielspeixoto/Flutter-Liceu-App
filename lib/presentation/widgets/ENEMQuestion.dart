@@ -33,7 +33,7 @@ class ENEMQuestionWidget extends StatelessWidget {
               image: FadeInImage.assetNetwork(
                 image: imageURL,
                 width: double.infinity,
-                height: MediaQuery.of(context).size.width * (height / width) - 5,
+                height: (MediaQuery.of(context).size.width - 8) * (height / width),
                 placeholder: "assets/loading.gif",
                 repeat: ImageRepeat.repeat,
               ),

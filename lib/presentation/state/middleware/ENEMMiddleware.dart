@@ -43,7 +43,9 @@ List<Middleware<AppState>> ENEMMiddleware(
   void trainingFilterAction(Store<AppState> store,
       FilterTrainingQuestions action, NextDispatcher next) async {
     next(action);
-    store.dispatch(NavigatePushAction(AppRoutes.training));
+    if(store.state.route.last != AppRoutes.training) {
+      store.dispatch(NavigatePushAction(AppRoutes.training));
+    }
     try {
       final questions = await getQuestionsUseCase.run(10, [action.domain]);
       final futures = questions.map((question) async {

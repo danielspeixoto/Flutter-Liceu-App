@@ -29,6 +29,13 @@ class TrainingPage extends StatelessWidget {
                 controller: _refreshController,
                 child: ListView(
                   children: <Widget>[
+                    Container(
+                      margin: EdgeInsets.all(8),
+                      child: Text(
+                        "Olha as questões que escolhemos para você!",
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
                     FetcherWidget(
                       isLoading: viewModel.questions.isLoading,
                       errorMessage: viewModel.questions.errorMessage,
