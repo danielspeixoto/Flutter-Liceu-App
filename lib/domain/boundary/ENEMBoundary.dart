@@ -8,10 +8,10 @@ abstract class IENEMQuestionRepository {
   Future<List<ENEMVideo>> videos(String accessToken, String id);
 }
 
-abstract class IGetQuestionsUseCase {
+abstract class IGetENEMQuestionsUseCase {
   Future<List<ENEMQuestion>> run(int amount, [List<QuestionDomain> domains]);
 }
 
-abstract class IGetQuestionsVideosUseCase {
+abstract class IGetENEMQuestionsVideosUseCase {
   Future<List<ENEMVideo>> run(String id);
 }

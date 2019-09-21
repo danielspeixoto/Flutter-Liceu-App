@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:app/domain/aggregates/Challenge.dart';
 import 'package:app/domain/aggregates/ENEMQuestion.dart';
+import 'package:app/domain/aggregates/ENEMVideo.dart';
 import 'package:app/domain/aggregates/Game.dart';
 import 'package:app/domain/aggregates/Post.dart';
 import 'package:app/domain/aggregates/Ranking.dart';
@@ -123,5 +124,20 @@ fromMapToENEMQuestion(Map<String, dynamic> data) {
     data["view"],
     data["width"],
     data["height"],
+  );
+}
+
+List<ENEMVideo> fromJsonToListOfENEMVideos(String content) {
+  final data = (json.decode(content) as List).cast<Map<String, dynamic>>();
+  final result = List<ENEMVideo>.generate(data.length, (i) => fromMapToENEMVideo(data[i]));
+  return result;
+}
+
+fromMapToENEMVideo(Map<String, dynamic> data) {
+  return ENEMVideo(
+    data["title"],
+    data["channel"]["title"],
+    data["thumbnails"]["default"],
+    data["videoId"],
   );
 }

@@ -33,3 +33,10 @@ class TrainingQuestionsRetrievedAction {
 
   TrainingQuestionsRetrievedAction(this.questions);
 }
+
+class AnswerTrainingQuestionAction {
+  final String questionId;
+  final int answer;
+
+  AnswerTrainingQuestionAction(this.questionId, this.answer);
+}

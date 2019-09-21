@@ -1,9 +1,9 @@
 import 'package:app/presentation/state/reducers/ChallengeReducer.dart';
 import 'package:app/presentation/state/reducers/CreatePostReducer.dart';
+import 'package:app/presentation/state/reducers/ENEMReducer.dart';
 import 'package:app/presentation/state/reducers/EditMyInfoReducer.dart';
 import 'package:app/presentation/state/reducers/LoginReducer.dart';
 import 'package:app/presentation/state/reducers/PostsReducer.dart';
-import 'package:app/presentation/state/reducers/ENEMReducer.dart';
 import 'package:app/presentation/state/reducers/UserReducer.dart';
 import 'package:redux/redux.dart';
 import 'package:redux_logging/redux_logging.dart';
@@ -11,9 +11,9 @@ import 'package:redux_logging/redux_logging.dart';
 import '../../injection.dart';
 import 'middleware/AnalyticsMiddleware.dart';
 import 'middleware/ChallengeMiddleware.dart';
+import 'middleware/ENEMMiddleware.dart';
 import 'middleware/LoginMiddleware.dart';
 import 'middleware/PostMiddleware.dart';
-import 'middleware/ENEMMiddleware.dart';
 import 'middleware/UserMiddleware.dart';
 import 'navigator/NavigatorMiddleware.dart';
 import 'navigator/NavigatorReducer.dart';
@@ -91,6 +91,7 @@ final Store<AppState> store = Store<AppState>(
       getRankingUseCase,
       getUserByIdUseCase,
       getENEMQuestionsUseCase,
+      getENEMQuestionsVideosUseCase,
     ),
     ...challengeMiddleware(
       getChallengeUseCase,

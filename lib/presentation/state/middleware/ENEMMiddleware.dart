@@ -15,7 +15,8 @@ import '../app_state.dart';
 List<Middleware<AppState>> ENEMMiddleware(
   IGetCurrentRankingUseCase getRankingUseCase,
   IGetUserByIdUseCase getUserById,
-  IGetQuestionsUseCase getQuestionsUseCase,
+  IGetENEMQuestionsUseCase getQuestionsUseCase,
+  IGetENEMQuestionsVideosUseCase videosUseCase,
 ) {
   void fetchRanking(Store<AppState> store, FetchRankingAction action,
       NextDispatcher next) async {
@@ -45,16 +46,19 @@ List<Middleware<AppState>> ENEMMiddleware(
     store.dispatch(NavigatePushAction(AppRoutes.training));
     try {
       final questions = await getQuestionsUseCase.run(10, [action.domain]);
-      final questionsData = questions.map((question) {
+      final futures = questions.map((question) async {
+        final videos = await videosUseCase.run(question.id);
         return ENEMQuestionData(
           question.id,
           question.imageURL,
           question.correctAnswer,
-          [],
+          videos,
           question.width,
           question.height,
+          -1,
         );
       }).toList();
+      final questionsData = await Future.wait(futures);
       store.dispatch(TrainingQuestionsRetrievedAction(questionsData));
     } catch (e) {
       print(e);

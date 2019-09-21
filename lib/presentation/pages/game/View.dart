@@ -60,6 +60,7 @@ class GamePage extends StatelessWidget {
                           ),
                         ),
                         FetcherWidget(
+                            errorMessage: viewModel.challenges.errorMessage,
                             isLoading: viewModel.challenges.isLoading,
                             child: () {
                               return Container(

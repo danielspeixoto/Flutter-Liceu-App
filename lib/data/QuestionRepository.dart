@@ -32,9 +32,16 @@ class ENEMQuestionRepository implements IENEMQuestionRepository {
   }
 
   @override
-  Future<List<ENEMVideo>> videos(String accessToken, String id) {
-    // TODO: implement videos
-    return null;
+  Future<List<ENEMVideo>> videos(String accessToken, String id) async {
+    final response = await http.get("$_url/$id/videos?start=0&amount=5", headers: {
+      apiKeyHeader: _apiKey,
+      contentTypeHeader: contentTypeValueForJson,
+      authHeader: accessToken
+    });
+    if (response.statusCode == 200) {
+      return fromJsonToListOfENEMVideos(response.body);
+    }
+    throw handleNetworkException(response.statusCode);
   }
 
 }

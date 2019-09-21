@@ -14,6 +14,7 @@ import 'data/QuestionRepository.dart';
 import 'data/RankingRepository.dart';
 import 'data/UserRepository.dart';
 import 'domain/usecase/challenge/SubmitChallengeAnswers.dart';
+import 'domain/usecase/enem/GetENEMVideosUseCase.dart';
 import 'domain/usecase/enem/GetQuestionsUseCase.dart';
 import 'domain/usecase/post/CreatePostUseCase.dart';
 import 'domain/usecase/post/DeletePostUseCase.dart';
@@ -25,10 +26,10 @@ import 'domain/usecase/user/MyPostsUseCase.dart';
 import 'domain/usecase/user/SetUserDescriptionUseCase.dart';
 import 'domain/usecase/user/SetUserInstagramUseCase.dart';
 
-//final baseURL = "https://liceu-staging.herokuapp.com/v2";
-//final apiKey = "2VsYHwfQKtjiAdLs8Z2fTLwuLpofSXWy";
-final baseURL = "https://protected-river-16209.herokuapp.com/v2";
-final apiKey = "8y/B?E(H+MbQeThWmYq3t6w9z\$C&F)J@";
+final baseURL = "https://liceu-staging.herokuapp.com/v2";
+final apiKey = "2VsYHwfQKtjiAdLs8Z2fTLwuLpofSXWy";
+//final baseURL = "https://protected-river-16209.herokuapp.com/v2";
+//final apiKey = "8y/B?E(H+MbQeThWmYq3t6w9z\$C&F)J@";
 
 final client = new http.Client();
 // Repositories
@@ -59,3 +60,4 @@ final getChallengeUseCase = GetChallengeUseCase(localRepository, challengeReposi
 final submitChallengeAnswersUseCase = SubmitChallengeAnswersUseCase(localRepository, challengeRepository);
 final getExplorePostsUseCase = ExplorePostsUseCase(exploreRepository, localRepository);
 final getENEMQuestionsUseCase = GetQuestionsUseCase(localRepository, questionRepository);
+final getENEMQuestionsVideosUseCase = GetENEMQuestionsVideosUseCase(localRepository, questionRepository);

@@ -1,6 +1,7 @@
 import 'package:app/presentation/state/actions/PageActions.dart';
 import 'package:app/presentation/state/app_state.dart';
 import 'package:app/presentation/widgets/ENEMQuestion.dart';
+import 'package:app/presentation/widgets/ENEMQuestionAnswer.dart';
 import 'package:app/presentation/widgets/FetcherWidget.dart';
 import 'package:app/presentation/widgets/LiceuScaffold.dart';
 import 'package:flutter/material.dart';
@@ -33,16 +34,31 @@ class TrainingPage extends StatelessWidget {
                       errorMessage: viewModel.questions.errorMessage,
                       child: () => Container(
                         child: Column(
-                            children: viewModel.questions.content
-                                .map(
-                                  (question) => ENEMQuestionWidget(
-                                    (int idx) {},
-                                    question.imageURL,
-                                    question.width,
-                                    question.height,
-                                  ),
-                                )
-                                .toList()),
+                            children: viewModel.questions.content.map(
+                          (question) {
+                            var status = [
+                              AnswerStatus.DEFAULT,
+                              AnswerStatus.DEFAULT,
+                              AnswerStatus.DEFAULT,
+                              AnswerStatus.DEFAULT,
+                              AnswerStatus.DEFAULT,
+                            ];
+                            if(question.selectedAnswer != -1) {
+                              status[question.selectedAnswer] = AnswerStatus.WRONG;
+                              status[question.answer] = AnswerStatus.CORRECT;
+                            }
+                            return ENEMQuestionWidget(
+                              (int idx) {
+                                viewModel.onAnswer(question.id, idx);
+                              },
+                              question.imageURL,
+                              question.width,
+                              question.height,
+                              question.videos,
+                              status,
+                            );
+                          },
+                        ).toList()),
                       ),
                     ),
                   ],

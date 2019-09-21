@@ -2,7 +2,7 @@ import 'package:app/domain/aggregates/ENEMQuestion.dart';
 import 'package:app/domain/boundary/ENEMBoundary.dart';
 import 'package:app/domain/boundary/LocalBoundary.dart';
 
-class GetQuestionsUseCase implements IGetQuestionsUseCase {
+class GetQuestionsUseCase implements IGetENEMQuestionsUseCase {
 
   final ILocalRepository _localRepository;
   final IENEMQuestionRepository _questionRepository;
