@@ -95,6 +95,16 @@ class ProfilePage extends StatelessWidget {
                                       ),
                                       margin: EdgeInsets.all(8),
                                     ),
+                                    FlatButton(
+                                      onPressed:
+                                          viewModel.onEditProfileButtonPressed,
+                                      child: Text(
+                                        "Edite seu perfil",
+                                        style: TextStyle(
+                                          color: Color(0xFF0061A1),
+                                        ),
+                                      ),
+                                    ),
                                   ],
                                 ),
                               ),

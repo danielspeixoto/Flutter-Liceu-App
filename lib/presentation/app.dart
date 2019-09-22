@@ -61,7 +61,10 @@ class MyApp extends StatelessWidget {
         child: MaterialApp(
           title: 'Liceu',
           theme: ThemeData(
-              primaryColorDark: Colors.black, primaryColor: Colors.black),
+            primaryColorDark: Colors.black54,
+            primaryColor: Colors.white,
+            accentColor: Color(0xFF0061A1),
+          ),
           navigatorKey: navigatorKey,
           navigatorObservers: [routeObserver],
           onGenerateRoute: (RouteSettings settings) => _getRoute(settings),
