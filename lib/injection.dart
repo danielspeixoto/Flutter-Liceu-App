@@ -28,17 +28,18 @@ import 'domain/usecase/user/MyPostsUseCase.dart';
 import 'domain/usecase/user/SetUserDescriptionUseCase.dart';
 import 'domain/usecase/user/SetUserInstagramUseCase.dart';
 
-final baseURL = "https://liceu-staging.herokuapp.com/v2";
-final apiKey = "2VsYHwfQKtjiAdLs8Z2fTLwuLpofSXWy";
-//final baseURL = "https://protected-river-16209.herokuapp.com/v2";
-//final apiKey = "8y/B?E(H+MbQeThWmYq3t6w9z\$C&F)J@";
+//final baseURL = "https://liceu-staging.herokuapp.com/v2";
+//final apiKey = "2VsYHwfQKtjiAdLs8Z2fTLwuLpofSXWy";
+final baseURL = "https://protected-river-16209.herokuapp.com/v2";
+final apiKey = "8y/B?E(H+MbQeThWmYq3t6w9z\$C&F)J@";
 
 final client = new http.Client();
 // Repositories
 final loginRepository = LoginRepository(baseURL + "/login", apiKey);
 final userRepository = UserRepository(baseURL + "/user", apiKey);
 final postRepository = PostRepository(baseURL + "/post", apiKey);
-final questionRepository = ENEMQuestionRepository(baseURL + "/question", apiKey);
+final questionRepository =
+    ENEMQuestionRepository(baseURL + "/question", apiKey);
 final gameRepository = ENEMGameRepository(baseURL + "/game", apiKey);
 final exploreRepository = ExploreRepository(baseURL + "/explore", apiKey);
 final rankingRepository = RankingRepository(baseURL + "/ranking", apiKey);
@@ -49,8 +50,10 @@ final loginUseCase = LoginUseCase(loginRepository, localRepository);
 final myInfoUseCase = MyInfoUseCase(userRepository, localRepository);
 final getUserByIdUseCase = GetUserByIdUseCase(userRepository, localRepository);
 final myPostsUseCase = MyPostsUseCase(localRepository, userRepository);
-final myChallengesUseCase = MyChallengesUseCase(localRepository, userRepository);
-final getRankingUseCase = GetCurrentRankingUseCase(localRepository, rankingRepository);
+final myChallengesUseCase =
+    MyChallengesUseCase(localRepository, userRepository);
+final getRankingUseCase =
+    GetCurrentRankingUseCase(localRepository, rankingRepository);
 final isLoggedInUseCase = IsLoggedInUseCase(localRepository);
 final logoutUseCase = LogOutUseCase(localRepository);
 final createPostUseCase = CreatePostUseCase(localRepository, postRepository);
@@ -59,9 +62,15 @@ final setUserDescriptionUseCase =
     SetUserDescriptionUseCase(localRepository, userRepository);
 final setUserInstagramUseCase =
     SetUserInstagramUseCase(localRepository, userRepository);
-final getChallengeUseCase = GetChallengeUseCase(localRepository, challengeRepository);
-final submitChallengeAnswersUseCase = SubmitChallengeAnswersUseCase(localRepository, challengeRepository);
-final getExplorePostsUseCase = ExplorePostsUseCase(exploreRepository, localRepository);
-final getENEMQuestionsUseCase = GetQuestionsUseCase(localRepository, questionRepository);
-final getENEMQuestionsVideosUseCase = GetENEMQuestionsVideosUseCase(localRepository, questionRepository);
-final submitENEMGamesUseCase = SubmitGameUseCase(localRepository, gameRepository);
+final getChallengeUseCase =
+    GetChallengeUseCase(localRepository, challengeRepository);
+final submitChallengeAnswersUseCase =
+    SubmitChallengeAnswersUseCase(localRepository, challengeRepository);
+final getExplorePostsUseCase =
+    ExplorePostsUseCase(exploreRepository, localRepository);
+final getENEMQuestionsUseCase =
+    GetQuestionsUseCase(localRepository, questionRepository);
+final getENEMQuestionsVideosUseCase =
+    GetENEMQuestionsVideosUseCase(localRepository, questionRepository);
+final submitENEMGamesUseCase =
+    SubmitGameUseCase(localRepository, gameRepository);

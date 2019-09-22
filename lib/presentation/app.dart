@@ -15,15 +15,15 @@ import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 
+import 'background/FirebaseNotifications.dart';
+
 final GlobalKey<NavigatorState> navigatorKey = new GlobalKey<NavigatorState>();
 final analytics = FirebaseAnalytics();
 
 class MyApp extends StatelessWidget {
-
-//  final Store store;
-
-  const MyApp({Key key}) : super(key: key);
-
+  MyApp({Key key}) : super(key: key) {
+    FirebaseNotifications(store);
+  }
 
   MaterialPageRoute _getRoute(RouteSettings settings) {
     switch (settings.name) {
@@ -49,7 +49,6 @@ class MyApp extends StatelessWidget {
         return MainRoute(SplashPage(), settings: settings);
     }
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -78,5 +77,4 @@ class AppRoutes {
   static const tournament = "/tournament";
   static const tournamentReview = "/tournamentReview";
   static const login = "/login";
-
 }
