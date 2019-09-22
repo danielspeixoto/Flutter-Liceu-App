@@ -1,25 +1,25 @@
-import 'dart:math';
-
 import 'package:app/domain/aggregates/ENEMGame.dart';
+import 'package:app/domain/aggregates/User.dart';
+import 'package:app/presentation/state/actions/FriendActions.dart';
 import 'package:app/presentation/state/app_state.dart';
 import 'package:app/presentation/state/reducers/Data.dart';
-import 'package:app/presentation/util/text.dart';
 import 'package:redux/redux.dart';
 
 class TrophyEntry {
-  final String name;
-  final String pictureURL;
+  final User user;
   final String timeSpent;
   final String score;
   final int position;
 
-  TrophyEntry(this.name, this.pictureURL, this.timeSpent, this.score, this.position);
+  TrophyEntry(this.user, this.timeSpent, this.score, this.position);
 }
 
 class TrophyViewModel {
   final Data<List<TrophyEntry>> rankingData;
 
-  TrophyViewModel({this.rankingData});
+  final Function(User user) onUserPressed;
+
+  TrophyViewModel({this.rankingData, this.onUserPressed});
 
   factory TrophyViewModel.create(Store<AppState> store) {
     final ranking = store.state.enemState.ranking;
@@ -41,20 +41,17 @@ class TrophyViewModel {
                   });
 
                   var seconds = (game.timeSpent % 60).floor().toString();
-                  if(seconds.length == 1) {
+                  if (seconds.length == 1) {
                     seconds = "0" + seconds;
                   }
 
                   return TrophyEntry(
-                    summarize(game.user.name, 25),
-                    game.user.picURL,
-                    (game.timeSpent / 60).floor().toString() +
-                        ":" +
-                        seconds,
-                    score.toString(),
-                    position++
-                  );
+                      game.user,
+                      (game.timeSpent / 60).floor().toString() + ":" + seconds,
+                      score.toString(),
+                      position++);
                 }).toList()),
+      onUserPressed: (user) => store.dispatch(ViewFriendAction(user)),
     );
   }
 }

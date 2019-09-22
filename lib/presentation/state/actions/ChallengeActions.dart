@@ -16,20 +16,20 @@ class ChallengeAction {
   ChallengeAction();
 }
 
+class ChallengeSomeoneAction {
+  final String challengedId;
+
+  ChallengeSomeoneAction(this.challengedId);
+}
+
 class AnswerTriviaAction {
   final String answer;
 
   AnswerTriviaAction(this.answer);
 }
 
-class ChallengeFinishedAction {
+class ChallengeFinishedAction {}
 
-}
+class TriviaTimerDecrementAction {}
 
-class TriviaTimerDecrementAction {
-
-}
-
-class NextTriviaAction {
-  
-}
+class NextTriviaAction {}

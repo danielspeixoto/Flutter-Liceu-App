@@ -8,6 +8,7 @@ import 'package:app/presentation/pages/tournament-review/View.dart';
 import 'package:app/presentation/pages/tournament/View.dart';
 import 'package:app/presentation/pages/training-filter/View.dart';
 import 'package:app/presentation/pages/training/View.dart';
+import 'package:app/presentation/pages/userprofile/View.dart';
 import 'package:app/presentation/state/app_state.dart';
 import 'package:app/presentation/state/navigator/RouteObserver.dart';
 import 'package:app/presentation/state/navigator/routes/MainRoute.dart';
@@ -31,6 +32,8 @@ class MyApp extends StatelessWidget {
         return MainRoute(LoginPage(), settings: settings);
       case AppRoutes.home:
         return MainRoute(HomePage(), settings: settings);
+      case AppRoutes.friend:
+        return MainRoute(UserProfilePage(), settings: settings);
       case AppRoutes.editProfile:
         return MainRoute(EditProfilePage(), settings: settings);
       case AppRoutes.createPost:
@@ -77,4 +80,5 @@ class AppRoutes {
   static const tournament = "/tournament";
   static const tournamentReview = "/tournamentReview";
   static const login = "/login";
+  static const friend = "/friend";
 }

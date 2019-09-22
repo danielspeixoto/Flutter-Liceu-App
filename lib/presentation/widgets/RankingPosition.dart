@@ -1,10 +1,10 @@
 import 'package:app/presentation/pages/trophy/ViewModel.dart';
+import 'package:app/presentation/util/text.dart';
 import 'package:app/presentation/widgets/RoundedImage.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class RankingPosition extends StatelessWidget {
-
   final TrophyEntry game;
 
   RankingPosition(this.game);
@@ -18,12 +18,11 @@ class RankingPosition extends StatelessWidget {
             Container(
               margin: EdgeInsets.all(8),
               child: RoundedImage(
-                pictureURL:
-                    game.pictureURL,
+                pictureURL: game.user.picURL,
                 size: 36,
               ),
             ),
-            Text(game.name),
+            Text(summarize(game.user.name, 25)),
             Spacer(),
             Column(
               children: <Widget>[

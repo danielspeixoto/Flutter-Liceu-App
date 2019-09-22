@@ -1,3 +1,4 @@
+import 'package:app/domain/aggregates/Challenge.dart';
 import 'package:app/domain/boundary/ChallengeBoundary.dart';
 import 'package:app/domain/boundary/UserBoundary.dart';
 import 'package:app/presentation/state/actions/ChallengeActions.dart';
@@ -15,15 +16,13 @@ final analytics = FirebaseAnalytics();
 
 List<Middleware<AppState>> challengeMiddleware(
   IGetChallengeUseCase getChallengeUseCase,
+  IChallengeSomeoneUseCase challengeSomeoneUseCase,
   IGetUserByIdUseCase getUserByIdUseCase,
   ISubmitChallengeAnswersUseCase submitChallengeAnswersUseCase,
 ) {
-  void getRandomChallenge(Store<AppState> store, ChallengeAction action,
-      NextDispatcher next) async {
-    next(action);
+  void dispatchChallenge(
+      Store<AppState> store, Challenge challenge, NextDispatcher next) async {
     try {
-      store.dispatch(NavigatePushAction(AppRoutes.challenge));
-      final challenge = await getChallengeUseCase.run();
       final futures = challenge.questions.map((trivia) async {
         return TriviaData(
           await getUserByIdUseCase.run(trivia.authorId),
@@ -40,6 +39,30 @@ List<Middleware<AppState>> challengeMiddleware(
     }
   }
 
+  void getRandomChallenge(Store<AppState> store, ChallengeAction action,
+      NextDispatcher next) async {
+    next(action);
+    try {
+      store.dispatch(NavigatePushAction(AppRoutes.challenge));
+      final challenge = await getChallengeUseCase.run();
+      dispatchChallenge(store, challenge, next);
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  void challengeSomeone(Store<AppState> store, ChallengeSomeoneAction action,
+      NextDispatcher next) async {
+    next(action);
+    try {
+      store.dispatch(NavigatePushAction(AppRoutes.challenge));
+      final challenge = await challengeSomeoneUseCase.run(action.challengedId);
+      dispatchChallenge(store, challenge, next);
+    } catch (e) {
+      print(e);
+    }
+  }
+
   void onAnswer(Store<AppState> store, AnswerTriviaAction action,
       NextDispatcher next) async {
     next(action);
@@ -51,7 +74,7 @@ List<Middleware<AppState>> challengeMiddleware(
           store.dispatch(ChallengeFinishedAction());
         });
       } else {
-        new Future.delayed(const Duration(seconds: 3), () {
+        new Future.delayed(const Duration(seconds: 2), () {
           store.dispatch(NextTriviaAction());
         });
       }
@@ -86,7 +109,9 @@ List<Middleware<AppState>> challengeMiddleware(
       analytics.logPostScore(score: score);
       await submitChallengeAnswersUseCase.run(
           challengeState.challenge.content.id, challengeState.answers);
-      store.dispatch(FetchMyChallengesAction());
+      new Future.delayed(const Duration(seconds: 3), () {
+        store.dispatch(FetchMyChallengesAction());
+      });
     } catch (e) {
       print(e);
     }
@@ -117,6 +142,7 @@ List<Middleware<AppState>> challengeMiddleware(
 
   return [
     TypedMiddleware<AppState, ChallengeAction>(getRandomChallenge),
+    TypedMiddleware<AppState, ChallengeSomeoneAction>(challengeSomeone),
     TypedMiddleware<AppState, AnswerTriviaAction>(onAnswer),
     TypedMiddleware<AppState, NextTriviaAction>(nextTriviaAction),
     TypedMiddleware<AppState, ChallengeFinishedAction>(onFinished),

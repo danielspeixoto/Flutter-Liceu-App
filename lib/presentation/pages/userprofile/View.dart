@@ -14,51 +14,17 @@ import 'package:url_launcher/url_launcher.dart';
 
 import 'ViewModel.dart';
 
-class ProfilePage extends StatelessWidget {
+class UserProfilePage extends StatelessWidget {
   final _refreshController = RefreshController(initialRefresh: false);
 
   @override
   Widget build(BuildContext context) =>
-      StoreConnector<AppState, ProfileViewModel>(
-        onInit: (store) => store.dispatch(PageInitAction("Profile")),
-        converter: (store) => ProfileViewModel.create(store),
-        builder: (BuildContext context, ProfileViewModel viewModel) {
+      StoreConnector<AppState, UserProfileViewModel>(
+        onInit: (store) => store.dispatch(PageInitAction("UserProfile")),
+        converter: (store) => UserProfileViewModel.create(store),
+        builder: (BuildContext context, UserProfileViewModel viewModel) {
           final user = viewModel.user.content;
           return LiceuScaffold(
-            drawer: Drawer(
-              child: ListView(
-                children: <Widget>[
-                  Container(
-                    child: FlatButton(
-                      padding: EdgeInsets.all(16),
-                      onPressed: () {
-                        launch("https://www.instagram.com/liceu.co");
-                      },
-                      child: Column(
-                        children: <Widget>[
-                          Icon(FontAwesomeIcons.instagram),
-                          Text("@liceu.co")
-                        ],
-                      ),
-                    ),
-                  ),
-                  ListTile(
-                    title: Text('Editar Perfil'),
-                    onTap: viewModel.onEditProfileButtonPressed,
-                  ),
-                  ListTile(
-                    title: Text('Sair desta conta'),
-                    onTap: viewModel.onLogoutPressed,
-                  ),
-                ],
-              ),
-            ),
-            leading: FlatButton(
-              onPressed: viewModel.onCreateButtonPressed,
-              child: new Icon(
-                FontAwesomeIcons.edit,
-              ),
-            ),
             body: SmartRefresher(
               onRefresh: () async {
                 viewModel.refresh();
@@ -95,6 +61,16 @@ class ProfilePage extends StatelessWidget {
                                       ),
                                       margin: EdgeInsets.all(8),
                                     ),
+                                    FlatButton(
+                                      onPressed: () => viewModel
+                                          .onChallengeMePressed(user.id),
+                                      child: Text(
+                                        "Me desafie!",
+                                        style: TextStyle(
+                                          color: Color(0xFF0061A1),
+                                        ),
+                                      ),
+                                    )
                                   ],
                                 ),
                               ),
@@ -154,7 +130,9 @@ class ProfilePage extends StatelessWidget {
                               child: Column(
                                 children: <Widget>[
                                   Text(
-                                      "Você ainda não compartilhou nenhum resumo"),
+                                    "${viewModel.user.content.name} ainda não compartilhou nenhum resumo",
+                                    textAlign: TextAlign.center,
+                                  ),
                                 ],
                               ),
                             )
@@ -162,7 +140,7 @@ class ProfilePage extends StatelessWidget {
                               children: viewModel.posts.content
                                   .map(
                                     (post) => PostWidget(
-                                      user: viewModel.user.content,
+                                      user: user,
                                       postContent: post.text,
                                       onSharePressed: () {
                                         viewModel.onSharePostPressed(
@@ -171,8 +149,6 @@ class ProfilePage extends StatelessWidget {
                                           post.text,
                                         );
                                       },
-                                      onDeletePressed: () => viewModel
-                                          .onDeletePostPressed(post.id),
                                     ),
                                   )
                                   .toList(),

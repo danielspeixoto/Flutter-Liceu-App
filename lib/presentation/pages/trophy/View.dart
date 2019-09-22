@@ -6,7 +6,6 @@ import 'package:app/presentation/widgets/LiceuScaffold.dart';
 import 'package:app/presentation/widgets/RankingPosition.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 import 'ViewModel.dart';
 
@@ -41,11 +40,14 @@ class TrophyPage extends StatelessWidget {
                   child: () {
                     return Card(
                       child: Column(
-                          children:
-                              viewModel.rankingData.content.map((game) {
+                          children: viewModel.rankingData.content.map((game) {
                         return Column(
                           children: <Widget>[
-                            RankingPosition(game),
+                            FlatButton(
+                              child: RankingPosition(game),
+                              onPressed: () =>
+                                  viewModel.onUserPressed(game.user),
+                            ),
                             LiceuDivider(),
                           ],
                         );

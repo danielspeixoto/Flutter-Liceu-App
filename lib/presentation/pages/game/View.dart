@@ -82,7 +82,11 @@ class GamePage extends StatelessWidget {
                                               .map((challenge) {
                                               return Column(
                                                 children: <Widget>[
-                                                  MatchHistory(challenge),
+                                                  MatchHistory(
+                                                    challenge,
+                                                    (user) => viewModel
+                                                        .onUserPressed(user),
+                                                  ),
                                                   LiceuDivider()
                                                 ],
                                               );

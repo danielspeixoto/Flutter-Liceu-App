@@ -14,6 +14,7 @@ import 'data/PostRepository.dart';
 import 'data/QuestionRepository.dart';
 import 'data/RankingRepository.dart';
 import 'data/UserRepository.dart';
+import 'domain/usecase/challenge/ChallengeSomeoneUseCase.dart';
 import 'domain/usecase/challenge/SubmitChallengeAnswers.dart';
 import 'domain/usecase/enem/GetENEMVideosUseCase.dart';
 import 'domain/usecase/enem/GetQuestionsUseCase.dart';
@@ -23,6 +24,7 @@ import 'domain/usecase/post/DeletePostUseCase.dart';
 import 'domain/usecase/post/ExplorePostsUseCase.dart';
 import 'domain/usecase/tournament/GetRankingUseCase.dart';
 import 'domain/usecase/user/GetUserByIdUseCase.dart';
+import 'domain/usecase/user/GetUserPostsUseCase.dart';
 import 'domain/usecase/user/MyChallengesUseCase.dart';
 import 'domain/usecase/user/MyPostsUseCase.dart';
 import 'domain/usecase/user/SetUserDescriptionUseCase.dart';
@@ -50,6 +52,8 @@ final loginUseCase = LoginUseCase(loginRepository, localRepository);
 final myInfoUseCase = MyInfoUseCase(userRepository, localRepository);
 final getUserByIdUseCase = GetUserByIdUseCase(userRepository, localRepository);
 final myPostsUseCase = MyPostsUseCase(localRepository, userRepository);
+final getUserPostsUseCase =
+    GetUserPostsUseCase(localRepository, userRepository);
 final myChallengesUseCase =
     MyChallengesUseCase(localRepository, userRepository);
 final getRankingUseCase =
@@ -62,6 +66,8 @@ final setUserDescriptionUseCase =
     SetUserDescriptionUseCase(localRepository, userRepository);
 final setUserInstagramUseCase =
     SetUserInstagramUseCase(localRepository, userRepository);
+final challengeSomeoneUseCase =
+    ChallengeSomeoneUseCase(localRepository, challengeRepository);
 final getChallengeUseCase =
     GetChallengeUseCase(localRepository, challengeRepository);
 final submitChallengeAnswersUseCase =

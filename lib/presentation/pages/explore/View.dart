@@ -38,7 +38,7 @@ class ExplorePage extends StatelessWidget {
                   Container(
                     margin: EdgeInsets.all(8),
                     child: Text(
-                        "Atualize a página pra trocar o conteúdo escolhido!",
+                      "Atualize a página pra trocar o conteúdo escolhido!",
                       textAlign: TextAlign.center,
                     ),
                   ),
@@ -50,9 +50,10 @@ class ExplorePage extends StatelessWidget {
                         children: viewModel.posts.content
                             .map(
                               (post) => PostWidget(
-                                userName: post.user.name,
-                                userPic: post.user.picURL,
+                                user: post.user,
                                 postContent: post.text,
+                                onUserPressed: (user) =>
+                                    viewModel.onUserPressed(user),
                                 onSharePressed: () {
                                   viewModel.onSharePostPressed(
                                     post.id,

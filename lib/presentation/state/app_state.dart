@@ -2,6 +2,7 @@ import 'package:app/presentation/state/reducers/ChallengeReducer.dart';
 import 'package:app/presentation/state/reducers/CreatePostReducer.dart';
 import 'package:app/presentation/state/reducers/ENEMReducer.dart';
 import 'package:app/presentation/state/reducers/EditMyInfoReducer.dart';
+import 'package:app/presentation/state/reducers/FriendReducer.dart';
 import 'package:app/presentation/state/reducers/LoginReducer.dart';
 import 'package:app/presentation/state/reducers/PostsReducer.dart';
 import 'package:app/presentation/state/reducers/UserReducer.dart';
@@ -12,6 +13,7 @@ import '../../injection.dart';
 import 'middleware/AnalyticsMiddleware.dart';
 import 'middleware/ChallengeMiddleware.dart';
 import 'middleware/ENEMMiddleware.dart';
+import 'middleware/FriendMiddleware.dart';
 import 'middleware/LoginMiddleware.dart';
 import 'middleware/PostMiddleware.dart';
 import 'middleware/UserMiddleware.dart';
@@ -20,6 +22,7 @@ import 'navigator/NavigatorReducer.dart';
 
 class AppState {
   final UserState userState;
+  final FriendState friendState;
   final PostState postState;
   final CreatePostState createPostState;
   final LoginState loginState;
@@ -30,6 +33,7 @@ class AppState {
 
   AppState({
     this.userState,
+    this.friendState,
     this.postState,
     this.createPostState,
     this.route,
@@ -42,6 +46,7 @@ class AppState {
   factory AppState.initial() => AppState(
         route: ["/"],
         userState: UserState.initial(),
+        friendState: FriendState.initial(),
         postState: PostState.initial(),
         createPostState: CreatePostState.initial(),
         loginState: LoginState.initial(),
@@ -54,6 +59,7 @@ class AppState {
 AppState appReducer(AppState state, action) => AppState(
       route: navigationReducer(state.route, action),
       userState: userReducer(state.userState, action),
+      friendState: friendReducer(state.friendState, action),
       postState: postReducer(state.postState, action),
       createPostState: createPostReducer(state.createPostState, action),
       loginState: loginReducer(state.loginState, action),
@@ -96,8 +102,13 @@ final Store<AppState> store = Store<AppState>(
     ),
     ...challengeMiddleware(
       getChallengeUseCase,
+      challengeSomeoneUseCase,
       getUserByIdUseCase,
       submitChallengeAnswersUseCase,
+    ),
+    ...friendMiddleware(
+      getUserPostsUseCase,
+      getUserByIdUseCase,
     ),
     ...navigationMiddleware()
   ],

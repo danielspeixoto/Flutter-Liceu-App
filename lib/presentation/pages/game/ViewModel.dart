@@ -1,5 +1,7 @@
+import 'package:app/domain/aggregates/User.dart';
 import 'package:app/presentation/state/actions/ChallengeActions.dart';
 import 'package:app/presentation/state/actions/ENEMActions.dart';
+import 'package:app/presentation/state/actions/FriendActions.dart';
 import 'package:app/presentation/state/actions/UserActions.dart';
 import 'package:app/presentation/state/aggregates/ChallengeHistoryData.dart';
 import 'package:app/presentation/state/app_state.dart';
@@ -12,6 +14,7 @@ class GameViewModel {
   final Function onChallengePressed;
   final Function onTrainingPressed;
   final Function onTournamentPressed;
+  final Function(User user) onUserPressed;
 
   GameViewModel({
     this.challenges,
@@ -19,6 +22,7 @@ class GameViewModel {
     this.onChallengePressed,
     this.onTrainingPressed,
     this.onTournamentPressed,
+    this.onUserPressed,
   });
 
   factory GameViewModel.create(Store<AppState> store) {
@@ -28,6 +32,7 @@ class GameViewModel {
       onChallengePressed: () => store.dispatch(ChallengeAction()),
       onTrainingPressed: () => store.dispatch(TrainingAction()),
       onTournamentPressed: () => store.dispatch(TournamentAction()),
+      onUserPressed: (user) => store.dispatch(ViewFriendAction(user)),
     );
   }
 }

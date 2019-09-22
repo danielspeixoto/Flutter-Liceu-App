@@ -1,3 +1,4 @@
+import 'package:app/domain/aggregates/User.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -12,18 +13,18 @@ class TabData {
 }
 
 class PostWidget extends StatelessWidget {
-  final String userPic;
-  final String userName;
+  final User user;
   final String postContent;
   final Function() onDeletePressed;
   final Function() onSharePressed;
+  final Function(User) onUserPressed;
 
   PostWidget({
-    @required this.userName,
-    @required this.userPic,
-    @required this.postContent,
+    this.user,
+    this.postContent,
     this.onDeletePressed,
-    @required this.onSharePressed,
+    this.onSharePressed,
+    this.onUserPressed,
   });
 
   @override
@@ -42,21 +43,24 @@ class PostWidget extends StatelessWidget {
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Row(
-                  children: <Widget>[
-                    Container(
-                      margin: EdgeInsets.all(8),
-                      child: RoundedImage(
-                        pictureURL: this.userPic,
-                        size: 36,
+                FlatButton(
+                  onPressed: () => onUserPressed(user),
+                  child: Row(
+                    children: <Widget>[
+                      Container(
+                        margin: EdgeInsets.all(8),
+                        child: RoundedImage(
+                          pictureURL: this.user.picURL,
+                          size: 36,
+                        ),
                       ),
-                    ),
-                    Text(
-                      this.userName,
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
-                    ),
-                  ],
+                      Text(
+                        this.user.name,
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 12),
+                      ),
+                    ],
+                  ),
                 ),
                 Expanded(
                   child: Align(

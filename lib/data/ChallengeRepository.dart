@@ -30,13 +30,31 @@ class ChallengeRepository implements IChallengeRepository {
   @override
   Future<void> submitResult(
       String accessToken, String challengeId, List<String> answers) async {
-    final response = await http.put(_url + "/" + challengeId, headers: {
-      apiKeyHeader: _apiKey,
-      contentTypeHeader: contentTypeValueForJson,
-      authHeader: accessToken
-    }, body: json.encode({
-      "answers": answers
-    }));
+    final response = await http.put(_url + "/" + challengeId,
+        headers: {
+          apiKeyHeader: _apiKey,
+          contentTypeHeader: contentTypeValueForJson,
+          authHeader: accessToken
+        },
+        body: json.encode({"answers": answers}));
+    if (response.statusCode == 200) {
+      return fromJsonToChallenge(response.body);
+    }
+    throw handleNetworkException(response.statusCode);
+  }
+
+  @override
+  Future<Challenge> challengeSomeone(
+      String accessToken, String challengedId) async {
+    final response = await http.post(
+      _url,
+      headers: {
+        apiKeyHeader: _apiKey,
+        contentTypeHeader: contentTypeValueForJson,
+        authHeader: accessToken
+      },
+      body: json.encode({"challengedId": challengedId}),
+    );
     if (response.statusCode == 200) {
       return fromJsonToChallenge(response.body);
     }

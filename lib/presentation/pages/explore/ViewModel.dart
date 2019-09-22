@@ -1,5 +1,5 @@
-import 'package:app/domain/aggregates/Post.dart';
 import 'package:app/domain/aggregates/User.dart';
+import 'package:app/presentation/state/actions/FriendActions.dart';
 import 'package:app/presentation/state/actions/PostActions.dart';
 import 'package:app/presentation/state/aggregates/PostData.dart';
 import 'package:app/presentation/state/app_state.dart';
@@ -16,6 +16,7 @@ class ExploreViewModel {
   final Function() refresh;
   final Function(String postId) onDeletePostPressed;
   final Function(String postId, String type, String text) onSharePostPressed;
+  final Function(User user) onUserPressed;
 
   ExploreViewModel({
     this.user,
@@ -23,6 +24,7 @@ class ExploreViewModel {
     this.onSharePostPressed,
     this.posts,
     this.refresh,
+    this.onUserPressed,
   });
 
   factory ExploreViewModel.create(Store<AppState> store) {
@@ -42,6 +44,7 @@ class ExploreViewModel {
         Share.share(summarize(text, 300) +
             "\n\nConfira mais no nosso app!\nhttps://bit.ly/BaixarLiceu");
       },
+      onUserPressed: (user) => store.dispatch(ViewFriendAction(user)),
     );
   }
 }

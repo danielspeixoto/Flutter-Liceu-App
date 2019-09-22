@@ -5,28 +5,36 @@ import 'package:flutter/material.dart';
 
 class MatchHistory extends StatelessWidget {
   final ChallengeHistoryData challenge;
+  final Function(User user) onUserPressed;
 
-  MatchHistory(this.challenge);
+  MatchHistory(this.challenge, this.onUserPressed);
 
   @override
-  Widget build(BuildContext context) => Row(
-        children: <Widget>[
-          Expanded(child: user(context, challenge.challenger)),
-          Expanded(
-            child: Text(
-              challenge.scoreChallenger.toString() +
-                  "   X   " +
-                  (challenge.scoreChallenged == null
-                      ? "-"
-                      : challenge.scoreChallenged.toString()),
-              textAlign: TextAlign.center,
+  Widget build(BuildContext context) => Container(
+        child: Row(
+          children: <Widget>[
+            Expanded(child: user(context, challenge.challenger)),
+            Expanded(
+              child: Column(
+                children: [
+                  Text(
+                    challenge.scoreChallenger.toString() +
+                        "   X   " +
+                        (challenge.scoreChallenged == null
+                            ? "-"
+                            : challenge.scoreChallenged.toString()),
+                    textAlign: TextAlign.center,
+                  ),
+                ],
+              ),
             ),
-          ),
-          Expanded(child: user(context, challenge.challenged))
-        ],
+            Expanded(child: user(context, challenge.challenged))
+          ],
+        ),
       );
 
-  Widget user(BuildContext context, User user) => Container(
+  Widget user(BuildContext context, User user) => FlatButton(
+        onPressed: () => onUserPressed(user),
         child: Column(
           children: <Widget>[
             Container(
@@ -36,7 +44,12 @@ class MatchHistory extends StatelessWidget {
                 size: 36,
               ),
             ),
-            user == null ? Text("Em espera") : Text(user.name)
+            user == null
+                ? Text("Em espera")
+                : Text(
+                    user.name,
+                    textAlign: TextAlign.center,
+                  )
           ],
         ),
         padding: EdgeInsets.all(8),
