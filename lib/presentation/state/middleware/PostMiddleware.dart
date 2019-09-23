@@ -18,7 +18,7 @@ List<Middleware<AppState>> postMiddleware(
       NextDispatcher next) async {
     next(action);
     try {
-      deletePostUseCase.run(action.postId);
+      await deletePostUseCase.run(action.postId);
     } catch (e) {
       print(e);
     }
