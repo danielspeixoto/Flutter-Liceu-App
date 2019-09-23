@@ -2,7 +2,7 @@ class Trivia {
   final String question;
   final String correctAnswer;
   final String wrongAnswer;
-  final TriviaDomain domain;
+  final List<TriviaDomain> domain;
 
   Trivia(this.question, this.correctAnswer, this.wrongAnswer, this.domain);
 }
