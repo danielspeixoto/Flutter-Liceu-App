@@ -1,3 +1,4 @@
+import 'package:app/presentation/state/middleware/TriviaMiddleware.dart';
 import 'package:app/presentation/state/reducers/ChallengeReducer.dart';
 import 'package:app/presentation/state/reducers/CreatePostReducer.dart';
 import 'package:app/presentation/state/reducers/ENEMReducer.dart';
@@ -5,6 +6,7 @@ import 'package:app/presentation/state/reducers/EditMyInfoReducer.dart';
 import 'package:app/presentation/state/reducers/FriendReducer.dart';
 import 'package:app/presentation/state/reducers/LoginReducer.dart';
 import 'package:app/presentation/state/reducers/PostsReducer.dart';
+import 'package:app/presentation/state/reducers/TriviaReducer.dart';
 import 'package:app/presentation/state/reducers/UserReducer.dart';
 import 'package:redux/redux.dart';
 import 'package:redux_logging/redux_logging.dart';
@@ -29,6 +31,7 @@ class AppState {
   final ENEMState enemState;
   final EditMyInfoState editMyInfoState;
   final ChallengeState challengeState;
+  final TriviaState triviaState;
   final List<String> route;
 
   AppState({
@@ -40,6 +43,7 @@ class AppState {
     this.editMyInfoState,
     this.loginState,
     this.enemState,
+    this.triviaState,
     this.challengeState,
   });
 
@@ -52,6 +56,7 @@ class AppState {
         loginState: LoginState.initial(),
         enemState: ENEMState.initial(),
         challengeState: ChallengeState.initial(),
+        triviaState: TriviaState.initial(),
         editMyInfoState: EditMyInfoState.initial(),
       );
 }
@@ -65,6 +70,7 @@ AppState appReducer(AppState state, action) => AppState(
       loginState: loginReducer(state.loginState, action),
       enemState: enemReducer(state.enemState, action),
       challengeState: challengeReducer(state.challengeState, action),
+      triviaState: triviaReducer(state.triviaState, action),
       editMyInfoState: editMyInfoReducer(state.editMyInfoState, action),
     );
 
@@ -109,6 +115,9 @@ final Store<AppState> store = Store<AppState>(
     ...friendMiddleware(
       getUserPostsUseCase,
       getUserByIdUseCase,
+    ),
+    ...triviaMiddleware(
+      createTriviaUseCase,
     ),
     ...navigationMiddleware()
   ],

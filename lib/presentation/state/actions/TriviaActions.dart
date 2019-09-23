@@ -5,3 +5,7 @@ class CreateTriviaAction {
 
   CreateTriviaAction(this.trivia);
 }
+
+class TriviaCreatedAction {
+  
+}
