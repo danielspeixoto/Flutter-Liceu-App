@@ -2,8 +2,9 @@ class Trivia {
   final String question;
   final String correctAnswer;
   final String wrongAnswer;
+  final TriviaDomain domain;
 
-  Trivia(this.question, this.correctAnswer, this.wrongAnswer);
+  Trivia(this.question, this.correctAnswer, this.wrongAnswer, this.domain);
 }
 
 enum TriviaDomain {
