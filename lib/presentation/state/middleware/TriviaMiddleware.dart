@@ -13,10 +13,10 @@ List<Middleware<AppState>> triviaMiddleware(
     next(action);
     try {
       await createTriviaUseCase.run(
-          action.trivia.question,
-          action.trivia.correctAnswer,
-          action.trivia.wrongAnswer,
-          action.trivia.domain);
+          action.question,
+          action.correctAnswer,
+          action.wrongAnswer,
+          [action.domain]);
     } catch (e) {
       print(e);
     }
