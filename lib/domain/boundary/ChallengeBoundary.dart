@@ -15,11 +15,6 @@ abstract class IChallengeSomeoneUseCase {
   Future<Challenge> run(String challengedId);
 }
 
-abstract class ISubmitTriviaUseCase {
-  Future<void> run(String question, String correctAnswer, String wrongAnswer,
-      List<String> tags);
-}
-
 abstract class ISubmitChallengeAnswersUseCase {
   Future<void> run(String challengeId, List<String> answers);
 }

@@ -1,4 +1,6 @@
+import 'package:app/data/TriviaRepository.dart';
 import 'package:app/domain/usecase/challenge/GetChallengeUseCase.dart';
+import 'package:app/domain/usecase/trivia/CreateTriviaUseCase.dart';
 import 'package:app/domain/usecase/user/IsLoggedInUseCase.dart';
 import 'package:app/domain/usecase/user/LogOutUseCase.dart';
 import 'package:app/domain/usecase/user/LoginUseCase.dart';
@@ -46,6 +48,7 @@ final gameRepository = ENEMGameRepository(baseURL + "/game", apiKey);
 final exploreRepository = ExploreRepository(baseURL + "/explore", apiKey);
 final rankingRepository = RankingRepository(baseURL + "/ranking", apiKey);
 final challengeRepository = ChallengeRepository(baseURL + "/challenge", apiKey);
+final triviaRepository = TriviaRepository(baseURL + "/trivia", apiKey);
 final localRepository = LocalRepository();
 // Use Cases
 final loginUseCase = LoginUseCase(loginRepository, localRepository);
@@ -80,3 +83,5 @@ final getENEMQuestionsVideosUseCase =
     GetENEMQuestionsVideosUseCase(localRepository, questionRepository);
 final submitENEMGamesUseCase =
     SubmitGameUseCase(localRepository, gameRepository);
+final createTriviaUseCase = 
+    CreateTriviaUseCase(localRepository, triviaRepository);
