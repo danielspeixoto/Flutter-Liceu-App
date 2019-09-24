@@ -38,9 +38,9 @@ class TriviaState {
 final Reducer<TriviaState> triviaReducer = combineReducers<TriviaState>([
   TypedReducer<TriviaState, CreateTriviaAction>(createTrivia),
   TypedReducer<TriviaState, TriviaCreatedAction>(triviaCreated),
-  TypedReducer<TriviaState, SetQuestionFieldAction>(setQuestionField),
-  TypedReducer<TriviaState, SetCorrectAnswerFieldAction>(setCorrectAnswerField),
-  TypedReducer<TriviaState, SetWrongAnswerFieldAction>(setWrongAnswerField),
+  TypedReducer<TriviaState, SetCreateTriviaQuestionFieldAction>(setQuestionField),
+  TypedReducer<TriviaState, SetCreateTriviaCorrectAnswerFieldAction>(setCorrectAnswerField),
+  TypedReducer<TriviaState, SetCreateTriviaWrongAnswerFieldAction>(setWrongAnswerField),
 ]);
 
 TriviaState createTrivia(TriviaState state, CreateTriviaAction action) {
@@ -55,15 +55,15 @@ TriviaState setDomain(TriviaState state, CreateTriviaAction action) {
   return state.copyWith(domain: action.domain);
 }
 
-TriviaState setQuestionField(TriviaState state, SetQuestionFieldAction action) {
+TriviaState setQuestionField(TriviaState state, SetCreateTriviaQuestionFieldAction action) {
   return state.copyWith(question: action.question);
 }
 
 TriviaState setCorrectAnswerField(
-    TriviaState state, SetCorrectAnswerFieldAction action) {
+    TriviaState state, SetCreateTriviaCorrectAnswerFieldAction action) {
   return state.copyWith(correctAnswer: action.correctAnswer);
 }
 
-TriviaState setWrongAnswerField(TriviaState state, SetWrongAnswerFieldAction action) {
+TriviaState setWrongAnswerField(TriviaState state, SetCreateTriviaWrongAnswerFieldAction action) {
   return state.copyWith(wrongAnswer: action.wrongAnswer);
 }

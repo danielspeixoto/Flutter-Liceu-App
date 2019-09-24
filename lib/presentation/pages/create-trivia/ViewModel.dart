@@ -36,16 +36,16 @@ class CreateTriviaViewModel {
         correctAnswer: triviaState.correctAnswer,
         wrongAnswer: triviaState.wrongAnswer,
         onTriviaDomainChanged: (domain){
-          store.dispatch(SetDomainFieldAction(domain));
+          store.dispatch(SetCreateTriviaDomainFieldAction(domain));
         },
         onQuestionTextChanged: (text) {
-          store.dispatch(SetQuestionFieldAction(text));
+          store.dispatch(SetCreateTriviaQuestionFieldAction(text));
         },
         onCorrectAnswerTextChanged: (text) {
-          store.dispatch(SetCorrectAnswerFieldAction(text));
+          store.dispatch(SetCreateTriviaCorrectAnswerFieldAction(text));
         },
         onWrongAnswerTextChanged: (text) {
-          store.dispatch(SetWrongAnswerFieldAction(text));
+          store.dispatch(SetCreateTriviaWrongAnswerFieldAction(text));
         },
         onCreateTriviaButtonPressed: () async {
             store.dispatch(CreateTriviaAction(triviaState.question, 

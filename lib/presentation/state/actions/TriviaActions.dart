@@ -9,28 +9,28 @@ class CreateTriviaAction {
   CreateTriviaAction(this.question, this.correctAnswer, this.wrongAnswer, this.domain);
 }
 
-class SetQuestionFieldAction {
+class SetCreateTriviaQuestionFieldAction {
   final String question;
 
-  SetQuestionFieldAction(this.question);
+  SetCreateTriviaQuestionFieldAction(this.question);
 }
 
-class SetCorrectAnswerFieldAction {
+class SetCreateTriviaCorrectAnswerFieldAction {
   final String correctAnswer;
 
-  SetCorrectAnswerFieldAction(this.correctAnswer);
+  SetCreateTriviaCorrectAnswerFieldAction(this.correctAnswer);
 }
 
-class SetWrongAnswerFieldAction {
+class SetCreateTriviaWrongAnswerFieldAction {
   final String wrongAnswer;
 
-  SetWrongAnswerFieldAction(this.wrongAnswer);
+  SetCreateTriviaWrongAnswerFieldAction(this.wrongAnswer);
 }
 
-class SetDomainFieldAction {
+class SetCreateTriviaDomainFieldAction {
   final TriviaDomain domain;
 
-  SetDomainFieldAction(this.domain);
+  SetCreateTriviaDomainFieldAction(this.domain);
 }
 
 class TriviaCreatedAction {
