@@ -25,10 +25,21 @@ class Sentry {
       return;
     } else {
       // Send the Exception and Stacktrace to Sentry in Production mode.
-      sentry.captureException(
+      await sentry.captureException(
         exception: error,
         stackTrace: stackTrace,
       );
+    }
+  }
+
+  Future<void> log(dynamic actionName) async {
+
+    if(isInDevelopmentMode) {
+
+      print('$actionName');
+
+    } else {
+      await sentry.capture(event: actionName);
     }
   }
 }
