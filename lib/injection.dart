@@ -34,7 +34,7 @@ import 'domain/usecase/user/SetUserInstagramUseCase.dart';
 
 //final baseURL = "https://liceu-staging.herokuapp.com/v2";
 //final apiKey = "2VsYHwfQKtjiAdLs8Z2fTLwuLpofSXWy";
-final baseURL = "https://protected-river-16209.herokuapp.com/v2";
+final baseURL = "https://liceu-staging.herokuapp.com/v2";
 final apiKey = "8y/B?E(H+MbQeThWmYq3t6w9z\$C&F)J@";
 
 final client = new http.Client();
