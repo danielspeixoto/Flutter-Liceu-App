@@ -1,19 +1,16 @@
 import 'package:sentry/sentry.dart';
-
+import '../../injection.dart';
 
 class Sentry {
   final SentryClient sentry = new SentryClient(dsn: "https://2173bb44d75b4617b22e11ddcd4b9345@sentry.io/1760063");
 
   bool get isInDevelopmentMode {
-    // Assume you're in production mode.
-    bool inDevelopmentMode = false;
 
-    // Assert expressions are only evaluated during development. They are ignored
-    // in production. Therefore, this code only sets `inDebugMode` to true
-    // in a development environment.
-    assert(inDevelopmentMode = true);
+    if(baseURL.contains('liceu-staging')){
+      return true;
+    }
 
-    return inDevelopmentMode;
+    return false;
   }
 
   Future<void> reportError(dynamic error, dynamic stackTrace) async {
@@ -32,14 +29,9 @@ class Sentry {
     }
   }
 
-  Future<void> log(dynamic actionName) async {
-
-    if(isInDevelopmentMode) {
-
-      print('$actionName');
-
-    } else {
-      await sentry.capture(event: actionName);
+  Future<void> log(dynamic action) async {
+    if (!isInDevelopmentMode) {
+      await sentry.capture(event: action);
     }
   }
 }

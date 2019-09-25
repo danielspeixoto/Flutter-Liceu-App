@@ -12,6 +12,7 @@ import 'package:redux/redux.dart';
 import 'package:redux_logging/redux_logging.dart';
 
 import '../../injection.dart';
+import 'middleware/SentryMiddleware.dart';
 import 'middleware/AnalyticsMiddleware.dart';
 import 'middleware/ChallengeMiddleware.dart';
 import 'middleware/ENEMMiddleware.dart';
@@ -78,8 +79,10 @@ final Store<AppState> store = Store<AppState>(
   appReducer,
   initialState: AppState.initial(),
   middleware: [
-    new LoggingMiddleware.printer(),
+    new
+    LoggingMiddleware.printer(),
     AnalyticsMiddleware(),
+    SentryMiddleware(),
     LoginMiddleware(
       logoutUseCase,
       loginUseCase,
