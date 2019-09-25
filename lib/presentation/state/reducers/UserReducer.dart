@@ -1,4 +1,3 @@
-import 'package:app/domain/aggregates/Challenge.dart';
 import 'package:app/domain/aggregates/Post.dart';
 import 'package:app/domain/aggregates/User.dart';
 import 'package:app/presentation/state/aggregates/ChallengeHistoryData.dart';
