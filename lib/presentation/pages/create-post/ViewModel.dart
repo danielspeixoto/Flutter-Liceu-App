@@ -10,7 +10,7 @@ class CreatePostViewModel {
   CreatePostViewModel({this.onPostSubmitted, this.isLoading});
 
   factory CreatePostViewModel.create(Store<AppState> store) {
-    final isLoading = store.state.createPostState.isLoading;
+    final isLoading = store.state.postState.isCreatingPost;
     return CreatePostViewModel(
       onPostSubmitted: isLoading ? null : (text) async {
         store.dispatch(

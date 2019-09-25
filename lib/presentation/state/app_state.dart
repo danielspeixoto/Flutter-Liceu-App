@@ -1,6 +1,5 @@
 import 'package:app/presentation/state/middleware/TriviaMiddleware.dart';
 import 'package:app/presentation/state/reducers/ChallengeReducer.dart';
-import 'package:app/presentation/state/reducers/CreatePostReducer.dart';
 import 'package:app/presentation/state/reducers/ENEMReducer.dart';
 import 'package:app/presentation/state/reducers/EditMyInfoReducer.dart';
 import 'package:app/presentation/state/reducers/FriendReducer.dart';
@@ -26,7 +25,6 @@ class AppState {
   final UserState userState;
   final FriendState friendState;
   final PostState postState;
-  final CreatePostState createPostState;
   final LoginState loginState;
   final ENEMState enemState;
   final EditMyInfoState editMyInfoState;
@@ -38,7 +36,6 @@ class AppState {
     this.userState,
     this.friendState,
     this.postState,
-    this.createPostState,
     this.route,
     this.editMyInfoState,
     this.loginState,
@@ -52,7 +49,6 @@ class AppState {
         userState: UserState.initial(),
         friendState: FriendState.initial(),
         postState: PostState.initial(),
-        createPostState: CreatePostState.initial(),
         loginState: LoginState.initial(),
         enemState: ENEMState.initial(),
         challengeState: ChallengeState.initial(),
@@ -66,7 +62,6 @@ AppState appReducer(AppState state, action) => AppState(
       userState: userReducer(state.userState, action),
       friendState: friendReducer(state.friendState, action),
       postState: postReducer(state.postState, action),
-      createPostState: createPostReducer(state.createPostState, action),
       loginState: loginReducer(state.loginState, action),
       enemState: enemReducer(state.enemState, action),
       challengeState: challengeReducer(state.challengeState, action),
