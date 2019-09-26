@@ -11,8 +11,6 @@ class SentryMiddleware extends MiddlewareClass<AppState> {
   Future call(
       Store<AppState> store, dynamic action, NextDispatcher next) async {
 
-    logging.log(action);
-
     next(action);
   }
 }
