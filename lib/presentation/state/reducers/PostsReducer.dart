@@ -7,21 +7,25 @@ import 'Data.dart';
 class PostState {
   final Data<List<PostData>> posts;
   final bool isCreatingPost;
+  final String createPostTextErrorMessage;
 
-  PostState(this.posts, this.isCreatingPost);
+  PostState(this.posts, this.isCreatingPost, this.createPostTextErrorMessage);
 
   factory PostState.initial() => PostState(
       Data(),
-      true
+      true,
+      ""
   );
 
   PostState copyWith({
     Data<List<PostData>> posts,
-    bool isCreatingPost
+    bool isCreatingPost,
+    String createPostTextErrorMessage
   }) {
     final state = PostState(
       posts ?? this.posts,
-      isCreatingPost ?? this.isCreatingPost
+      isCreatingPost ?? this.isCreatingPost,
+      createPostTextErrorMessage ?? this.createPostTextErrorMessage
     );
     return state;
   }
@@ -32,7 +36,8 @@ final Reducer<PostState> postReducer = combineReducers<PostState>([
   TypedReducer<PostState, ExplorePostsRetrievedAction>(explorePostsRetrieved),
   TypedReducer<PostState, ExplorePostsAction>(explorePosts),
   TypedReducer<PostState, CreatePostAction>(createPost),
-  TypedReducer<PostState, PostCreationAction>(postCreation),
+  TypedReducer<PostState, NavigateCreatePostAction>(navigateCreatePost),
+  TypedReducer<PostState, OnCreatePostTextSizeMismatchAction>(onCreatePostTextSizeMismatch)
 ]);
 
 PostState deletePost(PostState state, DeletePostAction action) {
@@ -60,12 +65,21 @@ PostState explorePosts(PostState state, ExplorePostsAction action) {
 
 PostState createPost(PostState state, CreatePostAction action) {
   return state.copyWith(
-     isCreatingPost: true
+     isCreatingPost: true,
+     createPostTextErrorMessage: ""
   );
 }
 
-PostState postCreation(PostState state, PostCreationAction action) {
+PostState navigateCreatePost(PostState state, NavigateCreatePostAction action) {
   return state.copyWith(
     isCreatingPost: false,
+     createPostTextErrorMessage: ""
+  );
+}
+
+PostState onCreatePostTextSizeMismatch(PostState state, OnCreatePostTextSizeMismatchAction action) {
+  return state.copyWith(
+    isCreatingPost: false,
+    createPostTextErrorMessage: "O tamanho do texto é menor que 100 ou maior que 2000 caracteres."
   );
 }

@@ -14,9 +14,9 @@ class CreatePostAction {
   CreatePostAction(this.postType, this.text);
 }
 
-class PostCreationAction {}
+class NavigateCreatePostAction {}
 
-class PostCreatedAction {}
+class PostSubmittedAction {}
 
 class ExplorePostsAction {}
 
@@ -26,4 +26,10 @@ class ExplorePostsRetrievedAction {
   ExplorePostsRetrievedAction(this.post);
 }
 
-class ExplorePostsErrorAction {}
+class ExplorePostsErrorAction {
+
+}
+
+class OnCreatePostTextSizeMismatchAction{
+
+}

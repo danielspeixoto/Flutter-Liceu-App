@@ -6,11 +6,14 @@ import 'package:redux/redux.dart';
 class CreatePostViewModel {
   final Function(String) onPostSubmitted;
   final bool isLoading;
+  final String createPostTextErrorMessage;
 
-  CreatePostViewModel({this.onPostSubmitted, this.isLoading});
+  CreatePostViewModel({this.onPostSubmitted, this.isLoading, this.createPostTextErrorMessage});
 
   factory CreatePostViewModel.create(Store<AppState> store) {
     final isLoading = store.state.postState.isCreatingPost;
+    final createPostTextErrorMessage = store.state.postState.createPostTextErrorMessage;
+    
     return CreatePostViewModel(
       onPostSubmitted: isLoading ? null : (text) async {
         store.dispatch(
@@ -21,6 +24,7 @@ class CreatePostViewModel {
         );
       },
       isLoading: isLoading,
+      createPostTextErrorMessage: createPostTextErrorMessage
     );
   }
 }
