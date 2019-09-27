@@ -59,6 +59,7 @@ class MyApp extends StatelessWidget {
     return StoreProvider(
         store: store,
         child: MaterialApp(
+          debugShowCheckedModeBanner: false,
           title: 'Liceu',
           theme: ThemeData(
             primaryColorDark: Colors.black54,

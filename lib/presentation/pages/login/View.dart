@@ -42,7 +42,6 @@ class LoginPage extends StatelessWidget {
                 Container(
                   width: double.infinity,
                   padding: EdgeInsets.all(4),
-
                   child: Column(
                     children: <Widget>[
                       SignInButton(
@@ -50,13 +49,16 @@ class LoginPage extends StatelessWidget {
                         text: "Entrar com Google",
                         onPressed: () async {
                           GoogleSignIn _googleSignIn = GoogleSignIn(
-                            scopes: ['email', "profile", "https://www.googleapis.com/auth/userinfo.profile"],
+                            scopes: [
+                              'email',
+                              "profile",
+                              "https://www.googleapis.com/auth/userinfo.profile"
+                            ],
                           );
                           final account = await _googleSignIn.signIn();
                           final auth = (await account.authentication);
-                          final token = auth.idToken;
-
-                          viewModel.login(token, "google");
+                          final accessToken = auth.accessToken;
+                          viewModel.login(accessToken, "google");
                         },
                       ),
                       SignInButton(Buttons.Facebook,

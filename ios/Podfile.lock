@@ -16,12 +16,19 @@ PODS:
     - FirebaseAnalytics (= 6.0.3)
   - Firebase/CoreOnly (6.4.0):
     - FirebaseCore (= 6.0.4)
+  - Firebase/Messaging (6.4.0):
+    - Firebase/CoreOnly
+    - FirebaseMessaging (~> 4.1.1)
   - firebase_analytics (0.0.1):
     - Firebase/Analytics (~> 6.0)
     - Firebase/Core
     - Flutter
   - firebase_core (0.0.1):
     - Firebase/Core
+    - Flutter
+  - firebase_messaging (0.0.1):
+    - Firebase/Core
+    - Firebase/Messaging
     - Flutter
   - FirebaseAnalytics (6.0.3):
     - FirebaseCore (~> 6.0)
@@ -32,6 +39,7 @@ PODS:
     - GoogleUtilities/Network (~> 6.0)
     - "GoogleUtilities/NSData+zlib (~> 6.0)"
     - nanopb (~> 0.3)
+  - FirebaseAnalyticsInterop (1.2.0)
   - FirebaseCore (6.0.4):
     - GoogleUtilities/Environment (~> 6.0)
     - GoogleUtilities/Logger (~> 6.0)
@@ -39,12 +47,21 @@ PODS:
     - FirebaseCore (~> 6.0)
     - GoogleUtilities/Environment (~> 6.0)
     - GoogleUtilities/UserDefaults (~> 6.0)
+  - FirebaseMessaging (4.1.1):
+    - FirebaseAnalyticsInterop (~> 1.1)
+    - FirebaseCore (~> 6.0)
+    - FirebaseInstanceID (~> 4.1)
+    - GoogleUtilities/AppDelegateSwizzler (~> 6.2)
+    - GoogleUtilities/Environment (~> 6.2)
+    - GoogleUtilities/Reachability (~> 6.2)
+    - GoogleUtilities/UserDefaults (~> 6.2)
+    - Protobuf (~> 3.1)
   - Flutter (1.0.0)
   - flutter_facebook_login (0.0.1):
     - FBSDKCoreKit (= 4.39.1)
     - FBSDKLoginKit (= 4.39.1)
     - Flutter
-  - flutter_secure_storage (3.2.0):
+  - flutter_secure_storage (3.3.1):
     - Flutter
   - google_sign_in (0.0.1):
     - Flutter
@@ -91,6 +108,9 @@ PODS:
     - nanopb/encode (= 0.3.901)
   - nanopb/decode (0.3.901)
   - nanopb/encode (0.3.901)
+  - pinch_zoom_image (0.0.1):
+    - Flutter
+  - Protobuf (3.9.0)
   - share (0.5.2):
     - Flutter
   - url_launcher (0.0.1):
@@ -99,10 +119,12 @@ PODS:
 DEPENDENCIES:
   - firebase_analytics (from `.symlinks/plugins/firebase_analytics/ios`)
   - firebase_core (from `.symlinks/plugins/firebase_core/ios`)
+  - firebase_messaging (from `.symlinks/plugins/firebase_messaging/ios`)
   - Flutter (from `.symlinks/flutter/ios-release`)
   - flutter_facebook_login (from `.symlinks/plugins/flutter_facebook_login/ios`)
   - flutter_secure_storage (from `.symlinks/plugins/flutter_secure_storage/ios`)
   - google_sign_in (from `.symlinks/plugins/google_sign_in/ios`)
+  - pinch_zoom_image (from `.symlinks/plugins/pinch_zoom_image/ios`)
   - share (from `.symlinks/plugins/share/ios`)
   - url_launcher (from `.symlinks/plugins/url_launcher/ios`)
 
@@ -113,20 +135,25 @@ SPEC REPOS:
     - FBSDKLoginKit
     - Firebase
     - FirebaseAnalytics
+    - FirebaseAnalyticsInterop
     - FirebaseCore
     - FirebaseInstanceID
+    - FirebaseMessaging
     - GoogleAppMeasurement
     - GoogleSignIn
     - GoogleToolboxForMac
     - GoogleUtilities
     - GTMSessionFetcher
     - nanopb
+    - Protobuf
 
 EXTERNAL SOURCES:
   firebase_analytics:
     :path: ".symlinks/plugins/firebase_analytics/ios"
   firebase_core:
     :path: ".symlinks/plugins/firebase_core/ios"
+  firebase_messaging:
+    :path: ".symlinks/plugins/firebase_messaging/ios"
   Flutter:
     :path: ".symlinks/flutter/ios-release"
   flutter_facebook_login:
@@ -135,6 +162,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/flutter_secure_storage/ios"
   google_sign_in:
     :path: ".symlinks/plugins/google_sign_in/ios"
+  pinch_zoom_image:
+    :path: ".symlinks/plugins/pinch_zoom_image/ios"
   share:
     :path: ".symlinks/plugins/share/ios"
   url_launcher:
@@ -145,14 +174,17 @@ SPEC CHECKSUMS:
   FBSDKCoreKit: f442aa96179cc9b382bb4abeb7e340a47cca8f91
   FBSDKLoginKit: c3079d9a4db27c492287b1eed7a4272b28cf8a59
   Firebase: 9445469655a98e9010737f4bc4720e5bda465873
-  firebase_analytics: 5afaaf8f43ae6a640f200d98f3ecff32e9873538
+  firebase_analytics: 045e7ebe7b8a4d27357168072868ff082dca15a6
   firebase_core: ae55ea92448ec8675d325da4db22cf3b4d58a54d
+  firebase_messaging: 0d5c04cc40f58bd4bf7f2992c91050f9bc01bec3
   FirebaseAnalytics: 69fe25866d2ec87c6f02d72c3c9a82bce9c065a0
+  FirebaseAnalyticsInterop: efbe45c8385ec626e29f9525e5ebd38520dfb6c1
   FirebaseCore: 7ea99e200f0024262650be56623fbe6a7bef1707
   FirebaseInstanceID: 9782fcfb89e4d7da76cc28eac4b8543dc7be4a4b
-  Flutter: 58dd7d1b27887414a370fcccb9e645c08ffd7a6a
+  FirebaseMessaging: 6bb0bdaf64c55fef7a219b7bb1e94e94a0855ced
+  Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
   flutter_facebook_login: be61e24a4b7d621515353c6b4583d1981bdaa3d6
-  flutter_secure_storage: 0c5779648ff644110e507909b77a57e620cbbf8b
+  flutter_secure_storage: 7953c38a04c3fdbb00571bcd87d8e3b5ceb9daec
   google_sign_in: 27e70a98b529f0b076d4b19f231b81da28b1750b
   GoogleAppMeasurement: 1e45fa601e6280c180880d57010390f6679cd971
   GoogleSignIn: 7ff245e1a7b26d379099d3243a562f5747e23d39
@@ -160,6 +192,8 @@ SPEC CHECKSUMS:
   GoogleUtilities: d2b0e277a95962e09bb27f5cd42f5f0b6a506c7d
   GTMSessionFetcher: 61bb0f61a4cb560030f1222021178008a5727a23
   nanopb: 2901f78ea1b7b4015c860c2fdd1ea2fee1a18d48
+  pinch_zoom_image: 2455133f9c87dce3f63c828dd583e3b1cdaa2df9
+  Protobuf: 1097ca58584c8d9be81bfbf2c5ff5975648dd87a
   share: 7d22fe8baedfe93aefd864bf0b73f29711fbb0a3
   url_launcher: 0067ddb8f10d36786672aa0722a21717dba3a298
 

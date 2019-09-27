@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:app/domain/boundary/LocalBoundary.dart';
-import 'package:app/domain/exceptions/ItemNotFoundException.dart';
 import 'package:app/domain/exceptions/NotLoggedInException.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
@@ -16,6 +15,8 @@ class LocalRepository implements ILocalRepository {
   @override
   // ignore: missing_return
   Future<void> saveCredentials(String credentials) {
+    credentials = credentials;
+    setIdFromCredentials(credentials);
     _storage.write(key: TOKEN_KEY, value: credentials);
   }
 
@@ -23,6 +24,8 @@ class LocalRepository implements ILocalRepository {
   // ignore: missing_return
   Future<void> logOut() {
     _storage.delete(key: TOKEN_KEY);
+    credentials = "";
+    id = "";
   }
 
   @override
@@ -43,12 +46,13 @@ class LocalRepository implements ILocalRepository {
     if (id != "") {
       return id;
     }
-    if (credentials == "") {
-      throw NotLoggedInException();
-    }
+    setIdFromCredentials(await getCredentials());
+    return id;
+  }
+
+  void setIdFromCredentials(String credentials) {
     final payload = parseJwt(credentials);
     id = payload["sub"];
-    return id;
   }
 
   @override
@@ -58,7 +62,7 @@ class LocalRepository implements ILocalRepository {
     }
     var cred = await _storage.read(key: TOKEN_KEY);
     if (cred == null) {
-      throw ItemNotFoundException();
+      throw NotLoggedInException();
     }
     credentials = cred;
     return credentials;
