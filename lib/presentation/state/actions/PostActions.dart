@@ -16,13 +16,9 @@ class CreatePostAction {
 
 class NavigateCreatePostAction {}
 
-class PostSubmittedAction {
+class PostSubmittedAction {}
 
-}
-
-class ExplorePostsAction {
-
-}
+class ExplorePostsAction {}
 
 class ExplorePostsRetrievedAction {
   final List<PostData> post;
