@@ -4,7 +4,6 @@ import 'package:app/presentation/state/actions/PostActions.dart';
 import 'package:app/presentation/state/aggregates/PostData.dart';
 import 'package:app/presentation/state/navigator/NavigatorActions.dart';
 import 'package:redux/redux.dart';
-
 import '../../app.dart';
 import '../app_state.dart';
 
