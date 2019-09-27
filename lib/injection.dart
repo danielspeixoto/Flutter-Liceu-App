@@ -31,20 +31,22 @@ import 'domain/usecase/user/MyPostsUseCase.dart';
 import 'domain/usecase/user/SetUserDescriptionUseCase.dart';
 import 'domain/usecase/user/SetUserInstagramUseCase.dart';
 
-bool get isInDebugMode {
-    bool inDebugMode = false;
+bool get isDev {
+    bool isDev = false;
 
-    assert(inDebugMode = true);
+    assert(isDev = true);
 
-    return inDebugMode;
+    return isDev;
 }
 
 
-final baseURL =  isInDebugMode ? "https://liceu-staging.herokuapp.com/v2"
+final baseURL =  isDev ? "https://liceu-staging.herokuapp.com/v2"
     : "https://protected-river-16209.herokuapp.com/v2";
 
-final apiKey = isInDebugMode ? "2VsYHwfQKtjiAdLs8Z2fTLwuLpofSXWy"
+final apiKey = isDev ? "2VsYHwfQKtjiAdLs8Z2fTLwuLpofSXWy"
     : "8y/B?E(H+MbQeThWmYq3t6w9z\$C&F)J@";
+
+final enviroment = isDev ? "development" : "production";
 
 final client = new http.Client();
 // Repositories
