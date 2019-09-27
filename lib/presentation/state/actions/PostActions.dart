@@ -16,13 +16,9 @@ class CreatePostAction {
 
 class PostCreationAction {}
 
-class PostCreatedAction {
+class PostCreatedAction {}
 
-}
-
-class ExplorePostsAction {
-
-}
+class ExplorePostsAction {}
 
 class ExplorePostsRetrievedAction {
   final List<PostData> post;
@@ -30,6 +26,4 @@ class ExplorePostsRetrievedAction {
   ExplorePostsRetrievedAction(this.post);
 }
 
-class ExplorePostsErrorAction {
-
-}
+class ExplorePostsErrorAction {}

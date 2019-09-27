@@ -33,6 +33,4 @@ class SetCreateTriviaDomainFieldAction {
   SetCreateTriviaDomainFieldAction(this.domain);
 }
 
-class TriviaCreatedAction {
-  
-}
+class TriviaCreatedAction {}
