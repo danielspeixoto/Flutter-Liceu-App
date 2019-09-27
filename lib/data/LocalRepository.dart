@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:app/domain/boundary/LocalBoundary.dart';
 import 'package:app/domain/exceptions/ItemNotFoundException.dart';
 import 'package:app/domain/exceptions/NotLoggedInException.dart';

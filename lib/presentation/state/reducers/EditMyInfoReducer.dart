@@ -1,5 +1,4 @@
 import 'dart:math';
-
 import 'package:app/presentation/state/actions/UserActions.dart';
 import 'package:redux/redux.dart';
 
