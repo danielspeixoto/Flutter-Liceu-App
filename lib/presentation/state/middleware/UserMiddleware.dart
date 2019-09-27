@@ -71,7 +71,7 @@ class UserMiddleware extends MiddlewareClass<AppState> {
         print(e);
         store.dispatch(FetchingMyChallengesErrorAction());
       });
-    } else if (action is PostCreatedAction) {
+    } else if (action is PostSubmittedAction) {
       store.dispatch(FetchMyPostsAction());
     } else if (action is MyProfileInfoWasChangedAction) {
       store.dispatch(FetchMyInfoAction());
