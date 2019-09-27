@@ -1,10 +1,10 @@
+import 'package:app/domain/aggregates/exceptions/Exceptions.dart';
 import 'package:app/domain/boundary/PostBoundary.dart';
 import 'package:app/domain/boundary/UserBoundary.dart';
 import 'package:app/presentation/state/actions/PostActions.dart';
 import 'package:app/presentation/state/aggregates/PostData.dart';
 import 'package:app/presentation/state/navigator/NavigatorActions.dart';
 import 'package:redux/redux.dart';
-
 import '../../app.dart';
 import '../app_state.dart';
 
@@ -18,7 +18,7 @@ List<Middleware<AppState>> postMiddleware(
       NextDispatcher next) async {
     next(action);
     try {
-      deletePostUseCase.run(action.postId);
+      await deletePostUseCase.run(action.postId);
     } catch (e) {
       print(e);
     }
@@ -29,13 +29,15 @@ List<Middleware<AppState>> postMiddleware(
     next(action);
     try {
       await createPostUseCase.run(action.postType, action.text);
-      store.dispatch(PostCreatedAction());
+      store.dispatch(PostSubmittedAction());
+    } on SizeBoundaryException catch(e) {
+      store.dispatch(OnCreatePostTextSizeMismatchAction());
     } catch (e) {
       print(e);
     }
   }
 
-  void postCreated(Store<AppState> store, PostCreatedAction action,
+  void postCreated(Store<AppState> store, PostSubmittedAction action,
       NextDispatcher next) async {
     next(action);
     if (store.state.route.last == AppRoutes.createPost) {
@@ -64,7 +66,7 @@ List<Middleware<AppState>> postMiddleware(
     }
   }
 
-  void postCreation(Store<AppState> store, PostCreationAction action,
+  void postCreation(Store<AppState> store, NavigateCreatePostAction action,
       NextDispatcher next) async {
     next(action);
     store.dispatch(NavigatePushAction(AppRoutes.createPost));
@@ -72,9 +74,9 @@ List<Middleware<AppState>> postMiddleware(
 
   return [
     TypedMiddleware<AppState, DeletePostAction>(deletePost),
-    TypedMiddleware<AppState, PostCreationAction>(postCreation),
+    TypedMiddleware<AppState, NavigateCreatePostAction>(postCreation),
     TypedMiddleware<AppState, CreatePostAction>(createPost),
-    TypedMiddleware<AppState, PostCreatedAction>(postCreated),
+    TypedMiddleware<AppState, PostSubmittedAction>(postCreated),
     TypedMiddleware<AppState, ExplorePostsAction>(explorePosts),
   ];
 }

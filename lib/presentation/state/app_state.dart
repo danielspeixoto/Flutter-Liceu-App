@@ -1,15 +1,17 @@
+import 'package:app/presentation/state/middleware/TriviaMiddleware.dart';
 import 'package:app/presentation/state/reducers/ChallengeReducer.dart';
-import 'package:app/presentation/state/reducers/CreatePostReducer.dart';
 import 'package:app/presentation/state/reducers/ENEMReducer.dart';
 import 'package:app/presentation/state/reducers/EditMyInfoReducer.dart';
 import 'package:app/presentation/state/reducers/FriendReducer.dart';
 import 'package:app/presentation/state/reducers/LoginReducer.dart';
 import 'package:app/presentation/state/reducers/PostsReducer.dart';
+import 'package:app/presentation/state/reducers/TriviaReducer.dart';
 import 'package:app/presentation/state/reducers/UserReducer.dart';
 import 'package:redux/redux.dart';
 import 'package:redux_logging/redux_logging.dart';
 
 import '../../injection.dart';
+import 'middleware/SentryMiddleware.dart';
 import 'middleware/AnalyticsMiddleware.dart';
 import 'middleware/ChallengeMiddleware.dart';
 import 'middleware/ENEMMiddleware.dart';
@@ -24,22 +26,22 @@ class AppState {
   final UserState userState;
   final FriendState friendState;
   final PostState postState;
-  final CreatePostState createPostState;
   final LoginState loginState;
   final ENEMState enemState;
   final EditMyInfoState editMyInfoState;
   final ChallengeState challengeState;
+  final TriviaState triviaState;
   final List<String> route;
 
   AppState({
     this.userState,
     this.friendState,
     this.postState,
-    this.createPostState,
     this.route,
     this.editMyInfoState,
     this.loginState,
     this.enemState,
+    this.triviaState,
     this.challengeState,
   });
 
@@ -48,10 +50,10 @@ class AppState {
         userState: UserState.initial(),
         friendState: FriendState.initial(),
         postState: PostState.initial(),
-        createPostState: CreatePostState.initial(),
         loginState: LoginState.initial(),
         enemState: ENEMState.initial(),
         challengeState: ChallengeState.initial(),
+        triviaState: TriviaState.initial(),
         editMyInfoState: EditMyInfoState.initial(),
       );
 }
@@ -61,10 +63,10 @@ AppState appReducer(AppState state, action) => AppState(
       userState: userReducer(state.userState, action),
       friendState: friendReducer(state.friendState, action),
       postState: postReducer(state.postState, action),
-      createPostState: createPostReducer(state.createPostState, action),
       loginState: loginReducer(state.loginState, action),
       enemState: enemReducer(state.enemState, action),
       challengeState: challengeReducer(state.challengeState, action),
+      triviaState: triviaReducer(state.triviaState, action),
       editMyInfoState: editMyInfoReducer(state.editMyInfoState, action),
     );
 
@@ -72,8 +74,10 @@ final Store<AppState> store = Store<AppState>(
   appReducer,
   initialState: AppState.initial(),
   middleware: [
-    new LoggingMiddleware.printer(),
+    new
+    LoggingMiddleware.printer(),
     AnalyticsMiddleware(),
+    SentryMiddleware(),
     LoginMiddleware(
       logoutUseCase,
       loginUseCase,
@@ -109,6 +113,9 @@ final Store<AppState> store = Store<AppState>(
     ...friendMiddleware(
       getUserPostsUseCase,
       getUserByIdUseCase,
+    ),
+    ...triviaMiddleware(
+      createTriviaUseCase,
     ),
     ...navigationMiddleware()
   ],

@@ -21,6 +21,7 @@ class RankingRetrievedAction {
 }
 
 class TrainingAction {}
+
 class TournamentAction {}
 
 class FilterTrainingQuestions {

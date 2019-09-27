@@ -39,7 +39,7 @@ class ProfileViewModel {
       user: userState.user,
       posts: userState.posts,
       onCreateButtonPressed: () =>
-          store.dispatch(PostCreationAction()),
+          store.dispatch(NavigateCreatePostAction()),
       refresh: () {
         store.dispatch(FetchMyInfoAction());
         store.dispatch(FetchMyPostsAction());

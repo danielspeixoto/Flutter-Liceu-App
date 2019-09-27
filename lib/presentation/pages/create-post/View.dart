@@ -29,26 +29,37 @@ class CreatePostPage extends StatelessWidget {
                   ),
                 ),
               ],
-              title: "Coloque aqui um resumo da sua matéria preferida!",
+              title: "Resumo",
               body: FetcherWidget(
                 isLoading: viewModel.isLoading,
                 child: () => SingleChildScrollView(
                   child: Column(
                     children: <Widget>[
                       Container(
-                        margin: EdgeInsets.all(8),
-                        child: TextField(
-                          controller: inputController,
-                          onSubmitted: viewModel.onPostSubmitted,
-                          decoration: InputDecoration(
-                              border: InputBorder.none,
-                              hintText:
-                                  "Clique aqui para começar à escrever seu post."),
-                          minLines: null,
-                          maxLines: null,
-                          keyboardType: TextInputType.multiline,
+                        margin:
+                            EdgeInsets.all(8),
+                          child: TextField(
+                        controller: inputController,
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              width: 0.1,
+                            ),
+                          ),
+                          hintText: "Comece a escrever um resumo",
                         ),
-                      ),
+                        minLines: null,
+                        maxLines: 9,
+                        keyboardType: TextInputType.multiline,
+                      )),
+                      Container(
+                        child: Text(
+                          viewModel.createPostTextErrorMessage,
+                          style: TextStyle(color: Colors.redAccent),
+                        ),
+                        margin:
+                            EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                      )
                     ],
                   ),
                 ),
