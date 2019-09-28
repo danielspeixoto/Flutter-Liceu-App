@@ -39,6 +39,11 @@ bool get isDev {
     return isDev;
 }
 
+ class FeaturesReady {
+  static final viewFriend = true;
+  static final createTrivia = isDev;
+}
+
 
 final baseURL =  isDev ? "https://liceu-staging.herokuapp.com/v2"
     : "https://protected-river-16209.herokuapp.com/v2";

@@ -19,6 +19,7 @@ List<Middleware<AppState>> triviaMiddleware(
           action.correctAnswer,
           action.wrongAnswer,
           [action.domain]);
+      store.dispatch(TriviaCreatedAction());
     } catch (e) {
       print(e);
     }

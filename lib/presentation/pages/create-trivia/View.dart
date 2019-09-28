@@ -50,19 +50,12 @@ class CreateTriviaPage extends StatelessWidget {
                                   color: Colors.deepPurpleAccent,
                                 ),
                                 onChanged: (String value) {
-                                  TriviaDomain domain;
-                                  if (value == 'Matemática') {
-                                    domain = TriviaDomain.MATHEMATICS;
-                                  } else if (value == 'Naturais') {
-                                    domain = TriviaDomain.NATURAL_SCIENCES;
-                                  } else if (value == 'Linguagens') {
-                                    domain = TriviaDomain.LANGUAGES;
-                                  } else {
-                                    domain = TriviaDomain.HUMAN_SCIENCES;
-                                  }
-                                  viewModel.onTriviaDomainChanged(domain);
+                                  
+                                  
+                                  viewModel.onTriviaDomainChanged(value);
                                 },
                                 items: <String>[
+                                  'Selecione',
                                   'Matemática',
                                   'Naturais',
                                   'Humanas',

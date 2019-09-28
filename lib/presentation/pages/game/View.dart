@@ -1,3 +1,4 @@
+import 'package:app/injection.dart';
 import 'package:app/presentation/state/actions/PageActions.dart';
 import 'package:app/presentation/state/app_state.dart';
 import 'package:app/presentation/widgets/ActionCard.dart';
@@ -23,12 +24,12 @@ class GamePage extends StatelessWidget {
         converter: (store) => GameViewModel.create(store),
         builder: (BuildContext context, GameViewModel viewModel) {
           return LiceuScaffold(
-            leading: FlatButton(
+            leading: FeaturesReady.createTrivia ? FlatButton(
               onPressed: viewModel.onCreateTriviaPressed,
               child: new Icon(
                 FontAwesomeIcons.plus,
               ),
-            ),
+            ) : null,
               body: SmartRefresher(
             controller: _refreshController,
             onRefresh: () async {
