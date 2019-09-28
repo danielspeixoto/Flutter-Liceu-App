@@ -1,4 +1,5 @@
 import 'package:app/domain/aggregates/Trivia.dart';
+import 'package:app/domain/aggregates/Trivia.dart' as prefix0;
 import 'package:app/presentation/state/actions/TriviaActions.dart';
 import 'package:app/presentation/state/app_state.dart';
 import 'package:redux/redux.dart';
@@ -8,11 +9,11 @@ class CreateTriviaViewModel {
   final Function(String text) onQuestionTextChanged;
   final Function(String text) onCorrectAnswerTextChanged;
   final Function(String text) onWrongAnswerTextChanged;
-  final Function(TriviaDomain) onTriviaDomainChanged;
+  final Function(String value) onTriviaDomainChanged;
   final String question;
   final String correctAnswer;
   final String wrongAnswer;
-  final TriviaDomain domain;
+  final String domain;
   final bool isCreatingTrivia;
 
   CreateTriviaViewModel(
@@ -29,13 +30,40 @@ class CreateTriviaViewModel {
 
   factory CreateTriviaViewModel.create(Store<AppState> store) {
     final triviaState = store.state.triviaState;
+    final triviaDomain = triviaState.domain;
+    String domain;
+
+    if (triviaDomain == TriviaDomain.MATHEMATICS) {
+      domain = "Matemática";
+    } else if (triviaDomain == TriviaDomain.NATURAL_SCIENCES) {
+      domain = "Naturais";
+    } else if (triviaDomain == TriviaDomain.LANGUAGES) {
+      domain = "Linguagens";
+    } else if (triviaDomain == TriviaDomain.HUMAN_SCIENCES) {
+      domain = "Humanas";
+    } else {
+      domain = "Selecione";
+    }
 
     return CreateTriviaViewModel(
         isCreatingTrivia: triviaState.isCreatingTrivia,
+        domain: domain,
         question: triviaState.question,
         correctAnswer: triviaState.correctAnswer,
         wrongAnswer: triviaState.wrongAnswer,
-        onTriviaDomainChanged: (domain){
+        onTriviaDomainChanged: (value) {
+          TriviaDomain domain;
+          if (value == 'Matemática') {
+            domain = TriviaDomain.MATHEMATICS;
+          } else if (value == 'Naturais') {
+            domain = TriviaDomain.NATURAL_SCIENCES;
+          } else if (value == 'Linguagens') {
+            domain = TriviaDomain.LANGUAGES;
+          } else if (value == 'Humanas') {
+            domain = TriviaDomain.HUMAN_SCIENCES;
+          } else {
+            domain = null;
+          }
           store.dispatch(SetCreateTriviaDomainFieldAction(domain));
         },
         onQuestionTextChanged: (text) {
@@ -48,10 +76,11 @@ class CreateTriviaViewModel {
           store.dispatch(SetCreateTriviaWrongAnswerFieldAction(text));
         },
         onCreateTriviaButtonPressed: () async {
-            store.dispatch(CreateTriviaAction(triviaState.question, 
-              triviaState.correctAnswer, triviaState.wrongAnswer, triviaState.domain));
-        } 
-    
-    );
+          store.dispatch(CreateTriviaAction(
+              triviaState.question,
+              triviaState.correctAnswer,
+              triviaState.wrongAnswer,
+              triviaState.domain));
+        });
   }
 }
