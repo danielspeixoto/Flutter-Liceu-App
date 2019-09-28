@@ -23,6 +23,12 @@ class GamePage extends StatelessWidget {
         converter: (store) => GameViewModel.create(store),
         builder: (BuildContext context, GameViewModel viewModel) {
           return LiceuScaffold(
+            leading: FlatButton(
+              onPressed: viewModel.onCreateTriviaPressed,
+              child: new Icon(
+                FontAwesomeIcons.plus,
+              ),
+            ),
               body: SmartRefresher(
             controller: _refreshController,
             onRefresh: () async {

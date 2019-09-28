@@ -27,7 +27,7 @@ class TriviaRepository implements ITriviaRepository {
           "question": question,
           "correctAnswer": correctAnswer,
           "wrongAnswer": wrongAnswer,
-          "tags": tags.map((tag) => fromDomainToString(tag)),
+          "tags": tags.map((tag) => fromDomainToString(tag)).toList(),
         }));
     if (response.statusCode == 200) {
       return;

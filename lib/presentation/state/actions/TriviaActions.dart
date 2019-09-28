@@ -9,6 +9,8 @@ class CreateTriviaAction {
   CreateTriviaAction(this.question, this.correctAnswer, this.wrongAnswer, this.domain);
 }
 
+class NavigateCreateTriviaAction{}
+
 class SetCreateTriviaQuestionFieldAction {
   final String question;
 
