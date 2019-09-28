@@ -66,7 +66,7 @@ List<Middleware<AppState>> postMiddleware(
     }
   }
 
-  void postCreation(Store<AppState> store, NavigateCreatePostAction action,
+  void navigateCreatePost(Store<AppState> store, NavigateCreatePostAction action,
       NextDispatcher next) async {
     next(action);
     store.dispatch(NavigatePushAction(AppRoutes.createPost));
@@ -74,7 +74,7 @@ List<Middleware<AppState>> postMiddleware(
 
   return [
     TypedMiddleware<AppState, DeletePostAction>(deletePost),
-    TypedMiddleware<AppState, NavigateCreatePostAction>(postCreation),
+    TypedMiddleware<AppState, NavigateCreatePostAction>(navigateCreatePost),
     TypedMiddleware<AppState, CreatePostAction>(createPost),
     TypedMiddleware<AppState, PostSubmittedAction>(postCreated),
     TypedMiddleware<AppState, ExplorePostsAction>(explorePosts),

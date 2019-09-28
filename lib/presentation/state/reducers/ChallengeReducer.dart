@@ -52,7 +52,7 @@ final Reducer<ChallengeState> challengeReducer =
     combineReducers<ChallengeState>([
   TypedReducer<ChallengeState, StartChallengeAction>(startChallenge),
   TypedReducer<ChallengeState, NextTriviaAction>(nextTrivia),
-  TypedReducer<ChallengeState, ChallengeAction>(resetChallenge),
+  TypedReducer<ChallengeState, NavigateChallengeAction>(resetChallenge),
   TypedReducer<ChallengeState, AnswerTriviaAction>(answerTrivia),
   TypedReducer<ChallengeState, TriviaTimerDecrementAction>(decrementTime),
 ]);
@@ -69,7 +69,7 @@ ChallengeState startChallenge(
   );
 }
 
-ChallengeState resetChallenge(ChallengeState state, ChallengeAction action) {
+ChallengeState resetChallenge(ChallengeState state, NavigateChallengeAction action) {
   return state.copyWith(challenge: Data(isLoading: true));
 }
 

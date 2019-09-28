@@ -45,6 +45,8 @@ class ProfileViewModel {
         store.dispatch(FetchMyPostsAction());
       },
       onEditProfileButtonPressed: () {
+        
+        //TODO colocar no lugar certo para o Navigate
         store.dispatch(NavigatePushAction(AppRoutes.editProfile));
       },
       onLogoutPressed: () {

@@ -29,10 +29,10 @@ class GameViewModel {
     return GameViewModel(
       challenges: store.state.userState.challenges,
       refresh: () => store.dispatch(FetchMyChallengesAction()),
-      onChallengePressed: () => store.dispatch(ChallengeAction()),
-      onTrainingPressed: () => store.dispatch(TrainingAction()),
-      onTournamentPressed: () => store.dispatch(TournamentAction()),
-      onUserPressed: (user) => store.dispatch(ViewFriendAction(user)),
+      onChallengePressed: () => store.dispatch(NavigateChallengeAction()),
+      onTrainingPressed: () => store.dispatch(NavigateTrainingAction()),
+      onTournamentPressed: () => store.dispatch(NavigateTournamentAction()),
+      onUserPressed: (user) => store.dispatch(NavigateViewFriendAction(user)),
     );
   }
 }

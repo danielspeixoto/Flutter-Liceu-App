@@ -3,10 +3,10 @@ import 'package:app/domain/aggregates/User.dart';
 
 import '../../constants.dart';
 
-class ViewFriendAction {
+class NavigateViewFriendAction {
   final User user;
 
-  ViewFriendAction(this.user);
+  NavigateViewFriendAction(this.user);
 }
 
 class SetFriendAction {

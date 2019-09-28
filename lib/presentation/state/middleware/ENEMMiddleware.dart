@@ -36,14 +36,14 @@ List<Middleware<AppState>> ENEMMiddleware(
     }
   }
 
-  void trainingAction(
-      Store<AppState> store, TrainingAction action, NextDispatcher next) async {
+  void navigateTraining(
+      Store<AppState> store, NavigateTrainingAction action, NextDispatcher next) async {
     next(action);
     store.dispatch(NavigatePushAction(AppRoutes.trainingFilter));
   }
 
   void trainingFilterAction(Store<AppState> store,
-      FilterTrainingQuestions action, NextDispatcher next) async {
+      NavigateFilterTrainingQuestions action, NextDispatcher next) async {
     next(action);
     if (store.state.route.last != AppRoutes.training) {
       store.dispatch(NavigatePushAction(AppRoutes.training));
@@ -101,7 +101,7 @@ List<Middleware<AppState>> ENEMMiddleware(
     store.dispatch(NavigateReplaceAction(AppRoutes.tournamentReview));
   }
 
-  void tournament(Store<AppState> store, TournamentAction action,
+  void tournament(Store<AppState> store, NavigateTournamentAction action,
       NextDispatcher next) async {
     next(action);
     if (store.state.route.last != AppRoutes.tournament) {
@@ -130,15 +130,15 @@ List<Middleware<AppState>> ENEMMiddleware(
 
   return [
     TypedMiddleware<AppState, FetchRankingAction>(fetchRanking),
-    TypedMiddleware<AppState, TrainingAction>(trainingAction),
-    TypedMiddleware<AppState, FilterTrainingQuestions>(trainingFilterAction),
+    TypedMiddleware<AppState, NavigateTrainingAction>(navigateTraining),
+    TypedMiddleware<AppState, NavigateFilterTrainingQuestions>(trainingFilterAction),
     TypedMiddleware<AppState, SubmitTournamentGameAction>(
       submitTournament,
     ),
     TypedMiddleware<AppState, ReviewTournamentGameAction>(
       reviewTournament,
     ),
-    TypedMiddleware<AppState, TournamentAction>(
+    TypedMiddleware<AppState, NavigateTournamentAction>(
       tournament,
     ),
   ];

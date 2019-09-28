@@ -8,6 +8,7 @@ final analytics = FirebaseAnalytics();
 
 List<Middleware<AppState>> triviaMiddleware(
     ICreateTriviaUseCase createTriviaUseCase) {
+      
   void createTrivia(Store<AppState> store, CreateTriviaAction action,
       NextDispatcher next) async {
     next(action);

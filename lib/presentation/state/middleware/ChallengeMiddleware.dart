@@ -39,7 +39,7 @@ List<Middleware<AppState>> challengeMiddleware(
     }
   }
 
-  void getRandomChallenge(Store<AppState> store, ChallengeAction action,
+  void navigateChallenge(Store<AppState> store, NavigateChallengeAction action,
       NextDispatcher next) async {
     next(action);
     try {
@@ -141,7 +141,7 @@ List<Middleware<AppState>> challengeMiddleware(
   }
 
   return [
-    TypedMiddleware<AppState, ChallengeAction>(getRandomChallenge),
+    TypedMiddleware<AppState, NavigateChallengeAction>(navigateChallenge),
     TypedMiddleware<AppState, ChallengeSomeoneAction>(challengeSomeone),
     TypedMiddleware<AppState, AnswerTriviaAction>(onAnswer),
     TypedMiddleware<AppState, NextTriviaAction>(nextTriviaAction),

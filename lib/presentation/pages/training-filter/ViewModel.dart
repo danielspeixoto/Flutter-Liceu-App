@@ -13,7 +13,7 @@ class TrainingFilterViewModel {
 
   factory TrainingFilterViewModel.create(Store<AppState> store) {
     return TrainingFilterViewModel(
-      onDomainSelected: (domain) => store.dispatch(FilterTrainingQuestions(domain))
+      onDomainSelected: (domain) => store.dispatch(NavigateFilterTrainingQuestions(domain))
     );
   }
 }

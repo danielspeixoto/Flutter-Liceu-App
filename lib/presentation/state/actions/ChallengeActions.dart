@@ -12,8 +12,8 @@ class AnswerChallengeAction {
   AnswerChallengeAction(this.challengeId);
 }
 
-class ChallengeAction {
-  ChallengeAction();
+class NavigateChallengeAction {
+  NavigateChallengeAction();
 }
 
 class ChallengeSomeoneAction {

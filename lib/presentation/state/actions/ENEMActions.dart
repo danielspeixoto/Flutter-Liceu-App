@@ -20,14 +20,14 @@ class RankingRetrievedAction {
   RankingRetrievedAction(this.ranking);
 }
 
-class TrainingAction {}
+class NavigateTrainingAction {}
 
-class TournamentAction {}
+class NavigateTournamentAction {}
 
-class FilterTrainingQuestions {
+class NavigateFilterTrainingQuestions {
   final QuestionDomain domain;
 
-  FilterTrainingQuestions(this.domain);
+  NavigateFilterTrainingQuestions(this.domain);
 }
 
 class TrainingQuestionsRetrievedAction {
