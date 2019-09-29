@@ -96,6 +96,17 @@ class CreateTriviaPage extends StatelessWidget {
                                     keyboardType: TextInputType.multiline,
                                   ),
                                 ),
+                                viewModel.question != null
+                                    ? Container(
+                                        margin: EdgeInsets.all(4),
+                                        child: Text(viewModel.question.length
+                                                .toString() +
+                                            "/200"),
+                                      )
+                                    : Container(
+                                        margin: EdgeInsets.all(4),
+                                        child: Text("0/200"),
+                                      ),
                                 Container(
                                     child: Text(
                                   viewModel.createTriviaQuestionErrorMessage,
@@ -119,11 +130,23 @@ class CreateTriviaPage extends StatelessWidget {
                                         hintText: "Resposta certa",
                                       ),
                                       keyboardType: TextInputType.multiline,
-                                    )
-                                ),
+                                    )),
+                                viewModel.correctAnswer != null
+                                    ? Container(
+                                        margin: EdgeInsets.all(4),
+                                        child: Text(viewModel
+                                                .correctAnswer.length
+                                                .toString() +
+                                            "/200"),
+                                      )
+                                    : Container(
+                                        margin: EdgeInsets.all(4),
+                                        child: Text("0/200"),
+                                      ),
                                 Container(
                                     child: Text(
-                                  viewModel.createTriviaCorrectAnswerErrorMessage,
+                                  viewModel
+                                      .createTriviaCorrectAnswerErrorMessage,
                                   style: TextStyle(color: Colors.redAccent),
                                 )),
                                 Container(
@@ -144,12 +167,22 @@ class CreateTriviaPage extends StatelessWidget {
                                     keyboardType: TextInputType.multiline,
                                   ),
                                 ),
+                                viewModel.wrongAnswer != null
+                                    ? Container(
+                                        margin: EdgeInsets.all(4),
+                                        child: Text(viewModel.wrongAnswer.length
+                                                .toString() +
+                                            "/200"),
+                                      )
+                                    : Container(
+                                        margin: EdgeInsets.all(4),
+                                        child: Text("0/200"),
+                                      ),
                                 Container(
                                     child: Text(
-                                      viewModel.createTriviaWrongAnswerErrorMessage,
-                                      style: TextStyle(color: Colors.redAccent),
-                                    )
-                                ),
+                                  viewModel.createTriviaWrongAnswerErrorMessage,
+                                  style: TextStyle(color: Colors.redAccent),
+                                )),
                               ],
                             ),
                           ),

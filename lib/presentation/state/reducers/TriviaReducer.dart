@@ -14,9 +14,9 @@ class TriviaState {
   final String createTriviaWrongAnswerErrorMessage;
 
   TriviaState(
-      {this.question = "",
-      this.correctAnswer = "",
-      this.wrongAnswer = "",
+      {this.question,
+      this.correctAnswer,
+      this.wrongAnswer,
       this.domain,
       this.isCreatingTrivia: false,
       this.domainNullErrorMessage: " ",
@@ -72,10 +72,10 @@ final Reducer<TriviaState> triviaReducer = combineReducers<TriviaState>([
       onCreateTriviaErrorTagNull),
   TypedReducer<TriviaState, SubmitTriviaErrorQuestionSizeMismatchAction>(
       onCreateTriviaErrorQuestionSizeMismatch),
-  TypedReducer<TriviaState, SubmitTriviaErrorTagNullAction>(
-      onCreateTriviaErrorTagNull),
-  TypedReducer<TriviaState, SubmitTriviaErrorTagNullAction>(
-      onCreateTriviaErrorTagNull)
+  TypedReducer<TriviaState, SubmitTriviaErrorCorrectAnswerSizeMismatchAction>(
+      onCreateTriviaErrorCorrectAnswerSizeMismatch),
+  TypedReducer<TriviaState, SubmitTriviaErrorWrongAnswerSizeMismatchAction>(
+      onCreateTriviaErrorWrongAnswerSizeMismatch)
 ]);
 
 TriviaState createTrivia(TriviaState state, SubmitTriviaAction action) {
@@ -88,7 +88,13 @@ TriviaState createTrivia(TriviaState state, SubmitTriviaAction action) {
 }
 
 TriviaState triviaCreated(TriviaState state, SubmitTriviaSuccessAction action) {
-  return state.copyWith(isCreatingTrivia: false, domain: null);
+  return state.copyWith(isCreatingTrivia: false, 
+  domain: null,
+  domainNullErrorMessage: "",
+  createTriviaQuestionErrorMessage: "",
+  createTriviaCorrectAnswerErrorMessage: "",
+  createTriviaWrongAnswerErrorMessage: ""
+  );
 }
 
 TriviaState setDomainField(
@@ -124,6 +130,9 @@ TriviaState navigateTrivia(
 TriviaState onCreateTriviaErrorTagNull(
     TriviaState state, SubmitTriviaErrorTagNullAction actions) {
   return state.copyWith(
+      question: actions.question,
+      correctAnswer: actions.correctAnswer,
+      wrongAnswer: actions.wrongAnswer,
       isCreatingTrivia: false,
       domainNullErrorMessage: "Você precisa escolher uma tag!");
 }
@@ -132,6 +141,9 @@ TriviaState onCreateTriviaErrorQuestionSizeMismatch(
     TriviaState state, SubmitTriviaErrorQuestionSizeMismatchAction actions) {
   return state.copyWith(
       isCreatingTrivia: false,
+      question: actions.question,
+      correctAnswer: actions.correctAnswer,
+      wrongAnswer: actions.wrongAnswer,
       createTriviaQuestionErrorMessage:
           "A questão precisa conter entre 20 e 300 caracteres.");
 }
@@ -140,6 +152,9 @@ TriviaState onCreateTriviaErrorCorrectAnswerSizeMismatch(TriviaState state,
     SubmitTriviaErrorCorrectAnswerSizeMismatchAction actions) {
   return state.copyWith(
       isCreatingTrivia: false,
+      question: actions.question,
+      correctAnswer: actions.correctAnswer,
+      wrongAnswer: actions.wrongAnswer,
       createTriviaCorrectAnswerErrorMessage:
           "A Reposta Correta precisa conter entre 1 e 200 caracteres.");
 }
@@ -148,6 +163,9 @@ TriviaState onCreateTriviaErrorWrongAnswerSizeMismatch(
     TriviaState state, SubmitTriviaErrorWrongAnswerSizeMismatchAction actions) {
   return state.copyWith(
       isCreatingTrivia: false,
+      question: actions.question,
+      correctAnswer: actions.correctAnswer,
+      wrongAnswer: actions.wrongAnswer,
       createTriviaWrongAnswerErrorMessage:
           "A Reposta Errada precisa conter entre 1 e 200 caracteres.");
 }

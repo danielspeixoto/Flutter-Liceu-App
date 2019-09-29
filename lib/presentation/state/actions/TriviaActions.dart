@@ -1,7 +1,7 @@
 import 'package:app/domain/aggregates/Trivia.dart';
 
 //Navigates
-class NavigateCreateTriviaAction{}
+class NavigateCreateTriviaAction {}
 
 //Fetches
 
@@ -37,15 +37,44 @@ class SubmitTriviaAction {
   final String wrongAnswer;
   final TriviaDomain domain;
 
-  SubmitTriviaAction(this.question, this.correctAnswer, this.wrongAnswer, this.domain);
+  SubmitTriviaAction(
+      this.question, this.correctAnswer, this.wrongAnswer, this.domain);
 }
 
 class SubmitTriviaSuccessAction {}
 
-class SubmitTriviaErrorTagNullAction {}
+class SubmitTriviaErrorTagNullAction {
+  final String question;
+  final String correctAnswer;
+  final String wrongAnswer;
 
-class SubmitTriviaErrorQuestionSizeMismatchAction {}
+  SubmitTriviaErrorTagNullAction(
+      this.question, this.correctAnswer, this.wrongAnswer);
+}
 
-class SubmitTriviaErrorCorrectAnswerSizeMismatchAction {}
+class SubmitTriviaErrorQuestionSizeMismatchAction {
+  final String question;
+  final String correctAnswer;
+  final String wrongAnswer;
 
-class SubmitTriviaErrorWrongAnswerSizeMismatchAction {}
+  SubmitTriviaErrorQuestionSizeMismatchAction(
+      this.question, this.correctAnswer, this.wrongAnswer);
+}
+
+class SubmitTriviaErrorCorrectAnswerSizeMismatchAction {
+  final String question;
+  final String correctAnswer;
+  final String wrongAnswer;
+
+  SubmitTriviaErrorCorrectAnswerSizeMismatchAction(
+      this.question, this.correctAnswer, this.wrongAnswer);
+}
+
+class SubmitTriviaErrorWrongAnswerSizeMismatchAction {
+  final String question;
+  final String correctAnswer;
+  final String wrongAnswer;
+
+  SubmitTriviaErrorWrongAnswerSizeMismatchAction(
+      this.question, this.correctAnswer, this.wrongAnswer);
+}

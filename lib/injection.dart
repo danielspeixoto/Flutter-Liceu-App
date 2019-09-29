@@ -41,7 +41,7 @@ bool get isDev {
 
  class FeaturesReady {
   static final viewFriend = true;
-  static final createTrivia = isDev;
+  static final createTrivia = true;
 }
 
 
