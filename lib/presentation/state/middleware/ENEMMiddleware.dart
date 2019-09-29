@@ -108,7 +108,7 @@ List<Middleware<AppState>> ENEMMiddleware(
       store.dispatch(NavigatePushAction(AppRoutes.tournament));
     }
     try {
-      final questions = await getQuestionsUseCase.run(10);
+      final questions = await getQuestionsUseCase.run(5);
       final futures = questions.map((question) async {
         final videos = await videosUseCase.run(question.id);
         return ENEMQuestionData(
