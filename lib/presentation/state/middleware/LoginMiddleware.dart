@@ -16,7 +16,8 @@ class LoginMiddleware extends MiddlewareClass<AppState> {
 
   LoginMiddleware(
     this._logoutUseCase,
-    this._loginUseCase, this._isLoggedInUseCase,
+    this._loginUseCase,
+    this._isLoggedInUseCase,
   );
 
   @override
@@ -36,7 +37,6 @@ class LoginMiddleware extends MiddlewareClass<AppState> {
         analytics.logLogin(loginMethod: action.method);
         analytics.setUserId(id);
         store.dispatch(LoginSuccessAction());
-        store.dispatch(NavigateReplaceAction(AppRoutes.home));
       }).catchError(
         (e) {
           print(e);

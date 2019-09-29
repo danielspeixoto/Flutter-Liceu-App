@@ -8,6 +8,7 @@ import 'package:app/presentation/state/aggregates/TriviaData.dart';
 import 'package:app/presentation/state/navigator/NavigatorActions.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:redux/redux.dart';
+
 import '../../app.dart';
 import '../app_state.dart';
 
@@ -31,7 +32,12 @@ List<Middleware<AppState>> challengeMiddleware(
         );
       });
       final trivias = await Future.wait(futures);
-      final challengeData = ChallengeData(challenge.id, trivias);
+      final challenger = await getUserByIdUseCase.run(challenge.challenger);
+      final challenged = challenge.challenged != null
+          ? await getUserByIdUseCase.run(challenge.challenged)
+          : null;
+      final challengeData =
+          ChallengeData(challenge.id, trivias, challenger, challenged);
       store.dispatch(SetStartChallengeAction(challengeData));
     } catch (e) {
       print(e);

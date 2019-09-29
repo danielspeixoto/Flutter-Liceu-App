@@ -6,7 +6,7 @@ import 'package:redux/redux.dart';
 
 import 'Data.dart';
 
-const TRIVIA_TIME_TO_ANSWER = 10;
+const TRIVIA_TIME_TO_ANSWER = 15;
 
 class ChallengeState {
   final Data<ChallengeData> challenge;
@@ -25,8 +25,8 @@ class ChallengeState {
     this.randomNum,
   );
 
-  factory ChallengeState.initial() =>
-      ChallengeState(Data(), [], 0, TRIVIA_TIME_TO_ANSWER, false, TRIVIA_TIME_TO_ANSWER);
+  factory ChallengeState.initial() => ChallengeState(
+      Data(), [], 0, TRIVIA_TIME_TO_ANSWER, false, TRIVIA_TIME_TO_ANSWER);
 
   ChallengeState copyWith({
     Data<ChallengeData> challenge,
