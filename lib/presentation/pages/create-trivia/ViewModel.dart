@@ -1,5 +1,5 @@
 import 'package:app/domain/aggregates/Trivia.dart';
-import 'package:app/domain/aggregates/Trivia.dart' as prefix0;
+
 import 'package:app/presentation/state/actions/TriviaActions.dart';
 import 'package:app/presentation/state/app_state.dart';
 import 'package:redux/redux.dart';
@@ -15,6 +15,7 @@ class CreateTriviaViewModel {
   final String wrongAnswer;
   final String domain;
   final bool isCreatingTrivia;
+  final String createTriviaDomainNullError;
 
   CreateTriviaViewModel(
       {this.onCreateTriviaButtonPressed,
@@ -26,7 +27,8 @@ class CreateTriviaViewModel {
       this.correctAnswer,
       this.wrongAnswer,
       this.domain,
-      this.isCreatingTrivia});
+      this.isCreatingTrivia,
+      this.createTriviaDomainNullError});
 
   factory CreateTriviaViewModel.create(Store<AppState> store) {
     final triviaState = store.state.triviaState;
@@ -51,6 +53,7 @@ class CreateTriviaViewModel {
         question: triviaState.question,
         correctAnswer: triviaState.correctAnswer,
         wrongAnswer: triviaState.wrongAnswer,
+        createTriviaDomainNullError: triviaState.domainNullError,
         onTriviaDomainChanged: (value) {
           TriviaDomain domain;
           if (value == 'Matemática') {

@@ -8,13 +8,15 @@ class TriviaState {
   final String correctAnswer;
   final String wrongAnswer;
   final TriviaDomain domain;
+  final String domainNullError;
 
   TriviaState(
       {this.question = "",
       this.correctAnswer = "",
       this.wrongAnswer = "",
       this.domain,
-      this.isCreatingTrivia: false});
+      this.isCreatingTrivia: false,
+      this.domainNullError: " "});
 
   factory TriviaState.initial() => TriviaState();
 
@@ -23,13 +25,15 @@ class TriviaState {
       String correctAnswer,
       String wrongAnswer,
       TriviaDomain domain,
-      bool isCreatingTrivia}) {
+      bool isCreatingTrivia,
+      String domainNullError}) {
     final state = TriviaState(
       question: question ?? this.question,
       correctAnswer: correctAnswer ?? this.correctAnswer,
       wrongAnswer: wrongAnswer ?? this.wrongAnswer,
       domain: domain ?? this.domain,
       isCreatingTrivia: isCreatingTrivia ?? this.isCreatingTrivia,
+      domainNullError: domainNullError ?? this.domainNullError
     );
     return state;
   }
@@ -45,7 +49,8 @@ final Reducer<TriviaState> triviaReducer = combineReducers<TriviaState>([
       setCorrectAnswerField),
   TypedReducer<TriviaState, SetCreateTriviaWrongAnswerFieldAction>(
       setWrongAnswerField),
-  TypedReducer<TriviaState, NavigateCreateTriviaAction>(navigateTrivia)
+  TypedReducer<TriviaState, NavigateCreateTriviaAction>(navigateTrivia),
+  TypedReducer<TriviaState, SubmitTriviaErrorTagNullAction>(onCreateTriviaErrorTagNull)
 ]);
 
 TriviaState createTrivia(TriviaState state, SubmitTriviaAction action) {
@@ -58,12 +63,15 @@ TriviaState createTrivia(TriviaState state, SubmitTriviaAction action) {
 }
 
 TriviaState triviaCreated(TriviaState state, SubmitTriviaSuccessAction action) {
-  return state.copyWith(isCreatingTrivia: false);
+  return state.copyWith(isCreatingTrivia: false,
+  domain: null);
 }
 
 TriviaState setDomainField(
     TriviaState state, SetCreateTriviaDomainFieldAction action) {
-  return state.copyWith(domain: action.domain);
+  return state.copyWith(
+    domain: action.domain,
+    domainNullError: " ");
 }
 
 TriviaState setQuestionField(
@@ -89,4 +97,11 @@ TriviaState navigateTrivia(
       correctAnswer: "",
       wrongAnswer: "",
       domain: null);
+}
+
+TriviaState onCreateTriviaErrorTagNull(TriviaState state, SubmitTriviaErrorTagNullAction actions) {
+  return state.copyWith(
+    isCreatingTrivia: false,
+    domainNullError: "Você precisa escolher uma tag!"
+  );
 }

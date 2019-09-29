@@ -36,7 +36,7 @@ class CreateTriviaPage extends StatelessWidget {
                           Row(
                             children: <Widget>[
                               Container(
-                                  child: Text('Escolha uma tag: '),
+                                  child: Text('Selecione uma tag: '),
                                   margin: EdgeInsets.all(4)),
                               DropdownButton<String>(
                                 value: viewModel.domain,
@@ -49,8 +49,6 @@ class CreateTriviaPage extends StatelessWidget {
                                   color: Colors.deepPurpleAccent,
                                 ),
                                 onChanged: (String value) {
-                                  
-                                  
                                   viewModel.onTriviaDomainChanged(value);
                                 },
                                 items: <String>[
@@ -68,6 +66,11 @@ class CreateTriviaPage extends StatelessWidget {
                               ),
                             ],
                           ),
+                          Container(
+                              child: Text(
+                            viewModel.createTriviaDomainNullError,
+                            style: TextStyle(color: Colors.redAccent),
+                          )),
                           Container(
                             margin: EdgeInsets.all(8),
                             child: Column(

@@ -42,4 +42,4 @@ class SubmitTriviaAction {
 
 class SubmitTriviaSuccessAction {}
 
-class SubmitTriviaErrorAction {}
+class SubmitTriviaErrorTagNullAction {}

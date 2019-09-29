@@ -1,4 +1,4 @@
-import 'package:app/domain/aggregates/exceptions/Exceptions.dart';
+import 'package:app/domain/aggregates/exceptions/CreatePostExceptions.dart';
 import 'package:app/domain/boundary/PostBoundary.dart';
 import 'package:app/domain/boundary/UserBoundary.dart';
 import 'package:app/presentation/state/actions/PostActions.dart';
@@ -30,7 +30,7 @@ List<Middleware<AppState>> postMiddleware(
     try {
       await createPostUseCase.run(action.postType, action.text);
       store.dispatch(SubmitPostSuccessAction());
-    } on SizeBoundaryException catch(e) {
+    } on CreatePostSizeBoundaryException catch(e) {
       store.dispatch(SubmitPostErrorTextSizeMismatchAction());
     } catch (e) {
       print(e);
