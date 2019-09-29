@@ -5,11 +5,14 @@
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
 
     <application
         android:name="com.deffish.Application"
         android:icon="@mipmap/ic_launcher"
         android:label="Liceu">
+
+        <meta-data android:name="com.google.firebase.messaging.default_notification_icon" android:resource="@drawable/ic_launcher"/>
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
