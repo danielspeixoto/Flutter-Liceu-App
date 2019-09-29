@@ -1,5 +1,11 @@
 import 'package:app/presentation/state/aggregates/ChallengeData.dart';
 
+
+//Navigates
+class NavigateChallengeAction {
+  NavigateChallengeAction();
+}
+
 class StartChallengeAction {
   final ChallengeData challenge;
 
@@ -12,9 +18,7 @@ class AnswerChallengeAction {
   AnswerChallengeAction(this.challengeId);
 }
 
-class NavigateChallengeAction {
-  NavigateChallengeAction();
-}
+
 
 class ChallengeSomeoneAction {
   final String challengedId;

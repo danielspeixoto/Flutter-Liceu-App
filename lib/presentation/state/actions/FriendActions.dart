@@ -3,6 +3,7 @@ import 'package:app/domain/aggregates/User.dart';
 
 import '../../constants.dart';
 
+//Navigates
 class NavigateViewFriendAction {
   final User user;
 

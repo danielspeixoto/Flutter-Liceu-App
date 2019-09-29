@@ -4,6 +4,17 @@ import 'package:app/presentation/state/aggregates/RankingData.dart';
 
 import '../../constants.dart';
 
+//Navigates
+class NavigateTrainingAction {}
+
+class NavigateTournamentAction {}
+
+class NavigateFilterTrainingQuestions {
+  final QuestionDomain domain;
+
+  NavigateFilterTrainingQuestions(this.domain);
+}
+
 class FetchRankingAction {
   FetchRankingAction();
 }
@@ -18,16 +29,6 @@ class RankingRetrievedAction {
   final RankingData ranking;
 
   RankingRetrievedAction(this.ranking);
-}
-
-class NavigateTrainingAction {}
-
-class NavigateTournamentAction {}
-
-class NavigateFilterTrainingQuestions {
-  final QuestionDomain domain;
-
-  NavigateFilterTrainingQuestions(this.domain);
 }
 
 class TrainingQuestionsRetrievedAction {

@@ -1,6 +1,9 @@
 import 'package:app/domain/aggregates/Post.dart';
 import 'package:app/presentation/state/aggregates/PostData.dart';
 
+//Navigates
+class NavigateCreatePostAction {}
+
 class DeletePostAction {
   final String postId;
 
@@ -14,8 +17,6 @@ class CreatePostAction {
   CreatePostAction(this.postType, this.text);
 }
 
-class NavigateCreatePostAction {}
-
 class PostSubmittedAction {}
 
 class ExplorePostsAction {}
@@ -26,10 +27,6 @@ class ExplorePostsRetrievedAction {
   ExplorePostsRetrievedAction(this.post);
 }
 
-class ExplorePostsErrorAction {
+class ExplorePostsErrorAction {}
 
-}
-
-class OnCreatePostTextSizeMismatchAction{
-
-}
+class OnCreatePostTextSizeMismatchAction {}
