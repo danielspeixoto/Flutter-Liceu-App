@@ -45,6 +45,7 @@ dependencies:
   pinch_zoom_image: ^0.2.5
   loader_search_bar: ^1.0.3+3
   sentry: any
+  percent_indicator: ^2.1.1+1
 
 
 dev_dependencies:

@@ -40,12 +40,21 @@ class LoginPage extends StatelessWidget {
                   ),
                 ),
                 Container(
+                  decoration: BoxDecoration(
+                    borderRadius:
+                        BorderRadius.vertical(top: Radius.circular(64)),
+                    shape: BoxShape.rectangle,
+                    color: Colors.white,
+                  ),
                   width: double.infinity,
-                  padding: EdgeInsets.all(4),
+                  padding: EdgeInsets.all(8),
                   child: Column(
                     children: <Widget>[
                       SignInButton(
                         Buttons.GoogleDark,
+                        shape: RoundedRectangleBorder(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(16))),
                         text: "Entrar com Google",
                         onPressed: () async {
                           GoogleSignIn _googleSignIn = GoogleSignIn(
@@ -62,7 +71,11 @@ class LoginPage extends StatelessWidget {
                         },
                       ),
                       SignInButton(Buttons.Facebook,
-                          text: "Entrar com Facebook", onPressed: () async {
+                          text: "Entrar com Facebook",
+                          shape: RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(16))),
+                          onPressed: () async {
                         try {
                           final facebookLogin = FacebookLogin();
                           final result = await facebookLogin

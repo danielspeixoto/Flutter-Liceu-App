@@ -41,11 +41,11 @@ class ProfileViewModel {
       onCreateButtonPressed: () =>
           store.dispatch(NavigateCreatePostAction()),
       refresh: () {
-        store.dispatch(FetchMyInfoAction());
-        store.dispatch(FetchMyPostsAction());
+        store.dispatch(FetchUserInfoAction());
+        store.dispatch(FetchUserPostsAction());
       },
       onEditProfileButtonPressed: () {
-        store.dispatch(NavigatePushAction(AppRoutes.editProfile));
+        store.dispatch(NavigateUserEditProfileAction());
       },
       onLogoutPressed: () {
         store.dispatch(LogOutAction());

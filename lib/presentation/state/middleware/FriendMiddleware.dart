@@ -23,7 +23,7 @@ List<Middleware<AppState>> friendMiddleware(
   }
 
   void viewFriend(
-      Store<AppState> store, ViewFriendAction action, NextDispatcher next) {
+      Store<AppState> store, NavigateViewFriendAction action, NextDispatcher next) {
     next(action);
     store.dispatch(SetFriendAction(action.user));
     store.dispatch(NavigatePushAction(AppRoutes.friend));
@@ -32,6 +32,6 @@ List<Middleware<AppState>> friendMiddleware(
 
   return [
     TypedMiddleware<AppState, FetchFriendPostsAction>(fetchPosts),
-    TypedMiddleware<AppState, ViewFriendAction>(viewFriend)
+    TypedMiddleware<AppState, NavigateViewFriendAction>(viewFriend)
   ];
 }

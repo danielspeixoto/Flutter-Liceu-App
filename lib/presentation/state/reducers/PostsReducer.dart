@@ -33,11 +33,11 @@ class PostState {
 
 final Reducer<PostState> postReducer = combineReducers<PostState>([
   TypedReducer<PostState, DeletePostAction>(deletePost),
-  TypedReducer<PostState, ExplorePostsRetrievedAction>(explorePostsRetrieved),
-  TypedReducer<PostState, ExplorePostsAction>(explorePosts),
-  TypedReducer<PostState, CreatePostAction>(createPost),
+  TypedReducer<PostState, FetchPostsSuccessAction>(explorePostsRetrieved),
+  TypedReducer<PostState, FetchPostsAction>(explorePosts),
+  TypedReducer<PostState, SubmitPostAction>(createPost),
   TypedReducer<PostState, NavigateCreatePostAction>(navigateCreatePost),
-  TypedReducer<PostState, OnCreatePostTextSizeMismatchAction>(onCreatePostTextSizeMismatch)
+  TypedReducer<PostState, SubmitPostErrorTextSizeMismatchAction>(onCreatePostTextSizeMismatch)
 ]);
 
 PostState deletePost(PostState state, DeletePostAction action) {
@@ -54,16 +54,16 @@ PostState deletePost(PostState state, DeletePostAction action) {
   );
 }
 
-PostState explorePostsRetrieved(PostState state, ExplorePostsRetrievedAction action) {
+PostState explorePostsRetrieved(PostState state, FetchPostsSuccessAction action) {
   return state.copyWith(posts: Data(content: action.post, isLoading: false));
 }
 
-PostState explorePosts(PostState state, ExplorePostsAction action) {
+PostState explorePosts(PostState state, FetchPostsAction action) {
   return state.copyWith(posts: state.posts.copyWith(isLoading: true, errorMessage: ""));
 }
 
 
-PostState createPost(PostState state, CreatePostAction action) {
+PostState createPost(PostState state, SubmitPostAction action) {
   return state.copyWith(
      isCreatingPost: true,
      createPostTextErrorMessage: ""
@@ -77,7 +77,7 @@ PostState navigateCreatePost(PostState state, NavigateCreatePostAction action) {
   );
 }
 
-PostState onCreatePostTextSizeMismatch(PostState state, OnCreatePostTextSizeMismatchAction action) {
+PostState onCreatePostTextSizeMismatch(PostState state, SubmitPostErrorTextSizeMismatchAction action) {
   return state.copyWith(
     isCreatingPost: false,
     createPostTextErrorMessage: "O tamanho do texto é menor que 100 ou maior que 2000 caracteres."

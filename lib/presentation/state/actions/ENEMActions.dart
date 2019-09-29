@@ -1,46 +1,62 @@
 import 'package:app/domain/aggregates/ENEMQuestion.dart';
 import 'package:app/presentation/state/aggregates/ENEMQuestionData.dart';
 import 'package:app/presentation/state/aggregates/RankingData.dart';
-
 import '../../constants.dart';
 
+//Navigates
+class NavigateTrainingQuestionsAction {}
+
+class NavigateTournamentAction {}
+
+class NavigateTrainingQuestionsFilterAction {
+  final QuestionDomain domain;
+
+  NavigateTrainingQuestionsFilterAction(this.domain);
+}
+
+class NavigateTournamentReviewAction {
+  final int score;
+  final int timeSpent;
+
+  NavigateTournamentReviewAction(this.score, this.timeSpent);
+}
+
+//Fetches
 class FetchRankingAction {
   FetchRankingAction();
 }
 
-class FetchingRankingErrorAction {
+class FetchRankingErrorAction {
   final String error;
 
-  FetchingRankingErrorAction({this.error = DEFAULT_ERROR_MESSAGE});
+  FetchRankingErrorAction({this.error = DEFAULT_ERROR_MESSAGE});
 }
 
-class RankingRetrievedAction {
+class FetchRankingSuccessAction {
   final RankingData ranking;
 
-  RankingRetrievedAction(this.ranking);
+  FetchRankingSuccessAction(this.ranking);
 }
 
-class TrainingAction {}
-
-class TournamentAction {}
-
-class FilterTrainingQuestions {
-  final QuestionDomain domain;
-
-  FilterTrainingQuestions(this.domain);
-}
-
-class TrainingQuestionsRetrievedAction {
+class FetchTrainingQuestionsSuccessAction {
   final List<ENEMQuestionData> questions;
 
-  TrainingQuestionsRetrievedAction(this.questions);
+  FetchTrainingQuestionsSuccessAction(this.questions);
 }
-class TournamentQuestionsRetrievedAction {
+
+class FetchTournamentQuestionsSuccessAction {
   final List<ENEMQuestionData> questions;
 
-  TournamentQuestionsRetrievedAction(this.questions);
+  FetchTournamentQuestionsSuccessAction(this.questions);
 }
 
+//Setters
+
+
+//Submits
+class SubmitTournamentGameAction {}
+
+//Interactions
 class AnswerTrainingQuestionAction {
   final String questionId;
   final int answer;
@@ -54,13 +70,3 @@ class AnswerTournamentQuestionAction {
 
   AnswerTournamentQuestionAction(this.questionId, this.answer);
 }
-
-class SubmitTournamentGameAction {}
-
-class ReviewTournamentGameAction {
-  final int score;
-  final int timeSpent;
-
-  ReviewTournamentGameAction(this.score, this.timeSpent);
-}
-

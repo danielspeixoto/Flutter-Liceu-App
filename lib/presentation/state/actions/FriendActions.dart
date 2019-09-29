@@ -3,18 +3,14 @@ import 'package:app/domain/aggregates/User.dart';
 
 import '../../constants.dart';
 
-class ViewFriendAction {
+//Navigates
+class NavigateViewFriendAction {
   final User user;
 
-  ViewFriendAction(this.user);
+  NavigateViewFriendAction(this.user);
 }
 
-class SetFriendAction {
-  final User user;
-
-  SetFriendAction(this.user);
-}
-
+//Fetches
 class FetchFriendAction {
   final String id;
 
@@ -25,12 +21,6 @@ class FetchFriendErrorAction {
   final String error;
 
   FetchFriendErrorAction({this.error = DEFAULT_ERROR_MESSAGE});
-}
-
-class SetFriendPostsAction {
-  final List<Post> posts;
-
-  SetFriendPostsAction(this.posts);
 }
 
 class FetchFriendPostsAction {
@@ -44,3 +34,17 @@ class FetchFriendPostsErrorAction {
 
   FetchFriendPostsErrorAction({this.error = DEFAULT_ERROR_MESSAGE});
 }
+
+//Setters
+class SetFriendAction {
+  final User user;
+
+  SetFriendAction(this.user);
+}
+
+class SetFriendPostsAction {
+  final List<Post> posts;
+
+  SetFriendPostsAction(this.posts);
+}
+

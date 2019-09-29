@@ -30,22 +30,22 @@ class UserMiddleware extends MiddlewareClass<AppState> {
   @override
   Future call(
       Store<AppState> store, dynamic action, NextDispatcher next) async {
-    if (action is FetchMyInfoAction) {
-      store.dispatch(FetchingUserAction());
+    if (action is FetchUserInfoAction) {
+      store.dispatch(FetchUserAction());
       _myInfoUseCase.run().then((user) {
         store.dispatch(SetUserAction(user));
       }).catchError((e) {
         print(e);
-        store.dispatch(FetchingUserErrorAction());
+        store.dispatch(FetchUserErrorAction());
       });
-    } else if (action is FetchMyPostsAction) {
+    } else if (action is FetchUserPostsAction) {
       this._myPostsUseCase.run().then((posts) {
         store.dispatch(SetUserPostsAction(posts));
       }).catchError((e) {
         print(e);
-        store.dispatch(FetchingMyPostsErrorAction());
+        store.dispatch(FetchUserPostsErrorAction());
       });
-    } else if (action is FetchMyChallengesAction) {
+    } else if (action is FetchUserChallengesAction) {
       this._myChallengesUseCase.run().then((challenges) async {
         final futures = challenges.map((challenge) async {
           final challenger = await _getUserById.run(challenge.challenger);
@@ -69,12 +69,12 @@ class UserMiddleware extends MiddlewareClass<AppState> {
         }
       }).catchError((e) {
         print(e);
-        store.dispatch(FetchingMyChallengesErrorAction());
+        store.dispatch(FetchUserChallengesErrorAction());
       });
-    } else if (action is PostSubmittedAction) {
-      store.dispatch(FetchMyPostsAction());
-    } else if (action is MyProfileInfoWasChangedAction) {
-      store.dispatch(FetchMyInfoAction());
+    } else if (action is SubmitPostSuccessAction) {
+      store.dispatch(FetchUserPostsAction());
+    } else if (action is SubmitUserProfileChangesSuccessAction) {
+      store.dispatch(FetchUserInfoAction());
       if (store.state.route.last == AppRoutes.editProfile) {
         store.dispatch(NavigatePopAction());
       }
@@ -83,7 +83,7 @@ class UserMiddleware extends MiddlewareClass<AppState> {
         await setUserDescriptionUseCase.run(action.bio);
         await setUserInstagramUseCase.run(action.instagram);
         store.dispatch(
-          MyProfileInfoWasChangedAction(
+          SubmitUserProfileChangesSuccessAction(
             action.bio,
             action.instagram,
           ),
@@ -93,6 +93,8 @@ class UserMiddleware extends MiddlewareClass<AppState> {
       }
     } else if (action is SetUserAction) {
       analytics.setUserProperty(name: "name", value: action.user.name);
+    } else if(action is NavigateUserEditProfileAction) {
+      store.dispatch(NavigatePushAction(AppRoutes.editProfile));
     }
     next(action);
   }

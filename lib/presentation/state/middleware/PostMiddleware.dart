@@ -24,20 +24,20 @@ List<Middleware<AppState>> postMiddleware(
     }
   }
 
-  void createPost(Store<AppState> store, CreatePostAction action,
+  void createPost(Store<AppState> store, SubmitPostAction action,
       NextDispatcher next) async {
     next(action);
     try {
       await createPostUseCase.run(action.postType, action.text);
-      store.dispatch(PostSubmittedAction());
+      store.dispatch(SubmitPostSuccessAction());
     } on SizeBoundaryException catch(e) {
-      store.dispatch(OnCreatePostTextSizeMismatchAction());
+      store.dispatch(SubmitPostErrorTextSizeMismatchAction());
     } catch (e) {
       print(e);
     }
   }
 
-  void postCreated(Store<AppState> store, PostSubmittedAction action,
+  void postCreated(Store<AppState> store, SubmitPostSuccessAction action,
       NextDispatcher next) async {
     next(action);
     if (store.state.route.last == AppRoutes.createPost) {
@@ -45,7 +45,7 @@ List<Middleware<AppState>> postMiddleware(
     }
   }
 
-  void explorePosts(Store<AppState> store, ExplorePostsAction action,
+  void explorePosts(Store<AppState> store, FetchPostsAction action,
       NextDispatcher next) async {
     next(action);
     try {
@@ -60,7 +60,7 @@ List<Middleware<AppState>> postMiddleware(
         );
       });
       final data = await Future.wait(futures);
-      store.dispatch(ExplorePostsRetrievedAction(data));
+      store.dispatch(FetchPostsSuccessAction(data));
     } catch (e) {
       print(e);
     }
@@ -75,8 +75,8 @@ List<Middleware<AppState>> postMiddleware(
   return [
     TypedMiddleware<AppState, DeletePostAction>(deletePost),
     TypedMiddleware<AppState, NavigateCreatePostAction>(postCreation),
-    TypedMiddleware<AppState, CreatePostAction>(createPost),
-    TypedMiddleware<AppState, PostSubmittedAction>(postCreated),
-    TypedMiddleware<AppState, ExplorePostsAction>(explorePosts),
+    TypedMiddleware<AppState, SubmitPostAction>(createPost),
+    TypedMiddleware<AppState, SubmitPostSuccessAction>(postCreated),
+    TypedMiddleware<AppState, FetchPostsAction>(explorePosts),
   ];
 }

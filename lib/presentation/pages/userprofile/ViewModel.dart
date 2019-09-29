@@ -34,8 +34,8 @@ class UserProfileViewModel {
         user: userState.user,
         posts: userState.posts,
         refresh: () {
-          store.dispatch(FetchMyInfoAction());
-          store.dispatch(FetchMyPostsAction());
+          store.dispatch(FetchUserInfoAction());
+          store.dispatch(FetchUserPostsAction());
         },
         onDeletePostPressed: (String postId) {
           store.dispatch(DeletePostAction(postId));
@@ -46,6 +46,6 @@ class UserProfileViewModel {
               "\n\nConfira mais no nosso app!\nhttps://bit.ly/BaixarLiceu");
         },
         onChallengeMePressed: (String userId) =>
-            store.dispatch(ChallengeSomeoneAction(userId)));
+            store.dispatch(NavigateChallengeSomeoneAction(userId)));
   }
 }

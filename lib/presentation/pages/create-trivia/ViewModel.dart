@@ -76,7 +76,7 @@ class CreateTriviaViewModel {
           store.dispatch(SetCreateTriviaWrongAnswerFieldAction(text));
         },
         onCreateTriviaButtonPressed: () async {
-          store.dispatch(CreateTriviaAction(
+          store.dispatch(SubmitTriviaAction(
               triviaState.question,
               triviaState.correctAnswer,
               triviaState.wrongAnswer,

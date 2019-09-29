@@ -31,18 +31,24 @@ List<Middleware<AppState>> challengeMiddleware(
         );
       });
       final trivias = await Future.wait(futures);
-      final challengeData = ChallengeData(challenge.id, trivias);
-      store.dispatch(StartChallengeAction(challengeData));
+      final challenger = await getUserByIdUseCase.run(challenge.challenger);
+      final challenged = challenge.challenged != null
+          ? await getUserByIdUseCase.run(challenge.challenged)
+          : null;
+      final challengeData =
+          ChallengeData(challenge.id, trivias, challenger, challenged);
+      store.dispatch(SetChallengeAction(challengeData));
     } catch (e) {
       print(e);
     }
   }
 
-  void getRandomChallenge(Store<AppState> store, ChallengeAction action,
+  void getRandomChallenge(Store<AppState> store, NavigateChallengeAction action,
       NextDispatcher next) async {
     next(action);
     try {
       store.dispatch(NavigatePushAction(AppRoutes.challenge));
+
       final challenge = await getChallengeUseCase.run();
       dispatchChallenge(store, challenge, next);
     } catch (e) {
@@ -50,11 +56,12 @@ List<Middleware<AppState>> challengeMiddleware(
     }
   }
 
-  void challengeSomeone(Store<AppState> store, ChallengeSomeoneAction action,
+  void challengeSomeone(Store<AppState> store, NavigateChallengeSomeoneAction action,
       NextDispatcher next) async {
     next(action);
     try {
       store.dispatch(NavigatePushAction(AppRoutes.challenge));
+
       final challenge = await challengeSomeoneUseCase.run(action.challengedId);
       dispatchChallenge(store, challenge, next);
     } catch (e) {
@@ -70,7 +77,7 @@ List<Middleware<AppState>> challengeMiddleware(
       if (challengeState.answers.length ==
           challengeState.challenge.content.questions.length) {
         new Future.delayed(const Duration(seconds: 3), () {
-          store.dispatch(ChallengeFinishedAction());
+          store.dispatch(SubmitChallengeAction());
         });
       } else {
         new Future.delayed(const Duration(seconds: 2), () {
@@ -86,11 +93,11 @@ List<Middleware<AppState>> challengeMiddleware(
       NextDispatcher next) async {
     next(action);
     new Future.delayed(const Duration(seconds: 1), () {
-      store.dispatch(TriviaTimerDecrementAction());
+      store.dispatch(SetTriviaTimerDecrementAction());
     });
   }
 
-  void onFinished(Store<AppState> store, ChallengeFinishedAction action,
+  void onFinished(Store<AppState> store, SubmitChallengeAction action,
       NextDispatcher next) async {
     next(action);
     final challengeState = store.state.challengeState;
@@ -109,14 +116,14 @@ List<Middleware<AppState>> challengeMiddleware(
       await submitChallengeAnswersUseCase.run(
           challengeState.challenge.content.id, challengeState.answers);
       new Future.delayed(const Duration(seconds: 3), () {
-        store.dispatch(FetchMyChallengesAction());
+        store.dispatch(FetchUserChallengesAction());
       });
     } catch (e) {
       print(e);
     }
   }
 
-  void decrementTime(Store<AppState> store, TriviaTimerDecrementAction action,
+  void decrementTime(Store<AppState> store, SetTriviaTimerDecrementAction action,
       NextDispatcher next) async {
     final challengeState = store.state.challengeState;
     if (challengeState.isTimerRunning) {
@@ -125,27 +132,27 @@ List<Middleware<AppState>> challengeMiddleware(
       } else {
         next(action);
         new Future.delayed(const Duration(seconds: 1), () {
-          store.dispatch(TriviaTimerDecrementAction());
+          store.dispatch(SetTriviaTimerDecrementAction());
         });
       }
     }
   }
 
-  void startChallenge(Store<AppState> store, StartChallengeAction action,
+  void startChallenge(Store<AppState> store, SetChallengeAction action,
       NextDispatcher next) async {
     next(action);
     new Future.delayed(const Duration(seconds: 1), () {
-      store.dispatch(TriviaTimerDecrementAction());
+      store.dispatch(SetTriviaTimerDecrementAction());
     });
   }
 
   return [
-    TypedMiddleware<AppState, ChallengeAction>(getRandomChallenge),
-    TypedMiddleware<AppState, ChallengeSomeoneAction>(challengeSomeone),
+    TypedMiddleware<AppState, NavigateChallengeAction>(getRandomChallenge),
+    TypedMiddleware<AppState, NavigateChallengeSomeoneAction>(challengeSomeone),
     TypedMiddleware<AppState, AnswerTriviaAction>(onAnswer),
     TypedMiddleware<AppState, NextTriviaAction>(nextTriviaAction),
-    TypedMiddleware<AppState, ChallengeFinishedAction>(onFinished),
-    TypedMiddleware<AppState, TriviaTimerDecrementAction>(decrementTime),
-    TypedMiddleware<AppState, StartChallengeAction>(startChallenge),
+    TypedMiddleware<AppState, SubmitChallengeAction>(onFinished),
+    TypedMiddleware<AppState, SetTriviaTimerDecrementAction>(decrementTime),
+    TypedMiddleware<AppState, SetChallengeAction>(startChallenge),
   ];
 }
