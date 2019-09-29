@@ -16,55 +16,67 @@ final analytics = FirebaseAnalytics();
 
 List<Middleware<AppState>> challengeMiddleware(
   IGetChallengeUseCase getChallengeUseCase,
+  IGetChallengeByIdUseCase getChallengeByIdUseCase,
   IChallengeSomeoneUseCase challengeSomeoneUseCase,
   IGetUserByIdUseCase getUserByIdUseCase,
   ISubmitChallengeAnswersUseCase submitChallengeAnswersUseCase,
 ) {
-  void dispatchChallenge(
-      Store<AppState> store, Challenge challenge, NextDispatcher next) async {
-    try {
-      final futures = challenge.questions.map((trivia) async {
-        return TriviaData(
-          await getUserByIdUseCase.run(trivia.authorId),
-          trivia.question,
-          trivia.correctAnswer,
-          trivia.wrongAnswer,
-        );
-      });
-      final trivias = await Future.wait(futures);
-      final challenger = await getUserByIdUseCase.run(challenge.challenger);
-      final challenged = challenge.challenged != null
-          ? await getUserByIdUseCase.run(challenge.challenged)
-          : null;
-      final challengeData =
-          ChallengeData(challenge.id, trivias, challenger, challenged);
-      store.dispatch(SetChallengeAction(challengeData));
-    } catch (e) {
-      print(e);
-    }
+  Future<ChallengeData> prepareChallenge(Challenge challenge) async {
+    final futures = challenge.questions.map((trivia) async {
+      return TriviaData(
+        await getUserByIdUseCase.run(trivia.authorId),
+        trivia.question,
+        trivia.correctAnswer,
+        trivia.wrongAnswer,
+      );
+    });
+    final trivias = await Future.wait(futures);
+    final challenger = await getUserByIdUseCase.run(challenge.challenger);
+    final challenged = challenge.challenged != null
+        ? await getUserByIdUseCase.run(challenge.challenged)
+        : null;
+    final challengeData =
+        ChallengeData(challenge.id, trivias, challenger, challenged);
+    return challengeData;
   }
 
-  void getRandomChallenge(Store<AppState> store, NavigateChallengeAction action,
-      NextDispatcher next) async {
-    next(action);
+  void getRandomChallenge(Store<AppState> store,
+      FetchRandomChallengeAction action, NextDispatcher next) async {
     try {
-      store.dispatch(NavigatePushAction(AppRoutes.challenge));
-
       final challenge = await getChallengeUseCase.run();
-      dispatchChallenge(store, challenge, next);
+      store.dispatch(SetChallengeAction(await prepareChallenge(challenge)));
     } catch (e) {
       print(e);
     }
   }
 
-  void challengeSomeone(Store<AppState> store, NavigateChallengeSomeoneAction action,
+  void getChallenge(Store<AppState> store, FetchChallengeAction action,
+      NextDispatcher next) async {
+    try {
+      final challenge = await getChallengeByIdUseCase.run(action.challengeId);
+      store.dispatch(SetChallengeAction(await prepareChallenge(challenge)));
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  void navigateChallenge(Store<AppState> store, NavigateChallengeAction action,
       NextDispatcher next) async {
     next(action);
     try {
       store.dispatch(NavigatePushAction(AppRoutes.challenge));
+    } catch (e) {
+      print(e);
+    }
+  }
 
+  void challengeSomeone(Store<AppState> store,
+      NavigateChallengeSomeoneAction action, NextDispatcher next) async {
+    next(action);
+    try {
+      store.dispatch(NavigatePushAction(AppRoutes.challenge));
       final challenge = await challengeSomeoneUseCase.run(action.challengedId);
-      dispatchChallenge(store, challenge, next);
+      store.dispatch(SetChallengeAction(await prepareChallenge(challenge)));
     } catch (e) {
       print(e);
     }
@@ -124,8 +136,8 @@ List<Middleware<AppState>> challengeMiddleware(
     }
   }
 
-  void decrementTime(Store<AppState> store, SetTriviaTimerDecrementAction action,
-      NextDispatcher next) async {
+  void decrementTime(Store<AppState> store,
+      SetTriviaTimerDecrementAction action, NextDispatcher next) async {
     final challengeState = store.state.challengeState;
     if (challengeState.isTimerRunning) {
       if (challengeState.timeLeft == 0) {
@@ -148,7 +160,9 @@ List<Middleware<AppState>> challengeMiddleware(
   }
 
   return [
-    TypedMiddleware<AppState, NavigateChallengeAction>(getRandomChallenge),
+    TypedMiddleware<AppState, NavigateChallengeAction>(navigateChallenge),
+    TypedMiddleware<AppState, FetchRandomChallengeAction>(getRandomChallenge),
+    TypedMiddleware<AppState, FetchChallengeAction>(getChallenge),
     TypedMiddleware<AppState, NavigateChallengeSomeoneAction>(challengeSomeone),
     TypedMiddleware<AppState, AnswerTriviaAction>(onAnswer),
     TypedMiddleware<AppState, NextTriviaAction>(nextTriviaAction),

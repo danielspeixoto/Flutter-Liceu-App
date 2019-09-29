@@ -106,6 +106,7 @@ final Store<AppState> store = Store<AppState>(
     ),
     ...challengeMiddleware(
       getChallengeUseCase,
+      getChallengeByIdUseCase,
       challengeSomeoneUseCase,
       getUserByIdUseCase,
       submitChallengeAnswersUseCase,

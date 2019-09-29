@@ -11,6 +11,14 @@ class NavigateChallengeSomeoneAction {
   NavigateChallengeSomeoneAction(this.challengedId);
 }
 
+class FetchRandomChallengeAction {}
+
+class FetchChallengeAction {
+  final String challengeId;
+
+  FetchChallengeAction(this.challengeId);
+}
+
 //Setters
 class SetChallengeAction {
   final ChallengeData challenge;
@@ -19,7 +27,6 @@ class SetChallengeAction {
 }
 
 class SetTriviaTimerDecrementAction {}
-
 
 //Submits
 class SubmitChallengeAction {}
