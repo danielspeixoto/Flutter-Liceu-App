@@ -37,29 +37,29 @@ class UserState {
 final Reducer<UserState> userReducer = combineReducers<UserState>([
 //  Personal Data
   TypedReducer<UserState, SetUserAction>(setProfileData),
-  TypedReducer<UserState, FetchingUserAction>(fetchingUser),
-  TypedReducer<UserState, FetchingUserErrorAction>(fetchingUserError),
+  TypedReducer<UserState, FetchUserAction>(fetchUser),
+  TypedReducer<UserState, FetchUserErrorAction>(fetchUserError),
 //  Posts
   TypedReducer<UserState, SetUserPostsAction>(setUserPosts),
-  TypedReducer<UserState, FetchingMyPostsAction>(fetchingMyPosts),
-  TypedReducer<UserState, FetchingMyPostsErrorAction>(fetchingMyPostsError),
+  TypedReducer<UserState, FetchUserPostsAction>(fetchUserPosts),
+  TypedReducer<UserState, FetchUserPostsErrorAction>(fetchUserPostsError),
   TypedReducer<UserState, DeletePostAction>(deletePost),
 //  Challenges
   TypedReducer<UserState, SetUserChallengesAction>(setUserChallenges),
-  TypedReducer<UserState, FetchMyChallengesAction>(fetchingMyChallenges),
-  TypedReducer<UserState, FetchingMyChallengesErrorAction>(fetchingMyChallengesError),
+  TypedReducer<UserState, FetchUserChallengesAction>(fetchUserChallenges),
+  TypedReducer<UserState, FetchUserChallengesErrorAction>(fetchUserChallengesError),
 ]);
 
 UserState setProfileData(UserState state, SetUserAction action) {
   return state.copyWith(user: Data(content: action.user, isLoading: false));
 }
 
-UserState fetchingUser(UserState state, FetchingUserAction action) {
+UserState fetchUser(UserState state, FetchUserAction action) {
   final s = state.copyWith(user: Data(isLoading: true));
   return s;
 }
 
-UserState fetchingUserError(UserState state, FetchingUserErrorAction action) {
+UserState fetchUserError(UserState state, FetchUserErrorAction action) {
   final s =
       state.copyWith(user: Data(errorMessage: action.error, isLoading: false));
   return s;
@@ -69,14 +69,14 @@ UserState setUserPosts(UserState state, SetUserPostsAction action) {
   return state.copyWith(posts: Data(content: action.posts, isLoading: false));
 }
 
-UserState fetchingMyPosts(UserState state, FetchingMyPostsAction action) {
+UserState fetchUserPosts(UserState state, FetchUserPostsAction action) {
   return state.copyWith(
     posts: state.posts.copyWith(isLoading: true),
   );
 }
 
-UserState fetchingMyPostsError(
-    UserState state, FetchingMyPostsErrorAction action) {
+UserState fetchUserPostsError(
+    UserState state, FetchUserPostsErrorAction action) {
   final s =
       state.copyWith(posts: Data(errorMessage: action.error, isLoading: false));
   return s;
@@ -100,14 +100,14 @@ UserState setUserChallenges(UserState state, SetUserChallengesAction action) {
   return state.copyWith(challenges: Data(content: action.challenges, isLoading: false));
 }
 
-UserState fetchingMyChallenges(UserState state, FetchMyChallengesAction action) {
+UserState fetchUserChallenges(UserState state, FetchUserChallengesAction action) {
   return state.copyWith(
     challenges: state.challenges.copyWith(isLoading: true),
   );
 }
 
-UserState fetchingMyChallengesError(
-    UserState state, FetchingMyChallengesErrorAction action) {
+UserState fetchUserChallengesError(
+    UserState state, FetchUserChallengesErrorAction action) {
   final s =
   state.copyWith(challenges: Data(errorMessage: action.error, isLoading: false));
   return s;

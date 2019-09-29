@@ -34,8 +34,8 @@ class UserProfileViewModel {
         user: userState.user,
         posts: userState.posts,
         refresh: () {
-          store.dispatch(FetchMyInfoAction());
-          store.dispatch(FetchMyPostsAction());
+          store.dispatch(FetchUserInfoAction());
+          store.dispatch(FetchUserPostsAction());
         },
         onDeletePostPressed: (String postId) {
           store.dispatch(DeletePostAction(postId));

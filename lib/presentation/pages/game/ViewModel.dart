@@ -31,7 +31,7 @@ class GameViewModel {
   factory GameViewModel.create(Store<AppState> store) {
     return GameViewModel(
       challenges: store.state.userState.challenges,
-      refresh: () => store.dispatch(FetchMyChallengesAction()),
+      refresh: () => store.dispatch(FetchUserChallengesAction()),
       onChallengePressed: () => store.dispatch(NavigateChallengeAction()),
       onTrainingPressed: () => store.dispatch(NavigateTrainingAction()),
       onTournamentPressed: () => store.dispatch(NavigateTournamentAction()),

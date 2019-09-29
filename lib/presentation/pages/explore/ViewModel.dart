@@ -34,7 +34,7 @@ class ExploreViewModel {
       user: userState.user,
       posts: postState.posts,
       refresh: () {
-        store.dispatch(ExplorePostsAction());
+        store.dispatch(FetchPostsAction());
       },
       onDeletePostPressed: (String postId) {
         store.dispatch(DeletePostAction(postId));

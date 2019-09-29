@@ -113,7 +113,7 @@ List<Middleware<AppState>> challengeMiddleware(
       await submitChallengeAnswersUseCase.run(
           challengeState.challenge.content.id, challengeState.answers);
       new Future.delayed(const Duration(seconds: 3), () {
-        store.dispatch(FetchMyChallengesAction());
+        store.dispatch(FetchUserChallengesAction());
       });
     } catch (e) {
       print(e);
