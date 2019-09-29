@@ -15,6 +15,8 @@ class ChallengeViewModel {
   final int timeLeft;
   final bool showAnswer;
   final int correctAnswer;
+  final User challenger;
+  final User challenged;
 
   ChallengeViewModel({
     this.question,
@@ -26,6 +28,8 @@ class ChallengeViewModel {
     this.timeLeft,
     this.showAnswer,
     this.correctAnswer,
+    this.challenger,
+    this.challenged
   });
 
   factory ChallengeViewModel.create(Store<AppState> store) {
@@ -45,6 +49,8 @@ class ChallengeViewModel {
       timeLeft: store.state.challengeState.timeLeft,
       showAnswer: !store.state.challengeState.isTimerRunning,
       correctAnswer: store.state.challengeState.randomNum,
+      challenger: content.challenger,
+      challenged: content.challenged
     );
   }
 }
