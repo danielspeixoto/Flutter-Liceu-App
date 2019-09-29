@@ -30,20 +30,20 @@ List<Middleware<AppState>> ENEMMiddleware(
         return GameData(game.id, user, game.answers, game.timeSpent);
       });
       final rankingData = RankingData(await Future.wait(futures));
-      store.dispatch(RankingRetrievedAction(rankingData));
+      store.dispatch(FetchRankingSuccessAction(rankingData));
     } catch (e) {
       print(e);
     }
   }
 
   void trainingAction(
-      Store<AppState> store, TrainingAction action, NextDispatcher next) async {
+      Store<AppState> store, NavigateTrainingAction action, NextDispatcher next) async {
     next(action);
     store.dispatch(NavigatePushAction(AppRoutes.trainingFilter));
   }
 
   void trainingFilterAction(Store<AppState> store,
-      FilterTrainingQuestions action, NextDispatcher next) async {
+      NavigateFilterTrainingQuestions action, NextDispatcher next) async {
     next(action);
     if (store.state.route.last != AppRoutes.training) {
       store.dispatch(NavigatePushAction(AppRoutes.training));
@@ -63,7 +63,7 @@ List<Middleware<AppState>> ENEMMiddleware(
         );
       }).toList();
       final questionsData = await Future.wait(futures);
-      store.dispatch(TrainingQuestionsRetrievedAction(questionsData));
+      store.dispatch(FetchTrainingQuestionsSuccessAction(questionsData));
     } catch (e) {
       print(e);
     }
@@ -88,7 +88,7 @@ List<Middleware<AppState>> ENEMMiddleware(
           question.selectedAnswer,
         );
       });
-      store.dispatch(ReviewTournamentGameAction(score, timeSpent));
+      store.dispatch(NavigateReviewTournamentAction(score, timeSpent));
       await submitGameUseCase.run(answers, timeSpent);
     } catch (e) {
       print(e);
@@ -96,12 +96,12 @@ List<Middleware<AppState>> ENEMMiddleware(
   }
 
   void reviewTournament(Store<AppState> store,
-      ReviewTournamentGameAction action, NextDispatcher next) {
+      NavigateReviewTournamentAction action, NextDispatcher next) {
     next(action);
     store.dispatch(NavigateReplaceAction(AppRoutes.tournamentReview));
   }
 
-  void tournament(Store<AppState> store, TournamentAction action,
+  void tournament(Store<AppState> store, NavigateTournamentAction action,
       NextDispatcher next) async {
     next(action);
     if (store.state.route.last != AppRoutes.tournament) {
@@ -122,7 +122,7 @@ List<Middleware<AppState>> ENEMMiddleware(
         );
       }).toList();
       final questionsData = await Future.wait(futures);
-      store.dispatch(TournamentQuestionsRetrievedAction(questionsData));
+      store.dispatch(FetchTournamentQuestionsSuccessAction(questionsData));
     } catch (e) {
       print(e);
     }
@@ -130,15 +130,15 @@ List<Middleware<AppState>> ENEMMiddleware(
 
   return [
     TypedMiddleware<AppState, FetchRankingAction>(fetchRanking),
-    TypedMiddleware<AppState, TrainingAction>(trainingAction),
-    TypedMiddleware<AppState, FilterTrainingQuestions>(trainingFilterAction),
+    TypedMiddleware<AppState, NavigateTrainingAction>(trainingAction),
+    TypedMiddleware<AppState, NavigateFilterTrainingQuestions>(trainingFilterAction),
     TypedMiddleware<AppState, SubmitTournamentGameAction>(
       submitTournament,
     ),
-    TypedMiddleware<AppState, ReviewTournamentGameAction>(
+    TypedMiddleware<AppState, NavigateReviewTournamentAction>(
       reviewTournament,
     ),
-    TypedMiddleware<AppState, TournamentAction>(
+    TypedMiddleware<AppState, NavigateTournamentAction>(
       tournament,
     ),
   ];

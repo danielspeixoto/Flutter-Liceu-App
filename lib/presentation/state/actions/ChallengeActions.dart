@@ -1,35 +1,32 @@
 import 'package:app/presentation/state/aggregates/ChallengeData.dart';
 
-class StartChallengeAction {
-  final ChallengeData challenge;
-
-  StartChallengeAction(this.challenge);
+//Navigates
+class NavigateChallengeAction {
+  NavigateChallengeAction();
 }
 
-class AnswerChallengeAction {
-  final String challengeId;
-
-  AnswerChallengeAction(this.challengeId);
-}
-
-class ChallengeAction {
-  ChallengeAction();
-}
-
-class ChallengeSomeoneAction {
+class NavigateChallengeSomeoneAction {
   final String challengedId;
 
-  ChallengeSomeoneAction(this.challengedId);
+  NavigateChallengeSomeoneAction(this.challengedId);
 }
 
-class AnswerTriviaAction {
+//Setters
+class SetStartChallengeAction {
+  final ChallengeData challenge;
+
+  SetStartChallengeAction(this.challenge);
+}
+
+class SetTriviaTimerDecrementAction {}
+
+class SetAnswerTriviaAction {
   final String answer;
 
-  AnswerTriviaAction(this.answer);
+  SetAnswerTriviaAction(this.answer);
 }
 
-class ChallengeFinishedAction {}
+class SetNextTriviaAction {}
 
-class TriviaTimerDecrementAction {}
-
-class NextTriviaAction {}
+//Submits
+class SubmitChallengeAction {}

@@ -61,33 +61,33 @@ final Reducer<ENEMState> enemReducer = combineReducers<ENEMState>([
   TypedReducer<ENEMState, FetchRankingAction>(
     fetchingRanking,
   ),
-  TypedReducer<ENEMState, RankingRetrievedAction>(
+  TypedReducer<ENEMState, FetchRankingSuccessAction>(
     setProfileData,
   ),
-  TypedReducer<ENEMState, FetchingRankingErrorAction>(
+  TypedReducer<ENEMState, FetchRankingErrorAction>(
     fetchingRankingError,
   ),
-  TypedReducer<ENEMState, AnswerTrainingQuestionAction>(
+  TypedReducer<ENEMState, SetAnswerTrainingQuestionAction>(
     answerTrainingQuestion,
   ),
-  TypedReducer<ENEMState, FilterTrainingQuestions>(
+  TypedReducer<ENEMState, NavigateFilterTrainingQuestions>(
     filterTrainingQuestions,
   ),
-  TypedReducer<ENEMState, TrainingQuestionsRetrievedAction>(
+  TypedReducer<ENEMState, FetchTrainingQuestionsSuccessAction>(
     trainingQuestionsRetrieved,
   ),
-  TypedReducer<ENEMState, AnswerTournamentQuestionAction>(
+  TypedReducer<ENEMState, SetAnswerTournamentQuestionAction>(
       answerTournamentQuestion),
-  TypedReducer<ENEMState, TournamentQuestionsRetrievedAction>(
+  TypedReducer<ENEMState, FetchTournamentQuestionsSuccessAction>(
     tournamentQuestionsRetrieved,
   ),
   TypedReducer<ENEMState, SubmitTournamentGameAction>(
     submitTournament,
   ),
-  TypedReducer<ENEMState, ReviewTournamentGameAction>(
+  TypedReducer<ENEMState, NavigateReviewTournamentAction>(
     reviewTournament,
   ),
-  TypedReducer<ENEMState, TournamentAction>(
+  TypedReducer<ENEMState, NavigateTournamentAction>(
     tournament,
   ),
 ]);
@@ -98,19 +98,19 @@ ENEMState fetchingRanking(ENEMState state, FetchRankingAction action) {
 }
 
 ENEMState fetchingRankingError(
-    ENEMState state, FetchingRankingErrorAction action) {
+    ENEMState state, FetchRankingErrorAction action) {
   return state.copyWith(
       ranking: state.ranking
           .copyWith(isLoading: false, errorMessage: DEFAULT_ERROR_MESSAGE));
 }
 
-ENEMState setProfileData(ENEMState state, RankingRetrievedAction action) {
+ENEMState setProfileData(ENEMState state, FetchRankingSuccessAction action) {
   return state.copyWith(
       ranking: Data(content: action.ranking, isLoading: false));
 }
 
 ENEMState trainingQuestionsRetrieved(
-    ENEMState state, TrainingQuestionsRetrievedAction action) {
+    ENEMState state, FetchTrainingQuestionsSuccessAction action) {
   return state.copyWith(
       trainingQuestions: state.trainingQuestions.copyWith(
     content: state.trainingQuestions.content == null
@@ -121,7 +121,7 @@ ENEMState trainingQuestionsRetrieved(
 }
 
 ENEMState answerTrainingQuestion(
-    ENEMState state, AnswerTrainingQuestionAction action) {
+    ENEMState state, SetAnswerTrainingQuestionAction action) {
   return state.copyWith(
       trainingQuestions: state.trainingQuestions.copyWith(
           content: state.trainingQuestions.content.map((question) {
@@ -141,12 +141,12 @@ ENEMState answerTrainingQuestion(
 }
 
 ENEMState filterTrainingQuestions(
-    ENEMState state, FilterTrainingQuestions action) {
+    ENEMState state, NavigateFilterTrainingQuestions action) {
   return state.copyWith(trainingQuestions: Data(), domain: action.domain);
 }
 
 ENEMState answerTournamentQuestion(
-    ENEMState state, AnswerTournamentQuestionAction action) {
+    ENEMState state, SetAnswerTournamentQuestionAction action) {
   return state.copyWith(
       tournamentQuestions: state.tournamentQuestions.copyWith(
           content: state.tournamentQuestions.content.map((question) {
@@ -166,7 +166,7 @@ ENEMState answerTournamentQuestion(
 }
 
 ENEMState tournamentQuestionsRetrieved(
-    ENEMState state, TournamentQuestionsRetrievedAction action) {
+    ENEMState state, FetchTournamentQuestionsSuccessAction action) {
   return state.copyWith(
     tournamentQuestions: Data(
       content: action.questions,
@@ -182,10 +182,10 @@ ENEMState submitTournament(ENEMState state, SubmitTournamentGameAction action) {
   );
 }
 
-ENEMState tournament(ENEMState state, TournamentAction action) {
+ENEMState tournament(ENEMState state, NavigateTournamentAction action) {
   return state.copyWith(tournamentQuestions: Data());
 }
 
-ENEMState reviewTournament(ENEMState state, ReviewTournamentGameAction action) {
+ENEMState reviewTournament(ENEMState state, NavigateReviewTournamentAction action) {
   return state.copyWith(score: action.score, timeSpent: action.timeSpent);
 }

@@ -18,11 +18,11 @@ class TrainingViewModel {
   factory TrainingViewModel.create(Store<AppState> store) {
     return TrainingViewModel(
       refresh: () {
-        store.dispatch(FilterTrainingQuestions(store.state.enemState.domain));
+        store.dispatch(NavigateFilterTrainingQuestions(store.state.enemState.domain));
       },
       questions: store.state.enemState.trainingQuestions,
       onAnswer: (String questionId, int answer) =>
-          store.dispatch(AnswerTrainingQuestionAction(questionId, answer)),
+          store.dispatch(SetAnswerTrainingQuestionAction(questionId, answer)),
     );
   }
 }

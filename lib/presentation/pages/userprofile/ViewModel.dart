@@ -46,6 +46,6 @@ class UserProfileViewModel {
               "\n\nConfira mais no nosso app!\nhttps://bit.ly/BaixarLiceu");
         },
         onChallengeMePressed: (String userId) =>
-            store.dispatch(ChallengeSomeoneAction(userId)));
+            store.dispatch(NavigateChallengeSomeoneAction(userId)));
   }
 }
