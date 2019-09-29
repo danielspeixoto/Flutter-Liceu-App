@@ -41,9 +41,9 @@ class HomePage extends StatelessWidget {
                   Container(
                     padding: EdgeInsets.all(8),
                     child: Icon(
-                      FontAwesomeIcons.bookOpen,
+                      FontAwesomeIcons.gamepad,
                       color: Colors.black,
-                      size: 18,
+                      size: 20,
                     ),
                   ),
                   Container(
@@ -57,20 +57,11 @@ class HomePage extends StatelessWidget {
                   Container(
                     padding: EdgeInsets.all(8),
                     child: Icon(
-                      FontAwesomeIcons.gamepad,
+                      FontAwesomeIcons.bookOpen,
                       color: Colors.black,
-                      size: 20,
+                      size: 18,
                     ),
                   ),
-
-//                  Container(
-//                    padding: EdgeInsets.all(8),
-//                    child: Icon(
-//                      FontAwesomeIcons.archive,
-//                      color: Colors.black,
-//                      size: 18,
-//                    ),
-//                  ),
                   Container(
                     padding: EdgeInsets.all(8),
                     child: Icon(
@@ -84,10 +75,9 @@ class HomePage extends StatelessWidget {
             ),
             body: TabBarView(
               children: [
-                ExplorePage(),
-                TrophyPage(),
                 GamePage(),
-//                ExplorePage(),
+                TrophyPage(),
+                ExplorePage(),
                 ProfilePage(),
               ],
             ),
