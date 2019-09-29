@@ -16,7 +16,7 @@ List<Middleware<AppState>> notificationMiddleware(
         store.dispatch(NavigateChallengeAction());
         break;
       case "enem_training":
-        store.dispatch(NavigateTrainingAction());
+        store.dispatch(NavigateTrainingQuestionsAction());
         break;
       case "enem_tournament":
         store.dispatch(NavigateTournamentAction());

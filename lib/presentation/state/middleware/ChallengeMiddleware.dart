@@ -38,7 +38,7 @@ List<Middleware<AppState>> challengeMiddleware(
           : null;
       final challengeData =
           ChallengeData(challenge.id, trivias, challenger, challenged);
-      store.dispatch(SetStartChallengeAction(challengeData));
+      store.dispatch(SetChallengeAction(challengeData));
     } catch (e) {
       print(e);
     }
@@ -139,7 +139,7 @@ List<Middleware<AppState>> challengeMiddleware(
     }
   }
 
-  void startChallenge(Store<AppState> store, SetStartChallengeAction action,
+  void startChallenge(Store<AppState> store, SetChallengeAction action,
       NextDispatcher next) async {
     next(action);
     new Future.delayed(const Duration(seconds: 1), () {
@@ -154,6 +154,6 @@ List<Middleware<AppState>> challengeMiddleware(
     TypedMiddleware<AppState, SetNextTriviaAction>(nextTriviaAction),
     TypedMiddleware<AppState, SubmitChallengeAction>(onFinished),
     TypedMiddleware<AppState, SetTriviaTimerDecrementAction>(decrementTime),
-    TypedMiddleware<AppState, SetStartChallengeAction>(startChallenge),
+    TypedMiddleware<AppState, SetChallengeAction>(startChallenge),
   ];
 }

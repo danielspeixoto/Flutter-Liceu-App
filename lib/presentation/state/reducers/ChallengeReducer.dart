@@ -50,7 +50,7 @@ class ChallengeState {
 
 final Reducer<ChallengeState> challengeReducer =
     combineReducers<ChallengeState>([
-  TypedReducer<ChallengeState, SetStartChallengeAction>(startChallenge),
+  TypedReducer<ChallengeState, SetChallengeAction>(startChallenge),
   TypedReducer<ChallengeState, SetNextTriviaAction>(nextTrivia),
   TypedReducer<ChallengeState, NavigateChallengeAction>(resetChallenge),
   TypedReducer<ChallengeState, SetAnswerTriviaAction>(answerTrivia),
@@ -58,7 +58,7 @@ final Reducer<ChallengeState> challengeReducer =
 ]);
 
 ChallengeState startChallenge(
-    ChallengeState state, SetStartChallengeAction action) {
+    ChallengeState state, SetChallengeAction action) {
   return ChallengeState.initial().copyWith(
     challenge: Data(content: action.challenge, isLoading: false),
     timeLeft: TRIVIA_TIME_TO_ANSWER,

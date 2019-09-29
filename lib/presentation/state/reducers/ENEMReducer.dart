@@ -70,7 +70,7 @@ final Reducer<ENEMState> enemReducer = combineReducers<ENEMState>([
   TypedReducer<ENEMState, SetAnswerTrainingQuestionAction>(
     answerTrainingQuestion,
   ),
-  TypedReducer<ENEMState, NavigateFilterTrainingQuestions>(
+  TypedReducer<ENEMState, NavigateTrainingQuestionsFilterAction>(
     filterTrainingQuestions,
   ),
   TypedReducer<ENEMState, FetchTrainingQuestionsSuccessAction>(
@@ -84,7 +84,7 @@ final Reducer<ENEMState> enemReducer = combineReducers<ENEMState>([
   TypedReducer<ENEMState, SubmitTournamentGameAction>(
     submitTournament,
   ),
-  TypedReducer<ENEMState, NavigateReviewTournamentAction>(
+  TypedReducer<ENEMState, NavigateTournamentReviewAction>(
     reviewTournament,
   ),
   TypedReducer<ENEMState, NavigateTournamentAction>(
@@ -141,7 +141,7 @@ ENEMState answerTrainingQuestion(
 }
 
 ENEMState filterTrainingQuestions(
-    ENEMState state, NavigateFilterTrainingQuestions action) {
+    ENEMState state, NavigateTrainingQuestionsFilterAction action) {
   return state.copyWith(trainingQuestions: Data(), domain: action.domain);
 }
 
@@ -186,6 +186,6 @@ ENEMState tournament(ENEMState state, NavigateTournamentAction action) {
   return state.copyWith(tournamentQuestions: Data());
 }
 
-ENEMState reviewTournament(ENEMState state, NavigateReviewTournamentAction action) {
+ENEMState reviewTournament(ENEMState state, NavigateTournamentReviewAction action) {
   return state.copyWith(score: action.score, timeSpent: action.timeSpent);
 }

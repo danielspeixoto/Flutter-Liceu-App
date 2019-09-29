@@ -37,13 +37,13 @@ List<Middleware<AppState>> ENEMMiddleware(
   }
 
   void trainingAction(
-      Store<AppState> store, NavigateTrainingAction action, NextDispatcher next) async {
+      Store<AppState> store, NavigateTrainingQuestionsAction action, NextDispatcher next) async {
     next(action);
     store.dispatch(NavigatePushAction(AppRoutes.trainingFilter));
   }
 
   void trainingFilterAction(Store<AppState> store,
-      NavigateFilterTrainingQuestions action, NextDispatcher next) async {
+      NavigateTrainingQuestionsFilterAction action, NextDispatcher next) async {
     next(action);
     if (store.state.route.last != AppRoutes.training) {
       store.dispatch(NavigatePushAction(AppRoutes.training));
@@ -88,7 +88,7 @@ List<Middleware<AppState>> ENEMMiddleware(
           question.selectedAnswer,
         );
       });
-      store.dispatch(NavigateReviewTournamentAction(score, timeSpent));
+      store.dispatch(NavigateTournamentReviewAction(score, timeSpent));
       await submitGameUseCase.run(answers, timeSpent);
     } catch (e) {
       print(e);
@@ -96,7 +96,7 @@ List<Middleware<AppState>> ENEMMiddleware(
   }
 
   void reviewTournament(Store<AppState> store,
-      NavigateReviewTournamentAction action, NextDispatcher next) {
+      NavigateTournamentReviewAction action, NextDispatcher next) {
     next(action);
     store.dispatch(NavigateReplaceAction(AppRoutes.tournamentReview));
   }
@@ -130,12 +130,12 @@ List<Middleware<AppState>> ENEMMiddleware(
 
   return [
     TypedMiddleware<AppState, FetchRankingAction>(fetchRanking),
-    TypedMiddleware<AppState, NavigateTrainingAction>(trainingAction),
-    TypedMiddleware<AppState, NavigateFilterTrainingQuestions>(trainingFilterAction),
+    TypedMiddleware<AppState, NavigateTrainingQuestionsAction>(trainingAction),
+    TypedMiddleware<AppState, NavigateTrainingQuestionsFilterAction>(trainingFilterAction),
     TypedMiddleware<AppState, SubmitTournamentGameAction>(
       submitTournament,
     ),
-    TypedMiddleware<AppState, NavigateReviewTournamentAction>(
+    TypedMiddleware<AppState, NavigateTournamentReviewAction>(
       reviewTournament,
     ),
     TypedMiddleware<AppState, NavigateTournamentAction>(

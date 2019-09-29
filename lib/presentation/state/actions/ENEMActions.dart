@@ -4,21 +4,21 @@ import 'package:app/presentation/state/aggregates/RankingData.dart';
 import '../../constants.dart';
 
 //Navigates
-class NavigateTrainingAction {}
+class NavigateTrainingQuestionsAction {}
 
 class NavigateTournamentAction {}
 
-class NavigateFilterTrainingQuestions {
+class NavigateTrainingQuestionsFilterAction {
   final QuestionDomain domain;
 
-  NavigateFilterTrainingQuestions(this.domain);
+  NavigateTrainingQuestionsFilterAction(this.domain);
 }
 
-class NavigateReviewTournamentAction {
+class NavigateTournamentReviewAction {
   final int score;
   final int timeSpent;
 
-  NavigateReviewTournamentAction(this.score, this.timeSpent);
+  NavigateTournamentReviewAction(this.score, this.timeSpent);
 }
 
 //Fetches

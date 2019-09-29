@@ -33,7 +33,7 @@ class GameViewModel {
       challenges: store.state.userState.challenges,
       refresh: () => store.dispatch(FetchUserChallengesAction()),
       onChallengePressed: () => store.dispatch(NavigateChallengeAction()),
-      onTrainingPressed: () => store.dispatch(NavigateTrainingAction()),
+      onTrainingPressed: () => store.dispatch(NavigateTrainingQuestionsAction()),
       onTournamentPressed: () => store.dispatch(NavigateTournamentAction()),
       onCreateTriviaPressed: () => store.dispatch(NavigateCreateTriviaAction()),
       onUserPressed: (user) => store.dispatch(NavigateViewFriendAction(user)),

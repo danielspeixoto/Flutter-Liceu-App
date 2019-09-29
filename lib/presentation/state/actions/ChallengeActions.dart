@@ -12,10 +12,10 @@ class NavigateChallengeSomeoneAction {
 }
 
 //Setters
-class SetStartChallengeAction {
+class SetChallengeAction {
   final ChallengeData challenge;
 
-  SetStartChallengeAction(this.challenge);
+  SetChallengeAction(this.challenge);
 }
 
 class SetTriviaTimerDecrementAction {}
