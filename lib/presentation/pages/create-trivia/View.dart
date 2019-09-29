@@ -6,7 +6,6 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:app/presentation/widgets/FetcherWidget.dart';
 import 'package:app/presentation/widgets/LiceuPage.dart';
-import 'package:app/domain/aggregates/Trivia.dart';
 
 class CreateTriviaPage extends StatelessWidget {
   @override

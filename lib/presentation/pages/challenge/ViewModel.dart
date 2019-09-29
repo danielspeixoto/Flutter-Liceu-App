@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:app/domain/aggregates/User.dart';
 import 'package:app/presentation/state/actions/ChallengeActions.dart';
 import 'package:app/presentation/state/app_state.dart';

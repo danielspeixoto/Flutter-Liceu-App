@@ -31,12 +31,12 @@ class GameViewModel {
   factory GameViewModel.create(Store<AppState> store) {
     return GameViewModel(
       challenges: store.state.userState.challenges,
-      refresh: () => store.dispatch(FetchMyChallengesAction()),
-      onChallengePressed: () => store.dispatch(ChallengeAction()),
-      onTrainingPressed: () => store.dispatch(TrainingAction()),
-      onTournamentPressed: () => store.dispatch(TournamentAction()),
+      refresh: () => store.dispatch(FetchUserChallengesAction()),
+      onChallengePressed: () => store.dispatch(NavigateChallengeAction()),
+      onTrainingPressed: () => store.dispatch(NavigateTrainingQuestionsAction()),
+      onTournamentPressed: () => store.dispatch(NavigateTournamentAction()),
       onCreateTriviaPressed: () => store.dispatch(NavigateCreateTriviaAction()),
-      onUserPressed: (user) => store.dispatch(ViewFriendAction(user)),
+      onUserPressed: (user) => store.dispatch(NavigateViewFriendAction(user)),
     );
   }
 }

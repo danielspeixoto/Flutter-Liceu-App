@@ -4,30 +4,47 @@ import 'package:app/presentation/state/aggregates/ChallengeHistoryData.dart';
 
 import '../../constants.dart';
 
-class FetchMyInfoAction {
-  FetchMyInfoAction();
+//Navigates
+class NavigateUserEditProfileAction{}
+
+//Fetches
+class FetchUserAction {}
+
+class FetchUserErrorAction {
+  final String error;
+
+  FetchUserErrorAction({this.error = DEFAULT_ERROR_MESSAGE});
 }
 
-class FetchMyPostsAction {
-  FetchMyPostsAction();
+class FetchUserInfoAction {
+  FetchUserInfoAction();
 }
 
-class FetchMyChallengesAction {
-  FetchMyChallengesAction();
+class FetchUserChallengesAction {
+  FetchUserChallengesAction();
 }
 
+class FetchUserChallengesErrorAction {
+  final String error;
+
+  FetchUserChallengesErrorAction({this.error = DEFAULT_ERROR_MESSAGE});
+}
+
+class FetchUserPostsAction {
+  FetchUserPostsAction();
+}
+
+class FetchUserPostsErrorAction {
+  final String error;
+
+  FetchUserPostsErrorAction({this.error = DEFAULT_ERROR_MESSAGE});
+}
+
+//Setters
 class SetUserAction {
   final User user;
 
   SetUserAction(this.user);
-}
-
-class FetchingUserAction {}
-
-class FetchingUserErrorAction {
-  final String error;
-
-  FetchingUserErrorAction({this.error = DEFAULT_ERROR_MESSAGE});
 }
 
 class SetUserPostsAction {
@@ -36,26 +53,10 @@ class SetUserPostsAction {
   SetUserPostsAction(this.posts);
 }
 
-class FetchingMyPostsAction {}
-
-class FetchingMyPostsErrorAction {
-  final String error;
-
-  FetchingMyPostsErrorAction({this.error = DEFAULT_ERROR_MESSAGE});
-}
-
 class SetUserChallengesAction {
   final List<ChallengeHistoryData> challenges;
 
   SetUserChallengesAction(this.challenges);
-}
-
-class FetchingMyChallengesAction {}
-
-class FetchingMyChallengesErrorAction {
-  final String error;
-
-  FetchingMyChallengesErrorAction({this.error = DEFAULT_ERROR_MESSAGE});
 }
 
 class SetUserEditFieldAction {
@@ -64,6 +65,7 @@ class SetUserEditFieldAction {
 
   SetUserEditFieldAction({this.bio, this.instagram});
 }
+//Submits
 
 class SubmitUserProfileChangesAction {
   final String bio;
@@ -72,9 +74,9 @@ class SubmitUserProfileChangesAction {
   SubmitUserProfileChangesAction({this.bio, this.instagram});
 }
 
-class MyProfileInfoWasChangedAction {
+class SubmitUserProfileChangesSuccessAction {
   final String bio;
   final String instagram;
 
-  MyProfileInfoWasChangedAction(this.bio, this.instagram);
+  SubmitUserProfileChangesSuccessAction(this.bio, this.instagram);
 }

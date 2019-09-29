@@ -17,7 +17,7 @@ class CreatePostViewModel {
     return CreatePostViewModel(
       onPostSubmitted: isLoading ? null : (text) async {
         store.dispatch(
-          CreatePostAction(
+          SubmitPostAction(
             PostType.TEXT,
             text,
           ),

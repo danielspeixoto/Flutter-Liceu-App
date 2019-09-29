@@ -36,8 +36,8 @@ class TriviaState {
 }
 
 final Reducer<TriviaState> triviaReducer = combineReducers<TriviaState>([
-  TypedReducer<TriviaState, CreateTriviaAction>(createTrivia),
-  TypedReducer<TriviaState, TriviaCreatedAction>(triviaCreated),
+  TypedReducer<TriviaState, SubmitTriviaAction>(createTrivia),
+  TypedReducer<TriviaState, SubmitTriviaSuccessAction>(triviaCreated),
   TypedReducer<TriviaState, SetCreateTriviaDomainFieldAction>(setDomainField),
   TypedReducer<TriviaState, SetCreateTriviaQuestionFieldAction>(
       setQuestionField),
@@ -48,7 +48,7 @@ final Reducer<TriviaState> triviaReducer = combineReducers<TriviaState>([
   TypedReducer<TriviaState, NavigateCreateTriviaAction>(navigateTrivia)
 ]);
 
-TriviaState createTrivia(TriviaState state, CreateTriviaAction action) {
+TriviaState createTrivia(TriviaState state, SubmitTriviaAction action) {
   return state.copyWith(
       isCreatingTrivia: true,
       question: "",
@@ -57,7 +57,7 @@ TriviaState createTrivia(TriviaState state, CreateTriviaAction action) {
       domain: null);
 }
 
-TriviaState triviaCreated(TriviaState state, TriviaCreatedAction action) {
+TriviaState triviaCreated(TriviaState state, SubmitTriviaSuccessAction action) {
   return state.copyWith(isCreatingTrivia: false);
 }
 

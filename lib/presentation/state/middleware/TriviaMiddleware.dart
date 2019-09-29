@@ -10,7 +10,7 @@ final analytics = FirebaseAnalytics();
 
 List<Middleware<AppState>> triviaMiddleware(
     ICreateTriviaUseCase createTriviaUseCase) {
-  void createTrivia(Store<AppState> store, CreateTriviaAction action,
+  void createTrivia(Store<AppState> store, SubmitTriviaAction action,
       NextDispatcher next) async {
     next(action);
     try {
@@ -19,7 +19,7 @@ List<Middleware<AppState>> triviaMiddleware(
           action.correctAnswer,
           action.wrongAnswer,
           [action.domain]);
-      store.dispatch(TriviaCreatedAction());
+      store.dispatch(SubmitTriviaSuccessAction());
     } catch (e) {
       print(e);
     }
@@ -34,7 +34,7 @@ List<Middleware<AppState>> triviaMiddleware(
   }
 
   return [
-    TypedMiddleware<AppState, CreateTriviaAction>(createTrivia),
+    TypedMiddleware<AppState, SubmitTriviaAction>(createTrivia),
     TypedMiddleware<AppState, NavigateCreateTriviaAction>(navigateTrivia)
   ];
 }

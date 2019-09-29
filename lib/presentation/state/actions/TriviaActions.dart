@@ -1,16 +1,11 @@
 import 'package:app/domain/aggregates/Trivia.dart';
 
-class CreateTriviaAction {
-  final String question;
-  final String correctAnswer;
-  final String wrongAnswer;
-  final TriviaDomain domain;
-
-  CreateTriviaAction(this.question, this.correctAnswer, this.wrongAnswer, this.domain);
-}
-
+//Navigates
 class NavigateCreateTriviaAction{}
 
+//Fetches
+
+//Setters
 class SetCreateTriviaQuestionFieldAction {
   final String question;
 
@@ -35,4 +30,16 @@ class SetCreateTriviaDomainFieldAction {
   SetCreateTriviaDomainFieldAction(this.domain);
 }
 
-class TriviaCreatedAction {}
+//Submits
+class SubmitTriviaAction {
+  final String question;
+  final String correctAnswer;
+  final String wrongAnswer;
+  final TriviaDomain domain;
+
+  SubmitTriviaAction(this.question, this.correctAnswer, this.wrongAnswer, this.domain);
+}
+
+class SubmitTriviaSuccessAction {}
+
+class SubmitTriviaErrorAction {}
