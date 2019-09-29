@@ -32,6 +32,12 @@ List<Middleware<AppState>> triviaMiddleware(
       store.dispatch(SubmitTriviaSuccessAction());
     } on CreateTriviaTagNullException catch (e) {
       store.dispatch(SubmitTriviaErrorTagNullAction());
+    } on CreateTriviaQuestionBoundaryException catch (e) {
+      store.dispatch(SubmitTriviaErrorQuestionSizeMismatchAction());
+    } on CreateTriviaCorrectAnswerBoundaryException catch (e) {
+      store.dispatch(SubmitTriviaErrorCorrectAnswerSizeMismatchAction());
+    } on CreateTriviaWrongAnswerBoundaryException catch (e) {
+      store.dispatch(SubmitTriviaErrorWrongAnswerSizeMismatchAction());
     } catch (e) {
       print(e);
     }

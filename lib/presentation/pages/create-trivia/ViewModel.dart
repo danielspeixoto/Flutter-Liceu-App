@@ -15,7 +15,10 @@ class CreateTriviaViewModel {
   final String wrongAnswer;
   final String domain;
   final bool isCreatingTrivia;
-  final String createTriviaDomainNullError;
+  final String createTriviaDomainNullErrorMessage;
+  final String createTriviaQuestionErrorMessage;
+  final String createTriviaCorrectAnswerErrorMessage;
+  final String createTriviaWrongAnswerErrorMessage;
 
   CreateTriviaViewModel(
       {this.onCreateTriviaButtonPressed,
@@ -28,7 +31,10 @@ class CreateTriviaViewModel {
       this.wrongAnswer,
       this.domain,
       this.isCreatingTrivia,
-      this.createTriviaDomainNullError});
+      this.createTriviaDomainNullErrorMessage,
+      this.createTriviaQuestionErrorMessage,
+      this.createTriviaCorrectAnswerErrorMessage,
+      this.createTriviaWrongAnswerErrorMessage});
 
   factory CreateTriviaViewModel.create(Store<AppState> store) {
     final triviaState = store.state.triviaState;
@@ -53,7 +59,13 @@ class CreateTriviaViewModel {
         question: triviaState.question,
         correctAnswer: triviaState.correctAnswer,
         wrongAnswer: triviaState.wrongAnswer,
-        createTriviaDomainNullError: triviaState.domainNullError,
+        createTriviaDomainNullErrorMessage: triviaState.domainNullErrorMessage,
+        createTriviaQuestionErrorMessage:
+            triviaState.createTriviaQuestionErrorMessage,
+        createTriviaCorrectAnswerErrorMessage:
+            triviaState.createTriviaCorrectAnswerErrorMessage,
+        createTriviaWrongAnswerErrorMessage:
+            triviaState.createTriviaWrongAnswerErrorMessage,
         onTriviaDomainChanged: (value) {
           TriviaDomain domain;
           if (value == 'Matemática') {

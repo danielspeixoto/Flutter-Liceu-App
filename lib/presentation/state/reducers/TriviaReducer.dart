@@ -8,7 +8,10 @@ class TriviaState {
   final String correctAnswer;
   final String wrongAnswer;
   final TriviaDomain domain;
-  final String domainNullError;
+  final String domainNullErrorMessage;
+  final String createTriviaQuestionErrorMessage;
+  final String createTriviaCorrectAnswerErrorMessage;
+  final String createTriviaWrongAnswerErrorMessage;
 
   TriviaState(
       {this.question = "",
@@ -16,7 +19,10 @@ class TriviaState {
       this.wrongAnswer = "",
       this.domain,
       this.isCreatingTrivia: false,
-      this.domainNullError: " "});
+      this.domainNullErrorMessage: " ",
+      this.createTriviaQuestionErrorMessage: "",
+      this.createTriviaCorrectAnswerErrorMessage: "",
+      this.createTriviaWrongAnswerErrorMessage: ""});
 
   factory TriviaState.initial() => TriviaState();
 
@@ -26,14 +32,26 @@ class TriviaState {
       String wrongAnswer,
       TriviaDomain domain,
       bool isCreatingTrivia,
-      String domainNullError}) {
+      String domainNullErrorMessage,
+      String createTriviaQuestionErrorMessage,
+      String createTriviaCorrectAnswerErrorMessage,
+      String createTriviaWrongAnswerErrorMessage}) {
     final state = TriviaState(
       question: question ?? this.question,
       correctAnswer: correctAnswer ?? this.correctAnswer,
       wrongAnswer: wrongAnswer ?? this.wrongAnswer,
       domain: domain ?? this.domain,
       isCreatingTrivia: isCreatingTrivia ?? this.isCreatingTrivia,
-      domainNullError: domainNullError ?? this.domainNullError
+      domainNullErrorMessage:
+          domainNullErrorMessage ?? this.domainNullErrorMessage,
+      createTriviaQuestionErrorMessage: createTriviaQuestionErrorMessage ??
+          this.createTriviaQuestionErrorMessage,
+      createTriviaCorrectAnswerErrorMessage:
+          createTriviaCorrectAnswerErrorMessage ??
+              this.createTriviaCorrectAnswerErrorMessage,
+      createTriviaWrongAnswerErrorMessage:
+          createTriviaWrongAnswerErrorMessage ??
+              this.createTriviaWrongAnswerErrorMessage,
     );
     return state;
   }
@@ -50,7 +68,14 @@ final Reducer<TriviaState> triviaReducer = combineReducers<TriviaState>([
   TypedReducer<TriviaState, SetCreateTriviaWrongAnswerFieldAction>(
       setWrongAnswerField),
   TypedReducer<TriviaState, NavigateCreateTriviaAction>(navigateTrivia),
-  TypedReducer<TriviaState, SubmitTriviaErrorTagNullAction>(onCreateTriviaErrorTagNull)
+  TypedReducer<TriviaState, SubmitTriviaErrorTagNullAction>(
+      onCreateTriviaErrorTagNull),
+  TypedReducer<TriviaState, SubmitTriviaErrorQuestionSizeMismatchAction>(
+      onCreateTriviaErrorQuestionSizeMismatch),
+  TypedReducer<TriviaState, SubmitTriviaErrorTagNullAction>(
+      onCreateTriviaErrorTagNull),
+  TypedReducer<TriviaState, SubmitTriviaErrorTagNullAction>(
+      onCreateTriviaErrorTagNull)
 ]);
 
 TriviaState createTrivia(TriviaState state, SubmitTriviaAction action) {
@@ -63,15 +88,12 @@ TriviaState createTrivia(TriviaState state, SubmitTriviaAction action) {
 }
 
 TriviaState triviaCreated(TriviaState state, SubmitTriviaSuccessAction action) {
-  return state.copyWith(isCreatingTrivia: false,
-  domain: null);
+  return state.copyWith(isCreatingTrivia: false, domain: null);
 }
 
 TriviaState setDomainField(
     TriviaState state, SetCreateTriviaDomainFieldAction action) {
-  return state.copyWith(
-    domain: action.domain,
-    domainNullError: " ");
+  return state.copyWith(domain: action.domain, domainNullErrorMessage: " ");
 }
 
 TriviaState setQuestionField(
@@ -99,9 +121,33 @@ TriviaState navigateTrivia(
       domain: null);
 }
 
-TriviaState onCreateTriviaErrorTagNull(TriviaState state, SubmitTriviaErrorTagNullAction actions) {
+TriviaState onCreateTriviaErrorTagNull(
+    TriviaState state, SubmitTriviaErrorTagNullAction actions) {
   return state.copyWith(
-    isCreatingTrivia: false,
-    domainNullError: "Você precisa escolher uma tag!"
-  );
+      isCreatingTrivia: false,
+      domainNullErrorMessage: "Você precisa escolher uma tag!");
+}
+
+TriviaState onCreateTriviaErrorQuestionSizeMismatch(
+    TriviaState state, SubmitTriviaErrorQuestionSizeMismatchAction actions) {
+  return state.copyWith(
+      isCreatingTrivia: false,
+      createTriviaQuestionErrorMessage:
+          "A questão precisa conter entre 20 e 300 caracteres.");
+}
+
+TriviaState onCreateTriviaErrorCorrectAnswerSizeMismatch(TriviaState state,
+    SubmitTriviaErrorCorrectAnswerSizeMismatchAction actions) {
+  return state.copyWith(
+      isCreatingTrivia: false,
+      createTriviaCorrectAnswerErrorMessage:
+          "A Reposta Correta precisa conter entre 1 e 200 caracteres.");
+}
+
+TriviaState onCreateTriviaErrorWrongAnswerSizeMismatch(
+    TriviaState state, SubmitTriviaErrorWrongAnswerSizeMismatchAction actions) {
+  return state.copyWith(
+      isCreatingTrivia: false,
+      createTriviaWrongAnswerErrorMessage:
+          "A Reposta Errada precisa conter entre 1 e 200 caracteres.");
 }

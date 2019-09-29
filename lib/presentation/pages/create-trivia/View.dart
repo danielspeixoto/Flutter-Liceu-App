@@ -68,7 +68,7 @@ class CreateTriviaPage extends StatelessWidget {
                           ),
                           Container(
                               child: Text(
-                            viewModel.createTriviaDomainNullError,
+                            viewModel.createTriviaDomainNullErrorMessage,
                             style: TextStyle(color: Colors.redAccent),
                           )),
                           Container(
@@ -97,6 +97,11 @@ class CreateTriviaPage extends StatelessWidget {
                                   ),
                                 ),
                                 Container(
+                                    child: Text(
+                                  viewModel.createTriviaQuestionErrorMessage,
+                                  style: TextStyle(color: Colors.redAccent),
+                                )),
+                                Container(
                                     margin: EdgeInsets.all(8),
                                     child: TextField(
                                       onChanged: (text) {
@@ -114,7 +119,13 @@ class CreateTriviaPage extends StatelessWidget {
                                         hintText: "Resposta certa",
                                       ),
                                       keyboardType: TextInputType.multiline,
-                                    )),
+                                    )
+                                ),
+                                Container(
+                                    child: Text(
+                                  viewModel.createTriviaCorrectAnswerErrorMessage,
+                                  style: TextStyle(color: Colors.redAccent),
+                                )),
                                 Container(
                                   margin: EdgeInsets.all(8),
                                   child: TextField(
@@ -132,6 +143,12 @@ class CreateTriviaPage extends StatelessWidget {
                                     ),
                                     keyboardType: TextInputType.multiline,
                                   ),
+                                ),
+                                Container(
+                                    child: Text(
+                                      viewModel.createTriviaWrongAnswerErrorMessage,
+                                      style: TextStyle(color: Colors.redAccent),
+                                    )
                                 ),
                               ],
                             ),

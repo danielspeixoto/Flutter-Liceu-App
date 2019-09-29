@@ -43,3 +43,9 @@ class SubmitTriviaAction {
 class SubmitTriviaSuccessAction {}
 
 class SubmitTriviaErrorTagNullAction {}
+
+class SubmitTriviaErrorQuestionSizeMismatchAction {}
+
+class SubmitTriviaErrorCorrectAnswerSizeMismatchAction {}
+
+class SubmitTriviaErrorWrongAnswerSizeMismatchAction {}
