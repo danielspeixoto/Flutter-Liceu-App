@@ -11,13 +11,14 @@ import 'package:redux/redux.dart';
 import 'package:redux_logging/redux_logging.dart';
 
 import '../../injection.dart';
-import 'middleware/SentryMiddleware.dart';
 import 'middleware/AnalyticsMiddleware.dart';
 import 'middleware/ChallengeMiddleware.dart';
 import 'middleware/ENEMMiddleware.dart';
 import 'middleware/FriendMiddleware.dart';
 import 'middleware/LoginMiddleware.dart';
+import 'middleware/NotificationMiddleware.dart';
 import 'middleware/PostMiddleware.dart';
+import 'middleware/SentryMiddleware.dart';
 import 'middleware/UserMiddleware.dart';
 import 'navigator/NavigatorMiddleware.dart';
 import 'navigator/NavigatorReducer.dart';
@@ -74,8 +75,7 @@ final Store<AppState> store = Store<AppState>(
   appReducer,
   initialState: AppState.initial(),
   middleware: [
-    new
-    LoggingMiddleware.printer(),
+    new LoggingMiddleware.printer(),
     AnalyticsMiddleware(),
     SentryMiddleware(),
     LoginMiddleware(
@@ -116,6 +116,9 @@ final Store<AppState> store = Store<AppState>(
     ),
     ...triviaMiddleware(
       createTriviaUseCase,
+    ),
+    ...notificationMiddleware(
+      isLoggedInUseCase,
     ),
     ...navigationMiddleware()
   ],
