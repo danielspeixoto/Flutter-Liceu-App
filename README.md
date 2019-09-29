@@ -1,17 +1,21 @@
-# app
+# Documentação do Aplicativo Liceu
 
-A new Flutter project.
+Este documento tem como objetivo descrever as funcionalidades das Actions no Redux, assim como os papéis de cada um dos Reducers e Middlewares presentes na aplicação.
 
-## Getting Started
+- [Redux Actions](#redux-actions)
 
-This project is a starting point for a Flutter application.
+## Redux Actions
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
-# Flutter-Liceu-App
+  - ### _Navigate_
+  
+  - ### _Delete_
+  
+  - ### _Fetch_
+  
+  - ### _Interactions_
+  
+  - ### _Set_
+  
+  - ### _Submit_
+  
+  
