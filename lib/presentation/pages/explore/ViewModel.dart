@@ -44,7 +44,7 @@ class ExploreViewModel {
         Share.share(summarize(text, 300) +
             "\n\nConfira mais no nosso app!\nhttps://bit.ly/BaixarLiceu");
       },
-      onUserPressed: (user) => store.dispatch(ViewFriendAction(user)),
+      onUserPressed: (user) => store.dispatch(NavigateViewFriendAction(user)),
     );
   }
 }

@@ -36,7 +36,7 @@ class GameViewModel {
       onTrainingPressed: () => store.dispatch(NavigateTrainingAction()),
       onTournamentPressed: () => store.dispatch(NavigateTournamentAction()),
       onCreateTriviaPressed: () => store.dispatch(NavigateCreateTriviaAction()),
-      onUserPressed: (user) => store.dispatch(ViewFriendAction(user)),
+      onUserPressed: (user) => store.dispatch(NavigateViewFriendAction(user)),
     );
   }
 }
