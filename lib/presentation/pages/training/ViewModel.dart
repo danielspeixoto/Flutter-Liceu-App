@@ -22,7 +22,7 @@ class TrainingViewModel {
       },
       questions: store.state.enemState.trainingQuestions,
       onAnswer: (String questionId, int answer) =>
-          store.dispatch(SetAnswerTrainingQuestionAction(questionId, answer)),
+          store.dispatch(AnswerTrainingQuestionAction(questionId, answer)),
     );
   }
 }

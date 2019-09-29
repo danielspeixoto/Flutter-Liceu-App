@@ -70,7 +70,7 @@ List<Middleware<AppState>> challengeMiddleware(
     }
   }
 
-  void onAnswer(Store<AppState> store, SetAnswerTriviaAction action,
+  void onAnswer(Store<AppState> store, AnswerTriviaAction action,
       NextDispatcher next) async {
     next(action);
     final challengeState = store.state.challengeState;
@@ -82,7 +82,7 @@ List<Middleware<AppState>> challengeMiddleware(
         });
       } else {
         new Future.delayed(const Duration(seconds: 2), () {
-          store.dispatch(SetNextTriviaAction());
+          store.dispatch(NextTriviaAction());
         });
       }
     } catch (e) {
@@ -90,7 +90,7 @@ List<Middleware<AppState>> challengeMiddleware(
     }
   }
 
-  void nextTriviaAction(Store<AppState> store, SetNextTriviaAction action,
+  void nextTriviaAction(Store<AppState> store, NextTriviaAction action,
       NextDispatcher next) async {
     next(action);
     new Future.delayed(const Duration(seconds: 1), () {
@@ -129,7 +129,7 @@ List<Middleware<AppState>> challengeMiddleware(
     final challengeState = store.state.challengeState;
     if (challengeState.isTimerRunning) {
       if (challengeState.timeLeft == 0) {
-        store.dispatch(SetAnswerTriviaAction(""));
+        store.dispatch(AnswerTriviaAction(""));
       } else {
         next(action);
         new Future.delayed(const Duration(seconds: 1), () {
@@ -150,8 +150,8 @@ List<Middleware<AppState>> challengeMiddleware(
   return [
     TypedMiddleware<AppState, NavigateChallengeAction>(getRandomChallenge),
     TypedMiddleware<AppState, NavigateChallengeSomeoneAction>(challengeSomeone),
-    TypedMiddleware<AppState, SetAnswerTriviaAction>(onAnswer),
-    TypedMiddleware<AppState, SetNextTriviaAction>(nextTriviaAction),
+    TypedMiddleware<AppState, AnswerTriviaAction>(onAnswer),
+    TypedMiddleware<AppState, NextTriviaAction>(nextTriviaAction),
     TypedMiddleware<AppState, SubmitChallengeAction>(onFinished),
     TypedMiddleware<AppState, SetTriviaTimerDecrementAction>(decrementTime),
     TypedMiddleware<AppState, SetChallengeAction>(startChallenge),

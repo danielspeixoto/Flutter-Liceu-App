@@ -20,13 +20,15 @@ class SetChallengeAction {
 
 class SetTriviaTimerDecrementAction {}
 
-class SetAnswerTriviaAction {
-  final String answer;
-
-  SetAnswerTriviaAction(this.answer);
-}
-
-class SetNextTriviaAction {}
 
 //Submits
 class SubmitChallengeAction {}
+
+//Interactions
+class AnswerTriviaAction {
+  final String answer;
+
+  AnswerTriviaAction(this.answer);
+}
+
+class NextTriviaAction {}

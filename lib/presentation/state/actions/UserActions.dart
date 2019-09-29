@@ -24,8 +24,6 @@ class FetchUserChallengesAction {
   FetchUserChallengesAction();
 }
 
-class FetchUserChallengesLoadingAction {}
-
 class FetchUserChallengesErrorAction {
   final String error;
 
@@ -35,8 +33,6 @@ class FetchUserChallengesErrorAction {
 class FetchUserPostsAction {
   FetchUserPostsAction();
 }
-
-class FetchUserPostsLoadingAction {}
 
 class FetchUserPostsErrorAction {
   final String error;

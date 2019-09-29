@@ -51,21 +51,22 @@ class FetchTournamentQuestionsSuccessAction {
 }
 
 //Setters
-class SetAnswerTrainingQuestionAction {
-  final String questionId;
-  final int answer;
 
-  SetAnswerTrainingQuestionAction(this.questionId, this.answer);
-}
-
-class SetAnswerTournamentQuestionAction {
-  final String questionId;
-  final int answer;
-
-  SetAnswerTournamentQuestionAction(this.questionId, this.answer);
-}
 
 //Submits
 class SubmitTournamentGameAction {}
 
+//Interactions
+class AnswerTrainingQuestionAction {
+  final String questionId;
+  final int answer;
 
+  AnswerTrainingQuestionAction(this.questionId, this.answer);
+}
+
+class AnswerTournamentQuestionAction {
+  final String questionId;
+  final int answer;
+
+  AnswerTournamentQuestionAction(this.questionId, this.answer);
+}

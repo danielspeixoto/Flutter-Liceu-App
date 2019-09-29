@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:app/domain/aggregates/User.dart';
 import 'package:app/presentation/state/actions/ChallengeActions.dart';
 import 'package:app/presentation/state/app_state.dart';
@@ -45,7 +43,7 @@ class ChallengeViewModel {
       answer2: store.state.challengeState.randomNum == 0 ? trivia.wrongAnswer : trivia.correctAnswer,
       author: trivia.author,
       isLoading: challenge.isLoading,
-      onAnswer: (String answer) => store.dispatch(SetAnswerTriviaAction(answer)),
+      onAnswer: (String answer) => store.dispatch(AnswerTriviaAction(answer)),
       timeLeft: store.state.challengeState.timeLeft,
       showAnswer: !store.state.challengeState.isTimerRunning,
       correctAnswer: store.state.challengeState.randomNum,
