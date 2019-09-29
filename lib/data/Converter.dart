@@ -83,8 +83,6 @@ Post fromMapToPost(data) {
     data["userId"],
     data["type"],
     data["description"],
-//    TODO: Convert string representation do DateTime
-//    data["submissionDate"]
   );
 }
 

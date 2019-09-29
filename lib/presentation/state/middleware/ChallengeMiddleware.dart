@@ -44,7 +44,6 @@ List<Middleware<AppState>> challengeMiddleware(
     try {
       store.dispatch(NavigatePushAction(AppRoutes.challenge));
 
-      //TODO criar FetchChallengeAction
       final challenge = await getChallengeUseCase.run();
       dispatchChallenge(store, challenge, next);
     } catch (e) {
@@ -58,7 +57,6 @@ List<Middleware<AppState>> challengeMiddleware(
     try {
       store.dispatch(NavigatePushAction(AppRoutes.challenge));
 
-      //TODO criar FetchChallengeSomeoneAction
       final challenge = await challengeSomeoneUseCase.run(action.challengedId);
       dispatchChallenge(store, challenge, next);
     } catch (e) {

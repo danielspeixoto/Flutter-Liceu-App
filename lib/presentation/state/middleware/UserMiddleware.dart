@@ -93,6 +93,8 @@ class UserMiddleware extends MiddlewareClass<AppState> {
       }
     } else if (action is SetUserAction) {
       analytics.setUserProperty(name: "name", value: action.user.name);
+    } else if(action is NavigateUserEditProfileAction) {
+      store.dispatch(NavigatePushAction(AppRoutes.editProfile));
     }
     next(action);
   }

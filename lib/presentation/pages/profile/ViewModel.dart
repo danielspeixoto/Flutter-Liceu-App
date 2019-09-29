@@ -45,8 +45,7 @@ class ProfileViewModel {
         store.dispatch(FetchUserPostsAction());
       },
       onEditProfileButtonPressed: () {
-        //TODO criar uma action para isso
-        store.dispatch(NavigatePushAction(AppRoutes.editProfile));
+        store.dispatch(NavigateUserEditProfileAction());
       },
       onLogoutPressed: () {
         store.dispatch(LogOutAction());

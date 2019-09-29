@@ -5,6 +5,7 @@ import 'package:app/presentation/state/aggregates/ChallengeHistoryData.dart';
 import '../../constants.dart';
 
 //Navigates
+class NavigateUserEditProfileAction{}
 
 //Fetches
 class FetchUserAction {}
