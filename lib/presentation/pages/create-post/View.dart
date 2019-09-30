@@ -39,14 +39,8 @@ class CreatePostPage extends StatelessWidget {
                           margin: EdgeInsets.all(8),
                           child: Theme(
                               data: new ThemeData(
-<<<<<<< HEAD
                                   primaryColor: Colors.black54,
                                   hintColor: Colors.black45),
-=======
-                                  primaryColor: Colors.red,
-                                  accentColor: Colors.orange,
-                                  hintColor: Colors.green),
->>>>>>> 1b59a43ed6740c85fa007da1105dc04b359210fb
                               child: TextField(
                                 controller: inputController,
                                 decoration: InputDecoration(
