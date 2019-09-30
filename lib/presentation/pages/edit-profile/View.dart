@@ -48,44 +48,52 @@ class EditProfilePage extends StatelessWidget {
                     margin: EdgeInsets.all(8),
                     child: Column(
                       children: [
-                        TextField(
-                          controller: bioTextController,
-                          onChanged: (text) {
-                            viewModel.onBioTextChanged(text);
-                          },
-                          decoration: InputDecoration(
-                            prefixIcon: Icon(FontAwesomeIcons.user),
-                            border: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                width: 0.1,
+                        Theme(
+                            data: new ThemeData(
+                                primaryColor: Colors.black54,
+                                hintColor: Colors.black45),
+                            child: TextField(
+                              controller: bioTextController,
+                              onChanged: (text) {
+                                viewModel.onBioTextChanged(text);
+                              },
+                              decoration: InputDecoration(
+                                prefixIcon: Icon(FontAwesomeIcons.user),
+                                border: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    width: 0.1,
+                                  ),
+                                ),
+                                hintText: "Fale sobre você",
                               ),
-                            ),
-                            hintText: "Fale sobre você",
-                          ),
-                          minLines: null,
-                          maxLines: 5,
-                          keyboardType: TextInputType.multiline,
-                        ),
+                              minLines: null,
+                              maxLines: 5,
+                              keyboardType: TextInputType.multiline,
+                            )),
                         Container(
                           margin: EdgeInsets.all(4),
                           child: Text(viewModel.bio.length.toString() + "/300"),
                         ),
-                        TextField(
-                          controller: instagramTextController,
-                          onChanged: (text) {
-                            viewModel.onInstagramTextChanged(text);
-                          },
-                          decoration: InputDecoration(
-                            prefixIcon: Icon(FontAwesomeIcons.instagram),
-                            border: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                width: 0.1,
+                        Theme(
+                            data: new ThemeData(
+                                primaryColor: Colors.black54,
+                                hintColor: Colors.black45),
+                            child: TextField(
+                              controller: instagramTextController,
+                              onChanged: (text) {
+                                viewModel.onInstagramTextChanged(text);
+                              },
+                              decoration: InputDecoration(
+                                prefixIcon: Icon(FontAwesomeIcons.instagram),
+                                border: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    width: 0.1,
+                                  ),
+                                ),
+                                hintText: "seu.instagram",
                               ),
-                            ),
-                            hintText: "seu.instagram",
-                          ),
-                          keyboardType: TextInputType.multiline,
-                        ),
+                              keyboardType: TextInputType.multiline,
+                            )),
                       ],
                     ),
                   ),
