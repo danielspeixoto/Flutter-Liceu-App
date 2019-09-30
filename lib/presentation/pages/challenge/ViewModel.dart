@@ -16,19 +16,18 @@ class ChallengeViewModel {
   final User challenger;
   final User challenged;
 
-  ChallengeViewModel({
-    this.question,
-    this.answer1,
-    this.answer2,
-    this.author,
-    this.onAnswer,
-    this.isLoading,
-    this.timeLeft,
-    this.showAnswer,
-    this.correctAnswer,
-    this.challenger,
-    this.challenged
-  });
+  ChallengeViewModel(
+      {this.question,
+      this.answer1,
+      this.answer2,
+      this.author,
+      this.onAnswer,
+      this.isLoading,
+      this.timeLeft,
+      this.showAnswer,
+      this.correctAnswer,
+      this.challenger,
+      this.challenged});
 
   factory ChallengeViewModel.create(Store<AppState> store) {
     final challenge = store.state.challengeState.challenge;
@@ -36,19 +35,27 @@ class ChallengeViewModel {
     if (content == null) {
       return ChallengeViewModel(isLoading: challenge.isLoading);
     }
-    final trivia = content.questions[store.state.challengeState.currentQuestion];
+    final trivia =
+        content.questions[store.state.challengeState.currentQuestion];
     return ChallengeViewModel(
-      question: trivia.question,
-      answer1: store.state.challengeState.randomNum == 0 ? trivia.correctAnswer : trivia.wrongAnswer,
-      answer2: store.state.challengeState.randomNum == 0 ? trivia.wrongAnswer : trivia.correctAnswer,
-      author: trivia.author,
-      isLoading: challenge.isLoading,
-      onAnswer: (String answer) => store.dispatch(AnswerTriviaAction(answer)),
-      timeLeft: store.state.challengeState.timeLeft,
-      showAnswer: !store.state.challengeState.isTimerRunning,
-      correctAnswer: store.state.challengeState.randomNum,
-      challenger: content.challenger,
-      challenged: content.challenged
-    );
+        question: trivia.question,
+        answer1: store.state.challengeState.randomNum == 0
+            ? trivia.correctAnswer
+            : trivia.wrongAnswer,
+        answer2: store.state.challengeState.randomNum == 0
+            ? trivia.wrongAnswer
+            : trivia.correctAnswer,
+        author: trivia.author,
+        isLoading: challenge.isLoading,
+        onAnswer: (String answer) {
+          if (store.state.challengeState.canAnswer) {
+            store.dispatch(AnswerTriviaAction(answer));
+          }
+        },
+        timeLeft: store.state.challengeState.timeLeft,
+        showAnswer: !store.state.challengeState.canAnswer,
+        correctAnswer: store.state.challengeState.randomNum,
+        challenger: content.challenger,
+        challenged: content.challenged);
   }
 }

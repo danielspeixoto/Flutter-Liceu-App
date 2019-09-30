@@ -148,7 +148,7 @@ List<Middleware<AppState>> challengeMiddleware(
   void decrementTime(Store<AppState> store,
       SetTriviaTimerDecrementAction action, NextDispatcher next) async {
     final challengeState = store.state.challengeState;
-    if (challengeState.isTimerRunning) {
+    if (challengeState.canAnswer) {
       if (challengeState.timeLeft == 0) {
         store.dispatch(AnswerTriviaAction(""));
       } else {
