@@ -49,8 +49,6 @@ class CreateTriviaPage extends StatelessWidget {
                                   color: Colors.deepPurpleAccent,
                                 ),
                                 onChanged: (String value) {
-                                  
-                                  
                                   viewModel.onTriviaDomainChanged(value);
                                 },
                                 items: <String>[
@@ -74,61 +72,76 @@ class CreateTriviaPage extends StatelessWidget {
                               children: [
                                 Container(
                                   margin: EdgeInsets.all(8),
-                                  child: TextField(
-                                    onChanged: (text) {
-                                      viewModel.onQuestionTextChanged(text);
-                                    },
-                                    decoration: InputDecoration(
-                                      prefixIcon:
-                                          Icon(FontAwesomeIcons.question),
-                                      border: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                          width: 0.1,
+                                  child: Theme(
+                                      data: new ThemeData(
+                                          primaryColor: Colors.black54,
+                                          hintColor: Colors.black45),
+                                      child: TextField(
+                                        onChanged: (text) {
+                                          viewModel.onQuestionTextChanged(text);
+                                        },
+                                        decoration: InputDecoration(
+                                          prefixIcon:
+                                              Icon(FontAwesomeIcons.question),
+                                          border: OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                              width: 0.1,
+                                            ),
+                                          ),
+                                          hintText: "Pergunta",
                                         ),
-                                      ),
-                                      hintText: "Pergunta",
-                                    ),
-                                    minLines: null,
-                                    maxLines: 3,
-                                    keyboardType: TextInputType.multiline,
-                                  ),
+                                        minLines: null,
+                                        maxLines: 3,
+                                        keyboardType: TextInputType.multiline,
+                                      )),
                                 ),
                                 Container(
                                     margin: EdgeInsets.all(8),
-                                    child: TextField(
-                                      onChanged: (text) {
-                                        viewModel
-                                            .onCorrectAnswerTextChanged(text);
-                                      },
-                                      decoration: InputDecoration(
-                                        prefixIcon:
-                                            Icon(FontAwesomeIcons.check),
-                                        border: OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                            width: 0.1,
+                                    child: Theme(
+                                        data: new ThemeData(
+                                            primaryColor: Colors.green[400],
+                                            hintColor: Colors.black45),
+                                        child: TextField(
+                                          onChanged: (text) {
+                                            viewModel
+                                                .onCorrectAnswerTextChanged(
+                                                    text);
+                                          },
+                                          decoration: InputDecoration(
+                                            prefixIcon:
+                                                Icon(FontAwesomeIcons.check),
+                                            border: OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                width: 0.1,
+                                              ),
+                                            ),
+                                            hintText: "Resposta certa",
                                           ),
-                                        ),
-                                        hintText: "Resposta certa",
-                                      ),
-                                      keyboardType: TextInputType.multiline,
-                                    )),
+                                          keyboardType: TextInputType.multiline,
+                                        ))),
                                 Container(
                                   margin: EdgeInsets.all(8),
-                                  child: TextField(
-                                    onChanged: (text) {
-                                      viewModel.onWrongAnswerTextChanged(text);
-                                    },
-                                    decoration: InputDecoration(
-                                      prefixIcon: Icon(FontAwesomeIcons.times),
-                                      border: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                          width: 0.1,
+                                  child: Theme(
+                                      data: new ThemeData(
+                                          primaryColor: Colors.red[400],
+                                          hintColor: Colors.black45),
+                                      child: TextField(
+                                        onChanged: (text) {
+                                          viewModel
+                                              .onWrongAnswerTextChanged(text);
+                                        },
+                                        decoration: InputDecoration(
+                                          prefixIcon:
+                                              Icon(FontAwesomeIcons.times),
+                                          border: OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                              width: 0.1,
+                                            ),
+                                          ),
+                                          hintText: "Resposta errada",
                                         ),
-                                      ),
-                                      hintText: "Resposta errada",
-                                    ),
-                                    keyboardType: TextInputType.multiline,
-                                  ),
+                                        keyboardType: TextInputType.multiline,
+                                      )),
                                 ),
                               ],
                             ),
