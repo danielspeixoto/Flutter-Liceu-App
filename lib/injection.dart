@@ -6,6 +6,7 @@ import 'package:app/domain/usecase/user/LogOutUseCase.dart';
 import 'package:app/domain/usecase/user/LoginUseCase.dart';
 import 'package:app/domain/usecase/user/MyInfoUseCase.dart';
 import 'package:http/http.dart' as http;
+
 import 'data/ChallengeRepository.dart';
 import 'data/ENEMGameRepository.dart';
 import 'data/ExploreRepository.dart';
@@ -16,6 +17,7 @@ import 'data/QuestionRepository.dart';
 import 'data/RankingRepository.dart';
 import 'data/UserRepository.dart';
 import 'domain/usecase/challenge/ChallengeSomeoneUseCase.dart';
+import 'domain/usecase/challenge/GetChallengeByIdUseCase.dart';
 import 'domain/usecase/challenge/SubmitChallengeAnswers.dart';
 import 'domain/usecase/enem/GetENEMVideosUseCase.dart';
 import 'domain/usecase/enem/GetQuestionsUseCase.dart';
@@ -32,23 +34,24 @@ import 'domain/usecase/user/SetUserDescriptionUseCase.dart';
 import 'domain/usecase/user/SetUserInstagramUseCase.dart';
 
 bool get isDev {
-    bool isDev = false;
+  bool isDev = false;
 
-    assert(isDev = true);
+  assert(isDev = true);
 
-    return isDev;
+  return isDev;
 }
 
- class FeaturesReady {
+class FeaturesReady {
   static final viewFriend = true;
   static final createTrivia = true;
 }
 
-
-final baseURL =  isDev ? "https://liceu-staging.herokuapp.com/v2"
+final baseURL = isDev
+    ? "https://liceu-staging.herokuapp.com/v2"
     : "https://protected-river-16209.herokuapp.com/v2";
 
-final apiKey = isDev ? "2VsYHwfQKtjiAdLs8Z2fTLwuLpofSXWy"
+final apiKey = isDev
+    ? "2VsYHwfQKtjiAdLs8Z2fTLwuLpofSXWy"
     : "8y/B?E(H+MbQeThWmYq3t6w9z\$C&F)J@";
 
 final enviroment = isDev ? "development" : "production";
@@ -89,6 +92,8 @@ final challengeSomeoneUseCase =
     ChallengeSomeoneUseCase(localRepository, challengeRepository);
 final getChallengeUseCase =
     GetChallengeUseCase(localRepository, challengeRepository);
+final getChallengeByIdUseCase =
+    GetChallengeByIdUseCase(localRepository, challengeRepository);
 final submitChallengeAnswersUseCase =
     SubmitChallengeAnswersUseCase(localRepository, challengeRepository);
 final getExplorePostsUseCase =
@@ -99,5 +104,5 @@ final getENEMQuestionsVideosUseCase =
     GetENEMQuestionsVideosUseCase(localRepository, questionRepository);
 final submitENEMGamesUseCase =
     SubmitGameUseCase(localRepository, gameRepository);
-final createTriviaUseCase = 
+final createTriviaUseCase =
     CreateTriviaUseCase(localRepository, triviaRepository);
