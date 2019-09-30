@@ -83,13 +83,13 @@ final Store<AppState> store = Store<AppState>(
       loginUseCase,
       isLoggedInUseCase,
     ),
-    UserMiddleware(
+    ...userMiddleware(
       myInfoUseCase,
       myPostsUseCase,
-      setUserDescriptionUseCase,
-      setUserInstagramUseCase,
       myChallengesUseCase,
       getUserByIdUseCase,
+      setUserDescriptionUseCase,
+      setUserInstagramUseCase,
     ),
     ...postMiddleware(
       createPostUseCase,
