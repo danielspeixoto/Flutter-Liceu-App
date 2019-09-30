@@ -1,3 +1,3 @@
-class SizeBoundaryException {
-  
-}
+class SizeBoundaryException {}
+
+class NullException {}

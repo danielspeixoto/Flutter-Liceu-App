@@ -1,3 +1,5 @@
+import 'package:app/domain/aggregates/Trivia.dart';
+import 'package:app/domain/aggregates/exceptions/CreateTriviaExceptions.dart';
 import 'package:app/domain/boundary/TriviaBoundary.dart';
 import 'package:app/presentation/app.dart';
 import 'package:app/presentation/state/actions/TriviaActions.dart';
@@ -10,16 +12,40 @@ final analytics = FirebaseAnalytics();
 
 List<Middleware<AppState>> triviaMiddleware(
     ICreateTriviaUseCase createTriviaUseCase) {
+
   void createTrivia(Store<AppState> store, SubmitTriviaAction action,
       NextDispatcher next) async {
     next(action);
     try {
+      List<TriviaDomain> listDomain;
+
+      if(action.domain == null){
+        listDomain = [];
+      } else {
+        listDomain = [action.domain];
+      }
       await createTriviaUseCase.run(
           action.question,
           action.correctAnswer,
           action.wrongAnswer,
-          [action.domain]);
+          listDomain);
       store.dispatch(SubmitTriviaSuccessAction());
+    } on DomainException catch (e) {
+      store.dispatch(SubmitTriviaErrorTagNullAction(action.question,
+          action.correctAnswer,
+          action.wrongAnswer));
+    } on QuestionException catch (e) {
+      store.dispatch(SubmitTriviaErrorQuestionSizeMismatchAction(action.question,
+          action.correctAnswer,
+          action.wrongAnswer,));
+    } on CorrectAnswerException catch (e) {
+      store.dispatch(SubmitTriviaErrorCorrectAnswerSizeMismatchAction(action.question,
+          action.correctAnswer,
+          action.wrongAnswer,));
+    } on WrongAnswerException catch (e) {
+      store.dispatch(SubmitTriviaErrorWrongAnswerSizeMismatchAction(action.question,
+          action.correctAnswer,
+          action.wrongAnswer,));
     } catch (e) {
       print(e);
     }
