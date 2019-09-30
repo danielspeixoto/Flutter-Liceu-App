@@ -36,7 +36,7 @@ class CreateTriviaPage extends StatelessWidget {
                           Row(
                             children: <Widget>[
                               Container(
-                                  child: Text('Escolha uma tag: '),
+                                  child: Text('Selecione uma tag: '),
                                   margin: EdgeInsets.all(4)),
                               DropdownButton<String>(
                                 value: viewModel.domain,
@@ -49,8 +49,6 @@ class CreateTriviaPage extends StatelessWidget {
                                   color: Colors.deepPurpleAccent,
                                 ),
                                 onChanged: (String value) {
-                                  
-                                  
                                   viewModel.onTriviaDomainChanged(value);
                                 },
                                 items: <String>[
@@ -68,6 +66,11 @@ class CreateTriviaPage extends StatelessWidget {
                               ),
                             ],
                           ),
+                          Container(
+                              child: Text(
+                            viewModel.createTriviaDomainNullErrorMessage,
+                            style: TextStyle(color: Colors.redAccent),
+                          )),
                           Container(
                             margin: EdgeInsets.all(8),
                             child: Column(
@@ -93,6 +96,22 @@ class CreateTriviaPage extends StatelessWidget {
                                     keyboardType: TextInputType.multiline,
                                   ),
                                 ),
+                                viewModel.question != null
+                                    ? Container(
+                                        margin: EdgeInsets.all(4),
+                                        child: Text(viewModel.question.length
+                                                .toString() +
+                                            "/200"),
+                                      )
+                                    : Container(
+                                        margin: EdgeInsets.all(4),
+                                        child: Text("0/200"),
+                                      ),
+                                Container(
+                                    child: Text(
+                                  viewModel.createTriviaQuestionErrorMessage,
+                                  style: TextStyle(color: Colors.redAccent),
+                                )),
                                 Container(
                                     margin: EdgeInsets.all(8),
                                     child: TextField(
@@ -112,6 +131,24 @@ class CreateTriviaPage extends StatelessWidget {
                                       ),
                                       keyboardType: TextInputType.multiline,
                                     )),
+                                viewModel.correctAnswer != null
+                                    ? Container(
+                                        margin: EdgeInsets.all(4),
+                                        child: Text(viewModel
+                                                .correctAnswer.length
+                                                .toString() +
+                                            "/200"),
+                                      )
+                                    : Container(
+                                        margin: EdgeInsets.all(4),
+                                        child: Text("0/200"),
+                                      ),
+                                Container(
+                                    child: Text(
+                                  viewModel
+                                      .createTriviaCorrectAnswerErrorMessage,
+                                  style: TextStyle(color: Colors.redAccent),
+                                )),
                                 Container(
                                   margin: EdgeInsets.all(8),
                                   child: TextField(
@@ -130,6 +167,22 @@ class CreateTriviaPage extends StatelessWidget {
                                     keyboardType: TextInputType.multiline,
                                   ),
                                 ),
+                                viewModel.wrongAnswer != null
+                                    ? Container(
+                                        margin: EdgeInsets.all(4),
+                                        child: Text(viewModel.wrongAnswer.length
+                                                .toString() +
+                                            "/200"),
+                                      )
+                                    : Container(
+                                        margin: EdgeInsets.all(4),
+                                        child: Text("0/200"),
+                                      ),
+                                Container(
+                                    child: Text(
+                                  viewModel.createTriviaWrongAnswerErrorMessage,
+                                  style: TextStyle(color: Colors.redAccent),
+                                )),
                               ],
                             ),
                           ),

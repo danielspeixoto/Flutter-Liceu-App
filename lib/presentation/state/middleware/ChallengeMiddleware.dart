@@ -8,7 +8,6 @@ import 'package:app/presentation/state/aggregates/TriviaData.dart';
 import 'package:app/presentation/state/navigator/NavigatorActions.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:redux/redux.dart';
-
 import '../../app.dart';
 import '../app_state.dart';
 
