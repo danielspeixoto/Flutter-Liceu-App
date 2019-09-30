@@ -88,33 +88,37 @@ TriviaState createTrivia(TriviaState state, SubmitTriviaAction action) {
 }
 
 TriviaState triviaCreated(TriviaState state, SubmitTriviaSuccessAction action) {
-  return state.copyWith(isCreatingTrivia: false, 
-  domain: null,
-  domainNullErrorMessage: "",
-  createTriviaQuestionErrorMessage: "",
-  createTriviaCorrectAnswerErrorMessage: "",
-  createTriviaWrongAnswerErrorMessage: ""
-  );
+  return state.copyWith(
+      isCreatingTrivia: false,
+      domain: null,
+      domainNullErrorMessage: "",
+      createTriviaQuestionErrorMessage: "",
+      createTriviaCorrectAnswerErrorMessage: "",
+      createTriviaWrongAnswerErrorMessage: "");
 }
 
 TriviaState setDomainField(
     TriviaState state, SetCreateTriviaDomainFieldAction action) {
-  return state.copyWith(domain: action.domain, domainNullErrorMessage: " ");
+  return state.copyWith(domain: action.domain, domainNullErrorMessage: "");
 }
 
 TriviaState setQuestionField(
     TriviaState state, SetCreateTriviaQuestionFieldAction action) {
-  return state.copyWith(question: action.question);
+  return state.copyWith(
+      question: action.question, createTriviaQuestionErrorMessage: "");
 }
 
 TriviaState setCorrectAnswerField(
     TriviaState state, SetCreateTriviaCorrectAnswerFieldAction action) {
-  return state.copyWith(correctAnswer: action.correctAnswer);
+  return state.copyWith(
+      correctAnswer: action.correctAnswer,
+      createTriviaCorrectAnswerErrorMessage: "");
 }
 
 TriviaState setWrongAnswerField(
     TriviaState state, SetCreateTriviaWrongAnswerFieldAction action) {
-  return state.copyWith(wrongAnswer: action.wrongAnswer);
+  return state.copyWith(
+      wrongAnswer: action.wrongAnswer, createTriviaWrongAnswerErrorMessage: "");
 }
 
 TriviaState navigateTrivia(
@@ -124,7 +128,11 @@ TriviaState navigateTrivia(
       question: "",
       correctAnswer: "",
       wrongAnswer: "",
-      domain: null);
+      domain: null,
+      domainNullErrorMessage: "",
+      createTriviaQuestionErrorMessage: "",
+      createTriviaCorrectAnswerErrorMessage: "",
+      createTriviaWrongAnswerErrorMessage: "");
 }
 
 TriviaState onCreateTriviaErrorTagNull(

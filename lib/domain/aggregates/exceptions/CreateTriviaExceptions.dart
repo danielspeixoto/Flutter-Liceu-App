@@ -1,7 +1,9 @@
-class CreateTriviaTagNullException {}
+import 'package:app/domain/aggregates/exceptions/Exceptions.dart';
 
-class CreateTriviaQuestionBoundaryException{}
+class DomainException implements NullException {}
 
-class CreateTriviaCorrectAnswerBoundaryException{}
+class QuestionException implements SizeBoundaryException {}
 
-class CreateTriviaWrongAnswerBoundaryException{}
+class CorrectAnswerException implements SizeBoundaryException {}
+
+class WrongAnswerException implements SizeBoundaryException {}

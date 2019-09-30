@@ -13,7 +13,7 @@ class CreatePostUseCase implements ICreatePostUseCase {
   Future<void> run(PostType type, String text) async {
  
     if(text.length < 100 || text.length > 2000){
-      throw CreatePostSizeBoundaryException();
+      throw CreatePostException();
     }
     final accessToken = await this._localRepository.getCredentials();
     await this._postRepository.create(accessToken, type, text);

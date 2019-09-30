@@ -14,13 +14,13 @@ class CreateTriviaUseCase implements ICreateTriviaUseCase {
       List<TriviaDomain> domains) async {
 
     if(domains.length == 0){
-      throw CreateTriviaTagNullException();
-    } else if(question.length < 20 || question.length > 300){
-      throw CreateTriviaQuestionBoundaryException();
-    } else if(correctAnswer.length < 1 || correctAnswer.length > 200){
-      throw CreateTriviaCorrectAnswerBoundaryException();
-    } else if(wrongAnswer.length < 1 || wrongAnswer.length > 200) {
-      throw CreateTriviaWrongAnswerBoundaryException();
+      throw DomainException();
+    } if(question.length < 20 || question.length > 300){
+      throw QuestionException();
+    } if(correctAnswer.length < 1 || correctAnswer.length > 200){
+      throw CorrectAnswerException();
+    } if(wrongAnswer.length < 1 || wrongAnswer.length > 200) {
+      throw WrongAnswerException();
     }
     
     final cred = await _localRepository.getCredentials();

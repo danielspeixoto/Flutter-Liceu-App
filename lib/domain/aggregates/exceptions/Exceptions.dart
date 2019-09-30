@@ -1,0 +1,3 @@
+class SizeBoundaryException {}
+
+class NullException {}

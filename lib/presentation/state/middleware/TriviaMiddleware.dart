@@ -30,19 +30,19 @@ List<Middleware<AppState>> triviaMiddleware(
           action.wrongAnswer,
           listDomain);
       store.dispatch(SubmitTriviaSuccessAction());
-    } on CreateTriviaTagNullException catch (e) {
+    } on DomainException catch (e) {
       store.dispatch(SubmitTriviaErrorTagNullAction(action.question,
           action.correctAnswer,
           action.wrongAnswer));
-    } on CreateTriviaQuestionBoundaryException catch (e) {
+    } on QuestionException catch (e) {
       store.dispatch(SubmitTriviaErrorQuestionSizeMismatchAction(action.question,
           action.correctAnswer,
           action.wrongAnswer,));
-    } on CreateTriviaCorrectAnswerBoundaryException catch (e) {
+    } on CorrectAnswerException catch (e) {
       store.dispatch(SubmitTriviaErrorCorrectAnswerSizeMismatchAction(action.question,
           action.correctAnswer,
           action.wrongAnswer,));
-    } on CreateTriviaWrongAnswerBoundaryException catch (e) {
+    } on WrongAnswerException catch (e) {
       store.dispatch(SubmitTriviaErrorWrongAnswerSizeMismatchAction(action.question,
           action.correctAnswer,
           action.wrongAnswer,));

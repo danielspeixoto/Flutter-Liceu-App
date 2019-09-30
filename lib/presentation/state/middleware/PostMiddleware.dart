@@ -30,7 +30,7 @@ List<Middleware<AppState>> postMiddleware(
     try {
       await createPostUseCase.run(action.postType, action.text);
       store.dispatch(SubmitPostSuccessAction());
-    } on CreatePostSizeBoundaryException catch(e) {
+    } on CreatePostException catch(e) {
       store.dispatch(SubmitPostErrorTextSizeMismatchAction());
     } catch (e) {
       print(e);
