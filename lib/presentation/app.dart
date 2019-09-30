@@ -3,6 +3,7 @@ import 'package:app/presentation/pages/create-post/View.dart';
 import 'package:app/presentation/pages/create-trivia/View.dart';
 import 'package:app/presentation/pages/edit-profile/View.dart';
 import 'package:app/presentation/pages/home/View.dart';
+import 'package:app/presentation/pages/intro/View.dart';
 import 'package:app/presentation/pages/login/View.dart';
 import 'package:app/presentation/pages/splash/View.dart';
 import 'package:app/presentation/pages/tournament-review/View.dart';
@@ -51,6 +52,8 @@ class MyApp extends StatelessWidget {
         return MainRoute(TournamentReviewPage(), settings: settings);
       case AppRoutes.createTrivia:
         return MainRoute(CreateTriviaPage(), settings: settings);
+      case AppRoutes.intro:
+        return MainRoute(IntroPage(), settings: settings);
       default:
         return MainRoute(SplashPage(), settings: settings);
     }
@@ -78,6 +81,7 @@ class MyApp extends StatelessWidget {
 
 class AppRoutes {
   static const splash = "/";
+  static const intro = "/intro";
   static const home = "/home";
   static const editProfile = "/editProfile";
   static const createPost = "/createPost";

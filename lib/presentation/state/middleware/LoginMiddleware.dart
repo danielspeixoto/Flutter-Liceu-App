@@ -60,6 +60,8 @@ class LoginMiddleware extends MiddlewareClass<AppState> {
       store.dispatch(NavigateReplaceAction(AppRoutes.home));
 //
     } else if (action is NotLoggedInAction) {
+      store.dispatch(NavigateReplaceAction(AppRoutes.intro));
+    } else if(action is NavigateLoginAction) {
       store.dispatch(NavigateReplaceAction(AppRoutes.login));
     }
     next(action);
