@@ -14,6 +14,7 @@ List<Middleware<AppState>> notificationMiddleware(
     switch (action) {
       case "start_challenge":
         store.dispatch(NavigateChallengeAction());
+        store.dispatch(FetchRandomChallengeAction());
         break;
       case "enem_training":
         store.dispatch(NavigateTrainingQuestionsAction());
@@ -26,6 +27,11 @@ List<Middleware<AppState>> notificationMiddleware(
           launch(data["url"]);
         }
         break;
+      case "answer_challenge":
+        if (data.containsKey("challengeId")) {
+          store.dispatch(NavigateChallengeAction());
+          store.dispatch(FetchChallengeAction(data["challengeId"]));
+        }
     }
   }
 
