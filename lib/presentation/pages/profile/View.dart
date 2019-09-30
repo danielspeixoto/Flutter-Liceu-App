@@ -10,7 +10,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 import 'ViewModel.dart';
 
@@ -32,7 +31,7 @@ class ProfilePage extends StatelessWidget {
                     child: FlatButton(
                       padding: EdgeInsets.all(16),
                       onPressed: () {
-                        launch("https://www.instagram.com/liceu.co");
+                        viewModel.onLiceuInstagramPressed();
                       },
                       child: Column(
                         children: <Widget>[
@@ -114,8 +113,7 @@ class ProfilePage extends StatelessWidget {
                               ? Container(
                                   child: FlatButton(
                                     onPressed: () {
-                                      launch("https://www.instagram.com/" +
-                                          user.instagramProfile);
+                                      viewModel.onInstagramPressed();
                                     },
                                     child: Row(
                                       children: <Widget>[

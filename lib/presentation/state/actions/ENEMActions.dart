@@ -1,6 +1,8 @@
+import 'package:app/domain/aggregates/ENEMGame.dart';
 import 'package:app/domain/aggregates/ENEMQuestion.dart';
 import 'package:app/presentation/state/aggregates/ENEMQuestionData.dart';
 import 'package:app/presentation/state/aggregates/RankingData.dart';
+
 import '../../constants.dart';
 
 //Navigates
@@ -52,11 +54,17 @@ class FetchTournamentQuestionsSuccessAction {
 
 //Setters
 
-
 //Submits
-class SubmitTournamentGameAction {}
+class SubmitTournamentGameAction {
+  final List<ENEMAnswer> answers;
+  final int timeSpent;
+
+  SubmitTournamentGameAction(this.answers, this.timeSpent);
+}
 
 //Interactions
+class EndTournamentGameAction {}
+
 class AnswerTrainingQuestionAction {
   final String questionId;
   final int answer;
@@ -70,3 +78,7 @@ class AnswerTournamentQuestionAction {
 
   AnswerTournamentQuestionAction(this.questionId, this.answer);
 }
+
+class StartTournamentAction {}
+
+class StartTrainingAction {}
