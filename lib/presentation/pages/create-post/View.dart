@@ -36,22 +36,26 @@ class CreatePostPage extends StatelessWidget {
                   child: Column(
                     children: <Widget>[
                       Container(
-                        margin:
-                            EdgeInsets.all(8),
-                          child: TextField(
-                        controller: inputController,
-                        decoration: InputDecoration(
-                          border: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              width: 0.1,
-                            ),
-                          ),
-                          hintText: "Comece a escrever um resumo",
-                        ),
-                        minLines: null,
-                        maxLines: 9,
-                        keyboardType: TextInputType.multiline,
-                      )),
+                          margin: EdgeInsets.all(8),
+                          child: Theme(
+                              data: new ThemeData(
+                                  primaryColor: Colors.red,
+                                  accentColor: Colors.orange,
+                                  hintColor: Colors.green),
+                              child: TextField(
+                                controller: inputController,
+                                decoration: InputDecoration(
+                                  border: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      width: 0.1,
+                                    ),
+                                  ),
+                                  hintText: "Comece a escrever um resumo",
+                                ),
+                                minLines: null,
+                                maxLines: 9,
+                                keyboardType: TextInputType.multiline,
+                              ))),
                       Container(
                         child: Text(
                           viewModel.createPostTextErrorMessage,
