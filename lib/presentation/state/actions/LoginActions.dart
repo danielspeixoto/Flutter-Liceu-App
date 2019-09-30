@@ -1,4 +1,5 @@
 
+class NavigateLoginAction {}
 
 class CheckIfIsLoggedInAction {
   CheckIfIsLoggedInAction();
