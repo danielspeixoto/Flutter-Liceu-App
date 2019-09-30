@@ -1,16 +1,15 @@
 import 'package:app/domain/aggregates/Post.dart';
 import 'package:app/domain/aggregates/User.dart';
+import 'package:app/presentation/state/actions/LiceuActions.dart';
 import 'package:app/presentation/state/actions/LoginActions.dart';
 import 'package:app/presentation/state/actions/PostActions.dart';
 import 'package:app/presentation/state/actions/UserActions.dart';
 import 'package:app/presentation/state/app_state.dart';
-import 'package:app/presentation/state/navigator/NavigatorActions.dart';
 import 'package:app/presentation/state/reducers/Data.dart';
 import 'package:app/presentation/util/text.dart';
 import 'package:redux/redux.dart';
 import 'package:share/share.dart';
-
-import '../../app.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ProfileViewModel {
   final Data<User> user;
@@ -21,6 +20,8 @@ class ProfileViewModel {
   final Function() refresh;
   final Function(String postId) onDeletePostPressed;
   final Function(String postId, String type, String text) onSharePostPressed;
+  final Function() onInstagramPressed;
+  final Function() onLiceuInstagramPressed;
 
   ProfileViewModel({
     this.user,
@@ -29,6 +30,8 @@ class ProfileViewModel {
     this.onLogoutPressed,
     this.onDeletePostPressed,
     this.onSharePostPressed,
+    this.onInstagramPressed,
+    this.onLiceuInstagramPressed,
     this.posts,
     this.refresh,
   });
@@ -38,8 +41,7 @@ class ProfileViewModel {
     return ProfileViewModel(
       user: userState.user,
       posts: userState.posts,
-      onCreateButtonPressed: () =>
-          store.dispatch(NavigateCreatePostAction()),
+      onCreateButtonPressed: () => store.dispatch(NavigateCreatePostAction()),
       refresh: () {
         store.dispatch(FetchUserInfoAction());
         store.dispatch(FetchUserPostsAction());
@@ -54,9 +56,18 @@ class ProfileViewModel {
         store.dispatch(DeletePostAction(postId));
       },
       onSharePostPressed: (String postId, String type, String text) {
-        analytics.logShare(contentType: type, itemId: postId, method: "copy");
+        store.dispatch(PostShareAction(postId, type));
         Share.share(summarize(text, 300) +
             "\n\nConfira mais no nosso app!\nhttps://bit.ly/BaixarLiceu");
+      },
+      onInstagramPressed: () {
+        final instagramProfile = userState.user.content.instagramProfile;
+        store.dispatch(InstagramClickedAction(instagramProfile));
+        launch("https://www.instagram.com/" + instagramProfile);
+      },
+      onLiceuInstagramPressed: () {
+        store.dispatch(LiceuInstagramPageClicked());
+        launch("https://www.instagram.com/liceu.co");
       },
     );
   }

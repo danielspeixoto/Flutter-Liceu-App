@@ -36,10 +36,16 @@ List<Middleware<AppState>> ENEMMiddleware(
     }
   }
 
-  void trainingAction(
-      Store<AppState> store, NavigateTrainingQuestionsAction action, NextDispatcher next) async {
+  void navigateTrainingAction(Store<AppState> store,
+      NavigateTrainingQuestionsAction action, NextDispatcher next) async {
     next(action);
     store.dispatch(NavigatePushAction(AppRoutes.trainingFilter));
+  }
+
+  void trainingAction(Store<AppState> store, StartTrainingAction action,
+      NextDispatcher next) async {
+    next(action);
+    store.dispatch(NavigateTrainingQuestionsAction);
   }
 
   void trainingFilterAction(Store<AppState> store,
@@ -69,8 +75,8 @@ List<Middleware<AppState>> ENEMMiddleware(
     }
   }
 
-  void submitTournament(Store<AppState> store,
-      SubmitTournamentGameAction action, NextDispatcher next) async {
+  void endTournament(Store<AppState> store, EndTournamentGameAction action,
+      NextDispatcher next) async {
     next(action);
     try {
       final timeSpent = DateTime.now()
@@ -89,7 +95,16 @@ List<Middleware<AppState>> ENEMMiddleware(
         );
       });
       store.dispatch(NavigateTournamentReviewAction(score, timeSpent));
-      await submitGameUseCase.run(answers, timeSpent);
+      store.dispatch(SubmitTournamentGameAction(answers, timeSpent));
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  void submitTournament(Store<AppState> store,
+      SubmitTournamentGameAction action, NextDispatcher next) async {
+    try {
+      await submitGameUseCase.run(action.answers, action.timeSpent);
     } catch (e) {
       print(e);
     }
@@ -128,10 +143,21 @@ List<Middleware<AppState>> ENEMMiddleware(
     }
   }
 
+  void startTournament(Store<AppState> store, StartTournamentAction action,
+      NextDispatcher next) {
+    store.dispatch(NavigateTournamentAction());
+  }
+
   return [
     TypedMiddleware<AppState, FetchRankingAction>(fetchRanking),
-    TypedMiddleware<AppState, NavigateTrainingQuestionsAction>(trainingAction),
-    TypedMiddleware<AppState, NavigateTrainingQuestionsFilterAction>(trainingFilterAction),
+    TypedMiddleware<AppState, NavigateTrainingQuestionsAction>(
+        navigateTrainingAction),
+    TypedMiddleware<AppState, StartTrainingAction>(trainingAction),
+    TypedMiddleware<AppState, NavigateTrainingQuestionsFilterAction>(
+        trainingFilterAction),
+    TypedMiddleware<AppState, EndTournamentGameAction>(
+      endTournament,
+    ),
     TypedMiddleware<AppState, SubmitTournamentGameAction>(
       submitTournament,
     ),
@@ -141,5 +167,6 @@ List<Middleware<AppState>> ENEMMiddleware(
     TypedMiddleware<AppState, NavigateTournamentAction>(
       tournament,
     ),
+    TypedMiddleware<AppState, StartTournamentAction>(startTournament),
   ];
 }

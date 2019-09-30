@@ -22,16 +22,23 @@ List<Middleware<AppState>> friendMiddleware(
     }
   }
 
-  void viewFriend(
-      Store<AppState> store, NavigateViewFriendAction action, NextDispatcher next) {
+  void viewFriend(Store<AppState> store, NavigateViewFriendAction action,
+      NextDispatcher next) {
+    next(action);
+    store.dispatch(NavigatePushAction(AppRoutes.friend));
+  }
+
+  void userClick(
+      Store<AppState> store, UserClickedAction action, NextDispatcher next) {
     next(action);
     store.dispatch(SetFriendAction(action.user));
-    store.dispatch(NavigatePushAction(AppRoutes.friend));
     store.dispatch(FetchFriendPostsAction(action.user.id));
+    store.dispatch(NavigatePushAction(AppRoutes.friend));
   }
 
   return [
     TypedMiddleware<AppState, FetchFriendPostsAction>(fetchPosts),
-    TypedMiddleware<AppState, NavigateViewFriendAction>(viewFriend)
+    TypedMiddleware<AppState, NavigateViewFriendAction>(viewFriend),
+    TypedMiddleware<AppState, UserClickedAction>(userClick)
   ];
 }

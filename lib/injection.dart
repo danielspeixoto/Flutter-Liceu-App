@@ -29,6 +29,7 @@ import 'domain/usecase/tournament/GetRankingUseCase.dart';
 import 'domain/usecase/user/GetUserByIdUseCase.dart';
 import 'domain/usecase/user/GetUserPostsUseCase.dart';
 import 'domain/usecase/user/MyChallengesUseCase.dart';
+import 'domain/usecase/user/MyId.dart';
 import 'domain/usecase/user/MyPostsUseCase.dart';
 import 'domain/usecase/user/SetUserDescriptionUseCase.dart';
 import 'domain/usecase/user/SetUserInstagramUseCase.dart';
@@ -81,6 +82,7 @@ final myChallengesUseCase =
 final getRankingUseCase =
     GetCurrentRankingUseCase(localRepository, rankingRepository);
 final isLoggedInUseCase = IsLoggedInUseCase(localRepository);
+final myIdUseCase = MyIdUseCase(localRepository);
 final logoutUseCase = LogOutUseCase(localRepository);
 final createPostUseCase = CreatePostUseCase(localRepository, postRepository);
 final deletePostUseCase = DeletePostUseCase(localRepository, postRepository);

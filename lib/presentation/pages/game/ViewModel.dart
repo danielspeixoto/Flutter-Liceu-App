@@ -33,14 +33,14 @@ class GameViewModel {
       challenges: store.state.userState.challenges,
       refresh: () => store.dispatch(FetchUserChallengesAction()),
       onChallengePressed: () {
-        store.dispatch(NavigateChallengeAction());
-        store.dispatch(FetchRandomChallengeAction());
+        store.dispatch(PlayRandomChallengeAction());
       },
-      onTrainingPressed: () =>
-          store.dispatch(NavigateTrainingQuestionsAction()),
-      onTournamentPressed: () => store.dispatch(NavigateTournamentAction()),
+      onTrainingPressed: () => store.dispatch(StartTrainingAction()),
+      onTournamentPressed: () => store.dispatch(StartTournamentAction()),
       onCreateTriviaPressed: () => store.dispatch(NavigateCreateTriviaAction()),
-      onUserPressed: (user) => store.dispatch(NavigateViewFriendAction(user)),
+      onUserPressed: (user) {
+        store.dispatch(UserClickedAction(user));
+      },
     );
   }
 }

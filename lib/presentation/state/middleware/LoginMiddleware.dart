@@ -2,7 +2,6 @@ import 'package:app/domain/boundary/LoginBoundary.dart';
 import 'package:app/domain/boundary/UserBoundary.dart';
 import 'package:app/presentation/state/actions/LoginActions.dart';
 import 'package:app/presentation/state/navigator/NavigatorActions.dart';
-import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:redux/redux.dart';
 
 import '../../app.dart';
@@ -12,7 +11,6 @@ class LoginMiddleware extends MiddlewareClass<AppState> {
   final ILogOutUseCase _logoutUseCase;
   final ILoginUseCase _loginUseCase;
   final IIsLoggedInUseCase _isLoggedInUseCase;
-  final analytics = FirebaseAnalytics();
 
   LoginMiddleware(
     this._logoutUseCase,
@@ -34,7 +32,6 @@ class LoginMiddleware extends MiddlewareClass<AppState> {
     } else if (action is LoginAction) {
       store.dispatch(IsLoggingInAction());
       _loginUseCase.run(action.accessToken, action.method).then((id) {
-        analytics.logLogin(loginMethod: action.method);
         analytics.setUserId(id);
         store.dispatch(LoginSuccessAction());
       }).catchError(
@@ -61,7 +58,7 @@ class LoginMiddleware extends MiddlewareClass<AppState> {
 //
     } else if (action is NotLoggedInAction) {
       store.dispatch(NavigateReplaceAction(AppRoutes.intro));
-    } else if(action is NavigateLoginAction) {
+    } else if (action is NavigateLoginAction) {
       store.dispatch(NavigateReplaceAction(AppRoutes.login));
     }
     next(action);

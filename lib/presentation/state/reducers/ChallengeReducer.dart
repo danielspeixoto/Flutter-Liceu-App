@@ -46,6 +46,16 @@ class ChallengeState {
     );
     return state;
   }
+
+  int score() {
+    var score = 0;
+    for (var i = 0; i < challenge.content.questions.length; i++) {
+      if (challenge.content.questions[i].correctAnswer == answers[i]) {
+        score++;
+      }
+    }
+    return score;
+  }
 }
 
 final Reducer<ChallengeState> challengeReducer =
@@ -57,8 +67,7 @@ final Reducer<ChallengeState> challengeReducer =
   TypedReducer<ChallengeState, SetTriviaTimerDecrementAction>(decrementTime),
 ]);
 
-ChallengeState startChallenge(
-    ChallengeState state, SetChallengeAction action) {
+ChallengeState startChallenge(ChallengeState state, SetChallengeAction action) {
   return ChallengeState.initial().copyWith(
     challenge: Data(content: action.challenge, isLoading: false),
     timeLeft: TRIVIA_TIME_TO_ANSWER,
@@ -69,7 +78,8 @@ ChallengeState startChallenge(
   );
 }
 
-ChallengeState resetChallenge(ChallengeState state, NavigateChallengeAction action) {
+ChallengeState resetChallenge(
+    ChallengeState state, NavigateChallengeAction action) {
   return state.copyWith(challenge: Data(isLoading: true));
 }
 
