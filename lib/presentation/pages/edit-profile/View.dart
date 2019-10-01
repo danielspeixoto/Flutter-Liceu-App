@@ -1,6 +1,7 @@
 import 'package:app/presentation/state/actions/PageActions.dart';
 import 'package:app/presentation/state/app_state.dart';
 import 'package:app/presentation/widgets/LiceuPage.dart';
+import 'package:app/presentation/widgets/TextFieldHighlight.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -48,52 +49,43 @@ class EditProfilePage extends StatelessWidget {
                     margin: EdgeInsets.all(8),
                     child: Column(
                       children: [
-                        Theme(
-                            data: new ThemeData(
-                                primaryColor: Colors.black54,
-                                hintColor: Colors.black45),
-                            child: TextField(
-                              controller: bioTextController,
-                              onChanged: (text) {
-                                viewModel.onBioTextChanged(text);
-                              },
-                              decoration: InputDecoration(
-                                prefixIcon: Icon(FontAwesomeIcons.user),
-                                border: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    width: 0.1,
-                                  ),
-                                ),
-                                hintText: "Fale sobre você",
+                        TextFieldHighlight(
+                          controller: bioTextController,
+                          onChanged: (text) {
+                            viewModel.onBioTextChanged(text);
+                          },
+                          decoration: InputDecoration(
+                            prefixIcon: Icon(FontAwesomeIcons.user),
+                            border: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                width: 0.1,
                               ),
-                              minLines: null,
-                              maxLines: 5,
-                              keyboardType: TextInputType.multiline,
-                            )),
+                            ),
+                            hintText: "Fale sobre você",
+                          ),
+                          maxLines: 5,
+                          keyboardType: TextInputType.multiline,
+                        ),
                         Container(
                           margin: EdgeInsets.all(4),
                           child: Text(viewModel.bio.length.toString() + "/300"),
                         ),
-                        Theme(
-                            data: new ThemeData(
-                                primaryColor: Colors.black54,
-                                hintColor: Colors.black45),
-                            child: TextField(
-                              controller: instagramTextController,
-                              onChanged: (text) {
-                                viewModel.onInstagramTextChanged(text);
-                              },
-                              decoration: InputDecoration(
-                                prefixIcon: Icon(FontAwesomeIcons.instagram),
-                                border: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    width: 0.1,
-                                  ),
-                                ),
-                                hintText: "seu.instagram",
+                        TextFieldHighlight(
+                          controller: instagramTextController,
+                          onChanged: (text) {
+                            viewModel.onInstagramTextChanged(text);
+                          },
+                          decoration: InputDecoration(
+                            prefixIcon: Icon(FontAwesomeIcons.instagram),
+                            border: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                width: 0.1,
                               ),
-                              keyboardType: TextInputType.multiline,
-                            )),
+                            ),
+                            hintText: "seu.instagram",
+                          ),
+                          keyboardType: TextInputType.multiline,
+                        ),
                       ],
                     ),
                   ),

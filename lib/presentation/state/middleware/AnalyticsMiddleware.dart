@@ -1,5 +1,6 @@
 import 'package:app/domain/aggregates/ENEMGame.dart';
 import 'package:app/domain/aggregates/Trivia.dart';
+import 'package:app/domain/aggregates/exceptions/CreateTriviaExceptions.dart';
 import 'package:app/domain/boundary/UserBoundary.dart';
 import 'package:app/presentation/state/actions/ChallengeActions.dart';
 import 'package:app/presentation/state/actions/ENEMActions.dart';
@@ -26,6 +27,7 @@ class AnalyticsMiddleware extends MiddlewareClass<AppState> {
   @override
   Future call(
       Store<AppState> store, dynamic action, NextDispatcher next) async {
+    next(action);
     if (action is PageInitAction) {
       analytics.setCurrentScreen(screenName: action.name);
     } else if (action is ChallengeSomeoneAction) {
@@ -91,7 +93,6 @@ class AnalyticsMiddleware extends MiddlewareClass<AppState> {
         "domain": domainToString(action.domain),
       });
     }
-    next(action);
   }
 
   String domainToString(TriviaDomain domain) {
