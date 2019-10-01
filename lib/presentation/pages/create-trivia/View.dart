@@ -33,88 +33,11 @@ class CreateTriviaPage extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
-<<<<<<< HEAD
-                          Row(
-                            children: <Widget>[
-                              Container(
-                                  child: Text('Escolha uma tag: '),
-                                  margin: EdgeInsets.all(4)),
-                              DropdownButton<String>(
-                                value: viewModel.domain,
-                                icon: Icon(Icons.arrow_downward),
-                                iconSize: 24,
-                                elevation: 16,
-                                style: TextStyle(color: Colors.deepPurple),
-                                underline: Container(
-                                  height: 2,
-                                  color: Colors.deepPurpleAccent,
-                                ),
-                                onChanged: (String value) {
-                                  viewModel.onTriviaDomainChanged(value);
-                                },
-                                items: <String>[
-                                  'Selecione',
-                                  'Matemática',
-                                  'Naturais',
-                                  'Humanas',
-                                  'Linguagens'
-                                ].map<DropdownMenuItem<String>>((String value) {
-                                  return DropdownMenuItem<String>(
-                                    value: value,
-                                    child: Text(value),
-                                  );
-                                }).toList(),
-                              ),
-                            ],
-                          ),
-=======
->>>>>>> 4dd9d70c56bde522d28b02cfbd7bd1102cba32e7
                           Container(
                             margin: EdgeInsets.all(8),
                             child: Column(
                               children: [
                                 Container(
-<<<<<<< HEAD
-                                  margin: EdgeInsets.all(8),
-                                  child: Theme(
-                                      data: new ThemeData(
-                                          primaryColor: Colors.black54,
-                                          hintColor: Colors.black45),
-                                      child: TextField(
-                                        onChanged: (text) {
-                                          viewModel.onQuestionTextChanged(text);
-                                        },
-                                        decoration: InputDecoration(
-                                          prefixIcon:
-                                              Icon(FontAwesomeIcons.question),
-                                          border: OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                              width: 0.1,
-                                            ),
-                                          ),
-                                          hintText: "Pergunta",
-                                        ),
-                                        minLines: null,
-                                        maxLines: 3,
-                                        keyboardType: TextInputType.multiline,
-                                      )),
-                                ),
-                                Container(
-                                    margin: EdgeInsets.all(8),
-                                    child: Theme(
-                                        data: new ThemeData(
-                                            primaryColor: Colors.green[400],
-                                            hintColor: Colors.black45),
-                                        child: TextField(
-                                          onChanged: (text) {
-                                            viewModel
-                                                .onCorrectAnswerTextChanged(
-                                                    text);
-                                          },
-                                          decoration: InputDecoration(
-                                            prefixIcon:
-                                                Icon(FontAwesomeIcons.check),
-=======
                                   margin: EdgeInsets.symmetric(vertical: 8),
                                   child: Column(
                                     children: <Widget>[
@@ -241,41 +164,11 @@ class CreateTriviaPage extends StatelessWidget {
                                           decoration: InputDecoration(
                                             prefixIcon:
                                                 Icon(FontAwesomeIcons.times),
->>>>>>> 4dd9d70c56bde522d28b02cfbd7bd1102cba32e7
                                             border: OutlineInputBorder(
                                               borderSide: BorderSide(
                                                 width: 0.1,
                                               ),
                                             ),
-<<<<<<< HEAD
-                                            hintText: "Resposta certa",
-                                          ),
-                                          keyboardType: TextInputType.multiline,
-                                        ))),
-                                Container(
-                                  margin: EdgeInsets.all(8),
-                                  child: Theme(
-                                      data: new ThemeData(
-                                          primaryColor: Colors.red[400],
-                                          hintColor: Colors.black45),
-                                      child: TextField(
-                                        onChanged: (text) {
-                                          viewModel
-                                              .onWrongAnswerTextChanged(text);
-                                        },
-                                        decoration: InputDecoration(
-                                          prefixIcon:
-                                              Icon(FontAwesomeIcons.times),
-                                          border: OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                              width: 0.1,
-                                            ),
-                                          ),
-                                          hintText: "Resposta errada",
-                                        ),
-                                        keyboardType: TextInputType.multiline,
-                                      )),
-=======
                                             hintText: "Caatinga",
                                           ),
                                           keyboardType: TextInputType.multiline,
@@ -362,7 +255,6 @@ class CreateTriviaPage extends StatelessWidget {
                                       ),
                                     )),
                                   ],
->>>>>>> 4dd9d70c56bde522d28b02cfbd7bd1102cba32e7
                                 ),
                               ],
                             ),
