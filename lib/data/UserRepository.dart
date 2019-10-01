@@ -132,4 +132,20 @@ class UserRepository implements IUserRepository {
     }
     throw handleNetworkException(response.statusCode);
   }
+
+  @override
+  Future<void> check(String accessToken, String id) async {
+    final response = await http.put(
+      _url + "/" + id + "/check",
+      headers: {
+        apiKeyHeader: _apiKey,
+        contentTypeHeader: contentTypeValueForJson,
+        authHeader: accessToken
+      },
+    );
+    if (response.statusCode == 200) {
+      return;
+    }
+    throw handleNetworkException(response.statusCode);
+  }
 }

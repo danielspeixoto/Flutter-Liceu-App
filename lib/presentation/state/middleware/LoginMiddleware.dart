@@ -11,11 +11,13 @@ class LoginMiddleware extends MiddlewareClass<AppState> {
   final ILogOutUseCase _logoutUseCase;
   final ILoginUseCase _loginUseCase;
   final IIsLoggedInUseCase _isLoggedInUseCase;
+  final ICheckUseCase _checkUseCase;
 
   LoginMiddleware(
     this._logoutUseCase,
     this._loginUseCase,
     this._isLoggedInUseCase,
+    this._checkUseCase,
   );
 
   @override
@@ -55,6 +57,10 @@ class LoginMiddleware extends MiddlewareClass<AppState> {
 //
     } else if (action is LoginSuccessAction) {
       store.dispatch(NavigateReplaceAction(AppRoutes.home));
+      new Future.delayed(const Duration(seconds: 5), () {
+        _checkUseCase.run();
+      });
+
 //
     } else if (action is NotLoggedInAction) {
       store.dispatch(NavigateReplaceAction(AppRoutes.intro));

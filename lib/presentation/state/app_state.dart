@@ -82,6 +82,7 @@ final Store<AppState> store = Store<AppState>(
       logoutUseCase,
       loginUseCase,
       isLoggedInUseCase,
+      checkUseCase,
     ),
     UserMiddleware(
       myInfoUseCase,
