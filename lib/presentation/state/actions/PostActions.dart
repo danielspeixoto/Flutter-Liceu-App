@@ -36,6 +36,9 @@ class DeletePostAction {
   DeletePostAction(this.postId);
 }
 
+class PostShareAction {
+  final String postId;
+  final String type;
 
-
-
+  PostShareAction(this.postId, this.type);
+}

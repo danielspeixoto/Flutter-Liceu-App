@@ -29,6 +29,10 @@ abstract class IMyInfoUseCase {
   Future<User> run();
 }
 
+abstract class IMyIdUseCase {
+  Future<String> run();
+}
+
 abstract class IIsLoggedInUseCase {
   Future<bool> run();
 }

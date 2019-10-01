@@ -8,6 +8,7 @@ import 'package:app/presentation/state/aggregates/TriviaData.dart';
 import 'package:app/presentation/state/navigator/NavigatorActions.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:redux/redux.dart';
+
 import '../../app.dart';
 import '../app_state.dart';
 
@@ -49,11 +50,31 @@ List<Middleware<AppState>> challengeMiddleware(
     }
   }
 
+  void playRandomChallenge(Store<AppState> store,
+      PlayRandomChallengeAction action, NextDispatcher next) {
+    try {
+      store.dispatch(NavigateChallengeAction());
+      store.dispatch(FetchRandomChallengeAction());
+    } catch (e) {
+      print(e);
+    }
+  }
+
   void getChallenge(Store<AppState> store, FetchChallengeAction action,
       NextDispatcher next) async {
     try {
       final challenge = await getChallengeByIdUseCase.run(action.challengeId);
       store.dispatch(SetChallengeAction(await prepareChallenge(challenge)));
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  void answerChallenge(Store<AppState> store, AcceptChallengeAction action,
+      NextDispatcher next) {
+    try {
+      store.dispatch(NavigateChallengeAction());
+      store.dispatch(FetchChallengeAction(action.challengeId));
     } catch (e) {
       print(e);
     }
@@ -69,11 +90,10 @@ List<Middleware<AppState>> challengeMiddleware(
     }
   }
 
-  void challengeSomeone(Store<AppState> store,
-      NavigateChallengeSomeoneAction action, NextDispatcher next) async {
+  void challengeSomeone(Store<AppState> store, ChallengeSomeoneAction action,
+      NextDispatcher next) async {
     next(action);
     try {
-      store.dispatch(NavigatePushAction(AppRoutes.challenge));
       final challenge = await challengeSomeoneUseCase.run(action.challengedId);
       store.dispatch(SetChallengeAction(await prepareChallenge(challenge)));
     } catch (e) {
@@ -114,17 +134,7 @@ List<Middleware<AppState>> challengeMiddleware(
     next(action);
     final challengeState = store.state.challengeState;
     try {
-      var score = 0;
-      for (var i = 0;
-          i < challengeState.challenge.content.questions.length;
-          i++) {
-        if (challengeState.challenge.content.questions[i].correctAnswer ==
-            challengeState.answers[i]) {
-          score++;
-        }
-      }
       store.dispatch(NavigatePopAction());
-      analytics.logPostScore(score: score);
       await submitChallengeAnswersUseCase.run(
           challengeState.challenge.content.id, challengeState.answers);
       new Future.delayed(const Duration(seconds: 3), () {
@@ -138,7 +148,7 @@ List<Middleware<AppState>> challengeMiddleware(
   void decrementTime(Store<AppState> store,
       SetTriviaTimerDecrementAction action, NextDispatcher next) async {
     final challengeState = store.state.challengeState;
-    if (challengeState.isTimerRunning) {
+    if (challengeState.canAnswer) {
       if (challengeState.timeLeft == 0) {
         store.dispatch(AnswerTriviaAction(""));
       } else {
@@ -161,8 +171,10 @@ List<Middleware<AppState>> challengeMiddleware(
   return [
     TypedMiddleware<AppState, NavigateChallengeAction>(navigateChallenge),
     TypedMiddleware<AppState, FetchRandomChallengeAction>(getRandomChallenge),
+    TypedMiddleware<AppState, PlayRandomChallengeAction>(playRandomChallenge),
     TypedMiddleware<AppState, FetchChallengeAction>(getChallenge),
-    TypedMiddleware<AppState, NavigateChallengeSomeoneAction>(challengeSomeone),
+    TypedMiddleware<AppState, AcceptChallengeAction>(answerChallenge),
+    TypedMiddleware<AppState, ChallengeSomeoneAction>(challengeSomeone),
     TypedMiddleware<AppState, AnswerTriviaAction>(onAnswer),
     TypedMiddleware<AppState, NextTriviaAction>(nextTriviaAction),
     TypedMiddleware<AppState, SubmitChallengeAction>(onFinished),

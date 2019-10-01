@@ -20,7 +20,6 @@ class TournamentViewModel {
         questions: store.state.enemState.tournamentQuestions,
         onAnswer: (String questionId, int answer) =>
             store.dispatch(AnswerTournamentQuestionAction(questionId, answer)),
-        submit: () => store.dispatch(SubmitTournamentGameAction())
-    );
+        submit: () => store.dispatch(EndTournamentGameAction()));
   }
 }

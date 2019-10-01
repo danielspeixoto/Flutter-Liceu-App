@@ -13,7 +13,7 @@ class ChallengeState {
   final List<String> answers;
   final int timeLeft;
   final int currentQuestion;
-  final bool isTimerRunning;
+  final bool canAnswer;
   final int randomNum;
 
   ChallengeState(
@@ -21,7 +21,7 @@ class ChallengeState {
     this.answers,
     this.currentQuestion,
     this.timeLeft,
-    this.isTimerRunning,
+    this.canAnswer,
     this.randomNum,
   );
 
@@ -33,7 +33,7 @@ class ChallengeState {
     List<String> answers,
     int currentQuestion,
     int timeLeft,
-    bool isTimerRunning,
+    bool canAnswer,
     int randomNum,
   }) {
     final state = ChallengeState(
@@ -41,10 +41,20 @@ class ChallengeState {
       answers ?? this.answers,
       currentQuestion ?? this.currentQuestion,
       timeLeft ?? this.timeLeft,
-      isTimerRunning ?? this.isTimerRunning,
+      canAnswer ?? this.canAnswer,
       randomNum ?? this.randomNum,
     );
     return state;
+  }
+
+  int score() {
+    var score = 0;
+    for (var i = 0; i < challenge.content.questions.length; i++) {
+      if (challenge.content.questions[i].correctAnswer == answers[i]) {
+        score++;
+      }
+    }
+    return score;
   }
 }
 
@@ -57,26 +67,26 @@ final Reducer<ChallengeState> challengeReducer =
   TypedReducer<ChallengeState, SetTriviaTimerDecrementAction>(decrementTime),
 ]);
 
-ChallengeState startChallenge(
-    ChallengeState state, SetChallengeAction action) {
+ChallengeState startChallenge(ChallengeState state, SetChallengeAction action) {
   return ChallengeState.initial().copyWith(
     challenge: Data(content: action.challenge, isLoading: false),
     timeLeft: TRIVIA_TIME_TO_ANSWER,
     currentQuestion: 0,
     answers: [],
-    isTimerRunning: true,
+    canAnswer: true,
     randomNum: Random().nextInt(2),
   );
 }
 
-ChallengeState resetChallenge(ChallengeState state, NavigateChallengeAction action) {
+ChallengeState resetChallenge(
+    ChallengeState state, NavigateChallengeAction action) {
   return state.copyWith(challenge: Data(isLoading: true));
 }
 
 ChallengeState answerTrivia(ChallengeState state, AnswerTriviaAction action) {
   return state.copyWith(
     answers: [...state.answers, action.answer],
-    isTimerRunning: false,
+    canAnswer: false,
   );
 }
 
@@ -87,7 +97,7 @@ ChallengeState decrementTime(
 
 ChallengeState nextTrivia(ChallengeState state, NextTriviaAction action) {
   return state.copyWith(
-    isTimerRunning: true,
+    canAnswer: true,
     timeLeft: TRIVIA_TIME_TO_ANSWER,
     currentQuestion: min(state.challenge.content.questions.length - 1,
         state.currentQuestion + 1),
