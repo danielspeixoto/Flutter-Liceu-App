@@ -19,6 +19,12 @@ abstract class IUserRepository {
   Future<List<Post>> posts(String accessToken, String userId);
 
   Future<List<Challenge>> challenges(String accessToken, String userId);
+
+  Future<void> check(String accessToken, String id);
+}
+
+abstract class ICheckUseCase {
+  Future<void> run();
 }
 
 abstract class IGetUserByIdUseCase {
