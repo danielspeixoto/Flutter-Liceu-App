@@ -37,20 +37,24 @@ class CreatePostPage extends StatelessWidget {
                     children: <Widget>[
                       Container(
                           margin: EdgeInsets.all(8),
-                          child: TextField(
-                            controller: inputController,
-                            decoration: InputDecoration(
-                              border: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  width: 0.1,
+                          child: Theme(
+                              data: new ThemeData(
+                                  primaryColor: Colors.black54,
+                                  hintColor: Colors.black45),
+                              child: TextField(
+                                controller: inputController,
+                                decoration: InputDecoration(
+                                  border: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      width: 0.1,
+                                    ),
+                                  ),
+                                  hintText: "Comece a escrever um resumo",
                                 ),
-                              ),
-                              hintText: "Comece a escrever um resumo",
-                            ),
-                            minLines: null,
-                            maxLines: 9,
-                            keyboardType: TextInputType.multiline,
-                          )),
+                                minLines: null,
+                                maxLines: 9,
+                                keyboardType: TextInputType.multiline,
+                              ))),
                       Container(
                         child: Text(
                           viewModel.createPostTextErrorMessage,
