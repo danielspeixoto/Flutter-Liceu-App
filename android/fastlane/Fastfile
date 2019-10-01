@@ -1,0 +1,21 @@
+default_platform(:android)
+
+platform :android do
+  desc "Runs all the tests"
+  lane :test do
+    gradle(task: "test")
+  end
+
+  desc "Submit a new Beta Build"
+  lane :beta do
+      sh("cd ../.. && source ~/.bashrc && flutter build appbundle")
+      upload_to_play_store(track: 'beta', aab: '../build/app/outputs/bundle/release/app.aab')
+      slack(message: 'Successfully distributed a new beta build', slack_url: 'https://hooks.slack.com/services/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')
+  end
+
+  desc "Deploy a new version to the Google Play"
+  lane :deploy do
+    gradle(task: "clean assembleRelease")
+    upload_to_play_store
+  end
+end
