@@ -35,7 +35,9 @@ class GameViewModel {
       onChallengePressed: () {
         store.dispatch(PlayRandomChallengeAction());
       },
-      onTrainingPressed: () => store.dispatch(StartTrainingAction()),
+      onTrainingPressed: () {
+        store.dispatch(StartTrainingAction());
+      },
       onTournamentPressed: () => store.dispatch(StartTournamentAction()),
       onCreateTriviaPressed: () => store.dispatch(NavigateCreateTriviaAction()),
       onUserPressed: (user) {

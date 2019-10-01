@@ -45,7 +45,7 @@ List<Middleware<AppState>> ENEMMiddleware(
   void trainingAction(Store<AppState> store, StartTrainingAction action,
       NextDispatcher next) async {
     next(action);
-    store.dispatch(NavigateTrainingQuestionsAction);
+    store.dispatch(NavigateTrainingQuestionsAction());
   }
 
   void trainingFilterAction(Store<AppState> store,
@@ -145,6 +145,7 @@ List<Middleware<AppState>> ENEMMiddleware(
 
   void startTournament(Store<AppState> store, StartTournamentAction action,
       NextDispatcher next) {
+    next(action);
     store.dispatch(NavigateTournamentAction());
   }
 
