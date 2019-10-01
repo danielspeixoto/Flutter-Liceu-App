@@ -3,6 +3,7 @@ import 'package:app/presentation/state/actions/PageActions.dart';
 import 'package:app/presentation/state/app_state.dart';
 import 'package:app/presentation/widgets/FetcherWidget.dart';
 import 'package:app/presentation/widgets/LiceuPage.dart';
+import 'package:app/presentation/widgets/TextFieldHighlight.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -47,28 +48,27 @@ class CreateTriviaPage extends StatelessWidget {
                                             fontWeight: FontWeight.bold),
                                       ),
                                       Container(
-                                        margin: EdgeInsets.all(8),
-                                        child: TextField(
-                                          onChanged: (text) {
-                                            viewModel
-                                                .onQuestionTextChanged(text);
-                                          },
-                                          decoration: InputDecoration(
-                                            prefixIcon:
-                                                Icon(FontAwesomeIcons.question),
-                                            border: OutlineInputBorder(
-                                              borderSide: BorderSide(
-                                                width: 0.1,
+                                          margin: EdgeInsets.all(8),
+                                          child: TextFieldHighlight(
+                                            onChanged: (text) {
+                                              viewModel
+                                                  .onQuestionTextChanged(text);
+                                            },
+                                            decoration: InputDecoration(
+                                              prefixIcon: Icon(
+                                                  FontAwesomeIcons.question),
+                                              border: OutlineInputBorder(
+                                                borderSide: BorderSide(
+                                                  width: 0.1,
+                                                ),
                                               ),
+                                              hintText:
+                                                  "Em qual bioma se passa o Rei Leão?",
                                             ),
-                                            hintText:
-                                                "Em qual bioma se passa o Rei Leão?",
-                                          ),
-                                          minLines: null,
-                                          maxLines: 3,
-                                          keyboardType: TextInputType.multiline,
-                                        ),
-                                      ),
+                                            maxLines: 3,
+                                            keyboardType:
+                                                TextInputType.multiline,
+                                          )),
                                       viewModel.question != null
                                           ? Container(
                                               margin: EdgeInsets.all(4),
@@ -102,26 +102,27 @@ class CreateTriviaPage extends StatelessWidget {
                                             fontWeight: FontWeight.bold),
                                       ),
                                       Container(
-                                          margin: EdgeInsets.all(8),
-                                          child: TextField(
-                                            onChanged: (text) {
-                                              viewModel
-                                                  .onCorrectAnswerTextChanged(
-                                                      text);
-                                            },
-                                            decoration: InputDecoration(
-                                              prefixIcon:
-                                                  Icon(FontAwesomeIcons.check),
-                                              border: OutlineInputBorder(
-                                                borderSide: BorderSide(
-                                                  width: 0.1,
-                                                ),
+                                        margin: EdgeInsets.all(8),
+                                        child: TextFieldHighlight(
+                                          onChanged: (text) {
+                                            viewModel
+                                                .onCorrectAnswerTextChanged(
+                                                    text);
+                                          },
+                                          borderHighlightColor: Colors.green[400],
+                                          decoration: InputDecoration(
+                                            prefixIcon:
+                                                Icon(FontAwesomeIcons.check),
+                                            border: OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                width: 0.1,
                                               ),
-                                              hintText: "Savana",
                                             ),
-                                            keyboardType:
-                                                TextInputType.multiline,
-                                          )),
+                                            hintText: "Savana",
+                                          ),
+                                          keyboardType: TextInputType.multiline,
+                                        ),
+                                      ),
                                       viewModel.correctAnswer != null
                                           ? Container(
                                               margin: EdgeInsets.all(4),
@@ -156,11 +157,13 @@ class CreateTriviaPage extends StatelessWidget {
                                       ),
                                       Container(
                                         margin: EdgeInsets.all(8),
-                                        child: TextField(
+                                        child: TextFieldHighlight(
                                           onChanged: (text) {
                                             viewModel
-                                                .onWrongAnswerTextChanged(text);
+                                                .onWrongAnswerTextChanged(
+                                                    text);
                                           },
+                                          borderHighlightColor: Colors.red[400],
                                           decoration: InputDecoration(
                                             prefixIcon:
                                                 Icon(FontAwesomeIcons.times),
