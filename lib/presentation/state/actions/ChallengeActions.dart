@@ -5,12 +5,6 @@ class NavigateChallengeAction {
   NavigateChallengeAction();
 }
 
-class NavigateChallengeSomeoneAction {
-  final String challengedId;
-
-  NavigateChallengeSomeoneAction(this.challengedId);
-}
-
 class FetchRandomChallengeAction {}
 
 class FetchChallengeAction {
@@ -39,3 +33,17 @@ class AnswerTriviaAction {
 }
 
 class NextTriviaAction {}
+
+class AcceptChallengeAction {
+  final String challengeId;
+
+  AcceptChallengeAction(this.challengeId);
+}
+
+class PlayRandomChallengeAction {}
+
+class ChallengeSomeoneAction {
+  final String challengedId;
+
+  ChallengeSomeoneAction(this.challengedId);
+}

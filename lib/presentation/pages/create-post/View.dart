@@ -2,6 +2,7 @@ import 'package:app/presentation/state/actions/PageActions.dart';
 import 'package:app/presentation/state/app_state.dart';
 import 'package:app/presentation/widgets/FetcherWidget.dart';
 import 'package:app/presentation/widgets/LiceuPage.dart';
+import 'package:app/presentation/widgets/TextFieldHighlight.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -36,22 +37,24 @@ class CreatePostPage extends StatelessWidget {
                   child: Column(
                     children: <Widget>[
                       Container(
-                        margin:
-                            EdgeInsets.all(8),
-                          child: TextField(
-                        controller: inputController,
-                        decoration: InputDecoration(
-                          border: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              width: 0.1,
+                        margin: EdgeInsets.all(8),
+                        child: TextFieldHighlight(
+                          controller: inputController,
+                          hintTextColor: Colors.black45,
+                          borderHighlightColor: Colors.black54,
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                width: 0.1,
+                              ),
                             ),
+                            hintText: "Comece a escrever um resumo",
                           ),
-                          hintText: "Comece a escrever um resumo",
+                          minLines: null,
+                          maxLines: 9,
+                          keyboardType: TextInputType.multiline,
                         ),
-                        minLines: null,
-                        maxLines: 9,
-                        keyboardType: TextInputType.multiline,
-                      )),
+                      ),
                       Container(
                         child: Text(
                           viewModel.createPostTextErrorMessage,

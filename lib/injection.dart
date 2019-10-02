@@ -26,9 +26,11 @@ import 'domain/usecase/post/CreatePostUseCase.dart';
 import 'domain/usecase/post/DeletePostUseCase.dart';
 import 'domain/usecase/post/ExplorePostsUseCase.dart';
 import 'domain/usecase/tournament/GetRankingUseCase.dart';
+import 'domain/usecase/user/CheckUseCase.dart';
 import 'domain/usecase/user/GetUserByIdUseCase.dart';
 import 'domain/usecase/user/GetUserPostsUseCase.dart';
 import 'domain/usecase/user/MyChallengesUseCase.dart';
+import 'domain/usecase/user/MyId.dart';
 import 'domain/usecase/user/MyPostsUseCase.dart';
 import 'domain/usecase/user/SetUserDescriptionUseCase.dart';
 import 'domain/usecase/user/SetUserInstagramUseCase.dart';
@@ -43,7 +45,7 @@ bool get isDev {
 
 class FeaturesReady {
   static final viewFriend = true;
-  static final createTrivia = isDev;
+  static final createTrivia = true;
 }
 
 final baseURL = isDev
@@ -81,6 +83,8 @@ final myChallengesUseCase =
 final getRankingUseCase =
     GetCurrentRankingUseCase(localRepository, rankingRepository);
 final isLoggedInUseCase = IsLoggedInUseCase(localRepository);
+final myIdUseCase = MyIdUseCase(localRepository);
+final checkUseCase = CheckUseCase(userRepository, localRepository);
 final logoutUseCase = LogOutUseCase(localRepository);
 final createPostUseCase = CreatePostUseCase(localRepository, postRepository);
 final deletePostUseCase = DeletePostUseCase(localRepository, postRepository);

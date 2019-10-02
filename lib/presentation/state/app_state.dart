@@ -76,12 +76,13 @@ final Store<AppState> store = Store<AppState>(
   initialState: AppState.initial(),
   middleware: [
     new LoggingMiddleware.printer(),
-    AnalyticsMiddleware(),
+    AnalyticsMiddleware(myIdUseCase),
     SentryMiddleware(),
     LoginMiddleware(
       logoutUseCase,
       loginUseCase,
       isLoggedInUseCase,
+      checkUseCase,
     ),
     ...userMiddleware(
       myInfoUseCase,

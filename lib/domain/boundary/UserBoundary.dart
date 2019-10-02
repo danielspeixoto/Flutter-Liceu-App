@@ -19,6 +19,12 @@ abstract class IUserRepository {
   Future<List<Post>> posts(String accessToken, String userId);
 
   Future<List<Challenge>> challenges(String accessToken, String userId);
+
+  Future<void> check(String accessToken, String id);
+}
+
+abstract class ICheckUseCase {
+  Future<void> run();
 }
 
 abstract class IGetUserByIdUseCase {
@@ -27,6 +33,10 @@ abstract class IGetUserByIdUseCase {
 
 abstract class IMyInfoUseCase {
   Future<User> run();
+}
+
+abstract class IMyIdUseCase {
+  Future<String> run();
 }
 
 abstract class IIsLoggedInUseCase {

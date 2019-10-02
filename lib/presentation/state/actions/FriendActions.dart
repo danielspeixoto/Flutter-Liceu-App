@@ -5,9 +5,7 @@ import '../../constants.dart';
 
 //Navigates
 class NavigateViewFriendAction {
-  final User user;
-
-  NavigateViewFriendAction(this.user);
+  NavigateViewFriendAction();
 }
 
 //Fetches
@@ -48,3 +46,8 @@ class SetFriendPostsAction {
   SetFriendPostsAction(this.posts);
 }
 
+class UserClickedAction {
+  final User user;
+
+  UserClickedAction(this.user);
+}

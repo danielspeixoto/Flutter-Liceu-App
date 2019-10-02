@@ -1,5 +1,5 @@
 import 'package:app/domain/aggregates/Trivia.dart';
-import 'package:app/domain/aggregates/Trivia.dart' as prefix0;
+
 import 'package:app/presentation/state/actions/TriviaActions.dart';
 import 'package:app/presentation/state/app_state.dart';
 import 'package:redux/redux.dart';
@@ -15,6 +15,10 @@ class CreateTriviaViewModel {
   final String wrongAnswer;
   final String domain;
   final bool isCreatingTrivia;
+  final String createTriviaDomainNullErrorMessage;
+  final String createTriviaQuestionErrorMessage;
+  final String createTriviaCorrectAnswerErrorMessage;
+  final String createTriviaWrongAnswerErrorMessage;
 
   CreateTriviaViewModel(
       {this.onCreateTriviaButtonPressed,
@@ -26,12 +30,19 @@ class CreateTriviaViewModel {
       this.correctAnswer,
       this.wrongAnswer,
       this.domain,
-      this.isCreatingTrivia});
+      this.isCreatingTrivia,
+      this.createTriviaDomainNullErrorMessage,
+      this.createTriviaQuestionErrorMessage,
+      this.createTriviaCorrectAnswerErrorMessage,
+      this.createTriviaWrongAnswerErrorMessage});
 
   factory CreateTriviaViewModel.create(Store<AppState> store) {
     final triviaState = store.state.triviaState;
     final triviaDomain = triviaState.domain;
     String domain;
+    String question;
+    String correctAnswer;
+    String wrongAnswer;
 
     if (triviaDomain == TriviaDomain.MATHEMATICS) {
       domain = "Matemática";
@@ -45,12 +56,20 @@ class CreateTriviaViewModel {
       domain = "Selecione";
     }
 
+
     return CreateTriviaViewModel(
         isCreatingTrivia: triviaState.isCreatingTrivia,
         domain: domain,
         question: triviaState.question,
         correctAnswer: triviaState.correctAnswer,
         wrongAnswer: triviaState.wrongAnswer,
+        createTriviaDomainNullErrorMessage: triviaState.domainNullErrorMessage,
+        createTriviaQuestionErrorMessage:
+            triviaState.createTriviaQuestionErrorMessage,
+        createTriviaCorrectAnswerErrorMessage:
+            triviaState.createTriviaCorrectAnswerErrorMessage,
+        createTriviaWrongAnswerErrorMessage:
+            triviaState.createTriviaWrongAnswerErrorMessage,
         onTriviaDomainChanged: (value) {
           TriviaDomain domain;
           if (value == 'Matemática') {

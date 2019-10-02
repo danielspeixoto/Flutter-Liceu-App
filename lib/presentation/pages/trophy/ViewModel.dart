@@ -51,7 +51,9 @@ class TrophyViewModel {
                       score.toString(),
                       position++);
                 }).toList()),
-      onUserPressed: (user) => store.dispatch(NavigateViewFriendAction(user)),
+      onUserPressed: (user) {
+        store.dispatch(UserClickedAction(user));
+      },
     );
   }
 }

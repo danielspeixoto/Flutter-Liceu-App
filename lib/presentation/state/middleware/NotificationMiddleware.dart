@@ -13,14 +13,13 @@ List<Middleware<AppState>> notificationMiddleware(
   void handleNotification(Store<AppState> store, String action, Map data) {
     switch (action) {
       case "start_challenge":
-        store.dispatch(NavigateChallengeAction());
-        store.dispatch(FetchRandomChallengeAction());
+        store.dispatch(PlayRandomChallengeAction());
         break;
       case "enem_training":
-        store.dispatch(NavigateTrainingQuestionsAction());
+        store.dispatch(StartTrainingAction());
         break;
       case "enem_tournament":
-        store.dispatch(NavigateTournamentAction());
+        store.dispatch(StartTournamentAction());
         break;
       case "webpage":
         if (data.containsKey("url")) {
@@ -29,8 +28,7 @@ List<Middleware<AppState>> notificationMiddleware(
         break;
       case "answer_challenge":
         if (data.containsKey("challengeId")) {
-          store.dispatch(NavigateChallengeAction());
-          store.dispatch(FetchChallengeAction(data["challengeId"]));
+          store.dispatch(AcceptChallengeAction(data["challengeId"]));
         }
     }
   }

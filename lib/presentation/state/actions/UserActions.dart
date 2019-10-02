@@ -5,7 +5,7 @@ import 'package:app/presentation/state/aggregates/ChallengeHistoryData.dart';
 import '../../constants.dart';
 
 //Navigates
-class NavigateUserEditProfileAction{}
+class NavigateUserEditProfileAction {}
 
 //Fetches
 class FetchUserAction {}
@@ -79,4 +79,10 @@ class SubmitUserProfileChangesSuccessAction {
   final String instagram;
 
   SubmitUserProfileChangesSuccessAction(this.bio, this.instagram);
+}
+
+class InstagramClickedAction {
+  final String instagram;
+
+  InstagramClickedAction(this.instagram);
 }

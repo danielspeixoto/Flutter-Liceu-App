@@ -1,6 +1,7 @@
 import 'package:app/presentation/state/actions/PageActions.dart';
 import 'package:app/presentation/state/app_state.dart';
 import 'package:app/presentation/widgets/LiceuPage.dart';
+import 'package:app/presentation/widgets/TextFieldHighlight.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -48,7 +49,7 @@ class EditProfilePage extends StatelessWidget {
                     margin: EdgeInsets.all(8),
                     child: Column(
                       children: [
-                        TextField(
+                        TextFieldHighlight(
                           controller: bioTextController,
                           onChanged: (text) {
                             viewModel.onBioTextChanged(text);
@@ -62,7 +63,6 @@ class EditProfilePage extends StatelessWidget {
                             ),
                             hintText: "Fale sobre você",
                           ),
-                          minLines: null,
                           maxLines: 5,
                           keyboardType: TextInputType.multiline,
                         ),
@@ -70,7 +70,7 @@ class EditProfilePage extends StatelessWidget {
                           margin: EdgeInsets.all(4),
                           child: Text(viewModel.bio.length.toString() + "/300"),
                         ),
-                        TextField(
+                        TextFieldHighlight(
                           controller: instagramTextController,
                           onChanged: (text) {
                             viewModel.onInstagramTextChanged(text);
