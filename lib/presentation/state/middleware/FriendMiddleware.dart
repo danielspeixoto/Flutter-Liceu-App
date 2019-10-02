@@ -1,5 +1,6 @@
 import 'package:app/domain/boundary/UserBoundary.dart';
 import 'package:app/presentation/state/actions/FriendActions.dart';
+import 'package:app/presentation/state/actions/PageActions.dart';
 import 'package:app/presentation/state/navigator/NavigatorActions.dart';
 import 'package:redux/redux.dart';
 
@@ -18,6 +19,7 @@ List<Middleware<AppState>> friendMiddleware(
       store.dispatch(SetFriendPostsAction(posts));
     } catch (e) {
       print(e);
+      store.dispatch(PageActionErrorAction(action.toString().substring(11)));
       store.dispatch(FetchFriendPostsErrorAction());
     }
   }

@@ -2,6 +2,7 @@ import 'package:app/domain/aggregates/Challenge.dart';
 import 'package:app/domain/boundary/ChallengeBoundary.dart';
 import 'package:app/domain/boundary/UserBoundary.dart';
 import 'package:app/presentation/state/actions/ChallengeActions.dart';
+import 'package:app/presentation/state/actions/PageActions.dart';
 import 'package:app/presentation/state/actions/UserActions.dart';
 import 'package:app/presentation/state/aggregates/ChallengeData.dart';
 import 'package:app/presentation/state/aggregates/TriviaData.dart';
@@ -47,6 +48,7 @@ List<Middleware<AppState>> challengeMiddleware(
       store.dispatch(SetChallengeAction(await prepareChallenge(challenge)));
     } catch (e) {
       print(e);
+      store.dispatch(PageActionErrorAction(action.toString().substring(11)));
     }
   }
 
@@ -57,6 +59,7 @@ List<Middleware<AppState>> challengeMiddleware(
       store.dispatch(FetchRandomChallengeAction());
     } catch (e) {
       print(e);
+      store.dispatch(PageActionErrorAction(action.toString().substring(11)));
     }
   }
 
@@ -67,6 +70,7 @@ List<Middleware<AppState>> challengeMiddleware(
       store.dispatch(SetChallengeAction(await prepareChallenge(challenge)));
     } catch (e) {
       print(e);
+      store.dispatch(PageActionErrorAction(action.toString().substring(11)));
     }
   }
 
@@ -77,6 +81,7 @@ List<Middleware<AppState>> challengeMiddleware(
       store.dispatch(FetchChallengeAction(action.challengeId));
     } catch (e) {
       print(e);
+      store.dispatch(PageActionErrorAction(action.toString().substring(11)));
     }
   }
 
@@ -87,6 +92,7 @@ List<Middleware<AppState>> challengeMiddleware(
       store.dispatch(NavigatePushAction(AppRoutes.challenge));
     } catch (e) {
       print(e);
+      store.dispatch(PageActionErrorAction(action.toString().substring(11)));
     }
   }
 
@@ -98,6 +104,7 @@ List<Middleware<AppState>> challengeMiddleware(
       store.dispatch(SetChallengeAction(await prepareChallenge(challenge)));
     } catch (e) {
       print(e);
+      store.dispatch(PageActionErrorAction(action.toString().substring(11)));
     }
   }
 
@@ -118,6 +125,7 @@ List<Middleware<AppState>> challengeMiddleware(
       }
     } catch (e) {
       print(e);
+      store.dispatch(PageActionErrorAction(action.toString().substring(11)));
     }
   }
 
@@ -142,6 +150,7 @@ List<Middleware<AppState>> challengeMiddleware(
       });
     } catch (e) {
       print(e);
+      store.dispatch(PageActionErrorAction(action.toString().substring(11)));
     }
   }
 

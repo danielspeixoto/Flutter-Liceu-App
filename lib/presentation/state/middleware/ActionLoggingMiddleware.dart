@@ -19,8 +19,8 @@ class ActionLoggingMiddleware extends MiddlewareClass<AppState> {
       printTime: true,
     ));
 
-    if (action is PageErrorAction) {
-      logger.e("Error in Action: ${action.toString().substring(11)}");
+    if (action is PageActionErrorAction) {
+      logger.e("Error in Action: ${action.actionName}");
     } else {
       logger.i("Executing Action: ${action.toString().substring(11)}");
     }

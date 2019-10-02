@@ -1,6 +1,7 @@
 import 'package:app/domain/aggregates/exceptions/CreatePostExceptions.dart';
 import 'package:app/domain/boundary/PostBoundary.dart';
 import 'package:app/domain/boundary/UserBoundary.dart';
+import 'package:app/presentation/state/actions/PageActions.dart';
 import 'package:app/presentation/state/actions/PostActions.dart';
 import 'package:app/presentation/state/aggregates/PostData.dart';
 import 'package:app/presentation/state/navigator/NavigatorActions.dart';
@@ -21,6 +22,7 @@ List<Middleware<AppState>> postMiddleware(
       await deletePostUseCase.run(action.postId);
     } catch (e) {
       print(e);
+      store.dispatch(PageActionErrorAction(action.toString().substring(11)));
     }
   }
 
@@ -34,6 +36,7 @@ List<Middleware<AppState>> postMiddleware(
       store.dispatch(SubmitPostErrorTextSizeMismatchAction());
     } catch (e) {
       print(e);
+      store.dispatch(PageActionErrorAction(action.toString().substring(11)));
     }
   }
 
@@ -63,6 +66,7 @@ List<Middleware<AppState>> postMiddleware(
       store.dispatch(FetchPostsSuccessAction(data));
     } catch (e) {
       print(e);
+      store.dispatch(PageActionErrorAction(action.toString().substring(11)));
     }
   }
 

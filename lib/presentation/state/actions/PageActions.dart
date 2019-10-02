@@ -4,4 +4,8 @@ class PageInitAction {
   PageInitAction(this.name);
 }
 
-class PageErrorAction {}
+class PageActionErrorAction {
+  final String actionName;
+
+  PageActionErrorAction(this.actionName);
+}

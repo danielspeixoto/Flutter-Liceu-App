@@ -3,6 +3,7 @@ import 'package:app/domain/boundary/ENEMBoundary.dart';
 import 'package:app/domain/boundary/RankingBoundary.dart';
 import 'package:app/domain/boundary/UserBoundary.dart';
 import 'package:app/presentation/state/actions/ENEMActions.dart';
+import 'package:app/presentation/state/actions/PageActions.dart';
 import 'package:app/presentation/state/aggregates/ENEMQuestionData.dart';
 import 'package:app/presentation/state/aggregates/GameData.dart';
 import 'package:app/presentation/state/aggregates/RankingData.dart';
@@ -33,6 +34,7 @@ List<Middleware<AppState>> ENEMMiddleware(
       store.dispatch(FetchRankingSuccessAction(rankingData));
     } catch (e) {
       print(e);
+      store.dispatch(PageActionErrorAction(action.toString().substring(11)));
     }
   }
 
@@ -72,6 +74,7 @@ List<Middleware<AppState>> ENEMMiddleware(
       store.dispatch(FetchTrainingQuestionsSuccessAction(questionsData));
     } catch (e) {
       print(e);
+      store.dispatch(PageActionErrorAction(action.toString().substring(11)));
     }
   }
 
@@ -98,6 +101,7 @@ List<Middleware<AppState>> ENEMMiddleware(
       store.dispatch(SubmitTournamentGameAction(answers, timeSpent));
     } catch (e) {
       print(e);
+      store.dispatch(PageActionErrorAction(action.toString().substring(11)));
     }
   }
 
@@ -107,6 +111,7 @@ List<Middleware<AppState>> ENEMMiddleware(
       await submitGameUseCase.run(action.answers, action.timeSpent);
     } catch (e) {
       print(e);
+      store.dispatch(PageActionErrorAction(action.toString().substring(11)));
     }
   }
 
@@ -140,6 +145,7 @@ List<Middleware<AppState>> ENEMMiddleware(
       store.dispatch(FetchTournamentQuestionsSuccessAction(questionsData));
     } catch (e) {
       print(e);
+      store.dispatch(PageActionErrorAction(action.toString().substring(11)));
     }
   }
 
