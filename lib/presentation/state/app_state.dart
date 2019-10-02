@@ -76,9 +76,9 @@ final Store<AppState> store = Store<AppState>(
   initialState: AppState.initial(),
   middleware: [
     new LoggingMiddleware.printer(),
-    AnalyticsMiddleware(myIdUseCase),
-    SentryMiddleware(),
-    LoginMiddleware(
+    ...analyticsMiddleware(myIdUseCase),
+    ...sentryMiddleware(),
+    ...loginMiddleware(
       logoutUseCase,
       loginUseCase,
       isLoggedInUseCase,
