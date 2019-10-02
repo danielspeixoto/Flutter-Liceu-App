@@ -66,7 +66,7 @@ class ProfileViewModel {
         launch("https://www.instagram.com/" + instagramProfile);
       },
       onLiceuInstagramPressed: () {
-        store.dispatch(LiceuInstagramPageClicked());
+        store.dispatch(LiceuInstagramPageClickedAction());
         launch("https://www.instagram.com/liceu.co");
       },
     );

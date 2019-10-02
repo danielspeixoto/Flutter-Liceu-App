@@ -76,21 +76,21 @@ final Store<AppState> store = Store<AppState>(
   initialState: AppState.initial(),
   middleware: [
     new LoggingMiddleware.printer(),
-    AnalyticsMiddleware(myIdUseCase),
-    SentryMiddleware(),
-    LoginMiddleware(
+    ...analyticsMiddleware(myIdUseCase),
+    ...sentryMiddleware(),
+    ...loginMiddleware(
       logoutUseCase,
       loginUseCase,
       isLoggedInUseCase,
       checkUseCase,
     ),
-    UserMiddleware(
+    ...userMiddleware(
       myInfoUseCase,
       myPostsUseCase,
-      setUserDescriptionUseCase,
-      setUserInstagramUseCase,
       myChallengesUseCase,
       getUserByIdUseCase,
+      setUserDescriptionUseCase,
+      setUserInstagramUseCase,
       myIdUseCase,
       submitUserFcmTokenUseCase
     ),

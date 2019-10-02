@@ -37,7 +37,7 @@ class UserState {
 final Reducer<UserState> userReducer = combineReducers<UserState>([
 //  Personal Data
   TypedReducer<UserState, SetUserAction>(setProfileData),
-  TypedReducer<UserState, FetchUserAction>(fetchUser),
+  TypedReducer<UserState, FetchUserInfoAction>(fetchUser),
   TypedReducer<UserState, FetchUserErrorAction>(fetchUserError),
 //  Posts
   TypedReducer<UserState, SetUserPostsAction>(setUserPosts),
@@ -56,7 +56,7 @@ UserState setProfileData(UserState state, SetUserAction action) {
   return state.copyWith(user: Data(content: action.user, isLoading: false));
 }
 
-UserState fetchUser(UserState state, FetchUserAction action) {
+UserState fetchUser(UserState state, FetchUserInfoAction action) {
   final s = state.copyWith(user: Data(isLoading: true));
   return s;
 }

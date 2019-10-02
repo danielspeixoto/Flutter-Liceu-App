@@ -10,106 +10,147 @@ import 'package:redux/redux.dart';
 import '../../app.dart';
 import '../app_state.dart';
 
-class UserMiddleware extends MiddlewareClass<AppState> {
-  final IMyInfoUseCase _myInfoUseCase;
-  final IMyPostsUseCase _myPostsUseCase;
-  final ISetUserDescriptionUseCase setUserDescriptionUseCase;
-  final ISetUserInstagramUseCase setUserInstagramUseCase;
-  final IMyChallengesUseCase _myChallengesUseCase;
-  final IGetUserByIdUseCase _getUserById;
-  final IMyIdUseCase _myIdUseCase;
-  final ISubmitFcmTokenUseCase _submitFcmTokenUseCase;
-  final analytics = FirebaseAnalytics();
+final analytics = FirebaseAnalytics();
 
-  UserMiddleware(
-    this._myInfoUseCase,
-    this._myPostsUseCase,
-    this.setUserDescriptionUseCase,
-    this.setUserInstagramUseCase,
-    this._myChallengesUseCase,
-    this._getUserById,
-    this._myIdUseCase,
-    this._submitFcmTokenUseCase
-  );
-
-  @override
-  Future call(
-      Store<AppState> store, dynamic action, NextDispatcher next) async {
-    if (action is FetchUserInfoAction) {
-      store.dispatch(FetchUserAction());
-      _myInfoUseCase.run().then((user) {
-        store.dispatch(SetUserAction(user));
-      }).catchError((e) {
-        print(e);
-        store.dispatch(FetchUserErrorAction());
-      });
-    } else if (action is FetchUserPostsAction) {
-      this._myPostsUseCase.run().then((posts) {
-        store.dispatch(SetUserPostsAction(posts));
-      }).catchError((e) {
-        print(e);
-        store.dispatch(FetchUserPostsErrorAction());
-      });
-    } else if (action is FetchUserChallengesAction) {
-      this._myChallengesUseCase.run().then((challenges) async {
-        final futures = challenges.map((challenge) async {
-          final challenger = await _getUserById.run(challenge.challenger);
-          final challenged = challenge.challenged == null
-              ? null
-              : await _getUserById.run(challenge.challenged);
-          return ChallengeHistoryData(
-            challenge.id,
-            challenger,
-            challenged,
-            challenge.scoreChallenger,
-            challenge.scoreChallenged,
-            challenge.questions,
-          );
-        });
-        try {
-          final challengeDataList = await Future.wait(futures);
-          store.dispatch(SetUserChallengesAction(challengeDataList));
-        } catch (e) {
-          print(e);
-        }
-      }).catchError((e) {
-        print(e);
-        store.dispatch(FetchUserChallengesErrorAction());
-      });
-    } else if (action is SubmitPostSuccessAction) {
-      store.dispatch(FetchUserPostsAction());
-    } else if (action is SubmitUserProfileChangesSuccessAction) {
-      store.dispatch(FetchUserInfoAction());
-      if (store.state.route.last == AppRoutes.editProfile) {
-        store.dispatch(NavigatePopAction());
-      }
-    } else if (action is SubmitUserProfileChangesAction) {
-      try {
-        await setUserDescriptionUseCase.run(action.bio);
-        await setUserInstagramUseCase.run(action.instagram);
-        store.dispatch(
-          SubmitUserProfileChangesSuccessAction(
-            action.bio,
-            action.instagram,
-          ),
-        );
-      } catch (e) {
-        print(e);
-      }
-    } else if (action is SetUserAction) {
-      analytics.setUserProperty(name: "name", value: action.user.name);
-    } else if(action is NavigateUserEditProfileAction) {
-      store.dispatch(NavigatePushAction(AppRoutes.editProfile));
-    } else if(action is LoginSuccessAction){
-      store.dispatch(SubmitUserFcmTokenAction(store.state.userState.fcmtoken));
-    } else if(action is SubmitUserFcmTokenAction) {
-      try{
-        final id = await _myIdUseCase.run();
-        await _submitFcmTokenUseCase.run(action.fcmtoken, id);
-      } catch (e) {
-        print(e);
-      }
-    }
+List<Middleware<AppState>> userMiddleware(
+    IMyInfoUseCase fetchUserInfoUseCase,
+    IMyPostsUseCase fetchUserPostsUseCase,
+    IMyChallengesUseCase fetchUserChallengesUseCase,
+    IGetUserByIdUseCase fetchUserByIdUseCase,
+    ISetUserDescriptionUseCase setUserDescriptionUseCase,
+    ISetUserInstagramUseCase setUserInstagramUseCase,
+    IMyIdUseCase _myIdUseCase,
+    ISubmitFcmTokenUseCase _submitFcmTokenUseCase) {
+  void fetchUserInfo(Store<AppState> store, FetchUserInfoAction action,
+      NextDispatcher next) async {
     next(action);
+    try {
+      final user = await fetchUserInfoUseCase.run();
+      store.dispatch(SetUserAction(user));
+    } catch (e) {
+      print(e);
+      store.dispatch(FetchUserErrorAction());
+    }
   }
+
+  void fetchUserPosts(Store<AppState> store, FetchUserPostsAction action,
+      NextDispatcher next) async {
+    next(action);
+    try {
+      final posts = await fetchUserPostsUseCase.run();
+      store.dispatch(SetUserPostsAction(posts));
+    } catch (e) {
+      print(e);
+      store.dispatch(FetchUserPostsErrorAction());
+    }
+  }
+
+  void fetchUserChallenges(Store<AppState> store,
+      FetchUserChallengesAction action, NextDispatcher next) async {
+    next(action);
+    fetchUserChallengesUseCase.run().then((challenges) async {
+      final futures = challenges.map((challenge) async {
+        final challenger = await fetchUserByIdUseCase.run(challenge.challenger);
+        final challenged = challenge.challenged == null
+            ? null
+            : await fetchUserByIdUseCase.run(challenge.challenged);
+        return ChallengeHistoryData(
+          challenge.id,
+          challenger,
+          challenged,
+          challenge.scoreChallenger,
+          challenge.scoreChallenged,
+          challenge.questions,
+        );
+      });
+      try {
+        final challengeDataList = await Future.wait(futures);
+        store.dispatch(SetUserChallengesAction(challengeDataList));
+      } catch (e) {
+        print(e);
+      }
+    }).catchError((e) {
+      print(e);
+      store.dispatch(FetchUserChallengesErrorAction());
+    });
+  }
+
+  void submitPostSuccess(Store<AppState> store, SubmitPostSuccessAction action,
+      NextDispatcher next) async {
+    next(action);
+    store.dispatch(FetchUserPostsAction());
+  }
+
+  void submitUserProfileChangesSuccess(Store<AppState> store,
+      SubmitUserProfileChangesSuccessAction action, NextDispatcher next) async {
+    next(action);
+    store.dispatch(FetchUserInfoAction());
+    if (store.state.route.last == AppRoutes.editProfile) {
+      store.dispatch(NavigatePopAction());
+    }
+  }
+
+  void submitUserProfileChanges(Store<AppState> store,
+      SubmitUserProfileChangesAction action, NextDispatcher next) async {
+    next(action);
+    try {
+      await setUserDescriptionUseCase.run(action.bio);
+      await setUserInstagramUseCase.run(action.instagram);
+      store.dispatch(
+        SubmitUserProfileChangesSuccessAction(
+          action.bio,
+          action.instagram,
+        ),
+      );
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  void setUser(
+      Store<AppState> store, SetUserAction action, NextDispatcher next) async {
+    next(action);
+    analytics.setUserProperty(name: "name", value: action.user.name);
+  }
+
+  void navigateUserEditProfile(Store<AppState> store,
+      NavigateUserEditProfileAction action, NextDispatcher next) async {
+    next(action);
+    store.dispatch(NavigatePushAction(AppRoutes.editProfile));
+  }
+
+  void loginSuccess(Store<AppState> store, LoginSuccessAction action,
+      NextDispatcher next) async {
+    next(action);
+    store.dispatch(SubmitUserFcmTokenAction(store.state.userState.fcmtoken));
+  }
+
+  void submitFcmToken(Store<AppState> store, SubmitUserFcmTokenAction action,
+      NextDispatcher next) async {
+    next(action);
+    try {
+      final id = await _myIdUseCase.run();
+      await _submitFcmTokenUseCase.run(action.fcmtoken, id);
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  return [
+    TypedMiddleware<AppState, FetchUserInfoAction>(fetchUserInfo),
+    TypedMiddleware<AppState, FetchUserPostsAction>(fetchUserPosts),
+    TypedMiddleware<AppState, FetchUserChallengesAction>(fetchUserChallenges),
+    TypedMiddleware<AppState, SubmitPostSuccessAction>(submitPostSuccess),
+    TypedMiddleware<AppState, SubmitUserProfileChangesSuccessAction>(
+        submitUserProfileChangesSuccess),
+    TypedMiddleware<AppState, SubmitUserProfileChangesAction>(
+        submitUserProfileChanges),
+    TypedMiddleware<AppState, SetUserAction>(setUser),
+    TypedMiddleware<AppState, NavigateUserEditProfileAction>(
+        navigateUserEditProfile),
+    TypedMiddleware<AppState, LoginSuccessAction>(
+        loginSuccess),
+    TypedMiddleware<AppState, SubmitUserFcmTokenAction>(
+        submitFcmToken),
+  ];
 }
