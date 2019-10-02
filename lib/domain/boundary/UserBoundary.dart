@@ -21,6 +21,8 @@ abstract class IUserRepository {
   Future<List<Challenge>> challenges(String accessToken, String userId);
 
   Future<void> check(String accessToken, String id);
+
+    Future<void> fcmtoken(String accessToken, String fcmtoken, String userId);
 }
 
 abstract class ICheckUseCase {
@@ -73,4 +75,8 @@ abstract class IGetUserChallengesUseCase {
 
 abstract class IMyChallengesUseCase {
   Future<List<Challenge>> run();
+}
+
+abstract class ISubmitFcmTokenUseCase {
+  Future<void> run(String fcmtoken, String userId);
 }

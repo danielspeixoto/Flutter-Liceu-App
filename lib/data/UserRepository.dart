@@ -34,6 +34,25 @@ class UserRepository implements IUserRepository {
     }
   }
 
+  Future<void> fcmtoken(String accessToken, String fcmToken, String userId) async{
+    try {
+      final response = await http.put(_url + "/" + userId + "/cloudMessaging", 
+      headers: {
+        apiKeyHeader: _apiKey,
+        contentTypeHeader: contentTypeValueForJson,
+        authHeader: accessToken
+      },
+      body: json.encode({"fcmToken": fcmToken}));
+      if (response.statusCode == 200) {
+        return;
+      }
+      throw handleNetworkException(response.statusCode);
+    } catch (e) {
+      print(e);
+      throw e;
+    }
+  }
+
   @override
   Future<List<Challenge>> challenges(String accessToken, String userId) async {
     final response =
