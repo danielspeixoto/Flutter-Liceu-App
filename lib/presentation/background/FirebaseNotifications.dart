@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:app/presentation/state/actions/NotificationActions.dart';
+import 'package:app/presentation/state/actions/UserActions.dart';
 import 'package:app/presentation/state/app_state.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:redux/redux.dart';
@@ -14,7 +15,7 @@ class FirebaseNotifications {
     if (Platform.isIOS) iOSPermission();
 
     _firebaseMessaging.getToken().then((token) {
-      print(token);
+      store.dispatch(SetUserFcmTokenAction(token));
     });
 
     _firebaseMessaging.configure(

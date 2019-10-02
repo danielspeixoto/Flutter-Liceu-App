@@ -91,6 +91,8 @@ final Store<AppState> store = Store<AppState>(
       getUserByIdUseCase,
       setUserDescriptionUseCase,
       setUserInstagramUseCase,
+      myIdUseCase,
+      submitUserFcmTokenUseCase
     ),
     ...postMiddleware(
       createPostUseCase,

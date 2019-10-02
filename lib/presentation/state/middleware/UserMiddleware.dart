@@ -1,4 +1,5 @@
 import 'package:app/domain/boundary/UserBoundary.dart';
+import 'package:app/presentation/state/actions/LoginActions.dart';
 import 'package:app/presentation/state/aggregates/ChallengeHistoryData.dart';
 import 'package:app/presentation/state/actions/PostActions.dart';
 import 'package:app/presentation/state/actions/UserActions.dart';
@@ -12,13 +13,14 @@ import '../app_state.dart';
 final analytics = FirebaseAnalytics();
 
 List<Middleware<AppState>> userMiddleware(
-  IMyInfoUseCase fetchUserInfoUseCase,
-  IMyPostsUseCase fetchUserPostsUseCase,
-  IMyChallengesUseCase fetchUserChallengesUseCase,
-  IGetUserByIdUseCase fetchUserByIdUseCase,
-  ISetUserDescriptionUseCase setUserDescriptionUseCase,
-  ISetUserInstagramUseCase setUserInstagramUseCase,
-) {
+    IMyInfoUseCase fetchUserInfoUseCase,
+    IMyPostsUseCase fetchUserPostsUseCase,
+    IMyChallengesUseCase fetchUserChallengesUseCase,
+    IGetUserByIdUseCase fetchUserByIdUseCase,
+    ISetUserDescriptionUseCase setUserDescriptionUseCase,
+    ISetUserInstagramUseCase setUserInstagramUseCase,
+    IMyIdUseCase _myIdUseCase,
+    ISubmitFcmTokenUseCase _submitFcmTokenUseCase) {
   void fetchUserInfo(Store<AppState> store, FetchUserInfoAction action,
       NextDispatcher next) async {
     next(action);
@@ -117,14 +119,38 @@ List<Middleware<AppState>> userMiddleware(
     store.dispatch(NavigatePushAction(AppRoutes.editProfile));
   }
 
-    return [
+  void loginSuccess(Store<AppState> store, LoginSuccessAction action,
+      NextDispatcher next) async {
+    next(action);
+    store.dispatch(SubmitUserFcmTokenAction(store.state.userState.fcmtoken));
+  }
+
+  void submitFcmToken(Store<AppState> store, SubmitUserFcmTokenAction action,
+      NextDispatcher next) async {
+    next(action);
+    try {
+      final id = await _myIdUseCase.run();
+      await _submitFcmTokenUseCase.run(action.fcmtoken, id);
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  return [
     TypedMiddleware<AppState, FetchUserInfoAction>(fetchUserInfo),
     TypedMiddleware<AppState, FetchUserPostsAction>(fetchUserPosts),
     TypedMiddleware<AppState, FetchUserChallengesAction>(fetchUserChallenges),
     TypedMiddleware<AppState, SubmitPostSuccessAction>(submitPostSuccess),
-    TypedMiddleware<AppState, SubmitUserProfileChangesSuccessAction>(submitUserProfileChangesSuccess),
-    TypedMiddleware<AppState, SubmitUserProfileChangesAction>(submitUserProfileChanges),
+    TypedMiddleware<AppState, SubmitUserProfileChangesSuccessAction>(
+        submitUserProfileChangesSuccess),
+    TypedMiddleware<AppState, SubmitUserProfileChangesAction>(
+        submitUserProfileChanges),
     TypedMiddleware<AppState, SetUserAction>(setUser),
-    TypedMiddleware<AppState, NavigateUserEditProfileAction>(navigateUserEditProfile),
+    TypedMiddleware<AppState, NavigateUserEditProfileAction>(
+        navigateUserEditProfile),
+    TypedMiddleware<AppState, LoginSuccessAction>(
+        loginSuccess),
+    TypedMiddleware<AppState, SubmitUserFcmTokenAction>(
+        submitFcmToken),
   ];
 }

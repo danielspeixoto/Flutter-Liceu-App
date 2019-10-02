@@ -1,5 +1,6 @@
 import 'package:app/domain/aggregates/Post.dart';
 import 'package:app/domain/aggregates/User.dart';
+import 'package:app/presentation/state/actions/LoginActions.dart';
 import 'package:app/presentation/state/aggregates/ChallengeHistoryData.dart';
 import 'package:app/presentation/state/actions/PostActions.dart';
 import 'package:app/presentation/state/actions/UserActions.dart';
@@ -11,24 +12,23 @@ class UserState {
   final Data<User> user;
   final Data<List<Post>> posts;
   final Data<List<ChallengeHistoryData>> challenges;
+  final String fcmtoken;
 
-  UserState(this.user, this.posts, this.challenges);
+  UserState(this.user, this.posts, this.challenges, this.fcmtoken);
 
-  factory UserState.initial() => UserState(
-        Data(),
-        Data(),
-    Data()
-      );
+  factory UserState.initial() => UserState(Data(), Data(), Data(), null);
 
   UserState copyWith({
     Data<User> user,
     Data<List<Post>> posts,
     Data<List<ChallengeHistoryData>> challenges,
+    String fcmtoken
   }) {
     final state = UserState(
       user ?? this.user,
       posts ?? this.posts,
       challenges ?? this.challenges,
+      fcmtoken ?? this.fcmtoken
     );
     return state;
   }
@@ -47,7 +47,9 @@ final Reducer<UserState> userReducer = combineReducers<UserState>([
 //  Challenges
   TypedReducer<UserState, SetUserChallengesAction>(setUserChallenges),
   TypedReducer<UserState, FetchUserChallengesAction>(fetchUserChallenges),
-  TypedReducer<UserState, FetchUserChallengesErrorAction>(fetchUserChallengesError),
+  TypedReducer<UserState, FetchUserChallengesErrorAction>(
+      fetchUserChallengesError),
+  TypedReducer<UserState, SetUserFcmTokenAction>(setFcmToken),
 ]);
 
 UserState setProfileData(UserState state, SetUserAction action) {
@@ -97,10 +99,12 @@ UserState deletePost(UserState state, DeletePostAction action) {
 }
 
 UserState setUserChallenges(UserState state, SetUserChallengesAction action) {
-  return state.copyWith(challenges: Data(content: action.challenges, isLoading: false));
+  return state.copyWith(
+      challenges: Data(content: action.challenges, isLoading: false));
 }
 
-UserState fetchUserChallenges(UserState state, FetchUserChallengesAction action) {
+UserState fetchUserChallenges(
+    UserState state, FetchUserChallengesAction action) {
   return state.copyWith(
     challenges: state.challenges.copyWith(isLoading: true),
   );
@@ -108,7 +112,13 @@ UserState fetchUserChallenges(UserState state, FetchUserChallengesAction action)
 
 UserState fetchUserChallengesError(
     UserState state, FetchUserChallengesErrorAction action) {
-  final s =
-  state.copyWith(challenges: Data(errorMessage: action.error, isLoading: false));
+  final s = state.copyWith(
+      challenges: Data(errorMessage: action.error, isLoading: false));
   return s;
+}
+
+UserState setFcmToken(UserState state, SetUserFcmTokenAction action) {
+  return state.copyWith(
+    fcmtoken: action.fcmtoken
+  );
 }

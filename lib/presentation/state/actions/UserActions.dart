@@ -64,6 +64,13 @@ class SetUserEditFieldAction {
   final String instagram;
 
   SetUserEditFieldAction({this.bio, this.instagram});
+  
+}
+
+class SetUserFcmTokenAction {
+  final String fcmtoken;
+
+  SetUserFcmTokenAction(this.fcmtoken);
 }
 //Submits
 
@@ -79,6 +86,12 @@ class SubmitUserProfileChangesSuccessAction {
   final String instagram;
 
   SubmitUserProfileChangesSuccessAction(this.bio, this.instagram);
+}
+
+class SubmitUserFcmTokenAction {
+  final String fcmtoken;
+
+  SubmitUserFcmTokenAction(this.fcmtoken);
 }
 
 class InstagramClickedAction {
