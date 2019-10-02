@@ -33,7 +33,6 @@ List<Middleware<AppState>> ENEMMiddleware(
       final rankingData = RankingData(await Future.wait(futures));
       store.dispatch(FetchRankingSuccessAction(rankingData));
     } catch (e) {
-      print(e);
       store.dispatch(PageActionErrorAction(action.toString().substring(11)));
     }
   }
@@ -73,7 +72,6 @@ List<Middleware<AppState>> ENEMMiddleware(
       final questionsData = await Future.wait(futures);
       store.dispatch(FetchTrainingQuestionsSuccessAction(questionsData));
     } catch (e) {
-      print(e);
       store.dispatch(PageActionErrorAction(action.toString().substring(11)));
     }
   }
@@ -100,7 +98,6 @@ List<Middleware<AppState>> ENEMMiddleware(
       store.dispatch(NavigateTournamentReviewAction(score, timeSpent));
       store.dispatch(SubmitTournamentGameAction(answers, timeSpent));
     } catch (e) {
-      print(e);
       store.dispatch(PageActionErrorAction(action.toString().substring(11)));
     }
   }
@@ -110,7 +107,6 @@ List<Middleware<AppState>> ENEMMiddleware(
     try {
       await submitGameUseCase.run(action.answers, action.timeSpent);
     } catch (e) {
-      print(e);
       store.dispatch(PageActionErrorAction(action.toString().substring(11)));
     }
   }
@@ -144,7 +140,6 @@ List<Middleware<AppState>> ENEMMiddleware(
       final questionsData = await Future.wait(futures);
       store.dispatch(FetchTournamentQuestionsSuccessAction(questionsData));
     } catch (e) {
-      print(e);
       store.dispatch(PageActionErrorAction(action.toString().substring(11)));
     }
   }

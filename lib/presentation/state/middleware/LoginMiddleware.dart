@@ -29,7 +29,6 @@ class LoginMiddleware extends MiddlewareClass<AppState> {
         store.dispatch(NotLoggedInAction());
         store.dispatch(NavigateReplaceAction(AppRoutes.login));
       }).catchError((e) {
-        print(e);
         store.dispatch(PageActionErrorAction(action.toString().substring(11)));
       });
 //
@@ -40,7 +39,7 @@ class LoginMiddleware extends MiddlewareClass<AppState> {
         store.dispatch(LoginSuccessAction());
       }).catchError(
         (e) {
-          print(e);
+
           store.dispatch(PageActionErrorAction(action.toString().substring(11)));
         },
       );
@@ -54,7 +53,6 @@ class LoginMiddleware extends MiddlewareClass<AppState> {
           store.dispatch(NotLoggedInAction());
         }
       }).catchError((e) {
-        print(e);
         store.dispatch(PageActionErrorAction(action.toString().substring(11)));
         store.dispatch(NotLoggedInAction());
       });

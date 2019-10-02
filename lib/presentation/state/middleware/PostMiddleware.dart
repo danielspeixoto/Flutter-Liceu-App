@@ -21,7 +21,6 @@ List<Middleware<AppState>> postMiddleware(
     try {
       await deletePostUseCase.run(action.postId);
     } catch (e) {
-      print(e);
       store.dispatch(PageActionErrorAction(action.toString().substring(11)));
     }
   }
@@ -35,7 +34,6 @@ List<Middleware<AppState>> postMiddleware(
     } on CreatePostException catch(e) {
       store.dispatch(SubmitPostErrorTextSizeMismatchAction());
     } catch (e) {
-      print(e);
       store.dispatch(PageActionErrorAction(action.toString().substring(11)));
     }
   }
@@ -65,7 +63,6 @@ List<Middleware<AppState>> postMiddleware(
       final data = await Future.wait(futures);
       store.dispatch(FetchPostsSuccessAction(data));
     } catch (e) {
-      print(e);
       store.dispatch(PageActionErrorAction(action.toString().substring(11)));
     }
   }

@@ -51,7 +51,6 @@ List<Middleware<AppState>> notificationMiddleware(
         handleNotification(store, action.action, action.data);
       }
     } catch (e) {
-      print(e);
       store.dispatch(PageActionErrorAction(action.toString().substring(11)));
     }
   }

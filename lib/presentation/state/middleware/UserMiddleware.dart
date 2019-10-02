@@ -41,14 +41,12 @@ class UserMiddleware extends MiddlewareClass<AppState> {
       _myInfoUseCase.run().then((user) {
         store.dispatch(SetUserAction(user));
       }).catchError((e) {
-        print(e);
         store.dispatch(FetchUserErrorAction());
       });
     } else if (action is FetchUserPostsAction) {
       this._myPostsUseCase.run().then((posts) {
         store.dispatch(SetUserPostsAction(posts));
       }).catchError((e) {
-        print(e);
         store.dispatch(FetchUserPostsErrorAction());
         store.dispatch(PageActionErrorAction(action.toString().substring(11)));
       });
@@ -72,11 +70,10 @@ class UserMiddleware extends MiddlewareClass<AppState> {
           final challengeDataList = await Future.wait(futures);
           store.dispatch(SetUserChallengesAction(challengeDataList));
         } catch (e) {
-          print(e);
+
           store.dispatch(PageActionErrorAction(action.toString().substring(11)));
         }
       }).catchError((e) {
-        print(e);
         store.dispatch(PageActionErrorAction(action.toString().substring(11)));
         store.dispatch(FetchUserChallengesErrorAction());
       });
@@ -98,7 +95,6 @@ class UserMiddleware extends MiddlewareClass<AppState> {
           ),
         );
       } catch (e) {
-        print(e);
         store.dispatch(PageActionErrorAction(action.toString().substring(11)));
       }
     } else if (action is SetUserAction) {
@@ -112,7 +108,6 @@ class UserMiddleware extends MiddlewareClass<AppState> {
         final id = await _myIdUseCase.run();
         await _submitFcmTokenUseCase.run(action.fcmtoken, id);   
       } catch (e) {
-        //print(e);
         store.dispatch(PageActionErrorAction(action.toString().substring(11)));
       }
     }

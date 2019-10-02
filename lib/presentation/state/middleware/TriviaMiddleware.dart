@@ -48,7 +48,6 @@ List<Middleware<AppState>> triviaMiddleware(
           action.correctAnswer,
           action.wrongAnswer,));
     } catch (e) {
-      print(e);
       store.dispatch(PageActionErrorAction(action.toString().substring(11)));
     }
   }

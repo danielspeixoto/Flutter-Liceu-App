@@ -47,7 +47,6 @@ List<Middleware<AppState>> challengeMiddleware(
       final challenge = await getChallengeUseCase.run();
       store.dispatch(SetChallengeAction(await prepareChallenge(challenge)));
     } catch (e) {
-      print(e);
       store.dispatch(PageActionErrorAction(action.toString().substring(11)));
     }
   }
@@ -58,7 +57,6 @@ List<Middleware<AppState>> challengeMiddleware(
       store.dispatch(NavigateChallengeAction());
       store.dispatch(FetchRandomChallengeAction());
     } catch (e) {
-      print(e);
       store.dispatch(PageActionErrorAction(action.toString().substring(11)));
     }
   }
@@ -69,7 +67,6 @@ List<Middleware<AppState>> challengeMiddleware(
       final challenge = await getChallengeByIdUseCase.run(action.challengeId);
       store.dispatch(SetChallengeAction(await prepareChallenge(challenge)));
     } catch (e) {
-      print(e);
       store.dispatch(PageActionErrorAction(action.toString().substring(11)));
     }
   }
@@ -80,7 +77,6 @@ List<Middleware<AppState>> challengeMiddleware(
       store.dispatch(NavigateChallengeAction());
       store.dispatch(FetchChallengeAction(action.challengeId));
     } catch (e) {
-      print(e);
       store.dispatch(PageActionErrorAction(action.toString().substring(11)));
     }
   }
@@ -91,7 +87,6 @@ List<Middleware<AppState>> challengeMiddleware(
     try {
       store.dispatch(NavigatePushAction(AppRoutes.challenge));
     } catch (e) {
-      print(e);
       store.dispatch(PageActionErrorAction(action.toString().substring(11)));
     }
   }
@@ -103,7 +98,6 @@ List<Middleware<AppState>> challengeMiddleware(
       final challenge = await challengeSomeoneUseCase.run(action.challengedId);
       store.dispatch(SetChallengeAction(await prepareChallenge(challenge)));
     } catch (e) {
-      print(e);
       store.dispatch(PageActionErrorAction(action.toString().substring(11)));
     }
   }
@@ -124,7 +118,6 @@ List<Middleware<AppState>> challengeMiddleware(
         });
       }
     } catch (e) {
-      print(e);
       store.dispatch(PageActionErrorAction(action.toString().substring(11)));
     }
   }
@@ -149,7 +142,6 @@ List<Middleware<AppState>> challengeMiddleware(
         store.dispatch(FetchUserChallengesAction());
       });
     } catch (e) {
-      print(e);
       store.dispatch(PageActionErrorAction(action.toString().substring(11)));
     }
   }
