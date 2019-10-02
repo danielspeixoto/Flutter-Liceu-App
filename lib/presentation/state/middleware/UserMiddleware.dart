@@ -109,13 +109,8 @@ class UserMiddleware extends MiddlewareClass<AppState> {
       store.dispatch(SubmitUserFcmTokenAction(store.state.userState.fcmtoken));
     } else if(action is SubmitUserFcmTokenAction) {
       try{
-        //final id = await _myIdUseCase.run();
-        //await _submitFcmTokenUseCase.run(action.fcmtoken, id);
-        if(false){
-
-        } else {
-          throw Exception();
-        }
+        final id = await _myIdUseCase.run();
+        await _submitFcmTokenUseCase.run(action.fcmtoken, id);   
       } catch (e) {
         //print(e);
         store.dispatch(PageActionErrorAction(action.toString().substring(11)));
