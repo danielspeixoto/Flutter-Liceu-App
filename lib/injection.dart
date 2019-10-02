@@ -5,6 +5,7 @@ import 'package:app/domain/usecase/user/IsLoggedInUseCase.dart';
 import 'package:app/domain/usecase/user/LogOutUseCase.dart';
 import 'package:app/domain/usecase/user/LoginUseCase.dart';
 import 'package:app/domain/usecase/user/MyInfoUseCase.dart';
+import 'package:app/domain/usecase/user/SubmitFcmTokenUseCase.dart';
 import 'package:http/http.dart' as http;
 
 import 'data/ChallengeRepository.dart';
@@ -110,3 +111,5 @@ final submitENEMGamesUseCase =
     SubmitGameUseCase(localRepository, gameRepository);
 final createTriviaUseCase =
     CreateTriviaUseCase(localRepository, triviaRepository);
+final submitUserFcmTokenUseCase = 
+    SubmitFcmTokenUseCase(localRepository, userRepository);

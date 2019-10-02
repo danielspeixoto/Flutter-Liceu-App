@@ -1,4 +1,5 @@
 import 'package:app/domain/boundary/UserBoundary.dart';
+import 'package:app/presentation/state/actions/LoginActions.dart';
 import 'package:app/presentation/state/aggregates/ChallengeHistoryData.dart';
 import 'package:app/presentation/state/actions/PostActions.dart';
 import 'package:app/presentation/state/actions/UserActions.dart';
@@ -16,6 +17,8 @@ class UserMiddleware extends MiddlewareClass<AppState> {
   final ISetUserInstagramUseCase setUserInstagramUseCase;
   final IMyChallengesUseCase _myChallengesUseCase;
   final IGetUserByIdUseCase _getUserById;
+  final IMyIdUseCase _myIdUseCase;
+  final ISubmitFcmTokenUseCase _submitFcmTokenUseCase;
   final analytics = FirebaseAnalytics();
 
   UserMiddleware(
@@ -25,6 +28,8 @@ class UserMiddleware extends MiddlewareClass<AppState> {
     this.setUserInstagramUseCase,
     this._myChallengesUseCase,
     this._getUserById,
+    this._myIdUseCase,
+    this._submitFcmTokenUseCase
   );
 
   @override
@@ -95,6 +100,15 @@ class UserMiddleware extends MiddlewareClass<AppState> {
       analytics.setUserProperty(name: "name", value: action.user.name);
     } else if(action is NavigateUserEditProfileAction) {
       store.dispatch(NavigatePushAction(AppRoutes.editProfile));
+    } else if(action is LoginSuccessAction){
+      store.dispatch(SubmitUserFcmTokenAction(store.state.userState.fcmtoken));
+    } else if(action is SubmitUserFcmTokenAction) {
+      try{
+        final id = await _myIdUseCase.run();
+        await _submitFcmTokenUseCase.run(action.fcmtoken, id);
+      } catch (e) {
+        print(e);
+      }
     }
     next(action);
   }
