@@ -18,7 +18,6 @@ List<Middleware<AppState>> friendMiddleware(
       final posts = await getUserPostsUseCase.run(action.id);
       store.dispatch(SetFriendPostsAction(posts));
     } catch (e) {
-      print(e);
       store.dispatch(PageActionErrorAction(action.toString().substring(11)));
       store.dispatch(FetchFriendPostsErrorAction());
     }

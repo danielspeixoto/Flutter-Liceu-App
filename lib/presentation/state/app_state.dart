@@ -76,22 +76,22 @@ final Store<AppState> store = Store<AppState>(
   appReducer,
   initialState: AppState.initial(),
   middleware: [
-    AnalyticsMiddleware(myIdUseCase),
-    SentryMiddleware(),
     ActionLoggingMiddleware(),
-    LoginMiddleware(
+    ...analyticsMiddleware(myIdUseCase),
+    ...sentryMiddleware(),
+    ...loginMiddleware(
       logoutUseCase,
       loginUseCase,
       isLoggedInUseCase,
       checkUseCase,
     ),
-    UserMiddleware(
+    ...userMiddleware(
       myInfoUseCase,
       myPostsUseCase,
-      setUserDescriptionUseCase,
-      setUserInstagramUseCase,
       myChallengesUseCase,
       getUserByIdUseCase,
+      setUserDescriptionUseCase,
+      setUserInstagramUseCase,
       myIdUseCase,
       submitUserFcmTokenUseCase
     ),

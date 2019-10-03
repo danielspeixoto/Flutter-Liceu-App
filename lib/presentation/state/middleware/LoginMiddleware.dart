@@ -8,67 +8,79 @@ import 'package:redux/redux.dart';
 import '../../app.dart';
 import '../app_state.dart';
 
-class LoginMiddleware extends MiddlewareClass<AppState> {
-  final ILogOutUseCase _logoutUseCase;
-  final ILoginUseCase _loginUseCase;
-  final IIsLoggedInUseCase _isLoggedInUseCase;
-  final ICheckUseCase _checkUseCase;
-
-  LoginMiddleware(
-    this._logoutUseCase,
-    this._loginUseCase,
-    this._isLoggedInUseCase,
-    this._checkUseCase,
-  );
-
-  @override
-  Future call(
-      Store<AppState> store, dynamic action, NextDispatcher next) async {
-    if (action is LogOutAction) {
-      this._logoutUseCase.run().then((_) {
-        store.dispatch(NotLoggedInAction());
-        store.dispatch(NavigateReplaceAction(AppRoutes.login));
-      }).catchError((e) {
-        store.dispatch(PageActionErrorAction(action.toString().substring(11)));
-      });
-//
-    } else if (action is LoginAction) {
-      store.dispatch(IsLoggingInAction());
-      _loginUseCase.run(action.accessToken, action.method).then((id) {
-        analytics.setUserId(id);
-        store.dispatch(LoginSuccessAction());
-      }).catchError(
-        (e) {
-
-          store.dispatch(PageActionErrorAction(action.toString().substring(11)));
-        },
-      );
-//
-    } else if (action is CheckIfIsLoggedInAction) {
-      store.dispatch(IsLoggingInAction());
-      _isLoggedInUseCase.run().then((isLogged) {
-        if (isLogged) {
-          store.dispatch(LoginSuccessAction());
-        } else {
-          store.dispatch(NotLoggedInAction());
-        }
-      }).catchError((e) {
-        store.dispatch(PageActionErrorAction(action.toString().substring(11)));
-        store.dispatch(NotLoggedInAction());
-      });
-//
-    } else if (action is LoginSuccessAction) {
-      store.dispatch(NavigateReplaceAction(AppRoutes.home));
-      new Future.delayed(const Duration(seconds: 5), () {
-        _checkUseCase.run();
-      });
-
-//
-    } else if (action is NotLoggedInAction) {
-      store.dispatch(NavigateReplaceAction(AppRoutes.intro));
-    } else if (action is NavigateLoginAction) {
+List<Middleware<AppState>> loginMiddleware(
+    ILogOutUseCase _logoutUseCase,
+    ILoginUseCase _loginUseCase,
+    IIsLoggedInUseCase _isLoggedInUseCase,
+    ICheckUseCase _checkUseCase) {
+  void logOut(
+      Store<AppState> store, LogOutAction action, NextDispatcher next) async {
+    try {
+      await _logoutUseCase.run();
+      store.dispatch(NotLoggedInAction());
       store.dispatch(NavigateReplaceAction(AppRoutes.login));
+    } catch (e) {
+      store.dispatch(PageActionErrorAction(action.toString().substring(11)));
     }
     next(action);
   }
+
+  void login(
+      Store<AppState> store, LoginAction action, NextDispatcher next) async {
+    try {
+      store.dispatch(IsLoggingInAction());
+      await _loginUseCase.run(action.accessToken, action.method);
+      store.dispatch(LoginSuccessAction());
+    } catch (e) {
+      store.dispatch(PageActionErrorAction(action.toString().substring(11)));
+    }
+    next(action);
+  }
+
+  void isLogged(Store<AppState> store, CheckIfIsLoggedInAction action,
+      NextDispatcher next) async {
+    next(action);
+    try {
+      store.dispatch(IsLoggingInAction());
+      final isLogged = await _isLoggedInUseCase.run();
+      if (isLogged) {
+        store.dispatch(LoginSuccessAction());
+      } else {
+        store.dispatch(NotLoggedInAction());
+      }
+    } catch (e) {
+      store.dispatch(PageActionErrorAction(action.toString().substring(11)));
+      store.dispatch(NotLoggedInAction());
+    }
+  }
+
+  void loginSuccess(Store<AppState> store, LoginSuccessAction action,
+      NextDispatcher next) async {
+    store.dispatch(NavigateReplaceAction(AppRoutes.home));
+    new Future.delayed(const Duration(seconds: 5), () {
+      _checkUseCase.run();
+    });
+    next(action);
+  }
+
+  void isNotLogged(Store<AppState> store, NotLoggedInAction action,
+      NextDispatcher next) async {
+    next(action);
+    store.dispatch(NavigateReplaceAction(AppRoutes.intro));
+  }
+
+  void navigateLogin(Store<AppState> store, NavigateLoginAction action,
+      NextDispatcher next) async {
+    next(action);
+    store.dispatch(NavigateReplaceAction(AppRoutes.login));
+  }
+
+  return [
+    TypedMiddleware<AppState, LogOutAction>(logOut),
+    TypedMiddleware<AppState, LoginAction>(login),
+    TypedMiddleware<AppState, CheckIfIsLoggedInAction>(isLogged),
+    TypedMiddleware<AppState, LoginSuccessAction>(loginSuccess),
+    TypedMiddleware<AppState, NotLoggedInAction>(isNotLogged),
+    TypedMiddleware<AppState, NavigateLoginAction>(navigateLogin),
+  ];
 }

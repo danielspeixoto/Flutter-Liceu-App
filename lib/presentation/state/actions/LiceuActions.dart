@@ -1,1 +1,1 @@
-class LiceuInstagramPageClicked {}
+class LiceuInstagramPageClickedAction {}
