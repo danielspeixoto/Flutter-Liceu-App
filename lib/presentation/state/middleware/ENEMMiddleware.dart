@@ -4,6 +4,7 @@ import 'package:app/domain/boundary/RankingBoundary.dart';
 import 'package:app/domain/boundary/UserBoundary.dart';
 import 'package:app/presentation/state/actions/ENEMActions.dart';
 import 'package:app/presentation/state/actions/LoggerActions.dart';
+import 'package:app/presentation/state/actions/SentryActions.dart';
 import 'package:app/presentation/state/aggregates/ENEMQuestionData.dart';
 import 'package:app/presentation/state/aggregates/GameData.dart';
 import 'package:app/presentation/state/aggregates/RankingData.dart';
@@ -32,8 +33,11 @@ List<Middleware<AppState>> ENEMMiddleware(
       });
       final rankingData = RankingData(await Future.wait(futures));
       store.dispatch(FetchRankingSuccessAction(rankingData));
-    } catch (e) {
-      store.dispatch(LoggerErrorAction(action.toString().substring(11)));
+    } catch (error, stackTrace) {
+      final actionName = action.toString().substring(11);
+      
+      store.dispatch(LoggerErrorAction(actionName));
+      store.dispatch(ReportSentryErrorAction(error, stackTrace, actionName));
     }
   }
 
@@ -71,8 +75,11 @@ List<Middleware<AppState>> ENEMMiddleware(
       }).toList();
       final questionsData = await Future.wait(futures);
       store.dispatch(FetchTrainingQuestionsSuccessAction(questionsData));
-    } catch (e) {
-      store.dispatch(LoggerErrorAction(action.toString().substring(11)));
+    } catch (error, stackTrace) {
+      final actionName = action.toString().substring(11);
+      
+      store.dispatch(LoggerErrorAction(actionName));
+      store.dispatch(ReportSentryErrorAction(error, stackTrace, actionName));
     }
   }
 
@@ -97,8 +104,11 @@ List<Middleware<AppState>> ENEMMiddleware(
       });
       store.dispatch(NavigateTournamentReviewAction(score, timeSpent));
       store.dispatch(SubmitTournamentGameAction(answers, timeSpent));
-    } catch (e) {
-      store.dispatch(LoggerErrorAction(action.toString().substring(11)));
+    } catch (error, stackTrace) {
+      final actionName = action.toString().substring(11);
+      
+      store.dispatch(LoggerErrorAction(actionName));
+      store.dispatch(ReportSentryErrorAction(error, stackTrace, actionName));
     }
   }
 
@@ -106,8 +116,11 @@ List<Middleware<AppState>> ENEMMiddleware(
       SubmitTournamentGameAction action, NextDispatcher next) async {
     try {
       await submitGameUseCase.run(action.answers, action.timeSpent);
-    } catch (e) {
-      store.dispatch(LoggerErrorAction(action.toString().substring(11)));
+    } catch (error, stackTrace) {
+      final actionName = action.toString().substring(11);
+      
+      store.dispatch(LoggerErrorAction(actionName));
+      store.dispatch(ReportSentryErrorAction(error, stackTrace, actionName));
     }
   }
 
@@ -139,8 +152,11 @@ List<Middleware<AppState>> ENEMMiddleware(
       }).toList();
       final questionsData = await Future.wait(futures);
       store.dispatch(FetchTournamentQuestionsSuccessAction(questionsData));
-    } catch (e) {
-      store.dispatch(LoggerErrorAction(action.toString().substring(11)));
+    } catch (error, stackTrace) {
+      final actionName = action.toString().substring(11);
+      
+      store.dispatch(LoggerErrorAction(actionName));
+      store.dispatch(ReportSentryErrorAction(error, stackTrace, actionName));
     }
   }
 

@@ -1,8 +1,13 @@
 class ReportSentryErrorAction {
-  final String error;
-  final String stackTrace;
+  final dynamic error;
+  final StackTrace stackTrace;
+  final String message;
 
-  ReportSentryErrorAction(this.error, this.stackTrace);
+  ReportSentryErrorAction(this.error, this.stackTrace, this.message);
 }
 
-class ReportSentryInfoAction{}
+class ReportSentryInfoAction{
+  final String actionName;
+
+  ReportSentryInfoAction(this.actionName);
+}

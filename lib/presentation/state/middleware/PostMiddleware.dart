@@ -4,6 +4,7 @@ import 'package:app/domain/boundary/UserBoundary.dart';
 import 'package:app/presentation/state/actions/LoggerActions.dart';
 import 'package:app/presentation/state/actions/PageActions.dart';
 import 'package:app/presentation/state/actions/PostActions.dart';
+import 'package:app/presentation/state/actions/SentryActions.dart';
 import 'package:app/presentation/state/aggregates/PostData.dart';
 import 'package:app/presentation/state/navigator/NavigatorActions.dart';
 import 'package:redux/redux.dart';
@@ -22,7 +23,6 @@ List<Middleware<AppState>> postMiddleware(
     try {
       await deletePostUseCase.run(action.postId);
     } catch (e) {
-      store.dispatch(LoggerErrorAction(action.toString().substring(11)));
     }
   }
 
@@ -32,10 +32,12 @@ List<Middleware<AppState>> postMiddleware(
     try {
       await createPostUseCase.run(action.postType, action.text);
       store.dispatch(SubmitPostSuccessAction());
-    } on CreatePostException catch(e) {
+    } on CreatePostException catch (error, stackTrace) {
       store.dispatch(SubmitPostErrorTextSizeMismatchAction());
-    } catch (e) {
-      store.dispatch(LoggerErrorAction(action.toString().substring(11)));
+    } catch (error, stackTrace) {
+       final actionName = action.toString().substring(11);
+      store.dispatch(LoggerErrorAction(actionName));
+      store.dispatch(ReportSentryErrorAction(error, stackTrace, actionName));
     }
   }
 
@@ -63,8 +65,10 @@ List<Middleware<AppState>> postMiddleware(
       });
       final data = await Future.wait(futures);
       store.dispatch(FetchPostsSuccessAction(data));
-    } catch (e) {
-      store.dispatch(LoggerErrorAction(action.toString().substring(11)));
+    } catch (error, stackTrace) {
+      final actionName = action.toString().substring(11);
+      store.dispatch(LoggerErrorAction(actionName));
+      store.dispatch(ReportSentryErrorAction(error, stackTrace, actionName));
     }
   }
 

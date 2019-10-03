@@ -75,7 +75,7 @@ final Store<AppState> store = Store<AppState>(
   appReducer,
   initialState: AppState.initial(),
   middleware: [
-    LoggerMiddleware(),
+    ...loggerMiddleware(),
     ...analyticsMiddleware(myIdUseCase),
     ...sentryMiddleware(),
     ...loginMiddleware(

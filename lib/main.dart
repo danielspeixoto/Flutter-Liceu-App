@@ -1,10 +1,10 @@
 import 'package:app/presentation/app.dart';
-import 'package:app/presentation/state/app_state.dart';
 import 'package:app/util/sentry.dart';
 import 'package:flutter/material.dart';
 import 'package:sentry/sentry.dart';
 import 'package:app/injection.dart';
 import 'dart:async';
+import 'dart:io';
 
 final sentry = Sentry();
 
@@ -16,7 +16,9 @@ Future<void> _reportError(dynamic error, dynamic stackTrace) async {
       stackTrace: stackTrace,
       environment: enviroment,
       level: SeverityLevel.error);
-  sentry.client.capture(event: event);
+  await sentry.client.capture(event: event);
+
+  exit(0);
 }
 
 Future<Null> main() async {
@@ -27,5 +29,6 @@ Future<Null> main() async {
   runZoned<Future<Null>>(() async {
     runApp(new MyApp());
   }, onError: (error, stackTrace) async {
+    await _reportError(error, stackTrace);
   });
 }

@@ -11,15 +11,14 @@ class Sentry {
   );
 
   Future<void> reportError(
-      dynamic error, dynamic action, dynamic stackTrace) async {
-    print('Caught error: $error');
+      dynamic error, String message, dynamic stackTrace) async {
 
     final Event event = new Event(
         exception: error,
         stackTrace: stackTrace,
         environment: enviroment,
         level: SeverityLevel.error,
-        message: action.toString().substring(11));
+        message: error.toString().substring(11) + " in " + message);
     client.capture(event: event);
   }
 
@@ -29,13 +28,13 @@ class Sentry {
   }
 
   Future<void> reportInfo(dynamic action) async {
-    if (!isDev) {
+    //if (!isDev) {
       final Event event = new Event(
           environment: enviroment,
           level: SeverityLevel.info,
           message: action.toString().substring(11));
       client.capture(event: event);
-    }
+    //}
   }
 
   Future<String> getRelease() async {
