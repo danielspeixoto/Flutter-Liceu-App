@@ -1,4 +1,5 @@
 import 'package:app/presentation/app.dart';
+import 'package:app/presentation/state/app_state.dart';
 import 'package:app/util/sentry.dart';
 import 'package:flutter/material.dart';
 import 'package:sentry/sentry.dart';
@@ -11,7 +12,10 @@ Future<void> _reportError(dynamic error, dynamic stackTrace) async {
   print('Caught error: $error');
 
   final Event event = new Event(
-      exception: error, stackTrace: stackTrace, environment: enviroment);
+      exception: error,
+      stackTrace: stackTrace,
+      environment: enviroment,
+      level: SeverityLevel.error);
   sentry.client.capture(event: event);
 }
 
@@ -23,6 +27,6 @@ Future<Null> main() async {
   runZoned<Future<Null>>(() async {
     runApp(new MyApp());
   }, onError: (error, stackTrace) async {
-    await _reportError(error, stackTrace);
+    store.dispatch(action);
   });
 }

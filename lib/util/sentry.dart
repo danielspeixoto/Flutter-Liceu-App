@@ -11,21 +11,18 @@ class Sentry {
       dsn: "https://2173bb44d75b4617b22e11ddcd4b9345@sentry.io/1760063",
       environmentAttributes: Event(release: "3.0.15"),);
 
-  Future<void> reportError(dynamic error, dynamic stackTrace) async {
-    // Print the exception to the console.
-    print('Caught error: $error');
-    if (isDev) {
-      // Print the full stacktrace in debug mode.
-      print(stackTrace);
-      return;
-    } else {
-      // Send the Exception and Stacktrace to Sentry in Production mode.
-      await client.captureException(
-        exception: error,
-        stackTrace: stackTrace,
-      );
-    }
-  }
+  Future<void> _reportError(dynamic error, dynamic action, dynamic stackTrace) async {
+  print('Caught error: $error');
+
+  final Event event = new Event(
+      exception: error,
+      stackTrace: stackTrace,
+      environment: enviroment,
+      level: SeverityLevel.error,
+      message: action.toString().substring(11));
+      client.capture(event: event);
+}
+
 
   Future<String> getRelease() async {
     File pubspec = new File("../pubspec.yaml");
