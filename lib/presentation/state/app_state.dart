@@ -1,3 +1,4 @@
+import 'package:app/presentation/state/middleware/ActionLoggingMiddleware.dart';
 import 'package:app/presentation/state/middleware/TriviaMiddleware.dart';
 import 'package:app/presentation/state/reducers/ChallengeReducer.dart';
 import 'package:app/presentation/state/reducers/ENEMReducer.dart';
@@ -75,7 +76,7 @@ final Store<AppState> store = Store<AppState>(
   appReducer,
   initialState: AppState.initial(),
   middleware: [
-    new LoggingMiddleware.printer(),
+    ActionLoggingMiddleware(),
     ...analyticsMiddleware(myIdUseCase),
     ...sentryMiddleware(),
     ...loginMiddleware(

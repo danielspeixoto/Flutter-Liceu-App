@@ -2,6 +2,7 @@ import 'package:app/domain/aggregates/Trivia.dart';
 import 'package:app/domain/aggregates/exceptions/CreateTriviaExceptions.dart';
 import 'package:app/domain/boundary/TriviaBoundary.dart';
 import 'package:app/presentation/app.dart';
+import 'package:app/presentation/state/actions/PageActions.dart';
 import 'package:app/presentation/state/actions/TriviaActions.dart';
 import 'package:app/presentation/state/navigator/NavigatorActions.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
@@ -47,7 +48,7 @@ List<Middleware<AppState>> triviaMiddleware(
           action.correctAnswer,
           action.wrongAnswer,));
     } catch (e) {
-      print(e);
+      store.dispatch(PageActionErrorAction(action.toString().substring(11)));
     }
   }
 

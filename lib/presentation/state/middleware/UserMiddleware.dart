@@ -1,5 +1,6 @@
 import 'package:app/domain/boundary/UserBoundary.dart';
 import 'package:app/presentation/state/actions/LoginActions.dart';
+import 'package:app/presentation/state/actions/PageActions.dart';
 import 'package:app/presentation/state/aggregates/ChallengeHistoryData.dart';
 import 'package:app/presentation/state/actions/PostActions.dart';
 import 'package:app/presentation/state/actions/UserActions.dart';
@@ -28,7 +29,7 @@ List<Middleware<AppState>> userMiddleware(
       final user = await fetchUserInfoUseCase.run();
       store.dispatch(SetUserAction(user));
     } catch (e) {
-      print(e);
+      store.dispatch(PageActionErrorAction(action.toString().substring(11)));
       store.dispatch(FetchUserErrorAction());
     }
   }
@@ -40,7 +41,7 @@ List<Middleware<AppState>> userMiddleware(
       final posts = await fetchUserPostsUseCase.run();
       store.dispatch(SetUserPostsAction(posts));
     } catch (e) {
-      print(e);
+      store.dispatch(PageActionErrorAction(action.toString().substring(11)));
       store.dispatch(FetchUserPostsErrorAction());
     }
   }
@@ -67,10 +68,10 @@ List<Middleware<AppState>> userMiddleware(
         final challengeDataList = await Future.wait(futures);
         store.dispatch(SetUserChallengesAction(challengeDataList));
       } catch (e) {
-        print(e);
+        store.dispatch(PageActionErrorAction(action.toString().substring(11)));
       }
     }).catchError((e) {
-      print(e);
+      store.dispatch(PageActionErrorAction(action.toString().substring(11)));
       store.dispatch(FetchUserChallengesErrorAction());
     });
   }
@@ -103,7 +104,7 @@ List<Middleware<AppState>> userMiddleware(
         ),
       );
     } catch (e) {
-      print(e);
+      store.dispatch(PageActionErrorAction(action.toString().substring(11)));
     }
   }
 
@@ -132,7 +133,7 @@ List<Middleware<AppState>> userMiddleware(
       final id = await _myIdUseCase.run();
       await _submitFcmTokenUseCase.run(action.fcmtoken, id);
     } catch (e) {
-      print(e);
+      store.dispatch(PageActionErrorAction(action.toString().substring(11)));
     }
   }
 
