@@ -18,7 +18,9 @@ Future<void> _reportError(dynamic error, dynamic stackTrace) async {
       level: SeverityLevel.error);
   await sentry.client.capture(event: event);
 
-  exit(0);
+  if(!isDev){
+    exit(0);
+  }
 }
 
 Future<Null> main() async {

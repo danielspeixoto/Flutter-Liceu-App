@@ -15,7 +15,7 @@ List<Middleware<AppState>> sentryMiddleware() {
 
   void reportError(Store<AppState> store, ReportSentryErrorAction action,
       NextDispatcher next) async {
-    await sentry.reportError(action.error, action.message, action.stackTrace);
+    await sentry.reportError(action.error, action.message, action.stackTrace, action.parameters);
     next(action);
   }
 

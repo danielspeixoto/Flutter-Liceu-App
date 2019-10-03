@@ -11,14 +11,15 @@ class Sentry {
   );
 
   Future<void> reportError(
-      dynamic error, String message, dynamic stackTrace) async {
+      dynamic error, String message, dynamic stackTrace, [dynamic parameters]) async {
 
     final Event event = new Event(
         exception: error,
         stackTrace: stackTrace,
         environment: enviroment,
         level: SeverityLevel.error,
-        message: error.toString().substring(11) + " in " + message);
+        extra: parameters,
+        message: "Exception in " + message);
     client.capture(event: event);
   }
 
