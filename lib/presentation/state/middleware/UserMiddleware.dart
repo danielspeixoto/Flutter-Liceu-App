@@ -31,7 +31,7 @@ List<Middleware<AppState>> userMiddleware(
       store.dispatch(SetUserAction(user));
     } catch (error, stackTrace) {
       final actionName = action.toString().substring(11);
-      
+
       store.dispatch(LoggerErrorAction(actionName));
       store.dispatch(ReportSentryErrorAction(error, stackTrace, actionName));
       store.dispatch(FetchUserErrorAction());
@@ -46,7 +46,7 @@ List<Middleware<AppState>> userMiddleware(
       store.dispatch(SetUserPostsAction(posts));
     } catch (error, stackTrace) {
       final actionName = action.toString().substring(11);
-      
+
       store.dispatch(LoggerErrorAction(actionName));
       store.dispatch(ReportSentryErrorAction(error, stackTrace, actionName));
       store.dispatch(FetchUserPostsErrorAction());
@@ -74,10 +74,9 @@ List<Middleware<AppState>> userMiddleware(
       });
       final challengeDataList = await Future.wait(futures);
       store.dispatch(SetUserChallengesAction(challengeDataList));
-
     } catch (error, stackTrace) {
       final actionName = action.toString().substring(11);
-      
+
       store.dispatch(LoggerErrorAction(actionName));
       store.dispatch(ReportSentryErrorAction(error, stackTrace, actionName));
       store.dispatch(FetchUserChallengesErrorAction());
@@ -113,9 +112,10 @@ List<Middleware<AppState>> userMiddleware(
       );
     } catch (error, stackTrace) {
       final actionName = action.toString().substring(11);
-      
+
       store.dispatch(LoggerErrorAction(actionName));
-      store.dispatch(ReportSentryErrorAction(error, stackTrace, actionName, action.itemToJson()));
+      store.dispatch(ReportSentryErrorAction(
+          error, stackTrace, actionName, action.itemToJson()));
     }
   }
 
@@ -145,9 +145,10 @@ List<Middleware<AppState>> userMiddleware(
       await _submitFcmTokenUseCase.run(action.fcmtoken, id);
     } catch (error, stackTrace) {
       final actionName = action.toString().substring(11);
-      
+
       store.dispatch(LoggerErrorAction(actionName));
-      store.dispatch(ReportSentryErrorAction(error, stackTrace, actionName, action.itemToJson()));
+      store.dispatch(ReportSentryErrorAction(
+          error, stackTrace, actionName, action.itemToJson()));
     }
   }
 
