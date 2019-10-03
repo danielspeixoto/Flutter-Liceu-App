@@ -47,14 +47,10 @@ class DeletePostAction extends ItemAction {
   }
 }
 
-class PostShareAction extends ItemAction {
+class PostShareAction {
   final String postId;
   final String type;
 
   PostShareAction(this.postId, this.type);
 
-  @override
-  Map<String, dynamic> itemToJson() {
-    return <String, dynamic>{'postId': postId, 'type': type};
-  }
 }

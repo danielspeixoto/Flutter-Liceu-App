@@ -120,7 +120,7 @@ List<Middleware<AppState>> ENEMMiddleware(
       final actionName = action.toString().substring(11);
       
       store.dispatch(LoggerErrorAction(actionName));
-      store.dispatch(ReportSentryErrorAction(error, stackTrace, actionName));
+      store.dispatch(ReportSentryErrorAction(error, stackTrace, actionName, action.itemToJson()));
     }
   }
 

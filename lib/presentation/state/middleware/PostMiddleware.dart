@@ -22,7 +22,10 @@ List<Middleware<AppState>> postMiddleware(
     next(action);
     try {
       await deletePostUseCase.run(action.postId);
-    } catch (e) {
+    } catch (error, stackTrace) {
+      final actionName = action.toString().substring(11);
+      store.dispatch(LoggerErrorAction(actionName));
+      store.dispatch(ReportSentryErrorAction(error, stackTrace, actionName, action.itemToJson()));
     }
   }
 
@@ -37,7 +40,7 @@ List<Middleware<AppState>> postMiddleware(
     } catch (error, stackTrace) {
        final actionName = action.toString().substring(11);
       store.dispatch(LoggerErrorAction(actionName));
-      store.dispatch(ReportSentryErrorAction(error, stackTrace, actionName));
+      store.dispatch(ReportSentryErrorAction(error, stackTrace, actionName, action.itemToJson()));
     }
   }
 

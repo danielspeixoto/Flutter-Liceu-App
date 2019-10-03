@@ -74,7 +74,7 @@ List<Middleware<AppState>> challengeMiddleware(
     } catch (error, stackTrace) {
       store.dispatch(LoggerErrorAction(action.toString().substring(11)));
       store.dispatch(ReportSentryErrorAction(
-          error, stackTrace, action.toString().substring(11)));
+          error, stackTrace, action.toString().substring(11), action.itemToJson()));
     }
   }
 
@@ -86,7 +86,7 @@ List<Middleware<AppState>> challengeMiddleware(
     } catch (error, stackTrace) {
       store.dispatch(LoggerErrorAction(action.toString().substring(11)));
       store.dispatch(ReportSentryErrorAction(
-          error, stackTrace, action.toString().substring(11)));
+          error, stackTrace, action.toString().substring(11), action.itemToJson()));
     }
   }
 
@@ -133,7 +133,7 @@ List<Middleware<AppState>> challengeMiddleware(
     } catch (error, stackTrace) {
       store.dispatch(LoggerErrorAction(action.toString().substring(11)));
       store.dispatch(ReportSentryErrorAction(
-          error, stackTrace, action.toString().substring(11)));
+          error, stackTrace, action.toString().substring(11), action.itemToJson()));
     }
   }
 
