@@ -1,6 +1,8 @@
 import 'package:app/domain/aggregates/exceptions/CreatePostExceptions.dart';
 import 'package:app/domain/boundary/PostBoundary.dart';
 import 'package:app/domain/boundary/UserBoundary.dart';
+import 'package:app/presentation/state/actions/LoggerActions.dart';
+import 'package:app/presentation/state/actions/PageActions.dart';
 import 'package:app/presentation/state/actions/PostActions.dart';
 import 'package:app/presentation/state/aggregates/PostData.dart';
 import 'package:app/presentation/state/navigator/NavigatorActions.dart';
@@ -20,7 +22,7 @@ List<Middleware<AppState>> postMiddleware(
     try {
       await deletePostUseCase.run(action.postId);
     } catch (e) {
-      print(e);
+      store.dispatch(LoggerErrorAction(action.toString().substring(11)));
     }
   }
 
@@ -33,7 +35,7 @@ List<Middleware<AppState>> postMiddleware(
     } on CreatePostException catch(e) {
       store.dispatch(SubmitPostErrorTextSizeMismatchAction());
     } catch (e) {
-      print(e);
+      store.dispatch(LoggerErrorAction(action.toString().substring(11)));
     }
   }
 
@@ -62,7 +64,7 @@ List<Middleware<AppState>> postMiddleware(
       final data = await Future.wait(futures);
       store.dispatch(FetchPostsSuccessAction(data));
     } catch (e) {
-      print(e);
+      store.dispatch(LoggerErrorAction(action.toString().substring(11)));
     }
   }
 

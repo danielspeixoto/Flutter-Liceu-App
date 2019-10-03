@@ -27,6 +27,5 @@ Future<Null> main() async {
   runZoned<Future<Null>>(() async {
     runApp(new MyApp());
   }, onError: (error, stackTrace) async {
-    store.dispatch(action);
   });
 }

@@ -1,5 +1,6 @@
 import 'package:app/domain/boundary/LoginBoundary.dart';
 import 'package:app/domain/boundary/UserBoundary.dart';
+import 'package:app/presentation/state/actions/LoggerActions.dart';
 import 'package:app/presentation/state/actions/LoginActions.dart';
 import 'package:app/presentation/state/navigator/NavigatorActions.dart';
 import 'package:redux/redux.dart';
@@ -19,7 +20,7 @@ List<Middleware<AppState>> loginMiddleware(
       store.dispatch(NotLoggedInAction());
       store.dispatch(NavigateReplaceAction(AppRoutes.login));
     } catch (e) {
-      print(e);
+      store.dispatch(LoggerErrorAction(action.toString().substring(11)));
     }
     next(action);
   }
@@ -31,7 +32,7 @@ List<Middleware<AppState>> loginMiddleware(
       await _loginUseCase.run(action.accessToken, action.method);
       store.dispatch(LoginSuccessAction());
     } catch (e) {
-      print(e);
+      store.dispatch(LoggerErrorAction(action.toString().substring(11)));
     }
     next(action);
   }
@@ -48,7 +49,7 @@ List<Middleware<AppState>> loginMiddleware(
         store.dispatch(NotLoggedInAction());
       }
     } catch (e) {
-      print(e);
+      store.dispatch(LoggerErrorAction(action.toString().substring(11)));
       store.dispatch(NotLoggedInAction());
     }
   }

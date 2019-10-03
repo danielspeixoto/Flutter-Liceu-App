@@ -1,7 +1,9 @@
 import 'package:app/domain/boundary/UserBoundary.dart';
 import 'package:app/presentation/state/actions/ChallengeActions.dart';
 import 'package:app/presentation/state/actions/ENEMActions.dart';
+import 'package:app/presentation/state/actions/LoggerActions.dart';
 import 'package:app/presentation/state/actions/NotificationActions.dart';
+import 'package:app/presentation/state/actions/PageActions.dart';
 import 'package:redux/redux.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -50,7 +52,7 @@ List<Middleware<AppState>> notificationMiddleware(
         handleNotification(store, action.action, action.data);
       }
     } catch (e) {
-      print(e);
+      store.dispatch(LoggerErrorAction(action.toString().substring(11)));
     }
   }
 
