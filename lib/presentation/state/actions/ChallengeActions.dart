@@ -8,12 +8,12 @@ class NavigateChallengeAction {
 
 class FetchRandomChallengeAction {}
 
-class FetchChallengeAction extends ItemAction{
+class FetchChallengeAction extends ItemAction {
   final String challengeId;
 
   FetchChallengeAction(this.challengeId);
 
-    Map<String, dynamic> itemToJson() {
+  Map<String, dynamic> itemToJson() {
     return <String, dynamic>{
       'challengeId': challengeId,
     };
@@ -33,12 +33,12 @@ class SetTriviaTimerDecrementAction {}
 class SubmitChallengeAction {}
 
 //Interactions
-class AnswerTriviaAction extends ItemAction{
+class AnswerTriviaAction extends ItemAction {
   final String answer;
 
   AnswerTriviaAction(this.answer);
 
-      @override
+  @override
   Map<String, dynamic> itemToJson() {
     return <String, dynamic>{
       'answer': answer,
@@ -53,7 +53,7 @@ class AcceptChallengeAction extends ItemAction {
 
   AcceptChallengeAction(this.challengeId);
 
-    @override
+  @override
   Map<String, dynamic> itemToJson() {
     return <String, dynamic>{
       'challengeId': challengeId,
@@ -63,7 +63,7 @@ class AcceptChallengeAction extends ItemAction {
 
 class PlayRandomChallengeAction {}
 
-class ChallengeSomeoneAction {
+class ChallengeSomeoneAction extends ItemAction{
   final String challengedId;
 
   ChallengeSomeoneAction(this.challengedId);

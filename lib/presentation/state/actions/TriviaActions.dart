@@ -1,4 +1,5 @@
 import 'package:app/domain/aggregates/Trivia.dart';
+import 'package:app/presentation/state/actions/ItemActions.dart';
 
 //Navigates
 class NavigateCreateTriviaAction {}
@@ -31,7 +32,7 @@ class SetCreateTriviaDomainFieldAction {
 }
 
 //Submits
-class SubmitTriviaAction {
+class SubmitTriviaAction extends ItemAction{
   final String question;
   final String correctAnswer;
   final String wrongAnswer;
@@ -39,6 +40,16 @@ class SubmitTriviaAction {
 
   SubmitTriviaAction(
       this.question, this.correctAnswer, this.wrongAnswer, this.domain);
+
+          @override
+  Map<String, dynamic> itemToJson() {
+    return <String, dynamic>{
+      'question': question,
+      'correctAnswer': correctAnswer,
+      'wrongAnswer': wrongAnswer,
+      'domain': domain
+    };
+  }
 }
 
 class SubmitTriviaSuccessAction {}
