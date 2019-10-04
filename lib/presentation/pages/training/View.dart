@@ -86,6 +86,33 @@ class TrainingPage extends StatelessWidget {
                                 );
                               },
                             ).toList(),
+                             Container(
+                               alignment: Alignment.bottomRight,
+                               margin: EdgeInsets.all(8),
+                                child: GestureDetector(
+                              onTap: () {
+                                viewModel.onReportButtonPressed(
+                                    viewModel.questions.content[0].id,
+                                    viewModel.questions.content[0].answer,
+                                    viewModel
+                                        .questions.content[0].selectedAnswer);
+                              },
+                              child: Column(
+                                children: [
+                                Icon(
+                                  FontAwesomeIcons.exclamationCircle,
+                                  color: Colors.black,
+                                  size: 12,
+                                ),
+                                Text(
+                                  'Reportar erro',
+                                  style: TextStyle(
+                                      color: Color(0xFF0061A1),
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 12),
+                                ),
+                              ]),
+                            )),
                             Container(
                               padding: EdgeInsets.all(8),
                               child: FlatButton(
@@ -102,28 +129,7 @@ class TrainingPage extends StatelessWidget {
                                 ),
                               ),
                             ),
-                            Container(
-                                child: GestureDetector(
-                              onTap: () {
-                                viewModel.onReportButtonPressed(viewModel.questions.content[0].id, 
-                                viewModel.questions.content[0].answer, viewModel.questions.content[0].selectedAnswer );
-                              },
-                              child: Column(children: [
-                                Icon(
-                                  FontAwesomeIcons.exclamationCircle,
-                                  color: Colors.black,
-                                  size: 10,
-                                ),
-                                Text(
-                                  'Reportar erro',
-                                  style: TextStyle(
-                                    color: Color(0xFF0061A1),
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 10
-                                  ),
-                                ),
-                              ]),
-                            ))
+                           
                           ],
                         ),
                       ),
