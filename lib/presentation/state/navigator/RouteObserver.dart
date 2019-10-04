@@ -1,3 +1,4 @@
+import 'package:app/presentation/state/actions/ChallengeActions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import '../app_state.dart';
@@ -38,7 +39,9 @@ class RouteAwareWidgetState extends State<RouteAwareWidget> with RouteAware {
   @override
   void didPopNext() {
     // Covering route was popped off the navigator.
+    store.dispatch(CancelChallengeAction());
     StoreProvider.of<AppState>(context).dispatch(NavigatePopStackAction());
+    
   }
 
   @override

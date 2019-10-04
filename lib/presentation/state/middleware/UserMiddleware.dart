@@ -149,9 +149,7 @@ List<Middleware<AppState>> userMiddleware(
     TypedMiddleware<AppState, SetUserAction>(setUser),
     TypedMiddleware<AppState, NavigateUserEditProfileAction>(
         navigateUserEditProfile),
-    TypedMiddleware<AppState, LoginSuccessAction>(
-        loginSuccess),
-    TypedMiddleware<AppState, SubmitUserFcmTokenAction>(
-        submitFcmToken),
+    TypedMiddleware<AppState, LoginSuccessAction>(loginSuccess),
+    TypedMiddleware<AppState, SubmitUserFcmTokenAction>(submitFcmToken)
   ];
 }

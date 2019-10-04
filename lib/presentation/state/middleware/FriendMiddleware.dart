@@ -1,6 +1,7 @@
 import 'package:app/domain/boundary/UserBoundary.dart';
 import 'package:app/presentation/state/actions/FriendActions.dart';
 import 'package:app/presentation/state/actions/PageActions.dart';
+import 'package:app/presentation/state/actions/UserActions.dart';
 import 'package:app/presentation/state/navigator/NavigatorActions.dart';
 import 'package:redux/redux.dart';
 
@@ -10,6 +11,7 @@ import '../app_state.dart';
 List<Middleware<AppState>> friendMiddleware(
   IGetUserPostsUseCase getUserPostsUseCase,
   IGetUserByIdUseCase getUserById,
+  IMyIdUseCase getMyIdUseCase,
 ) {
   void fetchPosts(Store<AppState> store, FetchFriendPostsAction action,
       NextDispatcher next) async {
@@ -24,17 +26,20 @@ List<Middleware<AppState>> friendMiddleware(
   }
 
   void viewFriend(Store<AppState> store, NavigateViewFriendAction action,
-      NextDispatcher next) {
+      NextDispatcher next) async {
     next(action);
+
     store.dispatch(NavigatePushAction(AppRoutes.friend));
   }
 
   void userClick(
-      Store<AppState> store, UserClickedAction action, NextDispatcher next) {
+      Store<AppState> store, UserClickedAction action, NextDispatcher next) async {
     next(action);
-    store.dispatch(SetFriendAction(action.user));
-    store.dispatch(FetchFriendPostsAction(action.user.id));
-    store.dispatch(NavigatePushAction(AppRoutes.friend));
+
+      store.dispatch(SetFriendAction(action.user));
+      store.dispatch(FetchFriendPostsAction(action.user.id));
+      store.dispatch(NavigateViewFriendAction());
+
   }
 
   return [

@@ -49,7 +49,6 @@ class UserProfileViewModel {
             "\n\nConfira mais no nosso app!\nhttps://bit.ly/BaixarLiceu");
       },
       onChallengeMePressed: (String userId) {
-        store.dispatch(NavigateChallengeAction());
         store.dispatch(ChallengeSomeoneAction(userId));
       },
       onInstagramPressed: () {

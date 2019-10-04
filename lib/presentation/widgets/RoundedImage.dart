@@ -1,4 +1,7 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_image/network.dart';
 
 class RoundedImage extends StatelessWidget {
   final String pictureURL;
@@ -18,7 +21,8 @@ class RoundedImage extends StatelessWidget {
             ),
           ),
           image: new DecorationImage(
-              fit: BoxFit.fill, image: new NetworkImage(this.pictureURL)),
+              fit: BoxFit.fill, image: new NetworkImageWithRetry(pictureURL) ),
         ),
       );
+  
 }

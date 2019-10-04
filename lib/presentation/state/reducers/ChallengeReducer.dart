@@ -15,6 +15,7 @@ class ChallengeState {
   final int currentQuestion;
   final bool canAnswer;
   final int randomNum;
+  final bool userCancelChallenged;
 
   ChallengeState(
     this.challenge,
@@ -23,10 +24,11 @@ class ChallengeState {
     this.timeLeft,
     this.canAnswer,
     this.randomNum,
+    this.userCancelChallenged
   );
 
   factory ChallengeState.initial() => ChallengeState(
-      Data(), [], 0, TRIVIA_TIME_TO_ANSWER, false, TRIVIA_TIME_TO_ANSWER);
+      Data(), [], 0, TRIVIA_TIME_TO_ANSWER, false, TRIVIA_TIME_TO_ANSWER, false);
 
   ChallengeState copyWith({
     Data<ChallengeData> challenge,
@@ -35,6 +37,7 @@ class ChallengeState {
     int timeLeft,
     bool canAnswer,
     int randomNum,
+    bool userCancelChallenged
   }) {
     final state = ChallengeState(
       challenge ?? this.challenge,
@@ -43,6 +46,7 @@ class ChallengeState {
       timeLeft ?? this.timeLeft,
       canAnswer ?? this.canAnswer,
       randomNum ?? this.randomNum,
+      userCancelChallenged ?? this.userCancelChallenged
     );
     return state;
   }
@@ -65,6 +69,7 @@ final Reducer<ChallengeState> challengeReducer =
   TypedReducer<ChallengeState, NavigateChallengeAction>(resetChallenge),
   TypedReducer<ChallengeState, AnswerTriviaAction>(answerTrivia),
   TypedReducer<ChallengeState, SetTriviaTimerDecrementAction>(decrementTime),
+  TypedReducer<ChallengeState, CancelChallengeAction>(cancelChallenge),
 ]);
 
 ChallengeState startChallenge(ChallengeState state, SetChallengeAction action) {
@@ -75,6 +80,13 @@ ChallengeState startChallenge(ChallengeState state, SetChallengeAction action) {
     answers: [],
     canAnswer: true,
     randomNum: Random().nextInt(2),
+    userCancelChallenged: false
+  );
+}
+
+ChallengeState cancelChallenge(ChallengeState state, CancelChallengeAction action) {
+    return state.copyWith(
+    userCancelChallenged: true,
   );
 }
 
