@@ -89,23 +89,8 @@ class TrainingPage extends StatelessWidget {
                                         builder: (context) {
                                           return SimpleDialog(
                                             children: <Widget>[
-                                              Container(
-                                                alignment: Alignment.center,
-                                                child: Text(
-                                                  "Reportar erro",
-                                                  style: TextStyle(
-                                                    color: Colors.black,
-                                                    fontWeight: FontWeight.bold,
-                                                  ),
-                                                ),
-                                              ),
                                               ListTile(
-                                                title: Text("Gabarito Errado",
-                                                    style: TextStyle(
-                                                        color:
-                                                            Color(0xFF0061A1),
-                                                        fontWeight:
-                                                            FontWeight.bold)),
+                                                title: Text("Gabarito Errado"),
                                                 onTap: () {
                                                   Navigator.of(context).pop();
                                                   viewModel

@@ -14,134 +14,116 @@ class TournamentPage extends StatelessWidget {
   final inputController = TextEditingController();
 
   @override
-  Widget build(BuildContext context) =>
-      StoreConnector<AppState, TournamentViewModel>(
-          onInit: (store) => store.dispatch(PageInitAction("Tournament")),
-          converter: (store) => TournamentViewModel.create(store),
-          builder: (BuildContext context, TournamentViewModel viewModel) {
-            return LiceuScaffold(
-              body: ListView(
-                children: <Widget>[
-                  Container(
-                    margin: EdgeInsets.all(8),
-                    child: Text(
-                      "Responda o máximo de perguntas em menos tempo para entrar no ranking.",
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                  FetcherWidget(
-                    isLoading: viewModel.questions.isLoading,
-                    errorMessage: viewModel.questions.errorMessage,
-                    child: () => Container(
-                      child: Column(
-                        children: <Widget>[
-                          ...viewModel.questions.content.map(
-                            (question) {
-                              var status = [
-                                AnswerStatus.DEFAULT,
-                                AnswerStatus.DEFAULT,
-                                AnswerStatus.DEFAULT,
-                                AnswerStatus.DEFAULT,
-                                AnswerStatus.DEFAULT,
-                              ];
-                              if (question.selectedAnswer != -1) {
-                                status[question.selectedAnswer] =
-                                    AnswerStatus.SELECTED;
-                              }
-                              return Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: <Widget>[
-                                    Card(
-                                      child: ENEMQuestionWidget(
-                                        (int idx) {
-                                          viewModel.onAnswer(question.id, idx);
-                                        },
-                                        question.imageURL,
-                                        question.width,
-                                        question.height,
-                                        status,
-                                      ),
-                                    ),
-                                    Container(
-                                      child: Align(
-                                        alignment: Alignment.topRight,
-                                        child: IconButton(
-                                          alignment: Alignment.topRight,
-                                          onPressed: () {
-                                            showDialog(
-                                                context: context,
-                                                builder: (context) {
-                                                  return SimpleDialog(
-                                                    children: <Widget>[
-                                                      Container(
-                                                        alignment:
-                                                            Alignment.center,
-                                                        child: Text(
-                                                          "Reportar erro",
-                                                          style: TextStyle(
-                                                            color: Colors.black,
-                                                            fontWeight:
-                                                                FontWeight.bold,
-                                                          ),
-                                                        ),
-                                                      ),
-                                                      ListTile(
-                                                        title: Text(
-                                                            "Gabarito Errado",
-                                                            style: TextStyle(
-                                                                color: Color(
-                                                                    0xFF0061A1),
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold)),
-                                                        onTap: () {
-                                                          Navigator.of(context)
-                                                              .pop();
-                                                          viewModel
-                                                              .onReportButtonPressed(
-                                                                  question.id,
-                                                                  question
-                                                                      .answer);
-                                                        },
-                                                      ),
-                                                    ],
-                                                  );
-                                                });
-                                          },
-                                          icon: Container(
-                                            child: Icon(
-                                              FontAwesomeIcons.ellipsisV,
-                                              size: 16,
-                                            ),
-                                          ),
+  Widget build(BuildContext context) => StoreConnector<AppState,
+          TournamentViewModel>(
+      onInit: (store) => store.dispatch(PageInitAction("Tournament")),
+      converter: (store) => TournamentViewModel.create(store),
+      builder: (BuildContext context, TournamentViewModel viewModel) {
+        return LiceuScaffold(
+          body: ListView(
+            children: <Widget>[
+              Container(
+                margin: EdgeInsets.all(8),
+                child: Text(
+                  "Responda o máximo de perguntas em menos tempo para entrar no ranking.",
+                  textAlign: TextAlign.center,
+                ),
+              ),
+              FetcherWidget(
+                isLoading: viewModel.questions.isLoading,
+                errorMessage: viewModel.questions.errorMessage,
+                child: () => Container(
+                  child: Column(
+                    children: <Widget>[
+                      ...viewModel.questions.content.map(
+                        (question) {
+                          var status = [
+                            AnswerStatus.DEFAULT,
+                            AnswerStatus.DEFAULT,
+                            AnswerStatus.DEFAULT,
+                            AnswerStatus.DEFAULT,
+                            AnswerStatus.DEFAULT,
+                          ];
+                          if (question.selectedAnswer != -1) {
+                            status[question.selectedAnswer] =
+                                AnswerStatus.SELECTED;
+                          }
+                          return Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Card(
+                                  child: ENEMQuestionWidget(
+                                    (int idx) {
+                                      viewModel.onAnswer(question.id, idx);
+                                    },
+                                    question.imageURL,
+                                    question.width,
+                                    question.height,
+                                    status,
+                                  ),
+                                ),
+                                Container(
+                                  child: Align(
+                                    alignment: Alignment.topRight,
+                                    child: IconButton(
+                                      alignment: Alignment.topRight,
+                                      onPressed: () {
+                                        showDialog(
+                                            context: context,
+                                            builder: (context) {
+                                              return SimpleDialog(
+                                                children: <Widget>[
+                                                  ListTile(
+                                                    title: Text(
+                                                      "Gabarito Errado",
+                                                    ),
+                                                    onTap: () {
+                                                      Navigator.of(context)
+                                                          .pop();
+                                                      viewModel
+                                                          .onReportButtonPressed(
+                                                              question.id,
+                                                              question.answer);
+                                                    },
+                                                  ),
+                                                ],
+                                              );
+                                            });
+                                      },
+                                      icon: Container(
+                                        child: Icon(
+                                          FontAwesomeIcons.ellipsisV,
+                                          size: 16,
                                         ),
                                       ),
                                     ),
-                                  ]);
-                            },
-                          ).toList(),
-                          Container(
-                            padding: EdgeInsets.all(8),
-                            child: FlatButton(
-                              onPressed: () {
-                                viewModel.submit();
-                              },
-                              child: Text(
-                                "Enviar",
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  color: Color(0xFF0061A1),
-                                  fontWeight: FontWeight.bold,
+                                  ),
                                 ),
-                              ),
+                              ]);
+                        },
+                      ).toList(),
+                      Container(
+                        padding: EdgeInsets.all(8),
+                        child: FlatButton(
+                          onPressed: () {
+                            viewModel.submit();
+                          },
+                          child: Text(
+                            "Enviar",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: Color(0xFF0061A1),
+                              fontWeight: FontWeight.bold,
                             ),
                           ),
-                        ],
+                        ),
                       ),
-                    ),
+                    ],
                   ),
-                ],
+                ),
               ),
-            );
-          });
+            ],
+          ),
+        );
+      });
 }
