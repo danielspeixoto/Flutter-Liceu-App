@@ -1,6 +1,5 @@
 import 'package:app/domain/aggregates/ENEMGame.dart';
 import 'package:app/domain/aggregates/Trivia.dart';
-import 'package:app/domain/aggregates/exceptions/CreateTriviaExceptions.dart';
 import 'package:app/domain/boundary/UserBoundary.dart';
 import 'package:app/presentation/state/actions/ChallengeActions.dart';
 import 'package:app/presentation/state/actions/ENEMActions.dart';
@@ -11,42 +10,40 @@ import 'package:app/presentation/state/actions/PageActions.dart';
 import 'package:app/presentation/state/actions/PostActions.dart';
 import 'package:app/presentation/state/actions/TriviaActions.dart';
 import 'package:app/presentation/state/actions/UserActions.dart';
-import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:app/presentation/util/analytics.dart';
 import 'package:redux/redux.dart';
 
 import '../app_state.dart';
-
-final analytics = FirebaseAnalytics();
 
 List<Middleware<AppState>> analyticsMiddleware(IMyIdUseCase myIdUseCase) {
   void setCurrentScreenPageInit(
       Store<AppState> store, PageInitAction action, NextDispatcher next) async {
     next(action);
-    analytics.setCurrentScreen(screenName: action.name);
+    LiceuAnalytics.setCurrentScreen(action.name);
   }
 
   void logEventChallengeSomeone(Store<AppState> store,
       ChallengeSomeoneAction action, NextDispatcher next) async {
     next(action);
-    analytics.logEvent(name: "challenge_user");
+    LiceuAnalytics.logEvent("challenge_user");
   }
 
   void logEventPlayRandomChallenge(Store<AppState> store,
       PlayRandomChallengeAction action, NextDispatcher next) async {
     next(action);
-    analytics.logEvent(name: "start_random_challenge");
+    LiceuAnalytics.logEvent("start_random_challenge");
   }
 
   void logEventAcceptChallenge(Store<AppState> store,
       AcceptChallengeAction action, NextDispatcher next) async {
     next(action);
-    analytics.logEvent(name: "accept_challenge");
+    LiceuAnalytics.logEvent("accept_challenge");
   }
 
   void logEventAnswerTrivia(Store<AppState> store, AnswerTriviaAction action,
       NextDispatcher next) async {
     next(action);
-    analytics.logEvent(name: "answer_challenge", parameters: {
+    LiceuAnalytics.logEvent("answer_challenge", {
       "correct": store
               .state
               .challengeState
@@ -62,7 +59,7 @@ List<Middleware<AppState>> analyticsMiddleware(IMyIdUseCase myIdUseCase) {
       SubmitChallengeAction action, NextDispatcher next) async {
     next(action);
     final score = store.state.challengeState.score();
-    analytics.logEvent(name: "submit_challenge", parameters: {
+    LiceuAnalytics.logEvent("submit_challenge", {
       "score": score,
     });
   }
@@ -70,19 +67,19 @@ List<Middleware<AppState>> analyticsMiddleware(IMyIdUseCase myIdUseCase) {
   void logEventStartTournament(Store<AppState> store,
       StartTournamentAction action, NextDispatcher next) async {
     next(action);
-    analytics.logEvent(name: "start_tournament");
+    LiceuAnalytics.logEvent("start_tournament");
   }
 
   void logEventAnswerTournamentQuestion(Store<AppState> store,
       AnswerTournamentQuestionAction action, NextDispatcher next) async {
     next(action);
-    analytics.logEvent(name: "answer_tournament");
+    LiceuAnalytics.logEvent("answer_tournament");
   }
 
   void logEventSubmitTournamentGame(Store<AppState> store,
       SubmitTournamentGameAction action, NextDispatcher next) async {
     next(action);
-    analytics.logEvent(name: "submit_tournament", parameters: {
+    LiceuAnalytics.logEvent("submit_tournament", {
       "time_spent": action.timeSpent,
       "score": ENEMAnswer.score(action.answers)
     });
@@ -91,78 +88,76 @@ List<Middleware<AppState>> analyticsMiddleware(IMyIdUseCase myIdUseCase) {
   void logEventStartTraining(Store<AppState> store, StartTrainingAction action,
       NextDispatcher next) async {
     next(action);
-    analytics.logEvent(name: "start_training");
+    LiceuAnalytics.logEvent("start_training");
   }
 
   void logEventAnswerTrainingQuestion(Store<AppState> store,
       AnswerTrainingQuestionAction action, NextDispatcher next) async {
     next(action);
-    analytics.logEvent(name: "answer_training");
+    LiceuAnalytics.logEvent("answer_training");
   }
 
   void logEventUserClicked(Store<AppState> store, UserClickedAction action,
       NextDispatcher next) async {
     next(action);
-    analytics.logEvent(name: "visit_user");
+    LiceuAnalytics.logEvent("visit_user");
   }
 
   void logEventInstagramClicked(Store<AppState> store,
       InstagramClickedAction action, NextDispatcher next) async {
     next(action);
-    analytics.logEvent(
-        name: "visit_social",
-        parameters: {"destination": "instagram", "id": action.instagram});
+    LiceuAnalytics.logEvent(
+        "visit_social", {"destination": "instagram", "id": action.instagram});
   }
 
   void logEventLiceuInstagramPageClicked(Store<AppState> store,
       LiceuInstagramPageClickedAction action, NextDispatcher next) async {
     next(action);
-    analytics.logEvent(
-        name: "visit_liceu_page", parameters: {"destination": "instagram"});
+    LiceuAnalytics.logEvent("visit_liceu_page", {"destination": "instagram"});
   }
 
   void logEventLoginSuccess(Store<AppState> store, LoginSuccessAction action,
       NextDispatcher next) async {
     next(action);
     final id = await myIdUseCase.run();
-    analytics.setUserProperty(name: "serverUserId", value: id);
+    LiceuAnalytics.setUserProperty("serverUserId", id);
   }
 
   void logEventLogin(
       Store<AppState> store, LoginAction action, NextDispatcher next) async {
     next(action);
-    analytics.logLogin(loginMethod: action.method);
+    LiceuAnalytics.logLogin(loginMethod: action.method);
   }
 
   void logEventLogOut(
       Store<AppState> store, LogOutAction action, NextDispatcher next) async {
     next(action);
-    analytics.logEvent(name: "logout");
+    LiceuAnalytics.logEvent("logout");
   }
 
   void logEventSubmitPost(Store<AppState> store, SubmitPostAction action,
       NextDispatcher next) async {
     next(action);
-    analytics.logEvent(name: "submit_post");
+    LiceuAnalytics.logEvent("submit_post");
   }
 
   void logEventPostShare(Store<AppState> store, PostShareAction action,
       NextDispatcher next) async {
     next(action);
-    analytics.logShare(
+    LiceuAnalytics.logShare(
         contentType: "post", itemId: action.postId, method: "copy");
   }
 
   void logEventDeletePost(Store<AppState> store, DeletePostAction action,
       NextDispatcher next) async {
     next(action);
-    analytics.logEvent(name: "delete_post");
+    LiceuAnalytics.logEvent("delete_post");
   }
 
   void logEventSubmitTrivia(Store<AppState> store, SubmitTriviaAction action,
       NextDispatcher next) async {
     next(action);
-    analytics.logEvent(name: "submit_trivia", parameters: {
+    LiceuAnalytics.logEvent("submit_trivia", {
       "domain": domainToString(action.domain),
     });
   }

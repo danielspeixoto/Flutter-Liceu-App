@@ -92,6 +92,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.1.2"
+  facebook_analytics_plugin:
+    dependency: "direct main"
+    description:
+      name: facebook_analytics_plugin
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.1+6"
   file:
     dependency: transitive
     description:

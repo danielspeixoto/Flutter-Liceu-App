@@ -49,6 +49,7 @@ dependencies:
   intro_slider: ^2.2.8
   logger: ^0.6.0
   flutter_image: ^2.0.0
+  facebook_analytics_plugin: ^0.0.1+6
 
 dev_dependencies:
   flutter_test:
