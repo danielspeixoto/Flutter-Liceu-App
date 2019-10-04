@@ -1,5 +1,7 @@
+import 'package:app/data/ReportRepository.dart';
 import 'package:app/data/TriviaRepository.dart';
 import 'package:app/domain/usecase/challenge/GetChallengeUseCase.dart';
+import 'package:app/domain/usecase/report/SubmitReportUseCase.dart';
 import 'package:app/domain/usecase/trivia/CreateTriviaUseCase.dart';
 import 'package:app/domain/usecase/user/IsLoggedInUseCase.dart';
 import 'package:app/domain/usecase/user/LogOutUseCase.dart';
@@ -47,6 +49,7 @@ bool get isDev {
 class FeaturesReady {
   static final viewFriend = true;
   static final createTrivia = true;
+  static final report = isDev;
 }
 
 final baseURL = isDev
@@ -71,6 +74,7 @@ final exploreRepository = ExploreRepository(baseURL + "/explore", apiKey);
 final rankingRepository = RankingRepository(baseURL + "/ranking", apiKey);
 final challengeRepository = ChallengeRepository(baseURL + "/challenge", apiKey);
 final triviaRepository = TriviaRepository(baseURL + "/trivia", apiKey);
+final reportRepository = ReportRepository(baseURL + "/report", apiKey);
 final localRepository = LocalRepository();
 // Use Cases
 final loginUseCase = LoginUseCase(loginRepository, localRepository);
@@ -113,3 +117,5 @@ final createTriviaUseCase =
     CreateTriviaUseCase(localRepository, triviaRepository);
 final submitUserFcmTokenUseCase = 
     SubmitFcmTokenUseCase(localRepository, userRepository);
+final submitReportUseCase = 
+    SubmitReportUseCase(localRepository, reportRepository);

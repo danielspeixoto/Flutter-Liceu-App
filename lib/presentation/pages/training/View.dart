@@ -1,3 +1,4 @@
+import 'package:app/injection.dart';
 import 'package:app/presentation/state/actions/PageActions.dart';
 import 'package:app/presentation/state/app_state.dart';
 import 'package:app/presentation/widgets/ENEMQuestion.dart';
@@ -7,6 +8,7 @@ import 'package:app/presentation/widgets/FetcherWidget.dart';
 import 'package:app/presentation/widgets/LiceuScaffold.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 import 'ViewModel.dart';
@@ -76,6 +78,44 @@ class TrainingPage extends StatelessWidget {
                                 );
                               },
                             ).toList(),
+                            Container(
+                              child: Align(
+                                alignment: Alignment.topRight,
+                                child: IconButton(
+                                  alignment: Alignment.topRight,
+                                  onPressed: () {
+                                    showDialog(
+                                        context: context,
+                                        builder: (context) {
+                                          return SimpleDialog(
+                                            children: <Widget>[
+                                              ListTile(
+                                                title: Text("Gabarito está Errado"),
+                                                onTap: () {
+                                                  Navigator.of(context).pop();
+                                                  viewModel
+                                                      .onReportButtonPressed(
+                                                          viewModel.questions
+                                                              .content[0].id,
+                                                          viewModel
+                                                              .questions
+                                                              .content[0]
+                                                              .answer);
+                                                },
+                                              ),
+                                            ],
+                                          );
+                                        });
+                                  },
+                                  icon: Container(
+                                    child: Icon(
+                                      FontAwesomeIcons.ellipsisV,
+                                      size: 16,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
                             Container(
                               padding: EdgeInsets.all(8),
                               child: FlatButton(
