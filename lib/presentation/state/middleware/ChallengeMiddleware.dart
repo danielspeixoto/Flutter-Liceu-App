@@ -113,15 +113,17 @@ List<Middleware<AppState>> challengeMiddleware(
     next(action);
     final challengeState = store.state.challengeState;
     try {
-      if (challengeState.answers.length ==
-          challengeState.challenge.content.questions.length) {
-        new Future.delayed(const Duration(seconds: 3), () {
-          store.dispatch(SubmitChallengeAction());
-        });
-      } else {
-        new Future.delayed(const Duration(seconds: 2), () {
-          store.dispatch(NextTriviaAction());
-        });
+      if (!challengeState.userCancelChallenged) {
+        if (challengeState.answers.length ==
+            challengeState.challenge.content.questions.length) {
+          new Future.delayed(const Duration(seconds: 3), () {
+            store.dispatch(SubmitChallengeAction());
+          });
+        } else {
+          new Future.delayed(const Duration(seconds: 2), () {
+            store.dispatch(NextTriviaAction());
+          });
+        }
       }
     } catch (e) {
       store.dispatch(PageActionErrorAction(action.toString().substring(11)));
@@ -131,9 +133,12 @@ List<Middleware<AppState>> challengeMiddleware(
   void nextTriviaAction(Store<AppState> store, NextTriviaAction action,
       NextDispatcher next) async {
     next(action);
-    new Future.delayed(const Duration(seconds: 1), () {
-      store.dispatch(SetTriviaTimerDecrementAction());
-    });
+    final challengeState = store.state.challengeState;
+    if (!challengeState.userCancelChallenged) {
+      new Future.delayed(const Duration(seconds: 1), () {
+        store.dispatch(SetTriviaTimerDecrementAction());
+      });
+    }
   }
 
   void onFinished(Store<AppState> store, SubmitChallengeAction action,
@@ -155,14 +160,16 @@ List<Middleware<AppState>> challengeMiddleware(
   void decrementTime(Store<AppState> store,
       SetTriviaTimerDecrementAction action, NextDispatcher next) async {
     final challengeState = store.state.challengeState;
-    if (challengeState.canAnswer) {
-      if (challengeState.timeLeft == 0) {
-        store.dispatch(AnswerTriviaAction(""));
-      } else {
-        next(action);
-        new Future.delayed(const Duration(seconds: 1), () {
-          store.dispatch(SetTriviaTimerDecrementAction());
-        });
+    if (!challengeState.userCancelChallenged) {
+      if (challengeState.canAnswer) {
+        if (challengeState.timeLeft == 0) {
+          store.dispatch(AnswerTriviaAction(""));
+        } else {
+          next(action);
+          new Future.delayed(const Duration(seconds: 1), () {
+            store.dispatch(SetTriviaTimerDecrementAction());
+          });
+        }
       }
     }
   }

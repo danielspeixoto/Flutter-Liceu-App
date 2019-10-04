@@ -47,3 +47,5 @@ class ChallengeSomeoneAction {
 
   ChallengeSomeoneAction(this.challengedId);
 }
+
+class CancelChallengeAction {}
