@@ -7,8 +7,8 @@ class SubmitReportUseCase implements ISubmitReportUseCase {
 
   SubmitReportUseCase(this._localRepository, this._reportRepository);
 
-  Future<void> run(String message, List<String> tags) async {
+  Future<void> run(String message, List<String> tags, Map<String, dynamic> params) async {
     final accessToken = await this._localRepository.getCredentials();
-    await this._reportRepository.submit(accessToken, message, tags);
+    await this._reportRepository.submit(accessToken, message, tags, params);
   }
 }
