@@ -28,7 +28,7 @@ class ENEMQuestionRepository implements IENEMQuestionRepository {
     if (response.statusCode == 200) {
       return fromJsonToListOfQuestions(response.body);
     }
-    throw handleNetworkException(response.statusCode);
+    throw handleNetworkException(response.statusCode, runtimeType.toString());
   }
 
   @override
@@ -41,7 +41,7 @@ class ENEMQuestionRepository implements IENEMQuestionRepository {
     if (response.statusCode == 200) {
       return fromJsonToListOfENEMVideos(response.body);
     }
-    throw handleNetworkException(response.statusCode);
+    throw handleNetworkException(response.statusCode, runtimeType.toString());
   }
 
 }

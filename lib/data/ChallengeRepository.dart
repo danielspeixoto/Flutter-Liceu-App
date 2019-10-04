@@ -24,7 +24,7 @@ class ChallengeRepository implements IChallengeRepository {
     if (response.statusCode == 200) {
       return fromJsonToChallenge(response.body);
     }
-    throw handleNetworkException(response.statusCode);
+    throw handleNetworkException(response.statusCode, runtimeType.toString());
   }
 
   @override
@@ -37,7 +37,7 @@ class ChallengeRepository implements IChallengeRepository {
     if (response.statusCode == 200) {
       return fromJsonToChallenge(response.body);
     }
-    throw handleNetworkException(response.statusCode);
+    throw handleNetworkException(response.statusCode, runtimeType.toString());
   }
 
   @override
@@ -51,8 +51,9 @@ class ChallengeRepository implements IChallengeRepository {
         },
         body: json.encode({"answers": answers}));
     if (response.statusCode != 200) {
-      throw handleNetworkException(response.statusCode);
+      throw handleNetworkException(response.statusCode, runtimeType.toString());
     }
+    
   }
 
   @override
@@ -70,6 +71,6 @@ class ChallengeRepository implements IChallengeRepository {
     if (response.statusCode == 200) {
       return fromJsonToChallenge(response.body);
     }
-    throw handleNetworkException(response.statusCode);
+    throw handleNetworkException(response.statusCode, runtimeType.toString());
   }
 }

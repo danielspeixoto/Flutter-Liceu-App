@@ -1,5 +1,6 @@
 import 'package:app/domain/aggregates/Post.dart';
 import 'package:app/domain/aggregates/User.dart';
+import 'package:app/presentation/state/actions/ItemActions.dart';
 import 'package:app/presentation/state/aggregates/ChallengeHistoryData.dart';
 
 import '../../constants.dart';
@@ -64,7 +65,6 @@ class SetUserEditFieldAction {
   final String instagram;
 
   SetUserEditFieldAction({this.bio, this.instagram});
-  
 }
 
 class SetUserFcmTokenAction {
@@ -74,11 +74,19 @@ class SetUserFcmTokenAction {
 }
 //Submits
 
-class SubmitUserProfileChangesAction {
+class SubmitUserProfileChangesAction extends ItemAction {
   final String bio;
   final String instagram;
 
   SubmitUserProfileChangesAction({this.bio, this.instagram});
+
+  @override
+  Map<String, dynamic> itemToJson() {
+    return <String, dynamic>{
+      'bio': bio,
+      'instagram': instagram,
+    };
+  }
 }
 
 class SubmitUserProfileChangesSuccessAction {
@@ -88,10 +96,17 @@ class SubmitUserProfileChangesSuccessAction {
   SubmitUserProfileChangesSuccessAction(this.bio, this.instagram);
 }
 
-class SubmitUserFcmTokenAction {
+class SubmitUserFcmTokenAction extends ItemAction {
   final String fcmtoken;
 
   SubmitUserFcmTokenAction(this.fcmtoken);
+
+  @override
+  Map<String, dynamic> itemToJson() {
+    return <String, dynamic>{
+      'fcmtoken': fcmtoken,
+    };
+  }
 }
 
 class InstagramClickedAction {

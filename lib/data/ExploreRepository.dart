@@ -24,6 +24,6 @@ class ExploreRepository implements IExploreRepository {
     if (response.statusCode == 200) {
       return fromJsonToListOfPosts(response.body);
     }
-    throw handleNetworkException(response.statusCode);
+    throw handleNetworkException(response.statusCode, runtimeType.toString());
   }
 }

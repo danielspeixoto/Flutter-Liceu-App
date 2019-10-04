@@ -1,5 +1,6 @@
 import 'package:app/domain/aggregates/Post.dart';
 import 'package:app/domain/aggregates/User.dart';
+import 'package:app/presentation/state/actions/ItemActions.dart';
 
 import '../../constants.dart';
 
@@ -9,10 +10,17 @@ class NavigateViewFriendAction {
 }
 
 //Fetches
-class FetchFriendAction {
+class FetchFriendAction extends ItemAction {
   final String id;
 
   FetchFriendAction(this.id);
+
+      @override
+  Map<String, dynamic> itemToJson() {
+    return <String, dynamic>{
+      'id': id
+    };
+  }
 }
 
 class FetchFriendErrorAction {

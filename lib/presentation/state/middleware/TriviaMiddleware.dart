@@ -2,7 +2,7 @@ import 'package:app/domain/aggregates/Trivia.dart';
 import 'package:app/domain/aggregates/exceptions/CreateTriviaExceptions.dart';
 import 'package:app/domain/boundary/TriviaBoundary.dart';
 import 'package:app/presentation/app.dart';
-import 'package:app/presentation/state/actions/PageActions.dart';
+import 'package:app/presentation/state/actions/UtilActions.dart';
 import 'package:app/presentation/state/actions/TriviaActions.dart';
 import 'package:app/presentation/state/navigator/NavigatorActions.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
@@ -47,8 +47,10 @@ List<Middleware<AppState>> triviaMiddleware(
       store.dispatch(SubmitTriviaErrorWrongAnswerSizeMismatchAction(action.question,
           action.correctAnswer,
           action.wrongAnswer,));
-    } catch (e) {
-      store.dispatch(PageActionErrorAction(action.toString().substring(11)));
+    } catch (error, stackTrace) {
+                 final actionName = action.toString().substring(11);
+      store.dispatch(OnCatchDefaultErrorAction(
+          error.toString(), stackTrace, actionName, action.itemToJson()));
     }
   }
 

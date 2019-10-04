@@ -1,6 +1,6 @@
 import 'package:app/domain/boundary/UserBoundary.dart';
+import 'package:app/presentation/state/actions/UtilActions.dart';
 import 'package:app/presentation/state/actions/LoginActions.dart';
-import 'package:app/presentation/state/actions/PageActions.dart';
 import 'package:app/presentation/state/aggregates/ChallengeHistoryData.dart';
 import 'package:app/presentation/state/actions/PostActions.dart';
 import 'package:app/presentation/state/actions/UserActions.dart';
@@ -28,8 +28,10 @@ List<Middleware<AppState>> userMiddleware(
     try {
       final user = await fetchUserInfoUseCase.run();
       store.dispatch(SetUserAction(user));
-    } catch (e) {
-      store.dispatch(PageActionErrorAction(action.toString().substring(11)));
+    } catch (error, stackTrace) {
+      final actionName = action.toString().substring(11);
+      store.dispatch(
+          OnCatchDefaultErrorAction(error.toString(), stackTrace, actionName));
       store.dispatch(FetchUserErrorAction());
     }
   }
@@ -40,8 +42,10 @@ List<Middleware<AppState>> userMiddleware(
     try {
       final posts = await fetchUserPostsUseCase.run();
       store.dispatch(SetUserPostsAction(posts));
-    } catch (e) {
-      store.dispatch(PageActionErrorAction(action.toString().substring(11)));
+    } catch (error, stackTrace) {
+      final actionName = action.toString().substring(11);
+      store.dispatch(
+          OnCatchDefaultErrorAction(error.toString(), stackTrace, actionName));
       store.dispatch(FetchUserPostsErrorAction());
     }
   }
@@ -49,7 +53,8 @@ List<Middleware<AppState>> userMiddleware(
   void fetchUserChallenges(Store<AppState> store,
       FetchUserChallengesAction action, NextDispatcher next) async {
     next(action);
-    fetchUserChallengesUseCase.run().then((challenges) async {
+    try {
+      final challenges = await fetchUserChallengesUseCase.run();
       final futures = challenges.map((challenge) async {
         final challenger = await fetchUserByIdUseCase.run(challenge.challenger);
         final challenged = challenge.challenged == null
@@ -64,16 +69,14 @@ List<Middleware<AppState>> userMiddleware(
           challenge.questions,
         );
       });
-      try {
-        final challengeDataList = await Future.wait(futures);
-        store.dispatch(SetUserChallengesAction(challengeDataList));
-      } catch (e) {
-        store.dispatch(PageActionErrorAction(action.toString().substring(11)));
-      }
-    }).catchError((e) {
-      store.dispatch(PageActionErrorAction(action.toString().substring(11)));
+      final challengeDataList = await Future.wait(futures);
+      store.dispatch(SetUserChallengesAction(challengeDataList));
+    } catch (error, stackTrace) {
+      final actionName = action.toString().substring(11);
+      store.dispatch(
+          OnCatchDefaultErrorAction(error.toString(), stackTrace, actionName));
       store.dispatch(FetchUserChallengesErrorAction());
-    });
+    }
   }
 
   void submitPostSuccess(Store<AppState> store, SubmitPostSuccessAction action,
@@ -103,8 +106,10 @@ List<Middleware<AppState>> userMiddleware(
           action.instagram,
         ),
       );
-    } catch (e) {
-      store.dispatch(PageActionErrorAction(action.toString().substring(11)));
+    } catch (error, stackTrace) {
+      final actionName = action.toString().substring(11);
+      store.dispatch(OnCatchDefaultErrorAction(
+          error.toString(), stackTrace, actionName, action.itemToJson()));
     }
   }
 
@@ -132,8 +137,10 @@ List<Middleware<AppState>> userMiddleware(
     try {
       final id = await _myIdUseCase.run();
       await _submitFcmTokenUseCase.run(action.fcmtoken, id);
-    } catch (e) {
-      store.dispatch(PageActionErrorAction(action.toString().substring(11)));
+    } catch (error, stackTrace) {
+      final actionName = action.toString().substring(11);
+      store.dispatch(OnCatchDefaultErrorAction(
+          error.toString(), stackTrace, actionName, action.itemToJson()));
     }
   }
 
@@ -150,6 +157,6 @@ List<Middleware<AppState>> userMiddleware(
     TypedMiddleware<AppState, NavigateUserEditProfileAction>(
         navigateUserEditProfile),
     TypedMiddleware<AppState, LoginSuccessAction>(loginSuccess),
-    TypedMiddleware<AppState, SubmitUserFcmTokenAction>(submitFcmToken)
+    TypedMiddleware<AppState, SubmitUserFcmTokenAction>(submitFcmToken),
   ];
 }

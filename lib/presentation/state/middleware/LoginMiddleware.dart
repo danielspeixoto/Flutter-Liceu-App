@@ -1,7 +1,7 @@
 import 'package:app/domain/boundary/LoginBoundary.dart';
 import 'package:app/domain/boundary/UserBoundary.dart';
+import 'package:app/presentation/state/actions/UtilActions.dart';
 import 'package:app/presentation/state/actions/LoginActions.dart';
-import 'package:app/presentation/state/actions/PageActions.dart';
 import 'package:app/presentation/state/navigator/NavigatorActions.dart';
 import 'package:redux/redux.dart';
 
@@ -19,8 +19,10 @@ List<Middleware<AppState>> loginMiddleware(
       await _logoutUseCase.run();
       store.dispatch(NotLoggedInAction());
       store.dispatch(NavigateReplaceAction(AppRoutes.login));
-    } catch (e) {
-      store.dispatch(PageActionErrorAction(action.toString().substring(11)));
+    } catch (error, stackTrace) {
+      final actionName = action.toString().substring(11);
+      store.dispatch(
+          OnCatchDefaultErrorAction(error.toString(), stackTrace, actionName));
     }
     next(action);
   }
@@ -31,8 +33,10 @@ List<Middleware<AppState>> loginMiddleware(
       store.dispatch(IsLoggingInAction());
       await _loginUseCase.run(action.accessToken, action.method);
       store.dispatch(LoginSuccessAction());
-    } catch (e) {
-      store.dispatch(PageActionErrorAction(action.toString().substring(11)));
+    } catch (error, stackTrace) {
+      final actionName = action.toString().substring(11);
+      store.dispatch(OnCatchDefaultErrorAction(
+          error.toString(), stackTrace, actionName, action.itemToJson()));
     }
     next(action);
   }
@@ -48,8 +52,10 @@ List<Middleware<AppState>> loginMiddleware(
       } else {
         store.dispatch(NotLoggedInAction());
       }
-    } catch (e) {
-      store.dispatch(PageActionErrorAction(action.toString().substring(11)));
+    } catch (error, stackTrace) {
+      final actionName = action.toString().substring(11);
+      store.dispatch(OnCatchDefaultErrorAction(
+          error.toString(), stackTrace, actionName));
       store.dispatch(NotLoggedInAction());
     }
   }
