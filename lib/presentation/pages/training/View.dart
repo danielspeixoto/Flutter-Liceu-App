@@ -24,14 +24,6 @@ class TrainingPage extends StatelessWidget {
           converter: (store) => TrainingViewModel.create(store),
           builder: (BuildContext context, TrainingViewModel viewModel) {
             return LiceuScaffold(
-              leading: FeaturesReady.report
-                  ? FlatButton(
-                      onPressed: null,
-                      child: new Icon(
-                        FontAwesomeIcons.plus,
-                      ),
-                    )
-                  : null,
               body: SmartRefresher(
                 onRefresh: () async {
                   viewModel.refresh();
