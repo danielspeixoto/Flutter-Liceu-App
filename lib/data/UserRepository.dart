@@ -27,7 +27,7 @@ class UserRepository implements IUserRepository {
       if (response.statusCode == 200) {
         return fromJsonToUser(response.body);
       }
-      throw handleNetworkException(response.statusCode);
+      throw handleNetworkException(response.statusCode, runtimeType.toString());
     } catch (e) {
       print(e);
       throw e;
@@ -46,7 +46,7 @@ class UserRepository implements IUserRepository {
       if (response.statusCode == 200) {
         return;
       }
-      throw handleNetworkException(response.statusCode);
+      throw handleNetworkException(response.statusCode, runtimeType.toString());
     } catch (e) {
       print(e);
       throw e;
@@ -64,7 +64,7 @@ class UserRepository implements IUserRepository {
     if (response.statusCode == 200) {
       return fromJsonToListOfChallenges(response.body);
     }
-    throw handleNetworkException(response.statusCode);
+    throw handleNetworkException(response.statusCode, runtimeType.toString());
   }
 
   @override
@@ -77,7 +77,7 @@ class UserRepository implements IUserRepository {
     if (response.statusCode == 200) {
       return fromJsonToListOfPosts(response.body);
     }
-    throw handleNetworkException(response.statusCode);
+    throw handleNetworkException(response.statusCode, runtimeType.toString());
   }
 
   @override
@@ -91,7 +91,7 @@ class UserRepository implements IUserRepository {
     if (response.statusCode == 200) {
       return;
     }
-    throw handleNetworkException(response.statusCode);
+    throw handleNetworkException(response.statusCode, runtimeType.toString());
   }
 
   @override
@@ -105,7 +105,7 @@ class UserRepository implements IUserRepository {
     if (response.statusCode == 200) {
       return;
     }
-    throw handleNetworkException(response.statusCode);
+    throw handleNetworkException(response.statusCode, runtimeType.toString());
   }
 
   @override
@@ -117,7 +117,7 @@ class UserRepository implements IUserRepository {
     if (response.statusCode == 200) {
       return fromJsonToListOfUsers(response.body);
     }
-    throw handleNetworkException(response.statusCode);
+    throw handleNetworkException(response.statusCode, runtimeType.toString());
   }
 
   @override
@@ -133,7 +133,7 @@ class UserRepository implements IUserRepository {
     if (response.statusCode == 200) {
       return;
     }
-    throw handleNetworkException(response.statusCode);
+    throw handleNetworkException(response.statusCode, runtimeType.toString());
   }
 
   @override
@@ -149,7 +149,7 @@ class UserRepository implements IUserRepository {
     if (response.statusCode == 200) {
       return;
     }
-    throw handleNetworkException(response.statusCode);
+    throw handleNetworkException(response.statusCode, runtimeType.toString());
   }
 
   @override
@@ -165,6 +165,6 @@ class UserRepository implements IUserRepository {
     if (response.statusCode == 200) {
       return;
     }
-    throw handleNetworkException(response.statusCode);
+    throw handleNetworkException(response.statusCode, runtimeType.toString());
   }
 }

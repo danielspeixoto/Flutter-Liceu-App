@@ -1,5 +1,6 @@
 import 'package:app/domain/aggregates/ENEMGame.dart';
 import 'package:app/domain/aggregates/ENEMQuestion.dart';
+import 'package:app/presentation/state/actions/ItemActions.dart';
 import 'package:app/presentation/state/aggregates/ENEMQuestionData.dart';
 import 'package:app/presentation/state/aggregates/RankingData.dart';
 
@@ -25,7 +26,6 @@ class NavigateTournamentReviewAction {
 
 //Fetches
 class FetchRankingAction {
-  FetchRankingAction();
 }
 
 class FetchRankingErrorAction {
@@ -44,6 +44,7 @@ class FetchTrainingQuestionsSuccessAction {
   final List<ENEMQuestionData> questions;
 
   FetchTrainingQuestionsSuccessAction(this.questions);
+
 }
 
 class FetchTournamentQuestionsSuccessAction {
@@ -55,11 +56,19 @@ class FetchTournamentQuestionsSuccessAction {
 //Setters
 
 //Submits
-class SubmitTournamentGameAction {
+class SubmitTournamentGameAction  extends ItemAction {
   final List<ENEMAnswer> answers;
   final int timeSpent;
 
   SubmitTournamentGameAction(this.answers, this.timeSpent);
+
+    @override
+  Map<String, dynamic> itemToJson() {
+    return <String, dynamic>{
+      'answers': answers,
+      'timeSpent': timeSpent
+    };
+  }
 }
 
 //Interactions

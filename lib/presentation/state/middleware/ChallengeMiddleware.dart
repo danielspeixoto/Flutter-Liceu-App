@@ -1,8 +1,8 @@
 import 'package:app/domain/aggregates/Challenge.dart';
 import 'package:app/domain/boundary/ChallengeBoundary.dart';
 import 'package:app/domain/boundary/UserBoundary.dart';
+import 'package:app/presentation/state/actions/UtilActions.dart';
 import 'package:app/presentation/state/actions/ChallengeActions.dart';
-import 'package:app/presentation/state/actions/PageActions.dart';
 import 'package:app/presentation/state/actions/UserActions.dart';
 import 'package:app/presentation/state/aggregates/ChallengeData.dart';
 import 'package:app/presentation/state/aggregates/TriviaData.dart';
@@ -46,8 +46,10 @@ List<Middleware<AppState>> challengeMiddleware(
     try {
       final challenge = await getChallengeUseCase.run();
       store.dispatch(SetChallengeAction(await prepareChallenge(challenge)));
-    } catch (e) {
-      store.dispatch(PageActionErrorAction(action.toString().substring(11)));
+    } catch (error, stackTrace) {
+      final actionName = action.toString().substring(11);
+      store.dispatch(
+          OnCatchDefaultErrorAction(error.toString(), stackTrace, actionName));
     }
   }
 
@@ -56,8 +58,10 @@ List<Middleware<AppState>> challengeMiddleware(
     try {
       store.dispatch(NavigateChallengeAction());
       store.dispatch(FetchRandomChallengeAction());
-    } catch (e) {
-      store.dispatch(PageActionErrorAction(action.toString().substring(11)));
+    } catch (error, stackTrace) {
+      final actionName = action.toString().substring(11);
+      store.dispatch(
+          OnCatchDefaultErrorAction(error.toString(), stackTrace, actionName));
     }
   }
 
@@ -66,8 +70,10 @@ List<Middleware<AppState>> challengeMiddleware(
     try {
       final challenge = await getChallengeByIdUseCase.run(action.challengeId);
       store.dispatch(SetChallengeAction(await prepareChallenge(challenge)));
-    } catch (e) {
-      store.dispatch(PageActionErrorAction(action.toString().substring(11)));
+    } catch (error, stackTrace) {
+      final actionName = action.toString().substring(11);
+      store.dispatch(OnCatchDefaultErrorAction(
+          error.toString(), stackTrace, actionName, action.itemToJson()));
     }
   }
 
@@ -76,8 +82,10 @@ List<Middleware<AppState>> challengeMiddleware(
     try {
       store.dispatch(NavigateChallengeAction());
       store.dispatch(FetchChallengeAction(action.challengeId));
-    } catch (e) {
-      store.dispatch(PageActionErrorAction(action.toString().substring(11)));
+    } catch (error, stackTrace) {
+      final actionName = action.toString().substring(11);
+      store.dispatch(OnCatchDefaultErrorAction(
+          error.toString(), stackTrace, actionName, action.itemToJson()));
     }
   }
 
@@ -86,8 +94,10 @@ List<Middleware<AppState>> challengeMiddleware(
     next(action);
     try {
       store.dispatch(NavigatePushAction(AppRoutes.challenge));
-    } catch (e) {
-      store.dispatch(PageActionErrorAction(action.toString().substring(11)));
+    } catch (error, stackTrace) {
+      final actionName = action.toString().substring(11);
+      store.dispatch(
+          OnCatchDefaultErrorAction(error.toString(), stackTrace, actionName));
     }
   }
 
@@ -95,15 +105,16 @@ List<Middleware<AppState>> challengeMiddleware(
       NextDispatcher next) async {
     next(action);
     final id = await getMyIdUseCase.run();
-
     if (id != action.challengedId) {
       try {
         store.dispatch(NavigateChallengeAction());
         final challenge =
             await challengeSomeoneUseCase.run(action.challengedId);
         store.dispatch(SetChallengeAction(await prepareChallenge(challenge)));
-      } catch (e) {
-        store.dispatch(PageActionErrorAction(action.toString().substring(11)));
+      } catch (error, stackTrace) {
+        final actionName = action.toString().substring(11);
+        store.dispatch(OnCatchDefaultErrorAction(
+            error.toString(), stackTrace, actionName, action.itemToJson()));
       }
     }
   }
@@ -125,8 +136,10 @@ List<Middleware<AppState>> challengeMiddleware(
           });
         }
       }
-    } catch (e) {
-      store.dispatch(PageActionErrorAction(action.toString().substring(11)));
+    } catch (error, stackTrace) {
+      final actionName = action.toString().substring(11);
+      store.dispatch(OnCatchDefaultErrorAction(
+          error.toString(), stackTrace, actionName, action.itemToJson()));
     }
   }
 
@@ -152,8 +165,10 @@ List<Middleware<AppState>> challengeMiddleware(
       new Future.delayed(const Duration(seconds: 3), () {
         store.dispatch(FetchUserChallengesAction());
       });
-    } catch (e) {
-      store.dispatch(PageActionErrorAction(action.toString().substring(11)));
+    } catch (error, stackTrace) {
+      final actionName = action.toString().substring(11);
+      store.dispatch(
+          OnCatchDefaultErrorAction(error.toString(), stackTrace, actionName));
     }
   }
 

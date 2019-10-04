@@ -29,7 +29,7 @@ class PostRepository implements IPostRepository {
     if (response.statusCode == 200) {
       return;
     }
-    throw handleNetworkException(response.statusCode);
+    throw handleNetworkException(response.statusCode, runtimeType.toString());
   }
 
   @override
@@ -45,7 +45,7 @@ class PostRepository implements IPostRepository {
     if (response.statusCode == 200) {
       return;
     }
-    throw handleNetworkException(response.statusCode);
+    throw handleNetworkException(response.statusCode, runtimeType.toString());
   }
 
   String _postTypeToString(PostType postType) {

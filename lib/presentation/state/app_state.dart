@@ -1,4 +1,4 @@
-import 'package:app/presentation/state/middleware/ActionLoggingMiddleware.dart';
+import 'package:app/presentation/state/middleware/LoggerMiddleware.dart';
 import 'package:app/presentation/state/middleware/TriviaMiddleware.dart';
 import 'package:app/presentation/state/reducers/ChallengeReducer.dart';
 import 'package:app/presentation/state/reducers/ENEMReducer.dart';
@@ -9,7 +9,6 @@ import 'package:app/presentation/state/reducers/PostsReducer.dart';
 import 'package:app/presentation/state/reducers/TriviaReducer.dart';
 import 'package:app/presentation/state/reducers/UserReducer.dart';
 import 'package:redux/redux.dart';
-import 'package:redux_logging/redux_logging.dart';
 
 import '../../injection.dart';
 import 'middleware/AnalyticsMiddleware.dart';
@@ -76,7 +75,7 @@ final Store<AppState> store = Store<AppState>(
   appReducer,
   initialState: AppState.initial(),
   middleware: [
-    ActionLoggingMiddleware(),
+    ...loggerMiddleware(),
     ...analyticsMiddleware(myIdUseCase),
     ...sentryMiddleware(),
     ...loginMiddleware(

@@ -1,3 +1,4 @@
+import 'package:app/presentation/state/actions/ItemActions.dart';
 import 'package:app/presentation/state/aggregates/ChallengeData.dart';
 
 //Navigates
@@ -7,10 +8,16 @@ class NavigateChallengeAction {
 
 class FetchRandomChallengeAction {}
 
-class FetchChallengeAction {
+class FetchChallengeAction extends ItemAction {
   final String challengeId;
 
   FetchChallengeAction(this.challengeId);
+
+  Map<String, dynamic> itemToJson() {
+    return <String, dynamic>{
+      'challengeId': challengeId,
+    };
+  }
 }
 
 //Setters
@@ -26,26 +33,47 @@ class SetTriviaTimerDecrementAction {}
 class SubmitChallengeAction {}
 
 //Interactions
-class AnswerTriviaAction {
+class AnswerTriviaAction extends ItemAction {
   final String answer;
 
   AnswerTriviaAction(this.answer);
+
+  @override
+  Map<String, dynamic> itemToJson() {
+    return <String, dynamic>{
+      'answer': answer,
+    };
+  }
 }
 
 class NextTriviaAction {}
 
-class AcceptChallengeAction {
+class AcceptChallengeAction extends ItemAction {
   final String challengeId;
 
   AcceptChallengeAction(this.challengeId);
+
+  @override
+  Map<String, dynamic> itemToJson() {
+    return <String, dynamic>{
+      'challengeId': challengeId,
+    };
+  }
 }
 
 class PlayRandomChallengeAction {}
 
-class ChallengeSomeoneAction {
+class ChallengeSomeoneAction extends ItemAction{
   final String challengedId;
 
   ChallengeSomeoneAction(this.challengedId);
+
+  @override
+  Map<String, dynamic> itemToJson() {
+    return <String, dynamic>{
+      'challengedId': challengedId,
+    };
+  }
 }
 
 class CancelChallengeAction {}

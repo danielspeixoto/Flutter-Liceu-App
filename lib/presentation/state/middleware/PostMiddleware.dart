@@ -1,7 +1,7 @@
 import 'package:app/domain/aggregates/exceptions/CreatePostExceptions.dart';
 import 'package:app/domain/boundary/PostBoundary.dart';
 import 'package:app/domain/boundary/UserBoundary.dart';
-import 'package:app/presentation/state/actions/PageActions.dart';
+import 'package:app/presentation/state/actions/UtilActions.dart';
 import 'package:app/presentation/state/actions/PostActions.dart';
 import 'package:app/presentation/state/aggregates/PostData.dart';
 import 'package:app/presentation/state/navigator/NavigatorActions.dart';
@@ -20,8 +20,10 @@ List<Middleware<AppState>> postMiddleware(
     next(action);
     try {
       await deletePostUseCase.run(action.postId);
-    } catch (e) {
-      store.dispatch(PageActionErrorAction(action.toString().substring(11)));
+    } catch (error, stackTrace) {
+      final actionName = action.toString().substring(11);
+      store.dispatch(OnCatchDefaultErrorAction(
+          error.toString(), stackTrace, actionName, action.itemToJson()));
     }
   }
 
@@ -31,10 +33,12 @@ List<Middleware<AppState>> postMiddleware(
     try {
       await createPostUseCase.run(action.postType, action.text);
       store.dispatch(SubmitPostSuccessAction());
-    } on CreatePostException catch(e) {
+    } on CreatePostException catch (error, stackTrace) {
       store.dispatch(SubmitPostErrorTextSizeMismatchAction());
-    } catch (e) {
-      store.dispatch(PageActionErrorAction(action.toString().substring(11)));
+    } catch (error, stackTrace) {
+      final actionName = action.toString().substring(11);
+      store.dispatch(OnCatchDefaultErrorAction(
+          error.toString(), stackTrace, actionName, action.itemToJson()));
     }
   }
 
@@ -62,8 +66,10 @@ List<Middleware<AppState>> postMiddleware(
       });
       final data = await Future.wait(futures);
       store.dispatch(FetchPostsSuccessAction(data));
-    } catch (e) {
-      store.dispatch(PageActionErrorAction(action.toString().substring(11)));
+    } catch (error, stackTrace) {
+      final actionName = action.toString().substring(11);
+      store.dispatch(
+          OnCatchDefaultErrorAction(error.toString(), stackTrace, actionName));
     }
   }
 

@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:app/presentation/state/actions/NotificationActions.dart';
 import 'package:app/presentation/state/actions/UserActions.dart';
 import 'package:app/presentation/state/app_state.dart';

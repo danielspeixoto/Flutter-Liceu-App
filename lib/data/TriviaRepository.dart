@@ -31,7 +31,7 @@ class TriviaRepository implements ITriviaRepository {
     if (response.statusCode == 200) {
       return;
     }
-    throw handleNetworkException(response.statusCode);
+    throw handleNetworkException(response.statusCode, runtimeType.toString());
   }
 
   String domainToString(TriviaDomain domain) {

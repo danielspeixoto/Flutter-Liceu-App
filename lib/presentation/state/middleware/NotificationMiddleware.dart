@@ -1,8 +1,8 @@
 import 'package:app/domain/boundary/UserBoundary.dart';
+import 'package:app/presentation/state/actions/UtilActions.dart';
 import 'package:app/presentation/state/actions/ChallengeActions.dart';
 import 'package:app/presentation/state/actions/ENEMActions.dart';
 import 'package:app/presentation/state/actions/NotificationActions.dart';
-import 'package:app/presentation/state/actions/PageActions.dart';
 import 'package:redux/redux.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -50,8 +50,10 @@ List<Middleware<AppState>> notificationMiddleware(
       if (store.state.loginState.isUserLoggedIn()) {
         handleNotification(store, action.action, action.data);
       }
-    } catch (e) {
-      store.dispatch(PageActionErrorAction(action.toString().substring(11)));
+    } catch (error, stackTrace) {
+      final actionName = action.toString().substring(11);
+      store.dispatch(
+          OnCatchDefaultErrorAction(error.toString(), stackTrace, actionName));
     }
   }
 

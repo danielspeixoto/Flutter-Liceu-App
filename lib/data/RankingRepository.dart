@@ -23,7 +23,7 @@ class RankingRepository implements IRankingRepository {
       if (response.statusCode == 200) {
         return fromJsonToRanking(response.body);
       }
-      throw handleNetworkException(response.statusCode);
+      throw handleNetworkException(response.statusCode, runtimeType.toString());
     } catch (e) {
       print(e);
       throw e;
