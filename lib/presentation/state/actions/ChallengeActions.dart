@@ -75,3 +75,5 @@ class ChallengeSomeoneAction extends ItemAction{
     };
   }
 }
+
+class CancelChallengeAction {}

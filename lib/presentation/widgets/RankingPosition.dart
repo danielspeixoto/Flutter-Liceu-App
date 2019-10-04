@@ -18,7 +18,9 @@ class RankingPosition extends StatelessWidget {
             Container(
               margin: EdgeInsets.all(8),
               child: RoundedImage(
-                pictureURL: game.user.picURL,
+                pictureURL: game.user.picURL != null
+                    ? game.user.picURL
+                    : "https://png.pngtree.com/svg/20170823/monkey_15.png",
                 size: 36,
               ),
             ),

@@ -5,6 +5,7 @@ import 'package:app/presentation/pages/edit-profile/View.dart';
 import 'package:app/presentation/pages/home/View.dart';
 import 'package:app/presentation/pages/intro/View.dart';
 import 'package:app/presentation/pages/login/View.dart';
+import 'package:app/presentation/pages/profile/View.dart';
 import 'package:app/presentation/pages/splash/View.dart';
 import 'package:app/presentation/pages/tournament-review/View.dart';
 import 'package:app/presentation/pages/tournament/View.dart';

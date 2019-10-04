@@ -113,10 +113,12 @@ final Store<AppState> store = Store<AppState>(
       challengeSomeoneUseCase,
       getUserByIdUseCase,
       submitChallengeAnswersUseCase,
+      myIdUseCase
     ),
     ...friendMiddleware(
       getUserPostsUseCase,
       getUserByIdUseCase,
+      myIdUseCase
     ),
     ...triviaMiddleware(
       createTriviaUseCase,

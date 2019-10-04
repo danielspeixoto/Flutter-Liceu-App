@@ -42,7 +42,9 @@ class UserProfilePage extends StatelessWidget {
                             children: <Widget>[
                               Container(
                                 child: RoundedImage(
-                                  pictureURL: user.picURL,
+                                  pictureURL: user.picURL != null
+                                      ? user.picURL
+                                      : "https://png.pngtree.com/svg/20170823/monkey_15.png",
                                   size: 80.0,
                                 ),
                                 margin: EdgeInsets.all(8),

@@ -16,12 +16,12 @@ import '../app_state.dart';
 final analytics = FirebaseAnalytics();
 
 List<Middleware<AppState>> challengeMiddleware(
-  IGetChallengeUseCase getChallengeUseCase,
-  IGetChallengeByIdUseCase getChallengeByIdUseCase,
-  IChallengeSomeoneUseCase challengeSomeoneUseCase,
-  IGetUserByIdUseCase getUserByIdUseCase,
-  ISubmitChallengeAnswersUseCase submitChallengeAnswersUseCase,
-) {
+    IGetChallengeUseCase getChallengeUseCase,
+    IGetChallengeByIdUseCase getChallengeByIdUseCase,
+    IChallengeSomeoneUseCase challengeSomeoneUseCase,
+    IGetUserByIdUseCase getUserByIdUseCase,
+    ISubmitChallengeAnswersUseCase submitChallengeAnswersUseCase,
+    IMyIdUseCase getMyIdUseCase) {
   Future<ChallengeData> prepareChallenge(Challenge challenge) async {
     final futures = challenge.questions.map((trivia) async {
       return TriviaData(
@@ -104,13 +104,17 @@ List<Middleware<AppState>> challengeMiddleware(
   void challengeSomeone(Store<AppState> store, ChallengeSomeoneAction action,
       NextDispatcher next) async {
     next(action);
-    try {
-      final challenge = await challengeSomeoneUseCase.run(action.challengedId);
-      store.dispatch(SetChallengeAction(await prepareChallenge(challenge)));
-    } catch (error, stackTrace) {
-      final actionName = action.toString().substring(11);
-      store.dispatch(OnCatchDefaultErrorAction(
-          error.toString(), stackTrace, actionName, action.itemToJson()));
+    final id = await getMyIdUseCase.run();
+    if (id != action.challengedId) {
+      try {
+        final challenge =
+            await challengeSomeoneUseCase.run(action.challengedId);
+        store.dispatch(SetChallengeAction(await prepareChallenge(challenge)));
+      } catch (error, stackTrace) {
+        final actionName = action.toString().substring(11);
+        store.dispatch(OnCatchDefaultErrorAction(
+            error.toString(), stackTrace, actionName, action.itemToJson()));
+      }
     }
   }
 
@@ -119,15 +123,17 @@ List<Middleware<AppState>> challengeMiddleware(
     next(action);
     final challengeState = store.state.challengeState;
     try {
-      if (challengeState.answers.length ==
-          challengeState.challenge.content.questions.length) {
-        new Future.delayed(const Duration(seconds: 3), () {
-          store.dispatch(SubmitChallengeAction());
-        });
-      } else {
-        new Future.delayed(const Duration(seconds: 2), () {
-          store.dispatch(NextTriviaAction());
-        });
+      if (!challengeState.userCancelChallenged) {
+        if (challengeState.answers.length ==
+            challengeState.challenge.content.questions.length) {
+          new Future.delayed(const Duration(seconds: 3), () {
+            store.dispatch(SubmitChallengeAction());
+          });
+        } else {
+          new Future.delayed(const Duration(seconds: 2), () {
+            store.dispatch(NextTriviaAction());
+          });
+        }
       }
     } catch (error, stackTrace) {
       final actionName = action.toString().substring(11);
@@ -139,9 +145,12 @@ List<Middleware<AppState>> challengeMiddleware(
   void nextTriviaAction(Store<AppState> store, NextTriviaAction action,
       NextDispatcher next) async {
     next(action);
-    new Future.delayed(const Duration(seconds: 1), () {
-      store.dispatch(SetTriviaTimerDecrementAction());
-    });
+    final challengeState = store.state.challengeState;
+    if (!challengeState.userCancelChallenged) {
+      new Future.delayed(const Duration(seconds: 1), () {
+        store.dispatch(SetTriviaTimerDecrementAction());
+      });
+    }
   }
 
   void onFinished(Store<AppState> store, SubmitChallengeAction action,
@@ -165,14 +174,16 @@ List<Middleware<AppState>> challengeMiddleware(
   void decrementTime(Store<AppState> store,
       SetTriviaTimerDecrementAction action, NextDispatcher next) async {
     final challengeState = store.state.challengeState;
-    if (challengeState.canAnswer) {
-      if (challengeState.timeLeft == 0) {
-        store.dispatch(AnswerTriviaAction(""));
-      } else {
-        next(action);
-        new Future.delayed(const Duration(seconds: 1), () {
-          store.dispatch(SetTriviaTimerDecrementAction());
-        });
+    if (!challengeState.userCancelChallenged) {
+      if (challengeState.canAnswer) {
+        if (challengeState.timeLeft == 0) {
+          store.dispatch(AnswerTriviaAction(""));
+        } else {
+          next(action);
+          new Future.delayed(const Duration(seconds: 1), () {
+            store.dispatch(SetTriviaTimerDecrementAction());
+          });
+        }
       }
     }
   }
