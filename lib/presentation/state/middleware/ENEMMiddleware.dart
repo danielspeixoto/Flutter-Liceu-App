@@ -84,19 +84,14 @@ List<Middleware<AppState>> ENEMMiddleware(
           .difference(store.state.enemState.tournamentStartTime)
           .inSeconds;
       int score = 0;
-      final answers =
-          store.state.enemState.tournamentQuestions.content.map((question) {
+          store.state.enemState.tournamentQuestions.content.map((question) async {
         if (question.answer == question.selectedAnswer) {
           score++;
         }
-        return ENEMAnswer(
-          question.id,
-          question.answer,
-          question.selectedAnswer,
-        );
       });
+      //final answers = await Future.wait(futures);
+     // store.dispatch(SubmitTournamentGameAction(answers, timeSpent));
       store.dispatch(NavigateTournamentReviewAction(score, timeSpent));
-      store.dispatch(SubmitTournamentGameAction(answers, timeSpent));
     } catch (e) {
       store.dispatch(PageActionErrorAction(action.toString().substring(11)));
     }

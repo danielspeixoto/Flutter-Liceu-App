@@ -16,12 +16,12 @@ import '../app_state.dart';
 final analytics = FirebaseAnalytics();
 
 List<Middleware<AppState>> challengeMiddleware(
-  IGetChallengeUseCase getChallengeUseCase,
-  IGetChallengeByIdUseCase getChallengeByIdUseCase,
-  IChallengeSomeoneUseCase challengeSomeoneUseCase,
-  IGetUserByIdUseCase getUserByIdUseCase,
-  ISubmitChallengeAnswersUseCase submitChallengeAnswersUseCase,
-) {
+    IGetChallengeUseCase getChallengeUseCase,
+    IGetChallengeByIdUseCase getChallengeByIdUseCase,
+    IChallengeSomeoneUseCase challengeSomeoneUseCase,
+    IGetUserByIdUseCase getUserByIdUseCase,
+    ISubmitChallengeAnswersUseCase submitChallengeAnswersUseCase,
+    IMyIdUseCase getMyIdUseCase) {
   Future<ChallengeData> prepareChallenge(Challenge challenge) async {
     final futures = challenge.questions.map((trivia) async {
       return TriviaData(
@@ -94,11 +94,17 @@ List<Middleware<AppState>> challengeMiddleware(
   void challengeSomeone(Store<AppState> store, ChallengeSomeoneAction action,
       NextDispatcher next) async {
     next(action);
-    try {
-      final challenge = await challengeSomeoneUseCase.run(action.challengedId);
-      store.dispatch(SetChallengeAction(await prepareChallenge(challenge)));
-    } catch (e) {
-      store.dispatch(PageActionErrorAction(action.toString().substring(11)));
+    final id = await getMyIdUseCase.run();
+
+    if (id != action.challengedId) {
+      try {
+        store.dispatch(NavigateChallengeAction());
+        final challenge =
+            await challengeSomeoneUseCase.run(action.challengedId);
+        store.dispatch(SetChallengeAction(await prepareChallenge(challenge)));
+      } catch (e) {
+        store.dispatch(PageActionErrorAction(action.toString().substring(11)));
+      }
     }
   }
 

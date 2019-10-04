@@ -1,4 +1,3 @@
-
 import 'package:redux/redux.dart';
 import '../app_state.dart';
 import '../../../util/sentry/sentry.dart';

@@ -137,6 +137,11 @@ List<Middleware<AppState>> userMiddleware(
     }
   }
 
+  void navigateUserProfile(Store<AppState> store,
+      NavigateUserProfileAction action, NextDispatcher next) {
+    store.dispatch(NavigateReplaceAction(AppRoutes.profile));
+  }
+
   return [
     TypedMiddleware<AppState, FetchUserInfoAction>(fetchUserInfo),
     TypedMiddleware<AppState, FetchUserPostsAction>(fetchUserPosts),
@@ -149,9 +154,8 @@ List<Middleware<AppState>> userMiddleware(
     TypedMiddleware<AppState, SetUserAction>(setUser),
     TypedMiddleware<AppState, NavigateUserEditProfileAction>(
         navigateUserEditProfile),
-    TypedMiddleware<AppState, LoginSuccessAction>(
-        loginSuccess),
-    TypedMiddleware<AppState, SubmitUserFcmTokenAction>(
-        submitFcmToken),
+    TypedMiddleware<AppState, LoginSuccessAction>(loginSuccess),
+    TypedMiddleware<AppState, SubmitUserFcmTokenAction>(submitFcmToken),
+    TypedMiddleware<AppState, NavigateUserProfileAction>(navigateUserProfile)
   ];
 }

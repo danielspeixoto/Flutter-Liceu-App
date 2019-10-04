@@ -5,6 +5,7 @@ import 'package:app/presentation/pages/edit-profile/View.dart';
 import 'package:app/presentation/pages/home/View.dart';
 import 'package:app/presentation/pages/intro/View.dart';
 import 'package:app/presentation/pages/login/View.dart';
+import 'package:app/presentation/pages/profile/View.dart';
 import 'package:app/presentation/pages/splash/View.dart';
 import 'package:app/presentation/pages/tournament-review/View.dart';
 import 'package:app/presentation/pages/tournament/View.dart';
@@ -54,6 +55,8 @@ class MyApp extends StatelessWidget {
         return MainRoute(CreateTriviaPage(), settings: settings);
       case AppRoutes.intro:
         return MainRoute(IntroPage(), settings: settings);
+      case AppRoutes.profile:
+        return MainRoute(ProfilePage(), settings: settings);
       default:
         return MainRoute(SplashPage(), settings: settings);
     }
@@ -93,5 +96,6 @@ class AppRoutes {
   static const login = "/login";
   static const friend = "/friend";
   static const createTrivia = "/createTrivia";
+  static const profile = "/profile";
 }
 
