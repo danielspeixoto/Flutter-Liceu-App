@@ -1,4 +1,4 @@
-import 'package:app/presentation/state/actions/SentryActions.dart';
+import 'package:app/presentation/state/actions/UtilActions.dart';
 import 'package:app/presentation/state/actions/UserActions.dart';
 import 'package:app/util/sentry.dart';
 import 'package:redux/redux.dart';
@@ -13,7 +13,7 @@ List<Middleware<AppState>> sentryMiddleware() {
     next(action);
   }
 
-  void reportError(Store<AppState> store, ReportSentryErrorAction action,
+  void reportError(Store<AppState> store, OnCatchDefaultErrorAction action,
       NextDispatcher next) async {
     await sentry.reportError(action.error, action.message, action.stackTrace, action.parameters);
     next(action);
@@ -27,7 +27,7 @@ List<Middleware<AppState>> sentryMiddleware() {
 
   return [
     TypedMiddleware<AppState, SetUserAction>(setUserContext),
-    TypedMiddleware<AppState, ReportSentryErrorAction>(reportError),
+    TypedMiddleware<AppState, OnCatchDefaultErrorAction>(reportError),
     TypedMiddleware<AppState, dynamic>(reportInfo),
   ];
 }

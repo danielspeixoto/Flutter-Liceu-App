@@ -1,10 +1,8 @@
 import 'package:app/domain/aggregates/exceptions/CreatePostExceptions.dart';
 import 'package:app/domain/boundary/PostBoundary.dart';
 import 'package:app/domain/boundary/UserBoundary.dart';
-import 'package:app/presentation/state/actions/LoggerActions.dart';
-import 'package:app/presentation/state/actions/PageActions.dart';
+import 'package:app/presentation/state/actions/UtilActions.dart';
 import 'package:app/presentation/state/actions/PostActions.dart';
-import 'package:app/presentation/state/actions/SentryActions.dart';
 import 'package:app/presentation/state/aggregates/PostData.dart';
 import 'package:app/presentation/state/navigator/NavigatorActions.dart';
 import 'package:redux/redux.dart';
@@ -24,8 +22,8 @@ List<Middleware<AppState>> postMiddleware(
       await deletePostUseCase.run(action.postId);
     } catch (error, stackTrace) {
       final actionName = action.toString().substring(11);
-      store.dispatch(LoggerErrorAction(actionName));
-      store.dispatch(ReportSentryErrorAction(error, stackTrace, actionName, action.itemToJson()));
+      store.dispatch(OnCatchDefaultErrorAction(
+          error.toString(), stackTrace, actionName, action.itemToJson()));
     }
   }
 
@@ -38,9 +36,9 @@ List<Middleware<AppState>> postMiddleware(
     } on CreatePostException catch (error, stackTrace) {
       store.dispatch(SubmitPostErrorTextSizeMismatchAction());
     } catch (error, stackTrace) {
-       final actionName = action.toString().substring(11);
-      store.dispatch(LoggerErrorAction(actionName));
-      store.dispatch(ReportSentryErrorAction(error, stackTrace, actionName, action.itemToJson()));
+      final actionName = action.toString().substring(11);
+      store.dispatch(OnCatchDefaultErrorAction(
+          error.toString(), stackTrace, actionName, action.itemToJson()));
     }
   }
 
@@ -70,8 +68,8 @@ List<Middleware<AppState>> postMiddleware(
       store.dispatch(FetchPostsSuccessAction(data));
     } catch (error, stackTrace) {
       final actionName = action.toString().substring(11);
-      store.dispatch(LoggerErrorAction(actionName));
-      store.dispatch(ReportSentryErrorAction(error, stackTrace, actionName));
+      store.dispatch(
+          OnCatchDefaultErrorAction(error.toString(), stackTrace, actionName));
     }
   }
 

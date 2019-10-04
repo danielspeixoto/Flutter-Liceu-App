@@ -39,6 +39,6 @@ class ENEMGameRepository implements IENEMGameRepository {
     if (response.statusCode == 200) {
       return;
     }
-    throw handleNetworkException(response.statusCode);
+    throw handleNetworkException(response.statusCode, runtimeType.toString());
   }
 }

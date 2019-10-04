@@ -1,7 +1,6 @@
 import 'package:app/domain/boundary/UserBoundary.dart';
+import 'package:app/presentation/state/actions/UtilActions.dart';
 import 'package:app/presentation/state/actions/FriendActions.dart';
-import 'package:app/presentation/state/actions/LoggerActions.dart';
-import 'package:app/presentation/state/actions/SentryActions.dart';
 import 'package:app/presentation/state/navigator/NavigatorActions.dart';
 import 'package:redux/redux.dart';
 
@@ -20,9 +19,8 @@ List<Middleware<AppState>> friendMiddleware(
       store.dispatch(SetFriendPostsAction(posts));
     } catch (error, stackTrace) {
       final actionName = action.toString().substring(11);
-      
-      store.dispatch(LoggerErrorAction(actionName));
-      store.dispatch(ReportSentryErrorAction(error, stackTrace, actionName));
+      store.dispatch(OnCatchDefaultErrorAction(
+          error.toString(), stackTrace, actionName));
       store.dispatch(FetchFriendPostsErrorAction());
     }
   }

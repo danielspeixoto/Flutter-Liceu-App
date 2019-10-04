@@ -1,9 +1,8 @@
 import 'package:app/domain/aggregates/Challenge.dart';
 import 'package:app/domain/boundary/ChallengeBoundary.dart';
 import 'package:app/domain/boundary/UserBoundary.dart';
+import 'package:app/presentation/state/actions/UtilActions.dart';
 import 'package:app/presentation/state/actions/ChallengeActions.dart';
-import 'package:app/presentation/state/actions/LoggerActions.dart';
-import 'package:app/presentation/state/actions/SentryActions.dart';
 import 'package:app/presentation/state/actions/UserActions.dart';
 import 'package:app/presentation/state/aggregates/ChallengeData.dart';
 import 'package:app/presentation/state/aggregates/TriviaData.dart';
@@ -48,9 +47,9 @@ List<Middleware<AppState>> challengeMiddleware(
       final challenge = await getChallengeUseCase.run();
       store.dispatch(SetChallengeAction(await prepareChallenge(challenge)));
     } catch (error, stackTrace) {
-      store.dispatch(LoggerErrorAction(action.toString().substring(11)));
-      store.dispatch(ReportSentryErrorAction(
-          error, stackTrace, action.toString().substring(11)));
+      final actionName = action.toString().substring(11);
+      store.dispatch(
+          OnCatchDefaultErrorAction(error.toString(), stackTrace, actionName));
     }
   }
 
@@ -60,9 +59,9 @@ List<Middleware<AppState>> challengeMiddleware(
       store.dispatch(NavigateChallengeAction());
       store.dispatch(FetchRandomChallengeAction());
     } catch (error, stackTrace) {
-      store.dispatch(LoggerErrorAction(action.toString().substring(11)));
-      store.dispatch(ReportSentryErrorAction(
-          error, stackTrace, action.toString().substring(11)));
+      final actionName = action.toString().substring(11);
+      store.dispatch(
+          OnCatchDefaultErrorAction(error.toString(), stackTrace, actionName));
     }
   }
 
@@ -72,9 +71,9 @@ List<Middleware<AppState>> challengeMiddleware(
       final challenge = await getChallengeByIdUseCase.run(action.challengeId);
       store.dispatch(SetChallengeAction(await prepareChallenge(challenge)));
     } catch (error, stackTrace) {
-      store.dispatch(LoggerErrorAction(action.toString().substring(11)));
-      store.dispatch(ReportSentryErrorAction(
-          error, stackTrace, action.toString().substring(11), action.itemToJson()));
+      final actionName = action.toString().substring(11);
+      store.dispatch(OnCatchDefaultErrorAction(
+          error.toString(), stackTrace, actionName, action.itemToJson()));
     }
   }
 
@@ -84,9 +83,9 @@ List<Middleware<AppState>> challengeMiddleware(
       store.dispatch(NavigateChallengeAction());
       store.dispatch(FetchChallengeAction(action.challengeId));
     } catch (error, stackTrace) {
-      store.dispatch(LoggerErrorAction(action.toString().substring(11)));
-      store.dispatch(ReportSentryErrorAction(
-          error, stackTrace, action.toString().substring(11), action.itemToJson()));
+      final actionName = action.toString().substring(11);
+      store.dispatch(OnCatchDefaultErrorAction(
+          error.toString(), stackTrace, actionName, action.itemToJson()));
     }
   }
 
@@ -96,9 +95,9 @@ List<Middleware<AppState>> challengeMiddleware(
     try {
       store.dispatch(NavigatePushAction(AppRoutes.challenge));
     } catch (error, stackTrace) {
-      store.dispatch(LoggerErrorAction(action.toString().substring(11)));
-      store.dispatch(ReportSentryErrorAction(
-          error, stackTrace, action.toString().substring(11)));
+      final actionName = action.toString().substring(11);
+      store.dispatch(
+          OnCatchDefaultErrorAction(error.toString(), stackTrace, actionName));
     }
   }
 
@@ -109,9 +108,9 @@ List<Middleware<AppState>> challengeMiddleware(
       final challenge = await challengeSomeoneUseCase.run(action.challengedId);
       store.dispatch(SetChallengeAction(await prepareChallenge(challenge)));
     } catch (error, stackTrace) {
-      store.dispatch(LoggerErrorAction(action.toString().substring(11)));
-      store.dispatch(ReportSentryErrorAction(
-          error, stackTrace, action.toString().substring(11), action.itemToJson()));
+      final actionName = action.toString().substring(11);
+      store.dispatch(OnCatchDefaultErrorAction(
+          error.toString(), stackTrace, actionName, action.itemToJson()));
     }
   }
 
@@ -131,9 +130,9 @@ List<Middleware<AppState>> challengeMiddleware(
         });
       }
     } catch (error, stackTrace) {
-      store.dispatch(LoggerErrorAction(action.toString().substring(11)));
-      store.dispatch(ReportSentryErrorAction(
-          error, stackTrace, action.toString().substring(11), action.itemToJson()));
+      final actionName = action.toString().substring(11);
+      store.dispatch(OnCatchDefaultErrorAction(
+          error.toString(), stackTrace, actionName, action.itemToJson()));
     }
   }
 
@@ -158,9 +157,8 @@ List<Middleware<AppState>> challengeMiddleware(
       });
     } catch (error, stackTrace) {
       final actionName = action.toString().substring(11);
-      store.dispatch(LoggerErrorAction(actionName));
       store.dispatch(
-          ReportSentryErrorAction(error.toString(), stackTrace, actionName));
+          OnCatchDefaultErrorAction(error.toString(), stackTrace, actionName));
     }
   }
 
