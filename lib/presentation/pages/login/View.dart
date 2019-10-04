@@ -23,7 +23,9 @@ class LoginPage extends StatelessWidget {
           onInit: (store) => store.dispatch(PageInitAction("Login")),
           converter: (store) => LoginViewModel.create(store),
           builder: (BuildContext context, LoginViewModel viewModel) {
-            Widget child = CircularProgressIndicator();
+            Widget child = CircularProgressIndicator(
+              backgroundColor: Colors.white,
+            );
             if (!viewModel.isLoading) {
               child = Column(children: [
                 Expanded(
