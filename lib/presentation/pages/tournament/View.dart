@@ -75,7 +75,7 @@ class TournamentPage extends StatelessWidget {
                                                 children: <Widget>[
                                                   ListTile(
                                                     title: Text(
-                                                      "Gabarito Errado",
+                                                      "Gabarito está Errado",
                                                     ),
                                                     onTap: () {
                                                       Navigator.of(context)

@@ -90,7 +90,7 @@ class TrainingPage extends StatelessWidget {
                                           return SimpleDialog(
                                             children: <Widget>[
                                               ListTile(
-                                                title: Text("Gabarito Errado"),
+                                                title: Text("Gabarito está Errado"),
                                                 onTap: () {
                                                   Navigator.of(context).pop();
                                                   viewModel
