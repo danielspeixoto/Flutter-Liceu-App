@@ -48,17 +48,44 @@ class TournamentPage extends StatelessWidget {
                                 status[question.selectedAnswer] =
                                     AnswerStatus.SELECTED;
                               }
-                              return Card(
-                                child: ENEMQuestionWidget(
-                                  (int idx) {
-                                    viewModel.onAnswer(question.id, idx);
-                                  },
-                                  question.imageURL,
-                                  question.width,
-                                  question.height,
-                                  status,
+                              return Column(children: [
+                                Card(
+                                  child: ENEMQuestionWidget(
+                                    (int idx) {
+                                      viewModel.onAnswer(question.id, idx);
+                                    },
+                                    question.imageURL,
+                                    question.width,
+                                    question.height,
+                                    status,
+                                  ),
                                 ),
-                              );
+                                Container(
+                                    alignment: Alignment.bottomRight,
+                                    margin: EdgeInsets.all(8),
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        viewModel.onReportButtonPressed(
+                                            viewModel.questions.content[0].id,
+                                            viewModel
+                                                .questions.content[0].answer);
+                                      },
+                                      child: Column(children: [
+                                        Icon(
+                                          FontAwesomeIcons.exclamationCircle,
+                                          color: Colors.black,
+                                          size: 12,
+                                        ),
+                                        Text(
+                                          'Reportar erro',
+                                          style: TextStyle(
+                                              color: Color(0xFF0061A1),
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 12),
+                                        ),
+                                      ]),
+                                    )),
+                              ]);
                             },
                           ).toList(),
                           Container(

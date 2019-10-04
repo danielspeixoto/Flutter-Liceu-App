@@ -85,9 +85,7 @@ class TrainingPage extends StatelessWidget {
                               onTap: () {
                                 viewModel.onReportButtonPressed(
                                     viewModel.questions.content[0].id,
-                                    viewModel.questions.content[0].answer,
-                                    viewModel
-                                        .questions.content[0].selectedAnswer);
+                                    viewModel.questions.content[0].answer);
                               },
                               child: Column(
                                 children: [

@@ -9,8 +9,7 @@ class TrainingViewModel {
   final Function() refresh;
   final Data<List<ENEMQuestionData>> questions;
   final Function(String questionId, int answer) onAnswer;
-  final Function(String questionId, int selectedAnswer,
-      int correctAnswer) onReportButtonPressed;
+  final Function(String questionId, int correctAnswer) onReportButtonPressed;
 
   TrainingViewModel(
       {this.refresh,
@@ -27,12 +26,10 @@ class TrainingViewModel {
         questions: store.state.enemState.trainingQuestions,
         onAnswer: (String questionId, int answer) =>
             store.dispatch(AnswerTrainingQuestionAction(questionId, answer)),
-        onReportButtonPressed: (String questionId,
-            int selectedAnswer, int correctAnswer) {
+        onReportButtonPressed: (String questionId, int correctAnswer) {
 
           Map<String, dynamic> params = {
             "questionId": questionId,
-            "selectedAnswer": selectedAnswer,
             "correctAnswer: ": correctAnswer
           };
 
