@@ -34,7 +34,7 @@ class TournamentPage extends StatelessWidget {
                     errorMessage: viewModel.questions.errorMessage,
                     child: () => Container(
                       child: Column(
-                        children: [
+                        children: <Widget>[
                           ...viewModel.questions.content.map(
                             (question) {
                               var status = [
@@ -48,44 +48,76 @@ class TournamentPage extends StatelessWidget {
                                 status[question.selectedAnswer] =
                                     AnswerStatus.SELECTED;
                               }
-                              return Column(children: [
-                                Card(
-                                  child: ENEMQuestionWidget(
-                                    (int idx) {
-                                      viewModel.onAnswer(question.id, idx);
-                                    },
-                                    question.imageURL,
-                                    question.width,
-                                    question.height,
-                                    status,
-                                  ),
-                                ),
-                                Container(
-                                    alignment: Alignment.bottomRight,
-                                    margin: EdgeInsets.all(8),
-                                    child: GestureDetector(
-                                      onTap: () {
-                                        viewModel.onReportButtonPressed(
-                                            viewModel.questions.content[0].id,
-                                            viewModel
-                                                .questions.content[0].answer);
-                                      },
-                                      child: Column(children: [
-                                        Icon(
-                                          FontAwesomeIcons.exclamationCircle,
-                                          color: Colors.black,
-                                          size: 12,
+                              return Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    Card(
+                                      child: ENEMQuestionWidget(
+                                        (int idx) {
+                                          viewModel.onAnswer(question.id, idx);
+                                        },
+                                        question.imageURL,
+                                        question.width,
+                                        question.height,
+                                        status,
+                                      ),
+                                    ),
+                                    Container(
+                                      child: Align(
+                                        alignment: Alignment.topRight,
+                                        child: IconButton(
+                                          alignment: Alignment.topRight,
+                                          onPressed: () {
+                                            showDialog(
+                                                context: context,
+                                                builder: (context) {
+                                                  return SimpleDialog(
+                                                    children: <Widget>[
+                                                      Container(
+                                                        alignment:
+                                                            Alignment.center,
+                                                        child: Text(
+                                                          "Reportar erro",
+                                                          style: TextStyle(
+                                                            color: Colors.black,
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      ListTile(
+                                                        title: Text(
+                                                            "Gabarito Errado",
+                                                            style: TextStyle(
+                                                                color: Color(
+                                                                    0xFF0061A1),
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold)),
+                                                        onTap: () {
+                                                          Navigator.of(context)
+                                                              .pop();
+                                                          viewModel
+                                                              .onReportButtonPressed(
+                                                                  question.id,
+                                                                  question
+                                                                      .answer);
+                                                        },
+                                                      ),
+                                                    ],
+                                                  );
+                                                });
+                                          },
+                                          icon: Container(
+                                            child: Icon(
+                                              FontAwesomeIcons.ellipsisV,
+                                              size: 16,
+                                            ),
+                                          ),
                                         ),
-                                        Text(
-                                          'Reportar erro',
-                                          style: TextStyle(
-                                              color: Color(0xFF0061A1),
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 12),
-                                        ),
-                                      ]),
-                                    )),
-                              ]);
+                                      ),
+                                    ),
+                                  ]);
                             },
                           ).toList(),
                           Container(

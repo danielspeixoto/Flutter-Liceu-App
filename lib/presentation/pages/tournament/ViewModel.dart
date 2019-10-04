@@ -31,7 +31,7 @@ class TournamentViewModel {
             "correctAnswer: ": correctAnswer
           };
 
-          List<String> tags = ["enem", "question", "incorrect", "answer"];
+          List<String> tags = ["generated", "enem", "question", "incorrect", "answer"];
           store.dispatch(
               SubmitReportEnemQuestionWrongAnswerAction("O gabarito da questão não está correto.", tags, params));
         });

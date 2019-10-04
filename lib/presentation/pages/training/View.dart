@@ -78,31 +78,59 @@ class TrainingPage extends StatelessWidget {
                                 );
                               },
                             ).toList(),
-                             Container(
-                               alignment: Alignment.bottomRight,
-                               margin: EdgeInsets.all(8),
-                                child: GestureDetector(
-                              onTap: () {
-                                viewModel.onReportButtonPressed(
-                                    viewModel.questions.content[0].id,
-                                    viewModel.questions.content[0].answer);
-                              },
-                              child: Column(
-                                children: [
-                                Icon(
-                                  FontAwesomeIcons.exclamationCircle,
-                                  color: Colors.black,
-                                  size: 12,
+                            Container(
+                              child: Align(
+                                alignment: Alignment.topRight,
+                                child: IconButton(
+                                  alignment: Alignment.topRight,
+                                  onPressed: () {
+                                    showDialog(
+                                        context: context,
+                                        builder: (context) {
+                                          return SimpleDialog(
+                                            children: <Widget>[
+                                              Container(
+                                                alignment: Alignment.center,
+                                                child: Text(
+                                                  "Reportar erro",
+                                                  style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
+                                                ),
+                                              ),
+                                              ListTile(
+                                                title: Text("Gabarito Errado",
+                                                    style: TextStyle(
+                                                        color:
+                                                            Color(0xFF0061A1),
+                                                        fontWeight:
+                                                            FontWeight.bold)),
+                                                onTap: () {
+                                                  Navigator.of(context).pop();
+                                                  viewModel
+                                                      .onReportButtonPressed(
+                                                          viewModel.questions
+                                                              .content[0].id,
+                                                          viewModel
+                                                              .questions
+                                                              .content[0]
+                                                              .answer);
+                                                },
+                                              ),
+                                            ],
+                                          );
+                                        });
+                                  },
+                                  icon: Container(
+                                    child: Icon(
+                                      FontAwesomeIcons.ellipsisV,
+                                      size: 16,
+                                    ),
+                                  ),
                                 ),
-                                Text(
-                                  'Reportar erro',
-                                  style: TextStyle(
-                                      color: Color(0xFF0061A1),
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 12),
-                                ),
-                              ]),
-                            )),
+                              ),
+                            ),
                             Container(
                               padding: EdgeInsets.all(8),
                               child: FlatButton(
@@ -119,7 +147,6 @@ class TrainingPage extends StatelessWidget {
                                 ),
                               ),
                             ),
-                           
                           ],
                         ),
                       ),
