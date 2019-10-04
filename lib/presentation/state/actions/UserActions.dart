@@ -7,8 +7,6 @@ import '../../constants.dart';
 //Navigates
 class NavigateUserEditProfileAction {}
 
-class NavigateUserProfileAction {}
-
 //Fetches
 class FetchUserAction {}
 

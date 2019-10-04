@@ -55,8 +55,6 @@ class MyApp extends StatelessWidget {
         return MainRoute(CreateTriviaPage(), settings: settings);
       case AppRoutes.intro:
         return MainRoute(IntroPage(), settings: settings);
-      case AppRoutes.profile:
-        return MainRoute(ProfilePage(), settings: settings);
       default:
         return MainRoute(SplashPage(), settings: settings);
     }
@@ -96,6 +94,5 @@ class AppRoutes {
   static const login = "/login";
   static const friend = "/friend";
   static const createTrivia = "/createTrivia";
-  static const profile = "/profile";
 }
 
