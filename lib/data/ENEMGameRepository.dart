@@ -31,7 +31,7 @@ class ENEMGameRepository implements IENEMGameRepository {
               "correctAnswer": answer.correctAnswer,
               "selectedAnswer": answer.selectedAnswer,
             };
-          }),
+          }).toList(),
           "timeSpent": timeSpent,
         },
       ),
