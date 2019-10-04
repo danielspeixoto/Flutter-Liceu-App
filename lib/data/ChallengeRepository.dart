@@ -21,7 +21,7 @@ class ChallengeRepository implements IChallengeRepository {
       contentTypeHeader: contentTypeValueForJson,
       authHeader: accessToken
     });
-    if (response.statusCode == 200) {
+    if (response.statusCode != 200) {
       return fromJsonToChallenge(response.body);
     }
     throw handleNetworkException(response.statusCode);
@@ -69,8 +69,7 @@ class ChallengeRepository implements IChallengeRepository {
       body: json.encode({"challengedId": challengedId}),
     );
     if (response.statusCode == 200) {
-      return fromJsonToChallenge(response.body);
+      throw handleNetworkException(response.statusCode);
     }
-    throw handleNetworkException(response.statusCode);
   }
 }
