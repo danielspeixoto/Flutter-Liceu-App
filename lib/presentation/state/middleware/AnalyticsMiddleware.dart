@@ -125,7 +125,7 @@ List<Middleware<AppState>> analyticsMiddleware(IMyIdUseCase myIdUseCase) {
       NextDispatcher next) async {
     next(action);
     final id = await myIdUseCase.run();
-    analytics.setUserId(id);
+    analytics.setUserProperty(name: "serverUserId", value: id);
   }
 
   void logEventLogin(
