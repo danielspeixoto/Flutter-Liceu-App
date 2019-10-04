@@ -8,7 +8,7 @@ class ReportRepository implements IReportRepository {
   final String _apiKey;
   final String _url;
 
-  ReportRepository(this._apiKey, this._url);
+  ReportRepository(this._url, this._apiKey);
 
   Future<void> submit(String accessToken, String message, List<String> tags,
       Map<String, dynamic> params) async {

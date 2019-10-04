@@ -9,7 +9,7 @@ class TrainingViewModel {
   final Function() refresh;
   final Data<List<ENEMQuestionData>> questions;
   final Function(String questionId, int answer) onAnswer;
-  final Function(String message, String questionId, int selectedAnswer,
+  final Function(String questionId, int selectedAnswer,
       int correctAnswer) onReportButtonPressed;
 
   TrainingViewModel(
@@ -27,7 +27,7 @@ class TrainingViewModel {
         questions: store.state.enemState.trainingQuestions,
         onAnswer: (String questionId, int answer) =>
             store.dispatch(AnswerTrainingQuestionAction(questionId, answer)),
-        onReportButtonPressed: (String message, String questionId,
+        onReportButtonPressed: (String questionId,
             int selectedAnswer, int correctAnswer) {
 
           Map<String, dynamic> params = {
@@ -38,7 +38,7 @@ class TrainingViewModel {
 
           List<String> tags = ["enem", "question", "incorrect", "answer"];
           store.dispatch(
-              SubmitReportEnemQuestionWrongAnswerAction(message, tags, params));
+              SubmitReportEnemQuestionWrongAnswerAction("O gabarito da questão não está correto.", tags, params));
         });
   }
 }

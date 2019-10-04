@@ -1,3 +1,4 @@
+import 'package:app/injection.dart';
 import 'package:app/presentation/state/actions/PageActions.dart';
 import 'package:app/presentation/state/app_state.dart';
 import 'package:app/presentation/widgets/ENEMQuestion.dart';
@@ -7,6 +8,7 @@ import 'package:app/presentation/widgets/FetcherWidget.dart';
 import 'package:app/presentation/widgets/LiceuScaffold.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 import 'ViewModel.dart';
@@ -22,6 +24,14 @@ class TrainingPage extends StatelessWidget {
           converter: (store) => TrainingViewModel.create(store),
           builder: (BuildContext context, TrainingViewModel viewModel) {
             return LiceuScaffold(
+              leading: FeaturesReady.report
+                  ? FlatButton(
+                      onPressed: null,
+                      child: new Icon(
+                        FontAwesomeIcons.plus,
+                      ),
+                    )
+                  : null,
               body: SmartRefresher(
                 onRefresh: () async {
                   viewModel.refresh();
@@ -92,6 +102,28 @@ class TrainingPage extends StatelessWidget {
                                 ),
                               ),
                             ),
+                            Container(
+                                child: GestureDetector(
+                              onTap: () {
+                                viewModel.onReportButtonPressed(viewModel.questions.content[0].id, 
+                                viewModel.questions.content[0].answer, viewModel.questions.content[0].selectedAnswer );
+                              },
+                              child: Column(children: [
+                                Icon(
+                                  FontAwesomeIcons.exclamationCircle,
+                                  color: Colors.black,
+                                  size: 10,
+                                ),
+                                Text(
+                                  'Reportar erro',
+                                  style: TextStyle(
+                                    color: Color(0xFF0061A1),
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 10
+                                  ),
+                                ),
+                              ]),
+                            ))
                           ],
                         ),
                       ),
