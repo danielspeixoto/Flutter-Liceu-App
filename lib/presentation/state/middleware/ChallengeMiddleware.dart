@@ -107,6 +107,7 @@ List<Middleware<AppState>> challengeMiddleware(
     final id = await getMyIdUseCase.run();
     if (id != action.challengedId) {
       try {
+        store.dispatch(NavigateChallengeAction());
         final challenge =
             await challengeSomeoneUseCase.run(action.challengedId);
         store.dispatch(SetChallengeAction(await prepareChallenge(challenge)));
