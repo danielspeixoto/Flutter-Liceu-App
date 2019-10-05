@@ -5,7 +5,6 @@ import 'package:app/presentation/pages/edit-profile/View.dart';
 import 'package:app/presentation/pages/home/View.dart';
 import 'package:app/presentation/pages/intro/View.dart';
 import 'package:app/presentation/pages/login/View.dart';
-import 'package:app/presentation/pages/profile/View.dart';
 import 'package:app/presentation/pages/splash/View.dart';
 import 'package:app/presentation/pages/tournament-review/View.dart';
 import 'package:app/presentation/pages/tournament/View.dart';
@@ -26,7 +25,7 @@ final analytics = FirebaseAnalytics();
 
 class MyApp extends StatelessWidget {
   MyApp({Key key}) : super(key: key) {
-    FirebaseNotifications(store);
+    ExternalConnections(store);
   }
 
   MaterialPageRoute _getRoute(RouteSettings settings) {
@@ -62,7 +61,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final analytics = FirebaseAnalytics();
     return StoreProvider(
         store: store,
         child: MaterialApp(
@@ -95,4 +93,3 @@ class AppRoutes {
   static const friend = "/friend";
   static const createTrivia = "/createTrivia";
 }
-

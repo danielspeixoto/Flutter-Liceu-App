@@ -1,15 +1,19 @@
 import 'dart:io';
+
+import 'package:app/presentation/state/actions/FriendActions.dart';
 import 'package:app/presentation/state/actions/NotificationActions.dart';
 import 'package:app/presentation/state/actions/UserActions.dart';
 import 'package:app/presentation/state/app_state.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/services.dart' show PlatformException;
 import 'package:redux/redux.dart';
+import 'package:uni_links/uni_links.dart';
 
-class FirebaseNotifications {
+class ExternalConnections {
   FirebaseMessaging _firebaseMessaging;
   final Store<AppState> store;
 
-  FirebaseNotifications(this.store) {
+  ExternalConnections(this.store) {
     this._firebaseMessaging = FirebaseMessaging();
     if (Platform.isIOS) iOSPermission();
 
@@ -45,6 +49,22 @@ class FirebaseNotifications {
         }
       },
     );
+    link(store);
+  }
+
+  void link(Store<AppState> store) async {
+    try {
+      final initialLink = await getInitialUri();
+      print(initialLink);
+      if (initialLink != null) {
+        final userId = initialLink.queryParameters['userId'];
+        Future.delayed(Duration(seconds: 3), () {
+          store.dispatch(NavigateViewFriendAction());
+          store.dispatch(FetchFriendAction(userId));
+          store.dispatch(FetchFriendPostsAction(userId));
+        });
+      }
+    } on PlatformException {}
   }
 
   void iOSPermission() {

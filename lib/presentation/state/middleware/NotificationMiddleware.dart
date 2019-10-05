@@ -1,8 +1,9 @@
 import 'package:app/domain/boundary/UserBoundary.dart';
-import 'package:app/presentation/state/actions/UtilActions.dart';
 import 'package:app/presentation/state/actions/ChallengeActions.dart';
 import 'package:app/presentation/state/actions/ENEMActions.dart';
+import 'package:app/presentation/state/actions/FriendActions.dart';
 import 'package:app/presentation/state/actions/NotificationActions.dart';
+import 'package:app/presentation/state/actions/UtilActions.dart';
 import 'package:redux/redux.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -31,6 +32,15 @@ List<Middleware<AppState>> notificationMiddleware(
         if (data.containsKey("challengeId")) {
           store.dispatch(AcceptChallengeAction(data["challengeId"]));
         }
+        break;
+      case "visit_user":
+        if (data.containsKey("userId")) {
+          final userId = data["challengeId"];
+          store.dispatch(NavigateViewFriendAction());
+          store.dispatch(FetchFriendAction(userId));
+          store.dispatch(FetchFriendPostsAction(userId));
+        }
+        break;
     }
   }
 
