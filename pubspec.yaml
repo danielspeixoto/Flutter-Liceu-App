@@ -50,6 +50,9 @@ dependencies:
   logger: ^0.6.0
   flutter_image: ^2.0.0
   facebook_analytics_plugin: ^0.0.1+6
+  flutter_full_pdf_viewer: ^1.0.4
+  path_provider: ^0.4.1
+  uni_links: ^0.2.0
 
 dev_dependencies:
   flutter_test:

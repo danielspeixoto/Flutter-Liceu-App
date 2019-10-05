@@ -8,6 +8,7 @@ import 'package:app/presentation/state/aggregates/ChallengeHistoryData.dart';
 import 'package:app/presentation/state/app_state.dart';
 import 'package:app/presentation/state/reducers/Data.dart';
 import 'package:redux/redux.dart';
+import 'package:share/share.dart';
 
 class GameViewModel {
   final Data<List<ChallengeHistoryData>> challenges;
@@ -17,6 +18,7 @@ class GameViewModel {
   final Function onTournamentPressed;
   final Function onCreateTriviaPressed;
   final Function(User user) onUserPressed;
+  final Function onChallengeFriendPressed;
 
   GameViewModel({
     this.challenges,
@@ -26,6 +28,7 @@ class GameViewModel {
     this.onTournamentPressed,
     this.onCreateTriviaPressed,
     this.onUserPressed,
+    this.onChallengeFriendPressed,
   });
 
   factory GameViewModel.create(Store<AppState> store) {
@@ -42,6 +45,11 @@ class GameViewModel {
       onCreateTriviaPressed: () => store.dispatch(NavigateCreateTriviaAction()),
       onUserPressed: (user) {
         store.dispatch(UserClickedAction(user));
+      },
+      onChallengeFriendPressed: () {
+        store.dispatch(ChallengeMeAction());
+        Share.share(
+            "Você é capaz de acertar mais questões?\nhttps://liceu.co?userId=${store.state.userState.user.content.id}");
       },
     );
   }

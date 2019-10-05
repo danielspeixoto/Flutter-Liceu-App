@@ -31,6 +31,7 @@ class FriendState {
 
 final Reducer<FriendState> friendReducer = combineReducers<FriendState>([
 //  Personal Data
+  TypedReducer<FriendState, NavigateViewFriendAction>(resetData),
   TypedReducer<FriendState, SetFriendAction>(setProfileData),
   TypedReducer<FriendState, FetchFriendAction>(fetchingFriend),
   TypedReducer<FriendState, FetchFriendErrorAction>(fetchingFriendError),
@@ -83,4 +84,8 @@ FriendState deletePost(FriendState state, DeletePostAction action) {
       content: posts,
     ),
   );
+}
+
+FriendState resetData(FriendState state, NavigateViewFriendAction action) {
+  return FriendState.initial();
 }

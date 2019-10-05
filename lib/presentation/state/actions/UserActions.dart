@@ -9,8 +9,6 @@ import '../../constants.dart';
 class NavigateUserEditProfileAction {}
 
 //Fetches
-class FetchUserAction {}
-
 class FetchUserErrorAction {
   final String error;
 
@@ -120,3 +118,5 @@ class InstagramClickedAction {
 
   InstagramClickedAction(this.instagram);
 }
+
+class UserProfileShareAction {}

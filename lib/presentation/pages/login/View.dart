@@ -3,9 +3,13 @@ import 'package:app/presentation/state/app_state.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
+import 'package:flutter_full_pdf_viewer/full_pdf_viewer_scaffold.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'dart:io';
+import 'dart:typed_data';
+import 'package:path_provider/path_provider.dart';
 
 import 'ViewModel.dart';
 
@@ -16,7 +20,22 @@ final List<String> imgList = [
   "assets/opinion3.jpeg"
 ];
 
+const String _documentPath = 'assets/therms-and-conditions.pdf';
+
 class LoginPage extends StatelessWidget {
+  Future<String> prepareTestPdf(context) async {
+    final ByteData bytes =
+        await DefaultAssetBundle.of(context).load(_documentPath);
+    final Uint8List list = bytes.buffer.asUint8List();
+
+    final tempDir = await getTemporaryDirectory();
+    final tempDocumentPath = '${tempDir.path}/$_documentPath';
+
+    final file = await File(tempDocumentPath).create(recursive: true);
+    file.writeAsBytesSync(list);
+    return tempDocumentPath;
+  }
+
   @override
   Widget build(BuildContext context) =>
       StoreConnector<AppState, LoginViewModel>(
@@ -99,6 +118,28 @@ class LoginPage extends StatelessWidget {
                           print(e);
                         }
                       }),
+                      Container(
+                        alignment: Alignment.bottomRight,
+                        child: FlatButton(
+                          onPressed: () => {
+                            // We need to prepare the test PDF, and then we can display the PDF.
+                            prepareTestPdf(context).then((pdfPath) {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => PDFViewerScaffold(
+                                        appBar: AppBar(
+                                          title: Text("Termos de Uso"),
+                                        ),
+                                        path: pdfPath)),
+                              );
+                            })
+                          },
+                          child: const Text('Termos de Uso',
+                              style: TextStyle(
+                                  color: Color(0xFF0061A1), fontSize: 12)),
+                        ),
+                      )
                     ],
                   ),
                 ),

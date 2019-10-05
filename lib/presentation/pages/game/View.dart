@@ -24,60 +24,75 @@ class GamePage extends StatelessWidget {
         converter: (store) => GameViewModel.create(store),
         builder: (BuildContext context, GameViewModel viewModel) {
           return LiceuScaffold(
-            leading: FeaturesReady.createTrivia ? FlatButton(
-              onPressed: viewModel.onCreateTriviaPressed,
-              child: new Icon(
-                FontAwesomeIcons.plus,
-              ),
-            ) : null,
+              leading: FeaturesReady.createTrivia
+                  ? FlatButton(
+                      onPressed: viewModel.onCreateTriviaPressed,
+                      child: new Icon(
+                        FontAwesomeIcons.plus,
+                      ),
+                    )
+                  : null,
               body: SmartRefresher(
-            controller: _refreshController,
-            onRefresh: () async {
-              viewModel.refresh();
-              _refreshController.refreshCompleted();
-            },
-            child: ListView(
-              children: <Widget>[
-                ActionCard(
-                  FontAwesomeIcons.gamepad,
-                  "Desafio Rápido",
-                  () => viewModel.onChallengePressed(),
-                ),
-                ActionCard(
-                  FontAwesomeIcons.trophy,
-                  "Torneio",
-                  () => viewModel.onTournamentPressed(),
-                ),
-                ActionCard(
-                  FontAwesomeIcons.userGraduate,
-                  "Treinamento",
-                  () => viewModel.onTrainingPressed(),
-                ),
-                Container(
-                  child: Card(
-                    child: Column(
-                      children: <Widget>[
-                        Container(
-                          width: double.infinity,
-                          color: Colors.black,
-                          padding: EdgeInsets.all(8),
-                          child: Text(
-                            "Histórico",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white),
-                          ),
+                controller: _refreshController,
+                onRefresh: () async {
+                  viewModel.refresh();
+                  _refreshController.refreshCompleted();
+                },
+                child: ListView(
+                  children: <Widget>[
+                    ActionCard(
+                      FontAwesomeIcons.gamepad,
+                      "Desafio Rápido",
+                      () => viewModel.onChallengePressed(),
+                    ),
+                    ActionCard(
+                      FontAwesomeIcons.trophy,
+                      "Torneio",
+                      () => viewModel.onTournamentPressed(),
+                    ),
+                    ActionCard(
+                      FontAwesomeIcons.userGraduate,
+                      "Treinamento",
+                      () => viewModel.onTrainingPressed(),
+                    ),
+                    FlatButton(
+                      onPressed: () {
+                        viewModel.onChallengeFriendPressed();
+                      },
+                      child: Text(
+                        "Desafie um amigo",
+                        style: TextStyle(
+                          color: Color(0xFF0061A1),
+                          fontWeight: FontWeight.bold,
                         ),
-                        FetcherWidget(
-                            errorMessage: viewModel.challenges.errorMessage,
-                            isLoading: viewModel.challenges.isLoading,
-                            child: () {
-                              return Container(
-                                child: Column(
-                                  children:
-                                      viewModel.challenges.content.length == 0
+                      ),
+                    ),
+                    Container(
+                      child: Card(
+                        child: Column(
+                          children: <Widget>[
+                            Container(
+                              width: double.infinity,
+                              color: Colors.black,
+                              padding: EdgeInsets.all(8),
+                              child: Text(
+                                "Histórico",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white),
+                              ),
+                            ),
+                            FetcherWidget(
+                                errorMessage: viewModel.challenges.errorMessage,
+                                isLoading: viewModel.challenges.isLoading,
+                                child: () {
+                                  return Container(
+                                    child: Column(
+                                      children: viewModel
+                                                  .challenges.content.length ==
+                                              0
                                           ? [
                                               Container(
                                                 child: Text(
@@ -98,16 +113,16 @@ class GamePage extends StatelessWidget {
                                                 ],
                                               );
                                             }).toList(),
-                                ),
-                              );
-                            }),
-                      ],
+                                    ),
+                                  );
+                                }),
+                          ],
+                        ),
+                      ),
                     ),
-                  ),
+                  ],
                 ),
-              ],
-            ),
-          ));
+              ));
         },
       );
 }

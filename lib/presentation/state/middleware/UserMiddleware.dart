@@ -1,11 +1,10 @@
 import 'package:app/domain/boundary/UserBoundary.dart';
-import 'package:app/presentation/state/actions/UtilActions.dart';
 import 'package:app/presentation/state/actions/LoginActions.dart';
-import 'package:app/presentation/state/aggregates/ChallengeHistoryData.dart';
 import 'package:app/presentation/state/actions/PostActions.dart';
 import 'package:app/presentation/state/actions/UserActions.dart';
+import 'package:app/presentation/state/actions/UtilActions.dart';
+import 'package:app/presentation/state/aggregates/ChallengeHistoryData.dart';
 import 'package:app/presentation/state/navigator/NavigatorActions.dart';
-import 'package:app/util/StackFilter.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:redux/redux.dart';
 
