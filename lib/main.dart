@@ -1,4 +1,5 @@
 import 'package:app/presentation/app.dart';
+import 'package:app/util/StackFilter.dart';
 import 'package:app/util/sentry.dart';
 import 'package:flutter/material.dart';
 import 'package:sentry/sentry.dart';
@@ -28,9 +29,12 @@ Future<Null> main() async {
     Zone.current.handleUncaughtError(details.exception, details.stack);
   };
 
+  
+
   runZoned<Future<Null>>(() async {
     runApp(new MyApp());
   }, onError: (error, stackTrace) async {
-    await _reportError(error, stackTrace);
+    
+    await _reportError(error, filter(stackTrace));
   });
 }
