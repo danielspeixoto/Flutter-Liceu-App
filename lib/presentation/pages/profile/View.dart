@@ -5,6 +5,7 @@ import 'package:app/presentation/widgets/LiceuDivider.dart';
 import 'package:app/presentation/widgets/LiceuScaffold.dart';
 import 'package:app/presentation/widgets/PostWidget.dart';
 import 'package:app/presentation/widgets/RoundedImage.dart';
+import 'package:app/presentation/widgets/TextFieldHighlight.dart';
 import 'package:app/presentation/widgets/TextWithLinks.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -44,6 +45,52 @@ class ProfilePage extends StatelessWidget {
                   ListTile(
                     title: Text('Editar Perfil'),
                     onTap: viewModel.onEditProfileButtonPressed,
+                  ),
+                  ListTile(
+                    title: Text('Reportar'),
+                    onTap: () {
+                      showDialog(
+                          context: context,
+                          builder: (context) {
+                            return SimpleDialog(
+                              title: Text("Reporte um feedback"),
+                              children: <Widget>[
+                                Container(
+                                    padding: EdgeInsets.symmetric(horizontal: 24),
+                                    child: Column(
+                                      children: <Widget>[
+                                        TextFieldHighlight(
+                                          onChanged: (text) {
+                                              viewModel.onFeedbackTextChanged(text);
+                                            },
+                                          decoration: InputDecoration(
+                                            border: OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                width: 0.1,
+                                              ),
+                                            ),
+                                            hintText:
+                                                "Não estou conseguindo desafiar alguém. Sempre que tento, o aplicativo fecha.",
+                                          ),
+                                          maxLines: 4,
+                                          keyboardType:
+                                                TextInputType.multiline,
+                                        ),
+                                        ListTile(
+                                          title: Text(
+                                            "Enviar",
+                                          ),
+                                          onTap: () {
+                                            Navigator.of(context).pop();
+                                            viewModel.onSendReportButtonPressed();
+                                          },
+                                        ),
+                                      ],
+                                    )),
+                              ],
+                            );
+                          });
+                    },
                   ),
                   ListTile(
                     title: Text('Sair desta conta'),

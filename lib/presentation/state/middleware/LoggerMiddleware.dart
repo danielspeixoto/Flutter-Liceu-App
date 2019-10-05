@@ -16,19 +16,19 @@ final logger = Logger(
 List<Middleware<AppState>> loggerMiddleware() {
   void logPresentationError(
       Store<AppState> store, OnCatchDefaultErrorAction action, NextDispatcher next) async {
-    logger.e("Error in Action: ${action.message}");
+    logger.e("Error in action ${action.message}");
     next(action);
   }
 
   void logInfo(Store<AppState> store, dynamic action, NextDispatcher next) async {
     if (!(action is OnCatchDefaultErrorAction)) {
-      logger.i("Executing Action: ${action.toString().substring(11)}");
+      logger.i("Executing ${action.toString().substring(11)}");
       next(action);
     }
   }
 
   void logDataError(Store<AppState> store, OnThrowDataExceptionAction action, NextDispatcher next) async {
-    logger.wtf("${action.exception} in method ${action.className}");
+    logger.wtf("${action.exception} in class ${action.className}");
   }
 
   return [
