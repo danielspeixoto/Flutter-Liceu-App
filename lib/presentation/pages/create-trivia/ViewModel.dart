@@ -40,9 +40,6 @@ class CreateTriviaViewModel {
     final triviaState = store.state.triviaState;
     final triviaDomain = triviaState.domain;
     String domain;
-    String question;
-    String correctAnswer;
-    String wrongAnswer;
 
     if (triviaDomain == TriviaDomain.MATHEMATICS) {
       domain = "Matemática";

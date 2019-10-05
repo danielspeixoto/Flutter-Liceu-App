@@ -67,6 +67,12 @@ class SetUserEditFieldAction {
   SetUserEditFieldAction({this.bio, this.instagram});
 }
 
+class SetUserReportFieldAction {
+  final String text;
+
+  SetUserReportFieldAction(this.text);
+}
+
 class SetUserFcmTokenAction {
   final String fcmtoken;
 

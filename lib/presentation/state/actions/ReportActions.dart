@@ -1,9 +1,12 @@
-class SubmitReportEnemQuestionWrongAnswerAction {
+
+//Submits
+
+class SubmitReportAction {
   final String message;
   final List<String> tags;
   final Map<String, dynamic> params;
 
-  SubmitReportEnemQuestionWrongAnswerAction(this.message, this.tags, this.params);
+  SubmitReportAction(this.message, this.tags, this.params);
 }
 
-class SubmitReportEnemQuestionWrongAnswerSuccessAction {}
+class SubmitReportSuccessAction {}
