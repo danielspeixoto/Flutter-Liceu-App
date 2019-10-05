@@ -6,12 +6,12 @@ import 'package:redux/redux.dart';
 
 List<Middleware<AppState>> reportMiddleware(
     ISubmitReportUseCase submitReportUseCase) {
-  void submitEnemQuestionWrongAnswerReport(Store<AppState> store,
-      SubmitReportEnemQuestionWrongAnswerAction action, NextDispatcher next) async {
+  void submitReport(Store<AppState> store,
+      SubmitReportAction action, NextDispatcher next) async {
     next(action);
     try {
       await submitReportUseCase.run(action.message, action.tags, action.params);
-      store.dispatch(SubmitReportEnemQuestionWrongAnswerSuccessAction());
+      store.dispatch(SubmitReportSuccessAction());
     } catch (error, stackTrace) {
       final actionName = action.toString().substring(11);
       store.dispatch(
@@ -20,7 +20,7 @@ List<Middleware<AppState>> reportMiddleware(
   }
 
   return [
-    TypedMiddleware<AppState, SubmitReportEnemQuestionWrongAnswerAction>(
-        submitEnemQuestionWrongAnswerReport)
+    TypedMiddleware<AppState, SubmitReportAction>(
+        submitReport)
   ];
 }

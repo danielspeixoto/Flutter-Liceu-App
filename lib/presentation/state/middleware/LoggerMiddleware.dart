@@ -27,7 +27,7 @@ List<Middleware<AppState>> loggerMiddleware() {
     }
     next(action);
   }
-
+  
   void logDataError(Store<AppState> store, OnThrowDataExceptionAction action,
       NextDispatcher next) async {
     logger.wtf("${action.exception} in method ${action.className}");

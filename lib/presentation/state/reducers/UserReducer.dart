@@ -13,22 +13,25 @@ class UserState {
   final Data<List<Post>> posts;
   final Data<List<ChallengeHistoryData>> challenges;
   final String fcmtoken;
+  final String reportFeedback;
 
-  UserState(this.user, this.posts, this.challenges, this.fcmtoken);
+  UserState(this.user, this.posts, this.challenges, this.fcmtoken, this.reportFeedback);
 
-  factory UserState.initial() => UserState(Data(), Data(), Data(), null);
+  factory UserState.initial() => UserState(Data(), Data(), Data(), null, null);
 
   UserState copyWith({
     Data<User> user,
     Data<List<Post>> posts,
     Data<List<ChallengeHistoryData>> challenges,
-    String fcmtoken
+    String fcmtoken,
+    String reportFeedback
   }) {
     final state = UserState(
       user ?? this.user,
       posts ?? this.posts,
       challenges ?? this.challenges,
-      fcmtoken ?? this.fcmtoken
+      fcmtoken ?? this.fcmtoken,
+      reportFeedback ?? this.reportFeedback
     );
     return state;
   }
@@ -50,7 +53,13 @@ final Reducer<UserState> userReducer = combineReducers<UserState>([
   TypedReducer<UserState, FetchUserChallengesErrorAction>(
       fetchUserChallengesError),
   TypedReducer<UserState, SetUserFcmTokenAction>(setFcmToken),
+// Report
+  TypedReducer<UserState, SetUserReportFieldAction>(setUserReportField)
 ]);
+
+UserState setUserReportField(UserState state, SetUserReportFieldAction action) {
+  return state.copyWith(reportFeedback: action.text);
+}
 
 UserState setProfileData(UserState state, SetUserAction action) {
   return state.copyWith(user: Data(content: action.user, isLoading: false));
