@@ -5,9 +5,10 @@ import 'package:flutter_image/network.dart';
 
 class RoundedImage extends StatelessWidget {
   final String pictureURL;
+  final String picturePath;
   final double size;
 
-  RoundedImage({this.pictureURL, this.size});
+  RoundedImage({this.pictureURL, this.picturePath, this.size});
 
   @override
   Widget build(BuildContext context) => Container(
@@ -21,8 +22,12 @@ class RoundedImage extends StatelessWidget {
             ),
           ),
           image: new DecorationImage(
-              fit: BoxFit.fill, image: new NetworkImageWithRetry(pictureURL) ),
+              fit: BoxFit.fill,
+              image: pictureURL != null
+                  ? new NetworkImageWithRetry(pictureURL)
+                  : new Image(
+                              image: new AssetImage(picturePath),
+                            )),
         ),
       );
-  
 }
