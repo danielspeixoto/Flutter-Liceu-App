@@ -63,7 +63,7 @@ class AcceptChallengeAction extends ItemAction {
 
 class PlayRandomChallengeAction {}
 
-class ChallengeSomeoneAction extends ItemAction{
+class ChallengeSomeoneAction extends ItemAction {
   final String challengedId;
 
   ChallengeSomeoneAction(this.challengedId);
@@ -77,3 +77,5 @@ class ChallengeSomeoneAction extends ItemAction{
 }
 
 class CancelChallengeAction {}
+
+class ChallengeMeAction {}

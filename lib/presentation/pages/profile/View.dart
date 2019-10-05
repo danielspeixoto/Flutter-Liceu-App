@@ -56,13 +56,15 @@ class ProfilePage extends StatelessWidget {
                               title: Text("Reporte um feedback"),
                               children: <Widget>[
                                 Container(
-                                    padding: EdgeInsets.symmetric(horizontal: 24),
+                                    padding:
+                                        EdgeInsets.symmetric(horizontal: 24),
                                     child: Column(
                                       children: <Widget>[
                                         TextFieldHighlight(
                                           onChanged: (text) {
-                                              viewModel.onFeedbackTextChanged(text);
-                                            },
+                                            viewModel
+                                                .onFeedbackTextChanged(text);
+                                          },
                                           decoration: InputDecoration(
                                             border: OutlineInputBorder(
                                               borderSide: BorderSide(
@@ -73,8 +75,7 @@ class ProfilePage extends StatelessWidget {
                                                 "Não estou conseguindo desafiar alguém. Sempre que tento, o aplicativo fecha.",
                                           ),
                                           maxLines: 4,
-                                          keyboardType:
-                                                TextInputType.multiline,
+                                          keyboardType: TextInputType.multiline,
                                         ),
                                         ListTile(
                                           title: Text(
@@ -82,7 +83,8 @@ class ProfilePage extends StatelessWidget {
                                           ),
                                           onTap: () {
                                             Navigator.of(context).pop();
-                                            viewModel.onSendReportButtonPressed();
+                                            viewModel
+                                                .onSendReportButtonPressed();
                                           },
                                         ),
                                       ],
@@ -143,9 +145,9 @@ class ProfilePage extends StatelessWidget {
                                     ),
                                     FlatButton(
                                       onPressed:
-                                          viewModel.onEditProfileButtonPressed,
+                                          viewModel.onShareProfilePressed,
                                       child: Text(
-                                        "Edite seu perfil",
+                                        "Compartilhe seu perfil",
                                         style: TextStyle(
                                           color: Color(0xFF0061A1),
                                         ),
