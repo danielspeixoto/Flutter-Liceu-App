@@ -1,5 +1,6 @@
 import 'package:app/presentation/state/actions/UtilActions.dart';
 import 'package:app/presentation/state/actions/UserActions.dart';
+import 'package:app/util/StackFilter.dart';
 import 'package:app/util/sentry.dart';
 import 'package:redux/redux.dart';
 import '../app_state.dart';
@@ -15,7 +16,7 @@ List<Middleware<AppState>> sentryMiddleware() {
 
   void reportError(Store<AppState> store, OnCatchDefaultErrorAction action,
       NextDispatcher next) async {
-    await sentry.reportError(action.error, action.message, action.stackTrace, action.parameters);
+    await sentry.reportError(action.error, action.message, filter(action.stackTrace), action.parameters);
     next(action);
   }
 

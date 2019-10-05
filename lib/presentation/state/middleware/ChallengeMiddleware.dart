@@ -7,6 +7,7 @@ import 'package:app/presentation/state/actions/UserActions.dart';
 import 'package:app/presentation/state/aggregates/ChallengeData.dart';
 import 'package:app/presentation/state/aggregates/TriviaData.dart';
 import 'package:app/presentation/state/navigator/NavigatorActions.dart';
+import 'package:app/util/StackFilter.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:redux/redux.dart';
 
