@@ -44,7 +44,7 @@ class UserProfilePage extends StatelessWidget {
                                 child: RoundedImage(
                                   pictureURL: user.picURL != null
                                       ? user.picURL
-                                      : "https://png.pngtree.com/svg/20170823/monkey_15.png",
+                                      : null,
                                   size: 80.0,
                                 ),
                                 margin: EdgeInsets.all(8),

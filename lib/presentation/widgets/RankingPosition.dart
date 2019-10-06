@@ -20,7 +20,7 @@ class RankingPosition extends StatelessWidget {
               child: RoundedImage(
                 pictureURL: game.user.picURL != null
                     ? game.user.picURL
-                    : "https://png.pngtree.com/svg/20170823/monkey_15.png",
+                    : null,
                 size: 36,
               ),
             ),
