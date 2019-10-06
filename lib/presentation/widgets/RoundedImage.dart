@@ -25,7 +25,6 @@ class RoundedImage extends StatelessWidget {
         width: this.size,
         height: this.size,
         child: new ClipOval(
-          //borderRadius: BorderRadius.circular(8.0),
           child: new CachedNetworkImage(
             imageUrl: pictureURL,
             height: size / 48,
