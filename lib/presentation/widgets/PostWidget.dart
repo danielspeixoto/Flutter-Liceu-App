@@ -52,7 +52,7 @@ class PostWidget extends StatelessWidget {
                         child: RoundedImage(
                           pictureURL: this.user.picURL != null
                               ? this.user.picURL
-                              : "https://png.pngtree.com/svg/20170823/monkey_15.png",
+                              : null,
                           size: 36,
                         ),
                       ),

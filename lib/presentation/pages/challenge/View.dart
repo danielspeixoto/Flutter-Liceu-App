@@ -39,8 +39,8 @@ class ChallengePage extends StatelessWidget {
                                   margin: EdgeInsets.all(8),
                                   child: RoundedImage(
                                     pictureURL: viewModel.challenger != null
-                                        ? "assets/koala.png"
-                                        : "assets/koala.png",
+                                        ? viewModel.challenger.picURL
+                                        : null,
                                     size: 64,
                                   ),
                                 ),
@@ -69,9 +69,9 @@ class ChallengePage extends StatelessWidget {
                                 Container(
                                   margin: EdgeInsets.all(8),
                                   child: RoundedImage(
-                                    pictureURL: viewModel.challenged == null
-                                        ? "https://png.pngtree.com/svg/20170823/monkey_15.png"
-                                        : viewModel.challenged.picURL,
+                                    pictureURL: viewModel.challenged != null
+                                        ? viewModel.challenged.picURL
+                                        : null,
                                     size: 64,
                                   ),
                                 ),

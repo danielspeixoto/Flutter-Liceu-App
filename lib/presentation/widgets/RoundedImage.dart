@@ -1,14 +1,24 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_image/network.dart';
+import "dart:math";
+
+final List<String> animals = [
+  "assets/hedgehog.png",
+  "assets/tiger.png",
+  'assets/fox.png',
+  'assets/cat.png',
+  'assets/pig.png',
+  'assets/dog.png',
+  'assets/koala.png'
+];
+
+final random = new Random();
 
 class RoundedImage extends StatelessWidget {
   final String pictureURL;
-  final String picturePath;
   final double size;
 
-  RoundedImage({this.pictureURL, this.picturePath, this.size});
+  RoundedImage({this.pictureURL, this.size});
 
   @override
   Widget build(BuildContext context) => Container(
@@ -25,9 +35,7 @@ class RoundedImage extends StatelessWidget {
               fit: BoxFit.fill,
               image: pictureURL != null
                   ? new NetworkImageWithRetry(pictureURL)
-                  : new Image(
-                              image: new AssetImage(picturePath),
-                            )),
+                  : new AssetImage(animals[random.nextInt(animals.length)])),
         ),
       );
 }
