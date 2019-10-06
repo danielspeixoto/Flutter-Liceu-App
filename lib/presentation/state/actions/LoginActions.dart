@@ -37,3 +37,9 @@ class IsLoggingInAction {
 class LogOutAction {
   LogOutAction();
 }
+
+class SetLoginReportFieldAction {
+  final String message;
+
+  SetLoginReportFieldAction(this.message);
+}

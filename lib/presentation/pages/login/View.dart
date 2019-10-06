@@ -1,5 +1,7 @@
+import 'package:app/injection.dart';
 import 'package:app/presentation/state/actions/PageActions.dart';
 import 'package:app/presentation/state/app_state.dart';
+import 'package:app/presentation/widgets/TextFieldHighlight.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
@@ -118,27 +120,91 @@ class LoginPage extends StatelessWidget {
                           print(e);
                         }
                       }),
-                      Container(
-                        alignment: Alignment.bottomRight,
-                        child: FlatButton(
-                          onPressed: () => {
-                            // We need to prepare the test PDF, and then we can display the PDF.
-                            prepareTestPdf(context).then((pdfPath) {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => PDFViewerScaffold(
-                                        appBar: AppBar(
-                                          title: Text("Termos de Uso"),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Container(
+                            alignment: Alignment.bottomLeft,
+                            child: FeaturesReady.report_login ? FlatButton(
+                              onPressed: () => {
+                                                      showDialog(
+                          context: context,
+                          builder: (context) {
+                            return SimpleDialog(
+                              title: Text("Fale conosco"),
+                              children: <Widget>[
+                                Container(
+                                    padding:
+                                        EdgeInsets.symmetric(horizontal: 24),
+                                    child: Column(
+                                      children: <Widget>[
+                                        TextFieldHighlight(
+                                          onChanged: (text) {
+                                             viewModel
+                                                 .onMessageTextChanged(text);
+                                          },
+                                          decoration: InputDecoration(
+                                            border: OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                width: 0.1,
+                                              ),
+                                            ),
+                                            hintText:
+                                                "Escreva sua mensagem",
+                                          ),
+                                          maxLines: 4,
+                                          keyboardType: TextInputType.multiline,
                                         ),
-                                        path: pdfPath)),
-                              );
-                            })
-                          },
-                          child: const Text('Termos de Uso',
-                              style: TextStyle(
-                                  color: Color(0xFF0061A1), fontSize: 12)),
-                        ),
+                                        ListTile(
+                                          title: Center(child: Text(
+                                            "Enviar",
+                                          ),),
+                                          onTap: () {
+                                            Navigator.of(context).pop();
+                                             viewModel
+                                                 .onSendMessageButtonPressed();
+                                          },
+                                        ),
+                                      ],
+                                    )),
+                              ],
+                            );
+                          })
+                              },
+                              child: const Text(
+                                'Fale conosco',
+                                style: TextStyle(
+                                    color: Color(0xFF0061A1),
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ) : null,
+                          ),
+                          Container(
+                            alignment: Alignment.bottomRight,
+                            child: FlatButton(
+                              onPressed: () => {
+                                // We need to prepare the test PDF, and then we can display the PDF.
+                                prepareTestPdf(context).then((pdfPath) {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => PDFViewerScaffold(
+                                            appBar: AppBar(
+                                              title: Text("Termos de Uso"),
+                                            ),
+                                            path: pdfPath)),
+                                  );
+                                })
+                              },
+                              child: const Text('Termos de Uso',
+                                  style: TextStyle(
+                                      color: Color(0xFF0061A1),
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.bold)),
+                            ),
+                          ),
+                        ],
                       )
                     ],
                   ),

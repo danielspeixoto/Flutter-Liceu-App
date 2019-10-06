@@ -5,18 +5,22 @@ import 'Data.dart';
 
 class LoginState {
   final Data<bool> loginStatus;
+  final String message;
 
-  LoginState(this.loginStatus);
+  LoginState(this.loginStatus, this.message);
 
   factory LoginState.initial() => LoginState(
         Data(),
+        null
       );
 
   LoginState copyWith({
     Data<bool> isLoggedIn,
+    String message
   }) {
     final state = LoginState(
       isLoggedIn ?? this.loginStatus,
+      message ?? this.message
     );
     return state;
   }
@@ -31,6 +35,7 @@ final Reducer<LoginState> loginReducer = combineReducers<LoginState>([
   TypedReducer<LoginState, LoginSuccessAction>(loginSuccess),
   TypedReducer<LoginState, NotLoggedInAction>(loginFailed),
   TypedReducer<LoginState, IsLoggingInAction>(login),
+  TypedReducer<LoginState, SetLoginReportFieldAction>(setMessage),
 ]);
 
 LoginState loginSuccess(LoginState state, LoginSuccessAction action) {
@@ -48,5 +53,11 @@ LoginState loginFailed(LoginState state, NotLoggedInAction action) {
 LoginState login(LoginState state, IsLoggingInAction action) {
   return state.copyWith(
     isLoggedIn: Data(isLoading: true),
+  );
+}
+
+LoginState setMessage(LoginState state, SetLoginReportFieldAction action) {
+  return state.copyWith(
+    message: action.message,
   );
 }
