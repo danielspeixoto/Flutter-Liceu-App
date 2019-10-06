@@ -121,6 +121,7 @@ class LoginPage extends StatelessWidget {
                         }
                       }),
                       Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           Container(
                             alignment: Alignment.bottomLeft,
