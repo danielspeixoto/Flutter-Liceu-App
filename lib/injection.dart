@@ -49,7 +49,9 @@ bool get isDev {
 class FeaturesReady {
   static final viewFriend = true;
   static final createTrivia = true;
-  static final report = isDev;
+  static final report_question = true;
+  static final report_sidemenu = true;
+  static final report_login = isDev;
 }
 
 final baseURL = isDev
