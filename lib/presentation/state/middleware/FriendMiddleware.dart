@@ -49,9 +49,9 @@ List<Middleware<AppState>> friendMiddleware(
       NextDispatcher next) async {
     next(action);
 
+    store.dispatch(NavigateViewFriendAction());
     store.dispatch(SetFriendAction(action.user));
     store.dispatch(FetchFriendPostsAction(action.user.id));
-    store.dispatch(NavigateViewFriendAction());
   }
 
   return [
