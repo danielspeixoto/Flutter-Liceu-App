@@ -40,7 +40,7 @@ class MatchHistory extends StatelessWidget {
             Container(
               margin: EdgeInsets.all(8),
               child: RoundedImage(
-                pictureURL: user != null ? user.picURL : null,
+                pictureURL: user != null ? user.picURL : "",
                 size: 36,
               ),
             ),

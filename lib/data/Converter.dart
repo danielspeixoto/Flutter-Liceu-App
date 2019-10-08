@@ -1,9 +1,9 @@
 import 'dart:convert';
 
 import 'package:app/domain/aggregates/Challenge.dart';
+import 'package:app/domain/aggregates/ENEMGame.dart';
 import 'package:app/domain/aggregates/ENEMQuestion.dart';
 import 'package:app/domain/aggregates/ENEMVideo.dart';
-import 'package:app/domain/aggregates/ENEMGame.dart';
 import 'package:app/domain/aggregates/Post.dart';
 import 'package:app/domain/aggregates/Ranking.dart';
 import 'package:app/domain/aggregates/User.dart';
@@ -42,19 +42,18 @@ List<Challenge> fromJsonToListOfChallenges(String content) {
 
 Challenge fromMapToChallenge(data) {
   return Challenge(
-    data["id"],
-    data["challenger"],
-    data["challenged"],
-    data["scoreChallenged"],
-    data["scoreChallenger"],
-    fromJsonToListOfTrivias(data["triviaQuestionsUsed"])
-  );
+      data["id"],
+      data["challenger"],
+      data["challenged"],
+      data["scoreChallenged"],
+      data["scoreChallenger"],
+      fromJsonToListOfTrivias(data["triviaQuestionsUsed"]));
 }
 
 List<Trivia> fromJsonToListOfTrivias(content) {
-  final l = new List<Trivia>.generate(content.length, (i) => fromMapToTrivia(content[i]));
+  final l = new List<Trivia>.generate(
+      content.length, (i) => fromMapToTrivia(content[i]));
   return l;
-
 }
 
 Trivia fromMapToTrivia(data) {
@@ -83,6 +82,7 @@ Post fromMapToPost(data) {
     data["userId"],
     data["type"],
     data["description"],
+    data["image"]["imageData"],
   );
 }
 
@@ -96,7 +96,8 @@ ENEMGame fromMapToGame(data) {
   return ENEMGame(
     data["id"],
     data["userId"],
-    List<ENEMAnswer>.generate(data["answers"].length, (i) => fromMapToAnswer(data["answers"][i])),
+    List<ENEMAnswer>.generate(
+        data["answers"].length, (i) => fromMapToAnswer(data["answers"][i])),
     data["timeSpent"],
   );
 }
@@ -111,7 +112,8 @@ ENEMAnswer fromMapToAnswer(data) {
 
 List<ENEMQuestion> fromJsonToListOfQuestions(String content) {
   final data = (json.decode(content) as List).cast<Map<String, dynamic>>();
-  final result = List<ENEMQuestion>.generate(data.length, (i) => fromMapToENEMQuestion(data[i]));
+  final result = List<ENEMQuestion>.generate(
+      data.length, (i) => fromMapToENEMQuestion(data[i]));
   return result;
 }
 
@@ -127,7 +129,8 @@ fromMapToENEMQuestion(Map<String, dynamic> data) {
 
 List<ENEMVideo> fromJsonToListOfENEMVideos(String content) {
   final data = (json.decode(content) as List).cast<Map<String, dynamic>>();
-  final result = List<ENEMVideo>.generate(data.length, (i) => fromMapToENEMVideo(data[i]));
+  final result =
+      List<ENEMVideo>.generate(data.length, (i) => fromMapToENEMVideo(data[i]));
   return result;
 }
 

@@ -14,7 +14,7 @@ class PostRepository implements IPostRepository {
   PostRepository(this._url, this._apiKey);
 
   @override
-  Future<void> create(String accessToken, PostType type, String text) async {
+  Future<void> createTextPost(String accessToken, String text) async {
     final response = await http.post(
       _url + "/",
       headers: {
@@ -23,7 +23,32 @@ class PostRepository implements IPostRepository {
         authHeader: accessToken
       },
       body: json.encode(
-        {"type": _postTypeToString(type), "description": text},
+        {"type": "text", "description": text},
+      ),
+    );
+    if (response.statusCode == 200) {
+      return;
+    }
+    throw handleNetworkException(response.statusCode, runtimeType.toString());
+  }
+
+  @override
+  Future<void> createImagePost(String accessToken, String imageData,
+      String imageTitle, String text) async {
+    final response = await http.post(
+      _url + "/",
+      headers: {
+        apiKeyHeader: _apiKey,
+        contentTypeHeader: contentTypeValueForJson,
+        authHeader: accessToken
+      },
+      body: json.encode(
+        {
+          "type": "image",
+          "description": text,
+          "imageTitle": imageTitle,
+          "imageData": imageData,
+        },
       ),
     );
     if (response.statusCode == 200) {
@@ -52,9 +77,10 @@ class PostRepository implements IPostRepository {
     switch (postType) {
       case PostType.TEXT:
         return "text";
+      case PostType.IMAGE:
+        return "image";
       default:
         return "";
     }
   }
-
 }

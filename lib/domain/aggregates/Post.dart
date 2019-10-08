@@ -1,12 +1,22 @@
 class Post {
   final String id;
   final String userId;
-  final String type;
+  PostType type;
   final String text;
+  final String imageURL;
 
 //  final DateTime submissionDate;
 
-  Post(this.id, this.userId, this.type, this.text);
+  Post(this.id, this.userId, String type, this.text, this.imageURL) {
+    switch (type) {
+      case "text":
+        this.type = PostType.TEXT;
+        break;
+      case "image":
+        this.type = PostType.IMAGE;
+        break;
+    }
+  }
 }
 
-enum PostType { TEXT }
+enum PostType { TEXT, IMAGE }

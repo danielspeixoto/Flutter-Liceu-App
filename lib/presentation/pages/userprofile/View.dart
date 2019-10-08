@@ -42,9 +42,8 @@ class UserProfilePage extends StatelessWidget {
                             children: <Widget>[
                               Container(
                                 child: RoundedImage(
-                                  pictureURL: user.picURL != null
-                                      ? user.picURL
-                                      : null,
+                                  pictureURL:
+                                      user.picURL != null ? user.picURL : null,
                                   size: 80.0,
                                 ),
                                 margin: EdgeInsets.all(8),
@@ -149,6 +148,7 @@ class UserProfilePage extends StatelessWidget {
                                           post.text,
                                         );
                                       },
+                                      imageURL: post.imageURL,
                                     ),
                                   )
                                   .toList(),

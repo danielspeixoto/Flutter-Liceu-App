@@ -86,20 +86,20 @@ final Store<AppState> store = Store<AppState>(
       checkUseCase,
     ),
     ...userMiddleware(
-      myInfoUseCase,
-      myPostsUseCase,
-      myChallengesUseCase,
-      getUserByIdUseCase,
-      setUserDescriptionUseCase,
-      setUserInstagramUseCase,
-      myIdUseCase,
-      submitUserFcmTokenUseCase
-    ),
+        myInfoUseCase,
+        myPostsUseCase,
+        myChallengesUseCase,
+        getUserByIdUseCase,
+        setUserDescriptionUseCase,
+        setUserInstagramUseCase,
+        myIdUseCase,
+        submitUserFcmTokenUseCase),
     ...postMiddleware(
-      createPostUseCase,
+      createTextPostUseCase,
       deletePostUseCase,
       getExplorePostsUseCase,
       getUserByIdUseCase,
+      createImagePostUseCase,
     ),
     ...ENEMMiddleware(
       getRankingUseCase,
@@ -109,27 +109,20 @@ final Store<AppState> store = Store<AppState>(
       submitENEMGamesUseCase,
     ),
     ...challengeMiddleware(
-      getChallengeUseCase,
-      getChallengeByIdUseCase,
-      challengeSomeoneUseCase,
-      getUserByIdUseCase,
-      submitChallengeAnswersUseCase,
-      myIdUseCase
-    ),
-    ...friendMiddleware(
-      getUserPostsUseCase,
-      getUserByIdUseCase,
-      myIdUseCase
-    ),
+        getChallengeUseCase,
+        getChallengeByIdUseCase,
+        challengeSomeoneUseCase,
+        getUserByIdUseCase,
+        submitChallengeAnswersUseCase,
+        myIdUseCase),
+    ...friendMiddleware(getUserPostsUseCase, getUserByIdUseCase, myIdUseCase),
     ...triviaMiddleware(
       createTriviaUseCase,
     ),
     ...notificationMiddleware(
       isLoggedInUseCase,
     ),
-    ...reportMiddleware(
-      submitReportUseCase
-    ),
+    ...reportMiddleware(submitReportUseCase),
     ...navigationMiddleware()
   ],
 );

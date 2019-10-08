@@ -135,8 +135,14 @@ List<Middleware<AppState>> analyticsMiddleware(IMyIdUseCase myIdUseCase) {
     LiceuAnalytics.logEvent("logout");
   }
 
-  void logEventSubmitPost(Store<AppState> store, SubmitPostAction action,
-      NextDispatcher next) async {
+  void logEventSubmitTextPost(Store<AppState> store,
+      SubmitTextPostAction action, NextDispatcher next) async {
+    next(action);
+    LiceuAnalytics.logEvent("submit_post");
+  }
+
+  void logEventSubmitImagePost(Store<AppState> store,
+      SubmitImagePostAction action, NextDispatcher next) {
     next(action);
     LiceuAnalytics.logEvent("submit_post");
   }
@@ -197,7 +203,8 @@ List<Middleware<AppState>> analyticsMiddleware(IMyIdUseCase myIdUseCase) {
     TypedMiddleware<AppState, LoginSuccessAction>(logEventLoginSuccess),
     TypedMiddleware<AppState, LoginAction>(logEventLogin),
     TypedMiddleware<AppState, LogOutAction>(logEventLogOut),
-    TypedMiddleware<AppState, SubmitPostAction>(logEventSubmitPost),
+    TypedMiddleware<AppState, SubmitTextPostAction>(logEventSubmitTextPost),
+    TypedMiddleware<AppState, SubmitImagePostAction>(logEventSubmitImagePost),
     TypedMiddleware<AppState, PostShareAction>(logEventPostShare),
     TypedMiddleware<AppState, DeletePostAction>(logEventDeletePost),
     TypedMiddleware<AppState, SubmitTriviaAction>(logEventSubmitTrivia),

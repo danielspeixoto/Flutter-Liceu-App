@@ -1,19 +1,21 @@
 import 'package:app/domain/aggregates/exceptions/CreatePostExceptions.dart';
 import 'package:app/domain/boundary/PostBoundary.dart';
 import 'package:app/domain/boundary/UserBoundary.dart';
-import 'package:app/presentation/state/actions/UtilActions.dart';
 import 'package:app/presentation/state/actions/PostActions.dart';
+import 'package:app/presentation/state/actions/UtilActions.dart';
 import 'package:app/presentation/state/aggregates/PostData.dart';
 import 'package:app/presentation/state/navigator/NavigatorActions.dart';
 import 'package:redux/redux.dart';
+
 import '../../app.dart';
 import '../app_state.dart';
 
 List<Middleware<AppState>> postMiddleware(
-  ICreatePostUseCase createPostUseCase,
+  ICreateTextPostUseCase createPostUseCase,
   IDeletePostUseCase deletePostUseCase,
   IExplorePostUseCase explorePostUseCase,
   IGetUserByIdUseCase getUserByIdUseCase,
+  ICreateImagePostUseCase createImagePostUseCase,
 ) {
   void deletePost(Store<AppState> store, DeletePostAction action,
       NextDispatcher next) async {
@@ -27,11 +29,26 @@ List<Middleware<AppState>> postMiddleware(
     }
   }
 
-  void createPost(Store<AppState> store, SubmitPostAction action,
+  void createTextPost(Store<AppState> store, SubmitTextPostAction action,
       NextDispatcher next) async {
     next(action);
     try {
-      await createPostUseCase.run(action.postType, action.text);
+      await createPostUseCase.run(action.text);
+      store.dispatch(SubmitPostSuccessAction());
+    } on CreatePostException catch (error, stackTrace) {
+      store.dispatch(SubmitPostErrorTextSizeMismatchAction());
+    } catch (error, stackTrace) {
+      final actionName = action.toString().substring(11);
+      store.dispatch(OnCatchDefaultErrorAction(
+          error.toString(), stackTrace, actionName, action.itemToJson()));
+    }
+  }
+
+  void createImagePost(Store<AppState> store, SubmitImagePostAction action,
+      NextDispatcher next) async {
+    next(action);
+    try {
+      await createImagePostUseCase.run(action.imageData, action.text);
       store.dispatch(SubmitPostSuccessAction());
     } on CreatePostException catch (error, stackTrace) {
       store.dispatch(SubmitPostErrorTextSizeMismatchAction());
@@ -62,6 +79,7 @@ List<Middleware<AppState>> postMiddleware(
           author,
           post.type,
           post.text,
+          post.imageURL,
         );
       });
       final data = await Future.wait(futures);
@@ -82,7 +100,8 @@ List<Middleware<AppState>> postMiddleware(
   return [
     TypedMiddleware<AppState, DeletePostAction>(deletePost),
     TypedMiddleware<AppState, NavigateCreatePostAction>(postCreation),
-    TypedMiddleware<AppState, SubmitPostAction>(createPost),
+    TypedMiddleware<AppState, SubmitTextPostAction>(createTextPost),
+    TypedMiddleware<AppState, SubmitImagePostAction>(createImagePost),
     TypedMiddleware<AppState, SubmitPostSuccessAction>(postCreated),
     TypedMiddleware<AppState, FetchPostsAction>(explorePosts),
   ];

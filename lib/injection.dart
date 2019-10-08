@@ -93,7 +93,10 @@ final isLoggedInUseCase = IsLoggedInUseCase(localRepository);
 final myIdUseCase = MyIdUseCase(localRepository);
 final checkUseCase = CheckUseCase(userRepository, localRepository);
 final logoutUseCase = LogOutUseCase(localRepository);
-final createPostUseCase = CreatePostUseCase(localRepository, postRepository);
+final createTextPostUseCase =
+    CreateTextPostUseCase(localRepository, postRepository);
+final createImagePostUseCase =
+    CreateImagePostUseCase(localRepository, postRepository);
 final deletePostUseCase = DeletePostUseCase(localRepository, postRepository);
 final setUserDescriptionUseCase =
     SetUserDescriptionUseCase(localRepository, userRepository);
@@ -117,7 +120,7 @@ final submitENEMGamesUseCase =
     SubmitGameUseCase(localRepository, gameRepository);
 final createTriviaUseCase =
     CreateTriviaUseCase(localRepository, triviaRepository);
-final submitUserFcmTokenUseCase = 
+final submitUserFcmTokenUseCase =
     SubmitFcmTokenUseCase(localRepository, userRepository);
-final submitReportUseCase = 
+final submitReportUseCase =
     SubmitReportUseCase(localRepository, reportRepository);

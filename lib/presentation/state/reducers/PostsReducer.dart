@@ -11,22 +11,16 @@ class PostState {
 
   PostState(this.posts, this.isCreatingPost, this.createPostTextErrorMessage);
 
-  factory PostState.initial() => PostState(
-      Data(),
-      true,
-      ""
-  );
+  factory PostState.initial() => PostState(Data(), true, "");
 
-  PostState copyWith({
-    Data<List<PostData>> posts,
-    bool isCreatingPost,
-    String createPostTextErrorMessage
-  }) {
+  PostState copyWith(
+      {Data<List<PostData>> posts,
+      bool isCreatingPost,
+      String createPostTextErrorMessage}) {
     final state = PostState(
-      posts ?? this.posts,
-      isCreatingPost ?? this.isCreatingPost,
-      createPostTextErrorMessage ?? this.createPostTextErrorMessage
-    );
+        posts ?? this.posts,
+        isCreatingPost ?? this.isCreatingPost,
+        createPostTextErrorMessage ?? this.createPostTextErrorMessage);
     return state;
   }
 }
@@ -35,9 +29,11 @@ final Reducer<PostState> postReducer = combineReducers<PostState>([
   TypedReducer<PostState, DeletePostAction>(deletePost),
   TypedReducer<PostState, FetchPostsSuccessAction>(explorePostsRetrieved),
   TypedReducer<PostState, FetchPostsAction>(explorePosts),
-  TypedReducer<PostState, SubmitPostAction>(createPost),
+  TypedReducer<PostState, SubmitTextPostAction>(createPost),
+  TypedReducer<PostState, SubmitImagePostAction>(createImagePost),
   TypedReducer<PostState, NavigateCreatePostAction>(navigateCreatePost),
-  TypedReducer<PostState, SubmitPostErrorTextSizeMismatchAction>(onCreatePostTextSizeMismatch)
+  TypedReducer<PostState, SubmitPostErrorTextSizeMismatchAction>(
+      onCreatePostTextSizeMismatch)
 ]);
 
 PostState deletePost(PostState state, DeletePostAction action) {
@@ -54,32 +50,32 @@ PostState deletePost(PostState state, DeletePostAction action) {
   );
 }
 
-PostState explorePostsRetrieved(PostState state, FetchPostsSuccessAction action) {
+PostState explorePostsRetrieved(
+    PostState state, FetchPostsSuccessAction action) {
   return state.copyWith(posts: Data(content: action.post, isLoading: false));
 }
 
 PostState explorePosts(PostState state, FetchPostsAction action) {
-  return state.copyWith(posts: state.posts.copyWith(isLoading: true, errorMessage: ""));
+  return state.copyWith(
+      posts: state.posts.copyWith(isLoading: true, errorMessage: ""));
 }
 
+PostState createPost(PostState state, SubmitTextPostAction action) {
+  return state.copyWith(isCreatingPost: true, createPostTextErrorMessage: "");
+}
 
-PostState createPost(PostState state, SubmitPostAction action) {
-  return state.copyWith(
-     isCreatingPost: true,
-     createPostTextErrorMessage: ""
-  );
+PostState createImagePost(PostState state, SubmitImagePostAction action) {
+  return state.copyWith(isCreatingPost: true, createPostTextErrorMessage: "");
 }
 
 PostState navigateCreatePost(PostState state, NavigateCreatePostAction action) {
-  return state.copyWith(
-    isCreatingPost: false,
-     createPostTextErrorMessage: ""
-  );
+  return state.copyWith(isCreatingPost: false, createPostTextErrorMessage: "");
 }
 
-PostState onCreatePostTextSizeMismatch(PostState state, SubmitPostErrorTextSizeMismatchAction action) {
+PostState onCreatePostTextSizeMismatch(
+    PostState state, SubmitPostErrorTextSizeMismatchAction action) {
   return state.copyWith(
-    isCreatingPost: false,
-    createPostTextErrorMessage: "O tamanho do texto é menor que 100 ou maior que 2000 caracteres."
-  );
+      isCreatingPost: false,
+      createPostTextErrorMessage:
+          "O tamanho do texto é menor que 100 ou maior que 2000 caracteres.");
 }

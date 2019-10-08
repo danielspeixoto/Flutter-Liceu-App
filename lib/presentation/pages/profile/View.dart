@@ -230,6 +230,7 @@ class ProfilePage extends StatelessWidget {
                                       },
                                       onDeletePressed: () => viewModel
                                           .onDeletePostPressed(post.id),
+                                      imageURL: post.imageURL,
                                     ),
                                   )
                                   .toList(),

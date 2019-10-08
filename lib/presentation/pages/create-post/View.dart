@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:app/presentation/state/actions/PageActions.dart';
 import 'package:app/presentation/state/app_state.dart';
 import 'package:app/presentation/widgets/FetcherWidget.dart';
@@ -6,11 +8,13 @@ import 'package:app/presentation/widgets/TextFieldHighlight.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:image_picker/image_picker.dart';
 
 import 'ViewModel.dart';
 
 class CreatePostPage extends StatelessWidget {
   final inputController = TextEditingController();
+  File file;
 
   @override
   Widget build(BuildContext context) =>
@@ -21,9 +25,11 @@ class CreatePostPage extends StatelessWidget {
             return LiceuPage(
               actions: <Widget>[
                 FlatButton(
-                  onPressed: viewModel.onPostSubmitted == null
+                  onPressed: viewModel.isLoading
                       ? null
-                      : () => viewModel.onPostSubmitted(inputController.text),
+                      : () {
+                          viewModel.onPostSubmitted(inputController.text, file);
+                        },
                   child: new Icon(
                     FontAwesomeIcons.shareSquare,
                     color: Colors.black,
@@ -62,7 +68,32 @@ class CreatePostPage extends StatelessWidget {
                         ),
                         margin:
                             EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                      )
+                      ),
+                      FlatButton(
+                        onPressed: () async {
+                          file = await ImagePicker.pickImage(
+                            source: ImageSource.camera,
+                          );
+                        },
+                        child: Column(
+                          children: <Widget>[
+                            Container(
+                              padding: EdgeInsets.all(8),
+                              child: Icon(
+                                FontAwesomeIcons.cameraRetro,
+                              ),
+                            ),
+                            Text("Adicione uma imagem"),
+                          ],
+                        ),
+                      ),
+                      file == null
+                          ? Container()
+                          : Container(
+                              child: Image.file(file),
+                              margin: EdgeInsets.only(
+                                top: 16,
+                              ))
                     ],
                   ),
                 ),
