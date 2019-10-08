@@ -100,7 +100,7 @@ List<Middleware<AppState>> analyticsMiddleware(IMyIdUseCase myIdUseCase) {
   void logEventUserClicked(Store<AppState> store, UserClickedAction action,
       NextDispatcher next) async {
     next(action);
-    LiceuAnalytics.logEvent("visit_user");
+    LiceuAnalytics.logEvent("visit_user", {"id": action.user.id});
   }
 
   void logEventInstagramClicked(Store<AppState> store,

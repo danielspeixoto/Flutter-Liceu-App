@@ -22,7 +22,7 @@ class CreateTriviaPage extends StatelessWidget {
                     ? null
                     : () => viewModel.onCreateTriviaButtonPressed(),
                 child: new Icon(
-                  FontAwesomeIcons.penAlt,
+                  FontAwesomeIcons.shareSquare,
                   color: Colors.black,
                 ),
               ),

@@ -142,7 +142,7 @@ TriviaState onCreateTriviaErrorTagNull(
       correctAnswer: actions.correctAnswer,
       wrongAnswer: actions.wrongAnswer,
       isCreatingTrivia: false,
-      domainNullErrorMessage: "Você precisa escolher uma tag!");
+      domainNullErrorMessage: "Você precisa escolher um assunto!");
 }
 
 TriviaState onCreateTriviaErrorQuestionSizeMismatch(
