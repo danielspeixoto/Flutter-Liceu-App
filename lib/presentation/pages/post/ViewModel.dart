@@ -1,3 +1,4 @@
+
 import 'package:app/domain/aggregates/Post.dart';
 import 'package:app/domain/aggregates/User.dart';
 import 'package:app/presentation/state/actions/FriendActions.dart';
@@ -9,48 +10,38 @@ import 'package:app/presentation/util/text.dart';
 import 'package:redux/redux.dart';
 import 'package:share/share.dart';
 
-class ExploreViewModel {
-  final Data<User> user;
-  final Data<List<PostData>> posts;
-  final Function() refresh;
+class CompletePostViewModel {
+  final Data<PostData> post;
   final Function(String postId) onDeletePostPressed;
   final Function(String postId, PostType type, String text) onSharePostPressed;
   final Function(User user) onUserPressed;
-  final Function(PostData post) onSeeMorePressed;
+  final Function() refresh;
 
-  ExploreViewModel({
-    this.user,
+  CompletePostViewModel({
+    this.post,
     this.onDeletePostPressed,
     this.onSharePostPressed,
-    this.posts,
-    this.refresh,
     this.onUserPressed,
-    this.onSeeMorePressed
+    this.refresh
   });
 
-  factory ExploreViewModel.create(Store<AppState> store) {
-    final userState = store.state.userState;
+    factory CompletePostViewModel.create(Store<AppState> store) {
     final postState = store.state.postState;
-    return ExploreViewModel(
-      user: userState.user,
-      posts: postState.posts,
-      refresh: () {
-        store.dispatch(FetchPostsAction());
-      },
-      onDeletePostPressed: (String postId) {
-        store.dispatch(DeletePostAction(postId));
-      },
+
+    return CompletePostViewModel(
+      post: postState.post,
+     
       onSharePostPressed: (postId, type, text) {
         store.dispatch(PostShareAction(postId, type));
         Share.share(summarize(text, 300) +
             "\n\nConfira mais no nosso app!\nhttps://bit.ly/BaixarLiceu");
       },
+      onDeletePostPressed: (String postId) {
+        store.dispatch(DeletePostAction(postId));
+      },
       onUserPressed: (user) {
         store.dispatch(UserClickedAction(user));
       },
-      onSeeMorePressed: (post) {
-        store.dispatch(NavigatePostAction(post));
-      }
     );
   }
 }

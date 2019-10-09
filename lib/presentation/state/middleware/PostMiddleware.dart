@@ -97,6 +97,12 @@ List<Middleware<AppState>> postMiddleware(
     store.dispatch(NavigatePushAction(AppRoutes.createPost));
   }
 
+  void navigatePost(Store<AppState> store, NavigatePostAction action, NextDispatcher next) async {
+    next(action);
+    store.dispatch(NavigatePushAction(AppRoutes.completePost));
+    store.dispatch(SetCompletePostAction(action.post));
+  }
+
   return [
     TypedMiddleware<AppState, DeletePostAction>(deletePost),
     TypedMiddleware<AppState, NavigateCreatePostAction>(postCreation),
@@ -104,5 +110,6 @@ List<Middleware<AppState>> postMiddleware(
     TypedMiddleware<AppState, SubmitImagePostAction>(createImagePost),
     TypedMiddleware<AppState, SubmitPostSuccessAction>(postCreated),
     TypedMiddleware<AppState, FetchPostsAction>(explorePosts),
+    TypedMiddleware<AppState, NavigatePostAction>(navigatePost)
   ];
 }

@@ -3,6 +3,7 @@ import 'package:app/domain/aggregates/User.dart';
 import 'package:app/presentation/state/actions/ChallengeActions.dart';
 import 'package:app/presentation/state/actions/PostActions.dart';
 import 'package:app/presentation/state/actions/UserActions.dart';
+import 'package:app/presentation/state/aggregates/PostData.dart';
 import 'package:app/presentation/state/app_state.dart';
 import 'package:app/presentation/state/reducers/Data.dart';
 import 'package:app/presentation/util/text.dart';
@@ -10,7 +11,7 @@ import 'package:redux/redux.dart';
 import 'package:share/share.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class UserProfileViewModel {
+class FriendViewModel {
   final Data<User> user;
   final Data<List<Post>> posts;
   final Function() refresh;
@@ -18,8 +19,9 @@ class UserProfileViewModel {
   final Function(String postId, PostType type, String text) onSharePostPressed;
   final Function(String userId) onChallengeMePressed;
   final Function() onInstagramPressed;
+  final Function(Post post, User user) onSeeMorePressed;
 
-  UserProfileViewModel({
+  FriendViewModel({
     this.user,
     this.onDeletePostPressed,
     this.onSharePostPressed,
@@ -27,13 +29,14 @@ class UserProfileViewModel {
     this.refresh,
     this.onChallengeMePressed,
     this.onInstagramPressed,
+    this.onSeeMorePressed
   });
 
-  factory UserProfileViewModel.create(Store<AppState> store) {
-    final userState = store.state.friendState;
-    return UserProfileViewModel(
-      user: userState.user,
-      posts: userState.posts,
+  factory FriendViewModel.create(Store<AppState> store) {
+    final friendState = store.state.friendState;
+    return FriendViewModel(
+      user: friendState.user,
+      posts: friendState.posts,
       refresh: () {
         store.dispatch(FetchUserInfoAction());
         store.dispatch(FetchUserPostsAction());
@@ -50,10 +53,14 @@ class UserProfileViewModel {
         store.dispatch(ChallengeSomeoneAction(userId));
       },
       onInstagramPressed: () {
-        final instagramProfile = userState.user.content.instagramProfile;
+        final instagramProfile = friendState.user.content.instagramProfile;
         store.dispatch(InstagramClickedAction(instagramProfile));
         launch("https://www.instagram.com/" + instagramProfile);
       },
+      onSeeMorePressed: (post, user) {
+        final postData = new PostData(post.id, user, post.type, post.text, post.imageURL);
+        store.dispatch(NavigatePostAction(postData));
+      }
     );
   }
 }

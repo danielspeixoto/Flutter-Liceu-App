@@ -1,5 +1,6 @@
 import 'package:app/presentation/state/actions/PageActions.dart';
 import 'package:app/presentation/state/app_state.dart';
+import 'package:app/presentation/util/text.dart';
 import 'package:app/presentation/widgets/FetcherWidget.dart';
 import 'package:app/presentation/widgets/LiceuDivider.dart';
 import 'package:app/presentation/widgets/LiceuScaffold.dart';
@@ -216,24 +217,36 @@ class ProfilePage extends StatelessWidget {
                               ),
                             )
                           : Column(
-                              children: viewModel.posts.content
-                                  .map(
-                                    (post) => PostWidget(
-                                      user: viewModel.user.content,
-                                      postContent: post.text,
-                                      onSharePressed: () {
-                                        viewModel.onSharePostPressed(
-                                          post.id,
-                                          post.type,
-                                          post.text,
-                                        );
-                                      },
-                                      onDeletePressed: () => viewModel
-                                          .onDeletePostPressed(post.id),
-                                      imageURL: post.imageURL,
-                                    ),
-                                  )
-                                  .toList(),
+                              children: viewModel.posts.content.map((post) {
+                                return Column(children: <Widget>[
+                                  PostWidget(
+                                    user: viewModel.user.content,
+                                    postContent: summarize(post.text,600),
+                                    onSharePressed: () {
+                                      viewModel.onSharePostPressed(
+                                        post.id,
+                                        post.type,
+                                        post.text,
+                                      );
+                                    },
+                                    onDeletePressed: () =>
+                                        viewModel.onDeletePostPressed(post.id),
+                                    imageURL: post.imageURL,
+                                    seeMore: post.text.length > 600 ? FlatButton(
+                                      onPressed: () =>
+                                          viewModel.onSeeMorePressed(post, user),
+                                      child: Text(
+                                        "Ver mais",
+                                        style: TextStyle(
+                                          color: Color(0xFF0061A1),
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ))
+                                  : null,
+                                  ),
+                                  
+                                ]);
+                              }).toList(),
                             ),
                     ),
                   ),
