@@ -122,7 +122,7 @@ class LoginPage extends StatelessWidget {
                     children: <Widget>[
                       Container(
                         alignment: Alignment.bottomLeft,
-                        child: FeaturesReady.report_login
+                        child: viewModel.isReportLoginFeatureReady
                             ? FlatButton(
                                 onPressed: () => {
                                   showDialog(

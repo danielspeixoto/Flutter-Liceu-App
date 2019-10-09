@@ -4,6 +4,7 @@ import 'package:app/presentation/state/middleware/TriviaMiddleware.dart';
 import 'package:app/presentation/state/reducers/ChallengeReducer.dart';
 import 'package:app/presentation/state/reducers/ENEMReducer.dart';
 import 'package:app/presentation/state/reducers/EditMyInfoReducer.dart';
+import 'package:app/presentation/state/reducers/FeatureReducer.dart';
 import 'package:app/presentation/state/reducers/FriendReducer.dart';
 import 'package:app/presentation/state/reducers/LoginReducer.dart';
 import 'package:app/presentation/state/reducers/PostsReducer.dart';
@@ -34,6 +35,7 @@ class AppState {
   final ChallengeState challengeState;
   final TriviaState triviaState;
   final List<String> route;
+  final FeatureState featureState;
 
   AppState({
     this.userState,
@@ -45,6 +47,7 @@ class AppState {
     this.enemState,
     this.triviaState,
     this.challengeState,
+    this.featureState
   });
 
   factory AppState.initial() => AppState(
@@ -57,6 +60,7 @@ class AppState {
         challengeState: ChallengeState.initial(),
         triviaState: TriviaState.initial(),
         editMyInfoState: EditMyInfoState.initial(),
+        featureState: FeatureState.initial()
       );
 }
 
@@ -70,6 +74,7 @@ AppState appReducer(AppState state, action) => AppState(
       challengeState: challengeReducer(state.challengeState, action),
       triviaState: triviaReducer(state.triviaState, action),
       editMyInfoState: editMyInfoReducer(state.editMyInfoState, action),
+      featureState: featureReducer(state.featureState, action)
     );
 
 final Store<AppState> store = Store<AppState>(
