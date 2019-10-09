@@ -1,10 +1,10 @@
-import 'package:intro_slider/intro_slider.dart';
-import 'package:intro_slider/slide_object.dart';
 import 'package:app/presentation/pages/intro/ViewModel.dart';
 import 'package:app/presentation/state/actions/PageActions.dart';
 import 'package:app/presentation/state/app_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:intro_slider/intro_slider.dart';
+import 'package:intro_slider/slide_object.dart';
 
 List<Slide> slides = [
   new Slide(
@@ -70,10 +70,11 @@ class IntroPage extends StatelessWidget {
                 color: Colors.white,
                 size: 35.0,
               ),
-              renderSkipBtn:
-                  Text("PULAR", style: TextStyle(color: Colors.white, fontSize: 15)),
-              renderDoneBtn:
-                  Text("ENTRAR", style: TextStyle(color: Colors.white, fontSize: 15)),
+              renderSkipBtn: Text("PULAR",
+                  key: Key("skipIntro"),
+                  style: TextStyle(color: Colors.white, fontSize: 15)),
+              renderDoneBtn: Text("ENTRAR",
+                  style: TextStyle(color: Colors.white, fontSize: 15)),
               colorDot: Colors.white70,
               colorActiveDot: Colors.white,
               sizeDot: 10.0,
