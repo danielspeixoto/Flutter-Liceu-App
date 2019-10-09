@@ -232,19 +232,19 @@ class ProfilePage extends StatelessWidget {
                                     onDeletePressed: () =>
                                         viewModel.onDeletePostPressed(post.id),
                                     imageURL: post.imageURL,
+                                    seeMore: post.text.length > 600 ? FlatButton(
+                                      onPressed: () =>
+                                          viewModel.onSeeMorePressed(post, user),
+                                      child: Text(
+                                        "Ver mais",
+                                        style: TextStyle(
+                                          color: Color(0xFF0061A1),
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ))
+                                  : null,
                                   ),
-                                  post.text.length > 600
-                                      ? FlatButton(
-                                          onPressed: () => viewModel
-                                              .onSeeMorePressed(post, user),
-                                          child: Text(
-                                            "Ver mais",
-                                            style: TextStyle(
-                                              color: Color(0xFF0061A1),
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ))
-                                      : Container()
+                                  
                                 ]);
                               }).toList(),
                             ),

@@ -68,8 +68,7 @@ class ExplorePage extends StatelessWidget {
                                         viewModel.onDeletePostPressed(post.id)
                                     : null,
                                 imageURL: post.imageURL,
-                              ),
-                              post.text.length > 600
+                                seeMore: post.text.length > 600
                                   ? FlatButton(
                                       onPressed: () =>
                                           viewModel.onSeeMorePressed(post),
@@ -80,7 +79,9 @@ class ExplorePage extends StatelessWidget {
                                           fontWeight: FontWeight.bold,
                                         ),
                                       ))
-                                  : Container()
+                                  : null,
+                              ),
+                              
                             ]);
                           },
                         ).toList(),

@@ -150,9 +150,7 @@ class FriendPage extends StatelessWidget {
                                       );
                                     },
                                     imageURL: post.imageURL,
-                                  ),
-                                   post.text.length > 600
-                                  ? FlatButton(
+                                    seeMore: post.text.length > 600 ? FlatButton(
                                       onPressed: () =>
                                           viewModel.onSeeMorePressed(post, user),
                                       child: Text(
@@ -162,7 +160,10 @@ class FriendPage extends StatelessWidget {
                                           fontWeight: FontWeight.bold,
                                         ),
                                       ))
-                                  : Container()
+                                  : null
+                                  ),
+                                    
+                                  
                                 ]);
                               }).toList(),
                             ),
