@@ -13,7 +13,7 @@ android:
     - build-tools-28.0.3
     - android-28 # match your targetVersion
 
-jdk: oraclejdk8
+jdk: oraclejdk9
 
 sudo: false
 
