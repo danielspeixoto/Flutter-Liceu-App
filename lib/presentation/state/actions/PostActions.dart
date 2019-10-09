@@ -1,11 +1,18 @@
 import 'dart:io';
 
 import 'package:app/domain/aggregates/Post.dart';
+import 'package:app/domain/aggregates/User.dart';
 import 'package:app/presentation/state/actions/ItemActions.dart';
 import 'package:app/presentation/state/aggregates/PostData.dart';
 
 //Navigate
 class NavigateCreatePostAction {}
+
+class NavigatePostAction {
+  final PostData post;
+
+  NavigatePostAction(this.post);
+}
 
 //Fetches
 class FetchPostsAction {}
@@ -23,6 +30,12 @@ class SetImageForSubmission {
   final File image;
 
   SetImageForSubmission(this.image);
+}
+
+class SetCompletePostAction {
+  final PostData post;
+
+  SetCompletePostAction(this.post);
 }
 
 //Submits

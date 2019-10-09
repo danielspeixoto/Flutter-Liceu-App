@@ -63,22 +63,7 @@ class TrainingPage extends StatelessWidget {
                                 return Card(
                                   child: Column(
                                     children: <Widget>[
-                                      ENEMQuestionWidget(
-                                        (int idx) {
-                                          viewModel.onAnswer(question.id, idx);
-                                        },
-                                        question.imageURL,
-                                        question.width,
-                                        question.height,
-                                        status,
-                                      ),
-                                      ENEMVideoWidget(question.videos),
-                                    ],
-                                  ),
-                                );
-                              },
-                            ).toList(),
-                            Container(
+                                      Container(
                               child: Align(
                                 alignment: Alignment.topRight,
                                 child: IconButton(
@@ -116,6 +101,22 @@ class TrainingPage extends StatelessWidget {
                                 ),
                               ),
                             ),
+                                      ENEMQuestionWidget(
+                                        (int idx) {
+                                          viewModel.onAnswer(question.id, idx);
+                                        },
+                                        question.imageURL,
+                                        question.width,
+                                        question.height,
+                                        status,
+                                      ),
+                                      ENEMVideoWidget(question.videos),
+                                    ],
+                                  ),
+                                );
+                              },
+                            ).toList(),
+                            
                             Container(
                               padding: EdgeInsets.all(8),
                               child: FlatButton(

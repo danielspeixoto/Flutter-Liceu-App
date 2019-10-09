@@ -38,31 +38,26 @@ import 'domain/usecase/user/MyPostsUseCase.dart';
 import 'domain/usecase/user/SetUserDescriptionUseCase.dart';
 import 'domain/usecase/user/SetUserInstagramUseCase.dart';
 
-bool get isDev {
-  bool isDev = false;
+class Feature {
+  
+  static bool get isDev {
+    bool isDev = false;
 
-  assert(isDev = true);
+    assert(isDev = true);
 
-  return isDev;
+    return isDev;
+  }
 }
 
-class FeaturesReady {
-  static final viewFriend = true;
-  static final createTrivia = true;
-  static final report_question = true;
-  static final report_sidemenu = true;
-  static final report_login = isDev;
-}
-
-final baseURL = isDev
+final baseURL = Feature.isDev
     ? "https://liceu-staging.herokuapp.com/v2"
     : "https://protected-river-16209.herokuapp.com/v2";
 
-final apiKey = isDev
+final apiKey = Feature.isDev
     ? "2VsYHwfQKtjiAdLs8Z2fTLwuLpofSXWy"
     : "8y/B?E(H+MbQeThWmYq3t6w9z\$C&F)J@";
 
-final enviroment = isDev ? "development" : "production";
+final enviroment = Feature.isDev ? "development" : "production";
 
 final client = new http.Client();
 // Repositories

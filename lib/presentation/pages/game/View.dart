@@ -24,7 +24,7 @@ class GamePage extends StatelessWidget {
         converter: (store) => GameViewModel.create(store),
         builder: (BuildContext context, GameViewModel viewModel) {
           return LiceuScaffold(
-              leading: FeaturesReady.createTrivia
+              leading: viewModel.isCreateTriviaFeatureReady
                   ? FlatButton(
                       onPressed: viewModel.onCreateTriviaPressed,
                       child: new Icon(

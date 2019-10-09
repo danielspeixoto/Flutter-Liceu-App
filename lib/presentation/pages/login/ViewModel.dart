@@ -9,20 +9,24 @@ class LoginViewModel {
   final Function() onSendMessageButtonPressed;
   final bool isLoading;
   final String message;
+  final bool isReportLoginFeatureReady;
 
   LoginViewModel(
       {this.login,
       this.onMessageTextChanged,
       this.onSendMessageButtonPressed,
       this.isLoading,
-      this.message});
+      this.message,
+      this.isReportLoginFeatureReady});
 
   factory LoginViewModel.create(Store<AppState> store) {
     final loginState = store.state.loginState;
+    final featureState = store.state.featureState;
     return LoginViewModel(
         login: (String accessCode, String method) {
           store.dispatch(LoginAction(accessCode, method));
         },
+        isReportLoginFeatureReady: featureState.reportLogin,
         isLoading: loginState.loginStatus.isLoading,
         message: loginState.message,
         onMessageTextChanged: (String message) {

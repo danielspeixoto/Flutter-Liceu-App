@@ -5,12 +5,13 @@ import 'package:app/presentation/pages/edit-profile/View.dart';
 import 'package:app/presentation/pages/home/View.dart';
 import 'package:app/presentation/pages/intro/View.dart';
 import 'package:app/presentation/pages/login/View.dart';
+import 'package:app/presentation/pages/post/View.dart';
 import 'package:app/presentation/pages/splash/View.dart';
 import 'package:app/presentation/pages/tournament-review/View.dart';
 import 'package:app/presentation/pages/tournament/View.dart';
 import 'package:app/presentation/pages/training-filter/View.dart';
 import 'package:app/presentation/pages/training/View.dart';
-import 'package:app/presentation/pages/userprofile/View.dart';
+import 'package:app/presentation/pages/friend/View.dart';
 import 'package:app/presentation/state/app_state.dart';
 import 'package:app/presentation/state/navigator/RouteObserver.dart';
 import 'package:app/presentation/state/navigator/routes/MainRoute.dart';
@@ -35,7 +36,7 @@ class MyApp extends StatelessWidget {
       case AppRoutes.home:
         return MainRoute(HomePage(), settings: settings);
       case AppRoutes.friend:
-        return MainRoute(UserProfilePage(), settings: settings);
+        return MainRoute(FriendPage(), settings: settings);
       case AppRoutes.editProfile:
         return MainRoute(EditProfilePage(), settings: settings);
       case AppRoutes.createPost:
@@ -54,6 +55,8 @@ class MyApp extends StatelessWidget {
         return MainRoute(CreateTriviaPage(), settings: settings);
       case AppRoutes.intro:
         return MainRoute(IntroPage(), settings: settings);
+      case AppRoutes.completePost:
+        return MainRoute(CompletePostPage(), settings: settings);
       default:
         return MainRoute(SplashPage(), settings: settings);
     }
@@ -92,4 +95,5 @@ class AppRoutes {
   static const login = "/login";
   static const friend = "/friend";
   static const createTrivia = "/createTrivia";
+  static const completePost = "/completePost";
 }
