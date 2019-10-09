@@ -61,6 +61,19 @@ class AcceptChallengeAction extends ItemAction {
   }
 }
 
+class AcceptChallengeFromNotificationAction extends ItemAction {
+  final String challengeId;
+
+  AcceptChallengeFromNotificationAction(this.challengeId);
+
+    @override
+  Map<String, dynamic> itemToJson() {
+    return <String, dynamic>{
+      'challengeId': challengeId,
+    };
+  }
+}
+
 class PlayRandomChallengeAction {}
 
 class ChallengeSomeoneAction extends ItemAction {

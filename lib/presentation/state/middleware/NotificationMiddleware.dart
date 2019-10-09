@@ -30,7 +30,7 @@ List<Middleware<AppState>> notificationMiddleware(
         break;
       case "answer_challenge":
         if (data.containsKey("challengeId")) {
-          store.dispatch(AcceptChallengeAction(data["challengeId"]));
+          store.dispatch(AcceptChallengeFromNotificationAction(data["challengeId"]));
         }
         break;
       case "visit_user":
@@ -40,6 +40,8 @@ List<Middleware<AppState>> notificationMiddleware(
           store.dispatch(FetchFriendAction(userId));
           store.dispatch(FetchFriendPostsAction(userId));
         }
+        break;
+      case "complete_post":
         break;
     }
   }

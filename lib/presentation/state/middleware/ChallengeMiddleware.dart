@@ -7,7 +7,6 @@ import 'package:app/presentation/state/actions/UserActions.dart';
 import 'package:app/presentation/state/aggregates/ChallengeData.dart';
 import 'package:app/presentation/state/aggregates/TriviaData.dart';
 import 'package:app/presentation/state/navigator/NavigatorActions.dart';
-import 'package:app/util/StackFilter.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:redux/redux.dart';
 
@@ -80,6 +79,18 @@ List<Middleware<AppState>> challengeMiddleware(
 
   void answerChallenge(Store<AppState> store, AcceptChallengeAction action,
       NextDispatcher next) {
+    try {
+      store.dispatch(NavigateChallengeAction());
+      store.dispatch(FetchChallengeAction(action.challengeId));
+    } catch (error, stackTrace) {
+      final actionName = action.toString().substring(11);
+      store.dispatch(OnCatchDefaultErrorAction(
+          error.toString(), stackTrace, actionName, action.itemToJson()));
+    }
+  }
+
+  void answerChallengeFromNotification(Store<AppState> store,
+      AcceptChallengeFromNotificationAction action, NextDispatcher next) {
     try {
       store.dispatch(NavigateChallengeAction());
       store.dispatch(FetchChallengeAction(action.challengeId));
