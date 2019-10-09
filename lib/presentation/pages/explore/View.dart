@@ -65,6 +65,7 @@ class ExplorePage extends StatelessWidget {
                                     ? () =>
                                         viewModel.onDeletePostPressed(post.id)
                                     : null,
+                                imageURL: post.imageURL,
                               ),
                             )
                             .toList(),

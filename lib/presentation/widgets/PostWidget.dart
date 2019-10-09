@@ -15,16 +15,18 @@ class TabData {
 class PostWidget extends StatelessWidget {
   final User user;
   final String postContent;
+  final String imageURL;
   final Function() onDeletePressed;
   final Function() onSharePressed;
   final Function(User) onUserPressed;
 
   PostWidget({
-    this.user,
-    this.postContent,
+    @required this.user,
+    @required this.postContent,
     this.onDeletePressed,
-    this.onSharePressed,
+    @required this.onSharePressed,
     this.onUserPressed,
+    @required this.imageURL,
   });
 
   @override
@@ -38,84 +40,94 @@ class PostWidget extends StatelessWidget {
           ),
         ),
         elevation: 0,
-        child: Column(
-          children: <Widget>[
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                FlatButton(
-                  onPressed: () => onUserPressed(user),
-                  child: Row(
-                    children: <Widget>[
-                      Container(
-                        margin: EdgeInsets.all(8),
-                        child: RoundedImage(
-                          pictureURL: this.user.picURL != null
-                              ? this.user.picURL
-                              : null,
-                          size: 36,
+        child: Container(
+          padding: EdgeInsets.only(bottom: 4),
+          child: Column(
+            children: <Widget>[
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  FlatButton(
+                    onPressed: () => onUserPressed(user),
+                    child: Row(
+                      children: <Widget>[
+                        Container(
+                          margin: EdgeInsets.all(8),
+                          child: RoundedImage(
+                            pictureURL: this.user.picURL != null
+                                ? this.user.picURL
+                                : null,
+                            size: 36,
+                          ),
                         ),
-                      ),
-                      Text(
-                        this.user.name,
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 12),
-                      ),
-                    ],
+                        Text(
+                          this.user.name,
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 12),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-                Expanded(
-                  child: Align(
-                    alignment: Alignment.topRight,
-                    child: IconButton(
+                  Expanded(
+                    child: Align(
                       alignment: Alignment.topRight,
-                      onPressed: () {
-                        showDialog(
-                            context: context,
-                            builder: (context) {
-                              return SimpleDialog(
-                                children: <Widget>[
-                                  ListTile(
-                                    title: Text("Compartilhar"),
-                                    onTap: () {
-                                      Navigator.of(context).pop();
-                                      onSharePressed();
-                                    },
-                                  ),
-                                  onDeletePressed != null
-                                      ? ListTile(
-                                          title: Text("Deletar postagem"),
-                                          onTap: () {
-                                            Navigator.of(context).pop();
-                                            onDeletePressed();
-                                          },
-                                        )
-                                      : Container(),
-                                ],
-                              );
-                            });
-                      },
-                      icon: Container(
-                        child: Icon(
-                          FontAwesomeIcons.ellipsisV,
-                          size: 16,
+                      child: IconButton(
+                        alignment: Alignment.topRight,
+                        onPressed: () {
+                          showDialog(
+                              context: context,
+                              builder: (context) {
+                                return SimpleDialog(
+                                  children: <Widget>[
+                                    ListTile(
+                                      title: Text("Compartilhar"),
+                                      onTap: () {
+                                        Navigator.of(context).pop();
+                                        onSharePressed();
+                                      },
+                                    ),
+                                    onDeletePressed != null
+                                        ? ListTile(
+                                            title: Text("Deletar postagem"),
+                                            onTap: () {
+                                              Navigator.of(context).pop();
+                                              onDeletePressed();
+                                            },
+                                          )
+                                        : Container(),
+                                  ],
+                                );
+                              });
+                        },
+                        icon: Container(
+                          child: Icon(
+                            FontAwesomeIcons.ellipsisV,
+                            size: 16,
+                          ),
                         ),
                       ),
                     ),
                   ),
-                ),
-              ],
-            ),
-            Container(
-              alignment: Alignment.centerLeft,
-              child: Linkify(
-                onOpen: (link) => launch(link.url),
-                text: this.postContent,
+                ],
               ),
-              margin: const EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 8.0),
-              padding: EdgeInsets.only(bottom: 4),
-            )
-          ],
+              Container(
+                alignment: Alignment.centerLeft,
+                child: Linkify(
+                  onOpen: (link) => launch(link.url),
+                  text: this.postContent,
+                ),
+                margin: const EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 8.0),
+                padding: EdgeInsets.only(bottom: 4),
+              ),
+              imageURL == null
+                  ? Container()
+                  : FadeInImage.assetNetwork(
+                      image: imageURL,
+                      placeholder: "assets/loading.gif",
+                      repeat: ImageRepeat.repeat,
+                    ),
+            ],
+          ),
         ),
       );
 }

@@ -10,14 +10,12 @@ import 'package:redux/redux.dart';
 import 'package:share/share.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../../app.dart';
-
 class UserProfileViewModel {
   final Data<User> user;
   final Data<List<Post>> posts;
   final Function() refresh;
   final Function(String postId) onDeletePostPressed;
-  final Function(String postId, String type, String text) onSharePostPressed;
+  final Function(String postId, PostType type, String text) onSharePostPressed;
   final Function(String userId) onChallengeMePressed;
   final Function() onInstagramPressed;
 
@@ -43,8 +41,8 @@ class UserProfileViewModel {
       onDeletePostPressed: (String postId) {
         store.dispatch(DeletePostAction(postId));
       },
-      onSharePostPressed: (String postId, String type, String text) {
-        analytics.logShare(contentType: type, itemId: postId, method: "copy");
+      onSharePostPressed: (postId, type, text) {
+        store.dispatch(PostShareAction(postId, type));
         Share.share(summarize(text, 300) +
             "\n\nConfira mais no nosso app!\nhttps://bit.ly/BaixarLiceu");
       },

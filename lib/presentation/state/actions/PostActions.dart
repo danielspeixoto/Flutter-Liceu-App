@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:app/domain/aggregates/Post.dart';
 import 'package:app/presentation/state/actions/ItemActions.dart';
 import 'package:app/presentation/state/aggregates/PostData.dart';
@@ -17,17 +19,33 @@ class FetchPostsSuccessAction {
 class FetchPostsErrorAction {}
 
 //Setters
+class SetImageForSubmission {
+  final File image;
+
+  SetImageForSubmission(this.image);
+}
 
 //Submits
-class SubmitPostAction extends ItemAction {
-  final PostType postType;
+class SubmitTextPostAction extends ItemAction {
   final String text;
 
-  SubmitPostAction(this.postType, this.text);
+  SubmitTextPostAction(this.text);
 
   @override
   Map<String, dynamic> itemToJson() {
-    return <String, dynamic>{'postType': postType, 'text': text};
+    return <String, dynamic>{'text': text};
+  }
+}
+
+class SubmitImagePostAction extends ItemAction {
+  final String text;
+  final String imageData;
+
+  SubmitImagePostAction(this.text, this.imageData);
+
+  @override
+  Map<String, dynamic> itemToJson() {
+    return <String, dynamic>{'text': text};
   }
 }
 
@@ -49,8 +67,7 @@ class DeletePostAction extends ItemAction {
 
 class PostShareAction {
   final String postId;
-  final String type;
+  final PostType type;
 
   PostShareAction(this.postId, this.type);
-
 }

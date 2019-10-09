@@ -1,3 +1,4 @@
+import 'package:app/domain/aggregates/Post.dart';
 import 'package:app/domain/aggregates/User.dart';
 import 'package:app/presentation/state/actions/FriendActions.dart';
 import 'package:app/presentation/state/actions/PostActions.dart';
@@ -13,7 +14,7 @@ class ExploreViewModel {
   final Data<List<PostData>> posts;
   final Function() refresh;
   final Function(String postId) onDeletePostPressed;
-  final Function(String postId, String type, String text) onSharePostPressed;
+  final Function(String postId, PostType type, String text) onSharePostPressed;
   final Function(User user) onUserPressed;
 
   ExploreViewModel({
@@ -37,7 +38,7 @@ class ExploreViewModel {
       onDeletePostPressed: (String postId) {
         store.dispatch(DeletePostAction(postId));
       },
-      onSharePostPressed: (String postId, String type, String text) {
+      onSharePostPressed: (postId, type, text) {
         store.dispatch(PostShareAction(postId, type));
         Share.share(summarize(text, 300) +
             "\n\nConfira mais no nosso app!\nhttps://bit.ly/BaixarLiceu");

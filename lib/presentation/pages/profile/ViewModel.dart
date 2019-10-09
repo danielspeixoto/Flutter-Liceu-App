@@ -21,7 +21,7 @@ class ProfileViewModel {
   final Function() onLogoutPressed;
   final Function() refresh;
   final Function(String postId) onDeletePostPressed;
-  final Function(String postId, String type, String text) onSharePostPressed;
+  final Function(String postId, PostType type, String text) onSharePostPressed;
   final Function() onInstagramPressed;
   final Function() onLiceuInstagramPressed;
   final Function() onSendReportButtonPressed;
@@ -65,7 +65,7 @@ class ProfileViewModel {
       onDeletePostPressed: (String postId) {
         store.dispatch(DeletePostAction(postId));
       },
-      onSharePostPressed: (String postId, String type, String text) {
+      onSharePostPressed: (postId, type, text) {
         store.dispatch(PostShareAction(postId, type));
         Share.share(summarize(text, 300) +
             "\n\nConfira mais no nosso app!\nhttps://bit.ly/BaixarLiceu");

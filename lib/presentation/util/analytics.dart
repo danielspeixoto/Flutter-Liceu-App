@@ -6,6 +6,9 @@ class LiceuAnalytics {
 
   static logEvent(String eventName, [Map<String, dynamic> params]) {
     _analytics.logEvent(name: eventName, parameters: params);
+    if (params == null) {
+      params = {};
+    }
     FacebookAnalyticsPlugin.logCustomEvent(name: eventName, parameters: params);
   }
 

@@ -1,6 +1,7 @@
-import 'package:flutter/material.dart';
 import "dart:math";
+
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/material.dart';
 
 final List<String> animals = [
   "assets/hedgehog.png",
@@ -12,11 +13,11 @@ final List<String> animals = [
   'assets/koala.png'
 ];
 
-final randomAnimal = animals[new Random().nextInt(animals.length)];
-
 class RoundedImage extends StatelessWidget {
   final String pictureURL;
   final double size;
+
+  final randomAnimal = animals[new Random().nextInt(animals.length)];
 
   RoundedImage({this.pictureURL, this.size});
 
@@ -30,9 +31,11 @@ class RoundedImage extends StatelessWidget {
             height: size / 48,
             width: size / 48,
             fit: BoxFit.cover,
-            errorWidget: (context, url, error) => new Image(image: AssetImage(randomAnimal), 
+            errorWidget: (context, url, error) => new Image(
+              image: AssetImage(randomAnimal),
+            ),
           ),
-        ),),
+        ),
         decoration: new ShapeDecoration(
           shape: CircleBorder(
             side: BorderSide(
