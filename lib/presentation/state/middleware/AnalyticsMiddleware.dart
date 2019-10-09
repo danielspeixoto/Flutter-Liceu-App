@@ -219,7 +219,7 @@ List<Middleware<AppState>> analyticsMiddleware(IMyIdUseCase myIdUseCase) {
 String postTypeToString(PostType domain) {
   switch (domain) {
     case PostType.IMAGE:
-      return "images";
+      return "image";
     case PostType.TEXT:
       return "text";
     default:
