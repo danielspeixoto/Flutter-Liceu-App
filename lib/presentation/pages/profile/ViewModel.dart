@@ -5,6 +5,7 @@ import 'package:app/presentation/state/actions/LoginActions.dart';
 import 'package:app/presentation/state/actions/PostActions.dart';
 import 'package:app/presentation/state/actions/ReportActions.dart';
 import 'package:app/presentation/state/actions/UserActions.dart';
+import 'package:app/presentation/state/aggregates/PostData.dart';
 import 'package:app/presentation/state/app_state.dart';
 import 'package:app/presentation/state/reducers/Data.dart';
 import 'package:app/presentation/util/text.dart';
@@ -27,6 +28,7 @@ class ProfileViewModel {
   final Function() onSendReportButtonPressed;
   final Function(String text) onFeedbackTextChanged;
   final Function onShareProfilePressed;
+  final Function(Post post, User user) onSeeMorePressed;
 
   ProfileViewModel({
     this.user,
@@ -43,6 +45,7 @@ class ProfileViewModel {
     this.onFeedbackTextChanged,
     this.reportFeedback,
     this.onShareProfilePressed,
+    this.onSeeMorePressed
   });
 
   factory ProfileViewModel.create(Store<AppState> store) {
@@ -98,6 +101,10 @@ class ProfileViewModel {
         Share.share(
             "Você já viu o que eu estou fazendo no Liceu? \nhttps://liceu.co?userId=${store.state.userState.user.content.id}");
       },
+      onSeeMorePressed: (post, user) {
+        final postData = new PostData(post.id, user, post.type, post.text, post.imageURL);
+        store.dispatch(NavigatePostAction(postData));
+      }
     );
   }
 }
