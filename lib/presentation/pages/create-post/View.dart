@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:app/presentation/state/actions/PageActions.dart';
 import 'package:app/presentation/state/app_state.dart';
 import 'package:app/presentation/widgets/FetcherWidget.dart';
@@ -14,7 +12,6 @@ import 'ViewModel.dart';
 
 class CreatePostPage extends StatelessWidget {
   final inputController = TextEditingController();
-  File file;
 
   @override
   Widget build(BuildContext context) =>
@@ -28,7 +25,8 @@ class CreatePostPage extends StatelessWidget {
                   onPressed: viewModel.isLoading
                       ? null
                       : () {
-                          viewModel.onPostSubmitted(inputController.text, file);
+                          viewModel.onPostSubmitted(
+                              inputController.text, viewModel.image);
                         },
                   child: new Icon(
                     FontAwesomeIcons.shareSquare,
@@ -71,9 +69,9 @@ class CreatePostPage extends StatelessWidget {
                       ),
                       FlatButton(
                         onPressed: () async {
-                          file = await ImagePicker.pickImage(
+                          viewModel.onImageSet(await ImagePicker.pickImage(
                             source: ImageSource.camera,
-                          );
+                          ));
                         },
                         child: Column(
                           children: <Widget>[
@@ -87,10 +85,10 @@ class CreatePostPage extends StatelessWidget {
                           ],
                         ),
                       ),
-                      file == null
+                      viewModel.image == null
                           ? Container()
                           : Container(
-                              child: Image.file(file),
+                              child: Image.file(viewModel.image),
                               margin: EdgeInsets.only(
                                 top: 16,
                               ))

@@ -1,4 +1,5 @@
 import 'package:app/domain/aggregates/ENEMGame.dart';
+import 'package:app/domain/aggregates/Post.dart';
 import 'package:app/domain/aggregates/Trivia.dart';
 import 'package:app/domain/boundary/UserBoundary.dart';
 import 'package:app/presentation/state/actions/ChallengeActions.dart';
@@ -144,14 +145,16 @@ List<Middleware<AppState>> analyticsMiddleware(IMyIdUseCase myIdUseCase) {
   void logEventSubmitImagePost(Store<AppState> store,
       SubmitImagePostAction action, NextDispatcher next) {
     next(action);
-    LiceuAnalytics.logEvent("submit_post");
+    LiceuAnalytics.logEvent("submit_image_post");
   }
 
   void logEventPostShare(Store<AppState> store, PostShareAction action,
       NextDispatcher next) async {
     next(action);
     LiceuAnalytics.logShare(
-        contentType: "post", itemId: action.postId, method: "copy");
+        contentType: postTypeToString(action.type),
+        itemId: action.postId,
+        method: "copy");
   }
 
   void logEventDeletePost(Store<AppState> store, DeletePostAction action,
@@ -211,6 +214,17 @@ List<Middleware<AppState>> analyticsMiddleware(IMyIdUseCase myIdUseCase) {
     TypedMiddleware<AppState, ChallengeMeAction>(logChallengeMe),
     TypedMiddleware<AppState, UserProfileShareAction>(logUserProfileShare),
   ];
+}
+
+String postTypeToString(PostType domain) {
+  switch (domain) {
+    case PostType.IMAGE:
+      return "images";
+    case PostType.TEXT:
+      return "text";
+    default:
+      throw Exception("post type does not match options available");
+  }
 }
 
 String domainToString(TriviaDomain domain) {

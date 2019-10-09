@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:app/domain/aggregates/Post.dart';
 import 'package:app/presentation/state/actions/ItemActions.dart';
 import 'package:app/presentation/state/aggregates/PostData.dart';
@@ -17,6 +19,11 @@ class FetchPostsSuccessAction {
 class FetchPostsErrorAction {}
 
 //Setters
+class SetImageForSubmission {
+  final File image;
+
+  SetImageForSubmission(this.image);
+}
 
 //Submits
 class SubmitTextPostAction extends ItemAction {
