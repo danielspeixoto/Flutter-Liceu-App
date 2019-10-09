@@ -136,6 +136,7 @@ List<Middleware<AppState>> userMiddleware(
     next(action);
     try {
       final id = await _myIdUseCase.run();
+      print("FCMTOKEN: "+action.fcmtoken);
       await _submitFcmTokenUseCase.run(action.fcmtoken, id);
     } catch (error, stackTrace) {
       final actionName = action.toString().substring(11);

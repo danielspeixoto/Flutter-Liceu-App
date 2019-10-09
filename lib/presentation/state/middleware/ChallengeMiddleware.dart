@@ -221,5 +221,6 @@ List<Middleware<AppState>> challengeMiddleware(
     TypedMiddleware<AppState, SubmitChallengeAction>(onFinished),
     TypedMiddleware<AppState, SetTriviaTimerDecrementAction>(decrementTime),
     TypedMiddleware<AppState, SetChallengeAction>(startChallenge),
+    TypedMiddleware<AppState, AcceptChallengeFromNotificationAction>(answerChallengeFromNotification)
   ];
 }
