@@ -49,14 +49,6 @@ class Feature {
   }
 }
 
-class FeaturesReady {
-  static final viewFriend = true;
-  static final createTrivia = true;
-  static final report_question = true;
-  static final report_sidemenu = true;
-  static final report_login = Feature.isDev;
-}
-
 final baseURL = Feature.isDev
     ? "https://liceu-staging.herokuapp.com/v2"
     : "https://protected-river-16209.herokuapp.com/v2";
