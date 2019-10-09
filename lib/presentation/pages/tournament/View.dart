@@ -62,43 +62,6 @@ class TournamentPage extends StatelessWidget {
                                     status,
                                   ),
                                 ),
-                                Container(
-                                  child: Align(
-                                    alignment: Alignment.topRight,
-                                    child: IconButton(
-                                      alignment: Alignment.topRight,
-                                      onPressed: () {
-                                        showDialog(
-                                            context: context,
-                                            builder: (context) {
-                                              return SimpleDialog(
-                                                children: <Widget>[
-                                                  ListTile(
-                                                    title: Text(
-                                                      "Gabarito está Errado",
-                                                    ),
-                                                    onTap: () {
-                                                      Navigator.of(context)
-                                                          .pop();
-                                                      viewModel
-                                                          .onReportButtonPressed(
-                                                              question.id,
-                                                              question.answer);
-                                                    },
-                                                  ),
-                                                ],
-                                              );
-                                            });
-                                      },
-                                      icon: Container(
-                                        child: Icon(
-                                          FontAwesomeIcons.ellipsisV,
-                                          size: 16,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
                               ]);
                         },
                       ).toList(),
