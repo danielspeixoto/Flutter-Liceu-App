@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>com.apple.developer.associated-domains</key>
-	<string>https://liceu.co</string>
+	<string>applinks:*.liceu.co</string>
 	<key>aps-environment</key>
 	<string>development</string>
 	<key>keychain-access-groups</key>

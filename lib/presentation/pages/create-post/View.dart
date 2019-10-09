@@ -70,7 +70,7 @@ class CreatePostPage extends StatelessWidget {
                       FlatButton(
                         onPressed: () async {
                           viewModel.onImageSet(await ImagePicker.pickImage(
-                            source: ImageSource.camera,
+                            source: ImageSource.gallery,
                           ));
                         },
                         child: Column(
