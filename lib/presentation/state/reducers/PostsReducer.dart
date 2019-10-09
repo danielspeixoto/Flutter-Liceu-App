@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:app/domain/aggregates/Post.dart';
+import 'package:app/domain/aggregates/User.dart';
 import 'package:app/presentation/state/actions/PostActions.dart';
 import 'package:app/presentation/state/aggregates/PostData.dart';
 import 'package:redux/redux.dart';
@@ -11,23 +13,25 @@ class PostState {
   final bool isCreatingPost;
   final File imageSubmission;
   final String createPostTextErrorMessage;
-
+  final Data<PostData> post;
   PostState(this.posts, this.isCreatingPost, this.createPostTextErrorMessage,
-      this.imageSubmission);
+      this.imageSubmission, this.post);
 
-  factory PostState.initial() => PostState(Data(), true, "", null);
+  factory PostState.initial() => PostState(Data(), true, "", null, Data());
 
   PostState copyWith({
     Data<List<PostData>> posts,
     bool isCreatingPost,
     String createPostTextErrorMessage,
     File imageSubmission,
+    Data<PostData> post
   }) {
     final state = PostState(
       posts ?? this.posts,
       isCreatingPost ?? this.isCreatingPost,
       createPostTextErrorMessage ?? this.createPostTextErrorMessage,
       imageSubmission ?? this.imageSubmission,
+      post ?? this.post,
     );
     return state;
   }
@@ -42,7 +46,8 @@ final Reducer<PostState> postReducer = combineReducers<PostState>([
   TypedReducer<PostState, SetImageForSubmission>(setImageForSubmission),
   TypedReducer<PostState, NavigateCreatePostAction>(navigateCreatePost),
   TypedReducer<PostState, SubmitPostErrorTextSizeMismatchAction>(
-      onCreatePostTextSizeMismatch)
+      onCreatePostTextSizeMismatch),
+  TypedReducer<PostState, SetCompletePostAction>(setPost)
 ]);
 
 PostState deletePost(PostState state, DeletePostAction action) {
@@ -56,6 +61,12 @@ PostState deletePost(PostState state, DeletePostAction action) {
     posts: state.posts.copyWith(
       content: posts,
     ),
+  );
+}
+
+PostState setPost(PostState state, SetCompletePostAction action) {
+  return state.copyWith(
+    post: Data(content: action.post, isLoading: false),
   );
 }
 
@@ -75,6 +86,7 @@ PostState createPost(PostState state, SubmitTextPostAction action) {
     true,
     "",
     null,
+    state.post,
   );
 }
 
@@ -84,6 +96,7 @@ PostState createImagePost(PostState state, SubmitImagePostAction action) {
     true,
     "",
     null,
+    state.post,
   );
 }
 

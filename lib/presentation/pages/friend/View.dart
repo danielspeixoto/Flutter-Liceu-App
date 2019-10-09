@@ -1,5 +1,6 @@
 import 'package:app/presentation/state/actions/PageActions.dart';
 import 'package:app/presentation/state/app_state.dart';
+import 'package:app/presentation/util/text.dart';
 import 'package:app/presentation/widgets/FetcherWidget.dart';
 import 'package:app/presentation/widgets/LiceuDivider.dart';
 import 'package:app/presentation/widgets/LiceuScaffold.dart';
@@ -13,15 +14,15 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 import 'ViewModel.dart';
 
-class UserProfilePage extends StatelessWidget {
+class FriendPage extends StatelessWidget {
   final _refreshController = RefreshController(initialRefresh: false);
 
   @override
   Widget build(BuildContext context) =>
-      StoreConnector<AppState, UserProfileViewModel>(
-        onInit: (store) => store.dispatch(PageInitAction("UserProfile")),
-        converter: (store) => UserProfileViewModel.create(store),
-        builder: (BuildContext context, UserProfileViewModel viewModel) {
+      StoreConnector<AppState, FriendViewModel>(
+        onInit: (store) => store.dispatch(PageInitAction("Friend")),
+        converter: (store) => FriendViewModel.create(store),
+        builder: (BuildContext context, FriendViewModel viewModel) {
           final user = viewModel.user.content;
           return LiceuScaffold(
             body: SmartRefresher(
@@ -136,22 +137,35 @@ class UserProfilePage extends StatelessWidget {
                               ),
                             )
                           : Column(
-                              children: viewModel.posts.content
-                                  .map(
-                                    (post) => PostWidget(
-                                      user: user,
-                                      postContent: post.text,
-                                      onSharePressed: () {
-                                        viewModel.onSharePostPressed(
-                                          post.id,
-                                          post.type,
-                                          post.text,
-                                        );
-                                      },
-                                      imageURL: post.imageURL,
-                                    ),
-                                  )
-                                  .toList(),
+                              children: viewModel.posts.content.map((post) {
+                                return Column(children: <Widget>[
+                                  PostWidget(
+                                    user: user,
+                                    postContent: summarize(post.text, 600),
+                                    onSharePressed: () {
+                                      viewModel.onSharePostPressed(
+                                        post.id,
+                                        post.type,
+                                        post.text,
+                                      );
+                                    },
+                                    imageURL: post.imageURL,
+                                    seeMore: post.text.length > 600 ? FlatButton(
+                                      onPressed: () =>
+                                          viewModel.onSeeMorePressed(post, user),
+                                      child: Text(
+                                        "Ver mais",
+                                        style: TextStyle(
+                                          color: Color(0xFF0061A1),
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ))
+                                  : null
+                                  ),
+                                    
+                                  
+                                ]);
+                              }).toList(),
                             ),
                     ),
                   ),

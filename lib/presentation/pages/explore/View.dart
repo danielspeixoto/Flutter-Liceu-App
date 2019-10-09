@@ -1,5 +1,6 @@
 import 'package:app/presentation/state/actions/PageActions.dart';
 import 'package:app/presentation/state/app_state.dart';
+import 'package:app/presentation/util/text.dart';
 import 'package:app/presentation/widgets/FetcherWidget.dart';
 import 'package:app/presentation/widgets/LiceuScaffold.dart';
 import 'package:app/presentation/widgets/PostWidget.dart';
@@ -47,11 +48,12 @@ class ExplorePage extends StatelessWidget {
                     errorMessage: viewModel.posts.errorMessage,
                     child: () => Container(
                       child: Column(
-                        children: viewModel.posts.content
-                            .map(
-                              (post) => PostWidget(
+                        children: viewModel.posts.content.map(
+                          (post) {
+                            return Column(children: <Widget>[
+                              PostWidget(
                                 user: post.user,
-                                postContent: post.text,
+                                postContent: summarize(post.text, 600),
                                 onUserPressed: (user) =>
                                     viewModel.onUserPressed(user),
                                 onSharePressed: () {
@@ -66,9 +68,23 @@ class ExplorePage extends StatelessWidget {
                                         viewModel.onDeletePostPressed(post.id)
                                     : null,
                                 imageURL: post.imageURL,
+                                seeMore: post.text.length > 600
+                                  ? FlatButton(
+                                      onPressed: () =>
+                                          viewModel.onSeeMorePressed(post),
+                                      child: Text(
+                                        "Ver mais",
+                                        style: TextStyle(
+                                          color: Color(0xFF0061A1),
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ))
+                                  : null,
                               ),
-                            )
-                            .toList(),
+                              
+                            ]);
+                          },
+                        ).toList(),
                       ),
                     ),
                   ),

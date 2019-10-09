@@ -19,6 +19,7 @@ class GameViewModel {
   final Function onCreateTriviaPressed;
   final Function(User user) onUserPressed;
   final Function onChallengeFriendPressed;
+  final bool isCreateTriviaFeatureReady;
 
   GameViewModel({
     this.challenges,
@@ -29,11 +30,13 @@ class GameViewModel {
     this.onCreateTriviaPressed,
     this.onUserPressed,
     this.onChallengeFriendPressed,
+    this.isCreateTriviaFeatureReady
   });
 
   factory GameViewModel.create(Store<AppState> store) {
     return GameViewModel(
       challenges: store.state.userState.challenges,
+      isCreateTriviaFeatureReady: store.state.featureState.createTrivia,
       refresh: () => store.dispatch(FetchUserChallengesAction()),
       onChallengePressed: () {
         store.dispatch(PlayRandomChallengeAction());

@@ -19,6 +19,7 @@ class PostWidget extends StatelessWidget {
   final Function() onDeletePressed;
   final Function() onSharePressed;
   final Function(User) onUserPressed;
+  final FlatButton seeMore;
 
   PostWidget({
     @required this.user,
@@ -27,6 +28,7 @@ class PostWidget extends StatelessWidget {
     @required this.onSharePressed,
     this.onUserPressed,
     @required this.imageURL,
+    this.seeMore
   });
 
   @override
@@ -126,6 +128,7 @@ class PostWidget extends StatelessWidget {
                       placeholder: "assets/loading.gif",
                       repeat: ImageRepeat.repeat,
                     ),
+              seeMore != null ? seeMore : Container()
             ],
           ),
         ),
