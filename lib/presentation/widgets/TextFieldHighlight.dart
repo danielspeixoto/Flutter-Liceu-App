@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:masked_text/masked_text.dart';
 
 class TextFieldHighlight extends StatelessWidget {
   final int minLines;
@@ -10,6 +11,7 @@ class TextFieldHighlight extends StatelessWidget {
   final TextEditingController controller;
   final InputDecoration decoration;
   final Function(String) onChanged;
+  final bool isMasked;
 
   TextFieldHighlight(
       {this.minLines,
@@ -19,14 +21,22 @@ class TextFieldHighlight extends StatelessWidget {
       this.hintTextColor,
       this.controller,
       this.decoration,
-      this.onChanged});
+      this.onChanged,
+      this.isMasked});
 
   @override
   Widget build(BuildContext context) => Theme(
       data: new ThemeData(
           primaryColor: this.borderHighlightColor,
           hintColor: this.hintTextColor),
-      child: TextField(
+      child: this.isMasked ? new MaskedTextField
+(
+    maskedTextFieldController: controller,
+    mask: "(xx)xxxxx-xxxx",
+    maxLength: 14,
+    keyboardType: TextInputType.number,
+    inputDecoration: this.decoration
+) : TextField(
         controller: this.controller,
           onChanged: this.onChanged,
           minLines: this.minLines,

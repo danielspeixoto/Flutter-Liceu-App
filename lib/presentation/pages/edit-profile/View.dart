@@ -88,6 +88,7 @@ class EditProfilePage extends StatelessWidget {
                             hintText: "Fale sobre você",
                           ),
                           maxLines: 5,
+                          isMasked: false,
                           keyboardType: TextInputType.multiline,
                         ),
                         Container(
@@ -101,6 +102,7 @@ class EditProfilePage extends StatelessWidget {
                             onChanged: (text) {
                               viewModel.onInstagramTextChanged(text);
                             },
+                            isMasked: false,
                             decoration: InputDecoration(
                               prefixIcon: Icon(FontAwesomeIcons.instagram),
                               border: OutlineInputBorder(
@@ -120,6 +122,7 @@ class EditProfilePage extends StatelessWidget {
                               onChanged: (text) {
                                 viewModel.onPhoneTextChanged(text);
                               },
+                              isMasked: true,
                               decoration: InputDecoration(
                                 prefixIcon: Icon(FontAwesomeIcons.phoneAlt),
                                 border: OutlineInputBorder(
@@ -138,6 +141,7 @@ class EditProfilePage extends StatelessWidget {
                               onChanged: (text) {
                                 viewModel.onDesiredCourseTextChanged(text);
                               },
+                              isMasked: false,
                               decoration: InputDecoration(
                                 prefixIcon: Icon(FontAwesomeIcons.school),
                                 border: OutlineInputBorder(
