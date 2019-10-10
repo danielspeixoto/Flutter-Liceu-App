@@ -3,6 +3,7 @@ import 'package:app/presentation/state/actions/ChallengeActions.dart';
 import 'package:app/presentation/state/actions/ENEMActions.dart';
 import 'package:app/presentation/state/actions/FriendActions.dart';
 import 'package:app/presentation/state/actions/NotificationActions.dart';
+import 'package:app/presentation/state/actions/PostActions.dart';
 import 'package:app/presentation/state/actions/UtilActions.dart';
 import 'package:redux/redux.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -42,6 +43,10 @@ List<Middleware<AppState>> notificationMiddleware(
         }
         break;
       case "complete_post":
+        if(data.containsKey("postId")){
+          final postId = data["postId"];
+          store.dispatch(FetchPostAction(postId));
+        }
         break;
     }
   }

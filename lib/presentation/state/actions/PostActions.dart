@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:app/domain/aggregates/Post.dart';
-import 'package:app/domain/aggregates/User.dart';
 import 'package:app/presentation/state/actions/ItemActions.dart';
 import 'package:app/presentation/state/aggregates/PostData.dart';
 
@@ -24,6 +23,12 @@ class FetchPostsSuccessAction {
 }
 
 class FetchPostsErrorAction {}
+
+class FetchPostAction{
+  final String postId;
+
+  FetchPostAction(this.postId);
+}
 
 //Setters
 class SetImageForSubmission {

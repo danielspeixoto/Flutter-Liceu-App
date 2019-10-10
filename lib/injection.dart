@@ -1,6 +1,7 @@
 import 'package:app/data/ReportRepository.dart';
 import 'package:app/data/TriviaRepository.dart';
 import 'package:app/domain/usecase/challenge/GetChallengeUseCase.dart';
+import 'package:app/domain/usecase/post/GetPostByIdUseCase.dart';
 import 'package:app/domain/usecase/report/SubmitReportUseCase.dart';
 import 'package:app/domain/usecase/trivia/CreateTriviaUseCase.dart';
 import 'package:app/domain/usecase/user/IsLoggedInUseCase.dart';
@@ -119,3 +120,4 @@ final submitUserFcmTokenUseCase =
     SubmitFcmTokenUseCase(localRepository, userRepository);
 final submitReportUseCase =
     SubmitReportUseCase(localRepository, reportRepository);
+final getPostByIdUseCase = GetPostByIdUseCase(localRepository, postRepository);
