@@ -183,6 +183,12 @@ List<Middleware<AppState>> analyticsMiddleware(IMyIdUseCase myIdUseCase) {
     LiceuAnalytics.logEvent("share_profile");
   }
 
+  void logAcceptChallengeFromNotification(Store<AppState> store,
+      AcceptChallengeFromNotificationAction action, NextDispatcher next) {
+    next(action);
+    LiceuAnalytics.logEvent("accept_challenge_from_notification");
+  }
+
   return [
     TypedMiddleware<AppState, PageInitAction>(setCurrentScreenPageInit),
     TypedMiddleware<AppState, ChallengeSomeoneAction>(logEventChallengeSomeone),
@@ -213,6 +219,7 @@ List<Middleware<AppState>> analyticsMiddleware(IMyIdUseCase myIdUseCase) {
     TypedMiddleware<AppState, SubmitTriviaAction>(logEventSubmitTrivia),
     TypedMiddleware<AppState, ChallengeMeAction>(logChallengeMe),
     TypedMiddleware<AppState, UserProfileShareAction>(logUserProfileShare),
+    TypedMiddleware<AppState, AcceptChallengeFromNotificationAction>(logAcceptChallengeFromNotification)
   ];
 }
 

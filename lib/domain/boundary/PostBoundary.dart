@@ -5,6 +5,7 @@ abstract class IPostRepository {
   Future<void> createImagePost(
       String accessToken, String imageData, String imageTitle, String text);
   Future<void> delete(String accessToken, String postId);
+  Future<Post> id(String accessToken, String postId);
 }
 
 abstract class ICreateTextPostUseCase {
@@ -25,4 +26,8 @@ abstract class IExploreRepository {
 
 abstract class IExplorePostUseCase {
   Future<List<Post>> run(int amount);
+}
+
+abstract class IGetPostByIdUseCase {
+  Future<Post> run(String postId);
 }

@@ -105,6 +105,7 @@ final Store<AppState> store = Store<AppState>(
       getExplorePostsUseCase,
       getUserByIdUseCase,
       createImagePostUseCase,
+      getPostByIdUseCase
     ),
     ...ENEMMiddleware(
       getRankingUseCase,

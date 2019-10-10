@@ -16,6 +16,7 @@ List<Middleware<AppState>> postMiddleware(
   IExplorePostUseCase explorePostUseCase,
   IGetUserByIdUseCase getUserByIdUseCase,
   ICreateImagePostUseCase createImagePostUseCase,
+  IGetPostByIdUseCase getPostByIdUseCase
 ) {
   void deletePost(Store<AppState> store, DeletePostAction action,
       NextDispatcher next) async {
@@ -103,6 +104,22 @@ List<Middleware<AppState>> postMiddleware(
     store.dispatch(SetCompletePostAction(action.post));
   }
 
+  void fetchPostById(Store<AppState> store, FetchPostAction action, NextDispatcher next) async {
+    next(action);
+    try{
+      final post = await getPostByIdUseCase.run(action.postId);
+      final user = await getUserByIdUseCase.run(post.userId);
+      final postData = new PostData(post.id, user, post.type, post.text, post.imageURL);
+
+      store.dispatch(NavigatePostAction(postData));
+    } catch (error, stackTrace) {
+      final actionName = action.toString().substring(11);
+      store.dispatch(
+          OnCatchDefaultErrorAction(error.toString(), stackTrace, actionName));
+    }
+    
+  }
+
   return [
     TypedMiddleware<AppState, DeletePostAction>(deletePost),
     TypedMiddleware<AppState, NavigateCreatePostAction>(postCreation),
@@ -110,6 +127,7 @@ List<Middleware<AppState>> postMiddleware(
     TypedMiddleware<AppState, SubmitImagePostAction>(createImagePost),
     TypedMiddleware<AppState, SubmitPostSuccessAction>(postCreated),
     TypedMiddleware<AppState, FetchPostsAction>(explorePosts),
-    TypedMiddleware<AppState, NavigatePostAction>(navigatePost)
+    TypedMiddleware<AppState, NavigatePostAction>(navigatePost),
+    TypedMiddleware<AppState, FetchPostAction>(fetchPostById)
   ];
 }
