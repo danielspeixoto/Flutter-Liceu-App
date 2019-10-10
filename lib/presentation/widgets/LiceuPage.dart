@@ -17,6 +17,7 @@ class LiceuPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Scaffold(
+        resizeToAvoidBottomInset: false,
         appBar: LiceuAppBar(actions: actions, title: title).build(context),
         body: this.body,
       );

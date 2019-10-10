@@ -61,8 +61,10 @@ class SetUserChallengesAction {
 class SetUserEditFieldAction {
   final String bio;
   final String instagram;
+  final String phone;
+  final String desiredCourse;
 
-  SetUserEditFieldAction({this.bio, this.instagram});
+  SetUserEditFieldAction({this.bio, this.instagram, this.phone, this.desiredCourse});
 }
 
 class SetUserReportFieldAction {

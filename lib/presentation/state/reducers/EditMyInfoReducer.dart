@@ -5,21 +5,27 @@ import 'package:redux/redux.dart';
 class EditMyInfoState {
   final String bio;
   final String instagram;
+  final String phone;
+  final String desiredCourse;
   final bool isLoading;
 
   EditMyInfoState({
     this.bio = "",
     this.instagram = "",
+    this.phone = "",
+    this.desiredCourse = "",
     this.isLoading = true,
   });
 
   factory EditMyInfoState.initial() => EditMyInfoState();
 
   EditMyInfoState copyWith(
-      {String bio, String instagram, bool isLoading}) {
+      {String bio, String instagram, String phone, String desiredCourse, bool isLoading}) {
     final state = EditMyInfoState(
       bio: bio ?? this.bio,
       instagram: instagram ?? this.instagram,
+      phone: phone ?? this.phone,
+      desiredCourse: desiredCourse ?? this.desiredCourse,
       isLoading: isLoading ?? this.isLoading,
     );
     return state;
@@ -46,11 +52,17 @@ String _limitInstagramSize(String instagram) {
       : instagram.substring(0, min(60, instagram.length));
 }
 
+String _limitDesiredCourseSize(String desiredCourse) {
+  return desiredCourse == null ? null : desiredCourse.substring(0, min(100, desiredCourse.length));
+}
+
 EditMyInfoState setUserEditFieldAction(
     EditMyInfoState state, SetUserEditFieldAction action) {
   return state.copyWith(
     bio: _limitBioSize(action.bio),
     instagram: _limitInstagramSize(action.instagram),
+    desiredCourse: _limitDesiredCourseSize(action.desiredCourse),
+    phone: action.phone
   );
 }
 
@@ -59,6 +71,8 @@ EditMyInfoState updateEditFieldsOnUserUpdate(
   return state.copyWith(
     bio: _limitBioSize(action.user.bio),
     instagram: _limitInstagramSize(action.user.instagramProfile),
+    desiredCourse: _limitDesiredCourseSize(action.user.desiredCourse),
+    phone: action.user.telephoneNumber
   );
 }
 

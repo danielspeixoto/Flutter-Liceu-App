@@ -5,6 +5,8 @@ import 'package:app/presentation/widgets/TextFieldHighlight.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:flutter_masked_text/flutter_masked_text.dart';
+import 'package:masked_text/masked_text.dart';
 import 'ViewModel.dart';
 
 class EditProfilePage extends StatelessWidget {
@@ -32,6 +34,28 @@ class EditProfilePage extends StatelessWidget {
                 offset: viewModel.instagram.length,
               ),
             );
+            //Desired Course
+            final TextEditingController desiredCourseTextController =
+                TextEditingController(
+              text: viewModel.desiredCourse,
+            );
+            desiredCourseTextController.selection = TextSelection.fromPosition(
+              TextPosition(
+                offset: viewModel.desiredCourse.length,
+              ),
+            );
+            //Phone
+            final TextEditingController phoneTextController =
+                TextEditingController(
+              text: viewModel.phone,
+            );
+            phoneTextController.selection = TextSelection.fromPosition(
+              TextPosition(
+                offset: viewModel.phone.length,
+              ),
+            );
+
+            //var phoneTextController = new MaskedTextController(mask: '(00)00000-0000');
             return LiceuPage(
               actions: <Widget>[
                 FlatButton(
@@ -70,22 +94,61 @@ class EditProfilePage extends StatelessWidget {
                           margin: EdgeInsets.all(4),
                           child: Text(viewModel.bio.length.toString() + "/300"),
                         ),
-                        TextFieldHighlight(
-                          controller: instagramTextController,
-                          onChanged: (text) {
-                            viewModel.onInstagramTextChanged(text);
-                          },
-                          decoration: InputDecoration(
-                            prefixIcon: Icon(FontAwesomeIcons.instagram),
-                            border: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                width: 0.1,
+                        Container(
+                          margin: EdgeInsets.all(4),
+                          child: TextFieldHighlight(
+                            controller: instagramTextController,
+                            onChanged: (text) {
+                              viewModel.onInstagramTextChanged(text);
+                            },
+                            decoration: InputDecoration(
+                              prefixIcon: Icon(FontAwesomeIcons.instagram),
+                              border: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  width: 0.1,
+                                ),
                               ),
+                              hintText: "seu.instagram",
                             ),
-                            hintText: "seu.instagram",
+                            keyboardType: TextInputType.multiline,
                           ),
-                          keyboardType: TextInputType.multiline,
                         ),
+                        Container(
+                            margin: EdgeInsets.all(4),
+                            child: TextFieldHighlight(
+                              controller: phoneTextController,
+                              onChanged: (text) {
+                                viewModel.onPhoneTextChanged(text);
+                              },
+                              decoration: InputDecoration(
+                                prefixIcon: Icon(FontAwesomeIcons.phoneAlt),
+                                border: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    width: 0.1,
+                                  ),
+                                ),
+                                hintText: "Telefone",
+                              ),
+                              keyboardType: TextInputType.phone,
+                            )),
+                        Container(
+                            margin: EdgeInsets.all(4),
+                            child: TextFieldHighlight(
+                              controller: desiredCourseTextController,
+                              onChanged: (text) {
+                                viewModel.onDesiredCourseTextChanged(text);
+                              },
+                              decoration: InputDecoration(
+                                prefixIcon: Icon(FontAwesomeIcons.school),
+                                border: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    width: 0.1,
+                                  ),
+                                ),
+                                hintText: "Curso desejado",
+                              ),
+                              keyboardType: TextInputType.multiline,
+                            )),
                       ],
                     ),
                   ),
