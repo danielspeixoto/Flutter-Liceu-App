@@ -163,6 +163,7 @@ class LoginPage extends StatelessWidget {
                                                       title: Center(
                                                         child: Text(
                                                           "Enviar",
+                                                          textAlign: TextAlign.center,
                                                         ),
                                                       ),
                                                       onTap: () {

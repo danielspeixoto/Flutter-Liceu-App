@@ -70,75 +70,73 @@ class TrainingPage extends StatelessWidget {
                                           child: IconButton(
                                             alignment: Alignment.topRight,
                                             onPressed: () {
-                                              showDialog(
-                                                  context: context,
-                                                  builder: (context) {
-                                                    return SimpleDialog(
-                                                      title: Text(
-                                                          "Relatar um problema"),
-                                                      children: <Widget>[
-                                                        Container(
-                                                            padding: EdgeInsets
-                                                                .symmetric(
-                                                                    horizontal:
-                                                                        24),
-                                                            child: Column(
-                                                              children: <
-                                                                  Widget>[
-                                                                TextFieldHighlight(
-                                                                  onChanged:
-                                                                      (text) {
-                                                                   viewModel
-                                                                         .onFeedbackTextChanged(text);
-                                                                  },
-                                                                  decoration:
-                                                                      InputDecoration(
-                                                                    border:
-                                                                        OutlineInputBorder(
-                                                                      borderSide:
-                                                                          BorderSide(
-                                                                        width:
-                                                                            0.1,
-                                                                      ),
-                                                                    ),
-                                                                    hintText:
-                                                                        "Essa questão não se relaciona com os vídeos.",
-                                                                  ),
-                                                                  maxLines: 4,
-                                                                  keyboardType:
-                                                                      TextInputType
-                                                                          .multiline,
-                                                                ),
-                                                                ListTile(
+                                                                                          showDialog(
+                                                context: context,
+                                                builder: (context) {
+                                                  return SimpleDialog(
+                                                    children: <Widget>[
+                                                      ListTile(
+                                                        title: Text(
+                                                            "Relatar um problema"),
+                                                        onTap: () {
+                                                          Navigator.of(context)
+                                                              .pop();
+                                                          showDialog(
+                                                              context: context,
+                                                              builder:
+                                                                  (context) {
+                                                                return SimpleDialog(
                                                                   title: Text(
-                                                                    "Enviar",
-                                                                  ),
-                                                                  onTap: () {
-                                                                    Navigator.of(
-                                                                            context)
-                                                                        .pop();
-                                                                    viewModel.onReportButtonPressed(
-                                                                        viewModel
-                                                                            .questions
-                                                                            .content[
-                                                                                0]
-                                                                            .id,
-                                                                        viewModel
-                                                                            .questions
-                                                                            .content[0]
-                                                                            .answer,
-                                                                            viewModel
-                                                                            .questions
-                                                                            .content[0]
-                                                                            .selectedAnswer,
-                                                                            );
-                                                                  },
-                                                                ),
-                                                              ],
-                                                            )),
-                                                      ],
-                                                    );
-                                                  });
+                                                                      "Relatar um problema"),
+                                                                  children: <
+                                                                      Widget>[
+                                                                    Container(
+                                                                        padding: EdgeInsets.symmetric(
+                                                                            horizontal:
+                                                                                24),
+                                                                        child:
+                                                                            Column(
+                                                                          children: <
+                                                                              Widget>[
+                                                                            TextFieldHighlight(
+                                                                              onChanged: (text) {
+                                                                                viewModel.onFeedbackTextChanged(text);
+                                                                              },
+                                                                              decoration: InputDecoration(
+                                                                                border: OutlineInputBorder(
+                                                                                  borderSide: BorderSide(
+                                                                                    width: 0.1,
+                                                                                  ),
+                                                                                ),
+                                                                                hintText: "Essa questão não se relaciona com os vídeos.",
+                                                                              ),
+                                                                              maxLines: 4,
+                                                                              keyboardType: TextInputType.multiline,
+                                                                            ),
+                                                                            ListTile(
+                                                                              title: Text(
+                                                                                "Enviar",
+                                                                                textAlign: TextAlign.center,
+                                                                              ),
+                                                                              onTap: () {
+                                                                                Navigator.of(context).pop();
+                                                                                viewModel.onReportButtonPressed(
+                                                                                  viewModel.questions.content[0].id,
+                                                                                  viewModel.questions.content[0].answer,
+                                                                                  viewModel.questions.content[0].selectedAnswer,
+                                                                                );
+                                                                              },
+                                                                            ),
+                                                                          ],
+                                                                        )),
+                                                                  ],
+                                                                );
+                                                              });
+                                                        },
+                                                      ),
+                                                    ],
+                                                  );
+                                                });
                                             },
                                             icon: Container(
                                               child: Icon(
