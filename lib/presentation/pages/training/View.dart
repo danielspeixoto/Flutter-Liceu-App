@@ -6,6 +6,7 @@ import 'package:app/presentation/widgets/ENEMQuestionAnswer.dart';
 import 'package:app/presentation/widgets/ENEMVideoWidget.dart';
 import 'package:app/presentation/widgets/FetcherWidget.dart';
 import 'package:app/presentation/widgets/LiceuScaffold.dart';
+import 'package:app/presentation/widgets/TextFieldHighlight.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -64,43 +65,90 @@ class TrainingPage extends StatelessWidget {
                                   child: Column(
                                     children: <Widget>[
                                       Container(
-                              child: Align(
-                                alignment: Alignment.topRight,
-                                child: IconButton(
-                                  alignment: Alignment.topRight,
-                                  onPressed: () {
-                                    showDialog(
-                                        context: context,
-                                        builder: (context) {
-                                          return SimpleDialog(
-                                            children: <Widget>[
-                                              ListTile(
-                                                title: Text("Gabarito está Errado"),
-                                                onTap: () {
-                                                  Navigator.of(context).pop();
-                                                  viewModel
-                                                      .onReportButtonPressed(
-                                                          viewModel.questions
-                                                              .content[0].id,
-                                                          viewModel
-                                                              .questions
-                                                              .content[0]
-                                                              .answer);
-                                                },
+                                        child: Align(
+                                          alignment: Alignment.topRight,
+                                          child: IconButton(
+                                            alignment: Alignment.topRight,
+                                            onPressed: () {
+                                              showDialog(
+                                                  context: context,
+                                                  builder: (context) {
+                                                    return SimpleDialog(
+                                                      title: Text(
+                                                          "Relatar um problema"),
+                                                      children: <Widget>[
+                                                        Container(
+                                                            padding: EdgeInsets
+                                                                .symmetric(
+                                                                    horizontal:
+                                                                        24),
+                                                            child: Column(
+                                                              children: <
+                                                                  Widget>[
+                                                                TextFieldHighlight(
+                                                                  onChanged:
+                                                                      (text) {
+                                                                   viewModel
+                                                                         .onFeedbackTextChanged(text);
+                                                                  },
+                                                                  decoration:
+                                                                      InputDecoration(
+                                                                    border:
+                                                                        OutlineInputBorder(
+                                                                      borderSide:
+                                                                          BorderSide(
+                                                                        width:
+                                                                            0.1,
+                                                                      ),
+                                                                    ),
+                                                                    hintText:
+                                                                        "Essa questão não se relaciona com os vídeos.",
+                                                                  ),
+                                                                  maxLines: 4,
+                                                                  keyboardType:
+                                                                      TextInputType
+                                                                          .multiline,
+                                                                ),
+                                                                ListTile(
+                                                                  title: Text(
+                                                                    "Enviar",
+                                                                  ),
+                                                                  onTap: () {
+                                                                    Navigator.of(
+                                                                            context)
+                                                                        .pop();
+                                                                    viewModel.onReportButtonPressed(
+                                                                        viewModel
+                                                                            .questions
+                                                                            .content[
+                                                                                0]
+                                                                            .id,
+                                                                        viewModel
+                                                                            .questions
+                                                                            .content[0]
+                                                                            .answer,
+                                                                            viewModel
+                                                                            .questions
+                                                                            .content[0]
+                                                                            .selectedAnswer,
+                                                                            );
+                                                                  },
+                                                                ),
+                                                              ],
+                                                            )),
+                                                      ],
+                                                    );
+                                                  });
+                                            },
+                                            icon: Container(
+                                              child: Icon(
+                                                FontAwesomeIcons.ellipsisV,
+                                                size: 16,
                                               ),
-                                            ],
-                                          );
-                                        });
-                                  },
-                                  icon: Container(
-                                    child: Icon(
-                                      FontAwesomeIcons.ellipsisV,
-                                      size: 16,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
                                       ENEMQuestionWidget(
                                         (int idx) {
                                           viewModel.onAnswer(question.id, idx);
@@ -116,7 +164,6 @@ class TrainingPage extends StatelessWidget {
                                 );
                               },
                             ).toList(),
-                            
                             Container(
                               padding: EdgeInsets.all(8),
                               child: FlatButton(

@@ -9,13 +9,17 @@ class TrainingViewModel {
   final Function() refresh;
   final Data<List<ENEMQuestionData>> questions;
   final Function(String questionId, int answer) onAnswer;
-  final Function(String questionId, int correctAnswer) onReportButtonPressed;
+  final Function(String questionId, int correctAnswer, int selectedAnswer) onReportButtonPressed;
+  final String reportFeedback;
+  final Function(String text) onFeedbackTextChanged;
 
   TrainingViewModel(
       {this.refresh,
       this.questions,
       this.onAnswer,
-      this.onReportButtonPressed});
+      this.onReportButtonPressed,
+      this.reportFeedback,
+      this.onFeedbackTextChanged});
 
   factory TrainingViewModel.create(Store<AppState> store) {
     return TrainingViewModel(
@@ -24,18 +28,23 @@ class TrainingViewModel {
               store.state.enemState.domain));
         },
         questions: store.state.enemState.trainingQuestions,
+        reportFeedback: store.state.enemState.trainingReportText,
         onAnswer: (String questionId, int answer) =>
             store.dispatch(AnswerTrainingQuestionAction(questionId, answer)),
-        onReportButtonPressed: (String questionId, int correctAnswer) {
+        onFeedbackTextChanged: (text) {
+          store.dispatch(SetTrainingReportFieldAction(text));
+        },
+        onReportButtonPressed: (String questionId, int correctAnswer, int selectedAnswer) {
 
           Map<String, dynamic> params = {
             "questionId": questionId,
-            "correctAnswer: ": correctAnswer
+            "correctAnswer": correctAnswer,
+            "selectedAnswer": selectedAnswer
           };
 
           List<String> tags = ["generated", "enem", "question", "incorrect", "answer"];
           store.dispatch(
-              SubmitReportAction("O gabarito da questão não está correto.", tags, params));
+              SubmitReportAction(store.state.enemState.trainingReportText, tags, params));
         });
   }
 }
