@@ -29,6 +29,7 @@ class ProfileViewModel {
   final Function(String text) onFeedbackTextChanged;
   final Function onShareProfilePressed;
   final Function(Post post, User user) onSeeMorePressed;
+  final Function(String imageURL) onImageZoomPressed;
 
   ProfileViewModel({
     this.user,
@@ -45,7 +46,8 @@ class ProfileViewModel {
     this.onFeedbackTextChanged,
     this.reportFeedback,
     this.onShareProfilePressed,
-    this.onSeeMorePressed
+    this.onSeeMorePressed,
+    this.onImageZoomPressed
   });
 
   factory ProfileViewModel.create(Store<AppState> store) {
@@ -104,6 +106,9 @@ class ProfileViewModel {
       onSeeMorePressed: (post, user) {
         final postData = new PostData(post.id, user, post.type, post.text, post.imageURL);
         store.dispatch(NavigatePostAction(postData));
+      }, 
+      onImageZoomPressed: (imageURL) {
+        store.dispatch(NavigatePostImageZoomAction(imageURL));
       }
     );
   }

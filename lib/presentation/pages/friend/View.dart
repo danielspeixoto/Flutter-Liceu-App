@@ -160,7 +160,18 @@ class FriendPage extends StatelessWidget {
                                           fontWeight: FontWeight.bold,
                                         ),
                                       ))
-                                  : null
+                                  : null,
+                                  expandImage: post.imageURL != null
+                                    ? FlatButton(
+                                        onPressed: () => viewModel.onImageZoomPressed(post.imageURL),
+                                        child: Text(
+                                          "Expandir",
+                                          style: TextStyle(
+                                            color: Color(0xFF0061A1),
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ))
+                                    : null,
                                   ),
                                     
                                   
