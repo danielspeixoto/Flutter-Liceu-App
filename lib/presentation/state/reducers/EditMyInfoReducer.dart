@@ -20,7 +20,11 @@ class EditMyInfoState {
   factory EditMyInfoState.initial() => EditMyInfoState();
 
   EditMyInfoState copyWith(
-      {String bio, String instagram, String phone, String desiredCourse, bool isLoading}) {
+      {String bio,
+      String instagram,
+      String phone,
+      String desiredCourse,
+      bool isLoading}) {
     final state = EditMyInfoState(
       bio: bio ?? this.bio,
       instagram: instagram ?? this.instagram,
@@ -34,10 +38,8 @@ class EditMyInfoState {
 
 final Reducer<EditMyInfoState> editMyInfoReducer =
     combineReducers<EditMyInfoState>([
-  TypedReducer<EditMyInfoState, SetUserEditFieldAction>(
-      setUserEditFieldAction),
-  TypedReducer<EditMyInfoState, SetUserAction>(
-      updateEditFieldsOnUserUpdate),
+  TypedReducer<EditMyInfoState, SetUserEditFieldAction>(setUserEditFieldAction),
+  TypedReducer<EditMyInfoState, SetUserAction>(updateEditFieldsOnUserUpdate),
   TypedReducer<EditMyInfoState, SubmitUserProfileChangesAction>(
       setLoadingEditPage),
 ]);
@@ -53,7 +55,13 @@ String _limitInstagramSize(String instagram) {
 }
 
 String _limitDesiredCourseSize(String desiredCourse) {
-  return desiredCourse == null ? null : desiredCourse.substring(0, min(100, desiredCourse.length));
+  return desiredCourse == null
+      ? null
+      : desiredCourse.substring(0, min(100, desiredCourse.length));
+}
+
+String _limitPhoneSize(String phone) {
+  return phone == null ? null : phone.substring(0, min(20, phone.length));
 }
 
 EditMyInfoState setUserEditFieldAction(
@@ -61,8 +69,8 @@ EditMyInfoState setUserEditFieldAction(
   return state.copyWith(
     bio: _limitBioSize(action.bio),
     instagram: _limitInstagramSize(action.instagram),
+    phone: _limitPhoneSize(action.phone),
     desiredCourse: _limitDesiredCourseSize(action.desiredCourse),
-    phone: action.phone
   );
 }
 
@@ -71,8 +79,8 @@ EditMyInfoState updateEditFieldsOnUserUpdate(
   return state.copyWith(
     bio: _limitBioSize(action.user.bio),
     instagram: _limitInstagramSize(action.user.instagramProfile),
+    phone: _limitPhoneSize(action.user.telephoneNumber),
     desiredCourse: _limitDesiredCourseSize(action.user.desiredCourse),
-    phone: action.user.telephoneNumber
   );
 }
 

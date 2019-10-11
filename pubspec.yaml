@@ -58,7 +58,6 @@ dependencies:
     git:
       url: git://github.com/rmarau/flutter_cached_network_image.git
       ref: fix-getFile_multiplecalls
-  flutter_masked_text: ^0.8.0
   masked_text: ^0.0.6
 
 dev_dependencies:

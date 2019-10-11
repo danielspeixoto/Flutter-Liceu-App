@@ -83,14 +83,18 @@ class SetUserFcmTokenAction {
 class SubmitUserProfileChangesAction extends ItemAction {
   final String bio;
   final String instagram;
+  final String desiredCourse;
+  final String phone;
 
-  SubmitUserProfileChangesAction({this.bio, this.instagram});
+  SubmitUserProfileChangesAction({this.bio, this.instagram, this.desiredCourse, this.phone});
 
   @override
   Map<String, dynamic> itemToJson() {
     return <String, dynamic>{
       'bio': bio,
       'instagram': instagram,
+      'desiredCourse': desiredCourse,
+      'phone': phone
     };
   }
 }
@@ -98,8 +102,10 @@ class SubmitUserProfileChangesAction extends ItemAction {
 class SubmitUserProfileChangesSuccessAction {
   final String bio;
   final String instagram;
+  final String desiredCourse;
+  final String phone;
 
-  SubmitUserProfileChangesSuccessAction(this.bio, this.instagram);
+  SubmitUserProfileChangesSuccessAction(this.bio, this.instagram, this.desiredCourse, this.phone);
 }
 
 class SubmitUserFcmTokenAction extends ItemAction {

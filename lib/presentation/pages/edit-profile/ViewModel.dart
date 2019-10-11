@@ -42,6 +42,8 @@ class EditProfileViewModel {
             SubmitUserProfileChangesAction(
               bio: state.bio,
               instagram: state.instagram,
+              desiredCourse: state.desiredCourse,
+              phone: state.phone
             ),
           );
         },

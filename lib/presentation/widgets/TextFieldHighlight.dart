@@ -29,10 +29,11 @@ class TextFieldHighlight extends StatelessWidget {
       data: new ThemeData(
           primaryColor: this.borderHighlightColor,
           hintColor: this.hintTextColor),
-      child: this.isMasked ? new MaskedTextField
+      child: this.isMasked ? MaskedTextField
 (
     maskedTextFieldController: controller,
-    mask: "(xx)xxxxx-xxxx",
+    onChange: this.onChanged,
+    mask: "(xx)xxxxx-xxxxx",
     maxLength: 14,
     keyboardType: TextInputType.number,
     inputDecoration: this.decoration
