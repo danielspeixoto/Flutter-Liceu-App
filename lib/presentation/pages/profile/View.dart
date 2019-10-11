@@ -44,7 +44,7 @@ class ProfilePage extends StatelessWidget {
                     ),
                   ),
                   ListTile(
-                    title: Text('Compartilhar Perfil'),
+                    title: Text('Compartilhar perfil'),
                     onTap: viewModel.onShareProfilePressed,
                   ),
                   ListTile(
@@ -95,6 +95,10 @@ class ProfilePage extends StatelessWidget {
                             );
                           });
                     },
+                  ),
+                  ListTile(
+                    title: Text('Perguntas frequentes'),
+                    onTap: viewModel.onShareProfilePressed,
                   ),
                   ListTile(
                     title: Text('Sair desta conta'),

@@ -60,6 +60,7 @@ class CreatePostPage extends StatelessWidget {
                           capitalization: TextCapitalization.sentences,
                         ),
                       ),
+                      
                       Container(
                         child: Text(
                           viewModel.createPostTextErrorMessage,
