@@ -15,6 +15,8 @@ class ENEMState {
   final QuestionDomain domain;
   final int score;
   final int timeSpent;
+  final String trainingReportText;
+  final String tournamentReportText;
 
   ENEMState(
       this.ranking,
@@ -23,7 +25,9 @@ class ENEMState {
       this.tournamentQuestions,
       this.tournamentStartTime,
       this.score,
-      this.timeSpent);
+      this.timeSpent,
+      this.trainingReportText,
+      this.tournamentReportText);
 
   factory ENEMState.initial() => ENEMState(
         Data(),
@@ -33,6 +37,8 @@ class ENEMState {
         null,
         null,
         null,
+        null,
+        null
       );
 
   ENEMState copyWith({
@@ -43,6 +49,8 @@ class ENEMState {
     DateTime tournamentStartTime,
     int score,
     int timeSpent,
+    String trainingReportText,
+    String tournamentReportText
   }) {
     final state = ENEMState(
       ranking ?? this.ranking,
@@ -52,6 +60,8 @@ class ENEMState {
       tournamentStartTime ?? this.tournamentStartTime,
       score ?? this.score,
       timeSpent ?? this.timeSpent,
+      trainingReportText ?? this.trainingReportText,
+      tournamentReportText ?? this.tournamentReportText
     );
     return state;
   }
@@ -90,7 +100,19 @@ final Reducer<ENEMState> enemReducer = combineReducers<ENEMState>([
   TypedReducer<ENEMState, NavigateTournamentAction>(
     tournament,
   ),
+  TypedReducer<ENEMState, SetTrainingReportFieldAction>(setReportTrainingText),
+  TypedReducer<ENEMState, SetTournamentReportFieldAction>(setReportTournamentText)
 ]);
+
+ENEMState setReportTrainingText(ENEMState state, SetTrainingReportFieldAction action) {
+    return state.copyWith(
+      trainingReportText: action.text);
+}
+
+ENEMState setReportTournamentText(ENEMState state, SetTournamentReportFieldAction action) {
+    return state.copyWith(
+      tournamentReportText: action.text);
+}
 
 ENEMState fetchingRanking(ENEMState state, FetchRankingAction action) {
   return state.copyWith(
