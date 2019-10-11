@@ -8,6 +8,28 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'ViewModel.dart';
 
+List<String> suggestions = [
+    "Administração - Bacharelado",
+      "Agronomia - Bacharelado",
+      "Arqueologia - Bacharelado",
+      "Arquitetura e Urbanismo - Bacharelado",
+      "Arquivologia - Bacharelado",
+      "Artes Visuais - Bacharelado",
+      "Artes Visuais - Licenciatura",
+      "Biblioteconomia - Bacharelado",
+      "Biomedicina - Bacharelado",
+      "Ciência da Computação - Bacharelado",
+      "Ciências Biológicas - Bacharelado",
+      "Ciências Biológicas - Licenciatura",
+      "Ciências Atuariais - Bacharelado",
+      "Ciências Contábeis - Bacharelado",
+      "Ciências Econômicas - Bacharelado",
+      "Ciências Naturais - Licenciatura",
+      "Ciências Sociais - Bacharelado",
+      "Ciências Sociais - Licenciatura",
+      "Cinema e Audiovisual - Bacharelado",
+];
+
 class EditProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) => StoreConnector<AppState,
@@ -88,7 +110,6 @@ class EditProfilePage extends StatelessWidget {
                                   maxLines: 5,
                                   keyboardType: TextInputType.multiline,
                                   capitalization: TextCapitalization.sentences,
-
                                 ),
                                 Container(
                                   margin: EdgeInsets.only(
@@ -171,6 +192,8 @@ class EditProfilePage extends StatelessWidget {
                                       keyboardType: TextInputType.text,
                                       capitalization:
                                           TextCapitalization.sentences,
+                                      isAutoCompleteTextField: true,
+                                      suggestions: suggestions,
                                     )),
                                 Container(
                                   margin: EdgeInsets.only(
