@@ -164,13 +164,14 @@ class LoginPage extends StatelessWidget {
                                                       title: Center(
                                                         child: Text(
                                                           "Enviar",
+                                                          textAlign: TextAlign.center,
                                                         ),
                                                       ),
                                                       onTap: () {
                                                         Navigator.of(context)
                                                             .pop();
                                                         viewModel
-                                                            .onSendMessageButtonPressed();
+                                                            .onSendMessageButtonPressed(runtimeType.toString());
                                                       },
                                                     ),
                                                   ],

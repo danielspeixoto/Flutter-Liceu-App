@@ -82,11 +82,12 @@ class ProfilePage extends StatelessWidget {
                                         ListTile(
                                           title: Text(
                                             "Enviar",
+                                            textAlign: TextAlign.center,
                                           ),
                                           onTap: () {
                                             Navigator.of(context).pop();
                                             viewModel
-                                                .onSendReportButtonPressed();
+                                                .onSendReportButtonPressed(runtimeType.toString());
                                           },
                                         ),
                                       ],
