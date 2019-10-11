@@ -97,10 +97,6 @@ class ProfilePage extends StatelessWidget {
                     },
                   ),
                   ListTile(
-                    title: Text('Perguntas frequentes'),
-                    onTap: viewModel.onShareProfilePressed,
-                  ),
-                  ListTile(
                     title: Text('Sair desta conta'),
                     onTap: viewModel.onLogoutPressed,
                   ),
