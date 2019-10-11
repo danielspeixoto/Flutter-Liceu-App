@@ -170,7 +170,7 @@ class LoginPage extends StatelessWidget {
                                                         Navigator.of(context)
                                                             .pop();
                                                         viewModel
-                                                            .onSendMessageButtonPressed();
+                                                            .onSendMessageButtonPressed(runtimeType.toString());
                                                       },
                                                     ),
                                                   ],

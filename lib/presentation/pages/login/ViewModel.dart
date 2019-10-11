@@ -6,7 +6,7 @@ import 'package:redux/redux.dart';
 class LoginViewModel {
   final Function(String, String) login;
   final Function(String) onMessageTextChanged;
-  final Function() onSendMessageButtonPressed;
+  final Function(String page) onSendMessageButtonPressed;
   final bool isLoading;
   final String message;
   final bool isReportLoginFeatureReady;
@@ -32,9 +32,9 @@ class LoginViewModel {
         onMessageTextChanged: (String message) {
           store.dispatch(SetLoginReportFieldAction(message));
         },
-        onSendMessageButtonPressed: () {
+        onSendMessageButtonPressed: (page) {
           Map<String, dynamic> params = {
-            "UserSituation": "on login page"
+            "page": page
           };
 
           List<String> tags = ["created", "message", "login"];

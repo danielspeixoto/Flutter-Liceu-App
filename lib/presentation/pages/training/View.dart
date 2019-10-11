@@ -123,7 +123,7 @@ class TrainingPage extends StatelessWidget {
                                                                                 viewModel.onReportButtonPressed(
                                                                                   viewModel.questions.content[0].id,
                                                                                   viewModel.questions.content[0].answer,
-                                                                                  viewModel.questions.content[0].selectedAnswer,
+                                                                                  runtimeType.toString()
                                                                                 );
                                                                               },
                                                                             ),
