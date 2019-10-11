@@ -9,7 +9,7 @@ class TournamentReviewViewModel {
   final Data<List<ENEMQuestionData>> questions;
   final int timeSpent;
   final int score;
-  final Function(String questionId, int correctAnswer, int selectedAnswer) onReportButtonPressed;
+  final Function(String questionId, int correctAnswer, String page) onReportButtonPressed;
   final String reportFeedback;
   final Function(String text) onFeedbackTextChanged;
 
@@ -31,10 +31,11 @@ class TournamentReviewViewModel {
         onFeedbackTextChanged: (text) {
           store.dispatch(SetTournamentReportFieldAction(text));
         },
-        onReportButtonPressed: (String questionId, int correctAnswer, int selectedAnswer) {
+        onReportButtonPressed: (String questionId, int correctAnswer, String page) {
           Map<String, dynamic> params = {
             "questionId": questionId,
-            "correctAnswer: ": correctAnswer,
+            "correctAnswer": correctAnswer,
+            "page": page
           };
 
           List<String> tags = [

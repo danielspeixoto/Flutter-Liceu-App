@@ -9,7 +9,7 @@ class TrainingViewModel {
   final Function() refresh;
   final Data<List<ENEMQuestionData>> questions;
   final Function(String questionId, int answer) onAnswer;
-  final Function(String questionId, int correctAnswer, int selectedAnswer) onReportButtonPressed;
+  final Function(String questionId, int correctAnswer, String page) onReportButtonPressed;
   final String reportFeedback;
   final Function(String text) onFeedbackTextChanged;
 
@@ -34,11 +34,12 @@ class TrainingViewModel {
         onFeedbackTextChanged: (text) {
           store.dispatch(SetTrainingReportFieldAction(text));
         },
-        onReportButtonPressed: (String questionId, int correctAnswer, int selectedAnswer) {
+        onReportButtonPressed: (String questionId, int correctAnswer, String page) {
 
           Map<String, dynamic> params = {
             "questionId": questionId,
-            "correctAnswer": correctAnswer
+            "correctAnswer": correctAnswer,
+            "page": page
           };
 
           List<String> tags = ["generated", "enem", "question", "incorrect", "answer"];

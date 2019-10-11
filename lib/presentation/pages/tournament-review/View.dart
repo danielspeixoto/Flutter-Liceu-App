@@ -146,7 +146,7 @@ class TournamentReviewPage extends StatelessWidget {
                                                                                 viewModel.onReportButtonPressed(
                                                                                   question.id,
                                                                                   question.answer,
-                                                                                  question.selectedAnswer,
+                                                                                  runtimeType.toString()
                                                                                 );
                                                                               },
                                                                             ),

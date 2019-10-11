@@ -86,7 +86,7 @@ class ProfilePage extends StatelessWidget {
                                           onTap: () {
                                             Navigator.of(context).pop();
                                             viewModel
-                                                .onSendReportButtonPressed();
+                                                .onSendReportButtonPressed(runtimeType.toString());
                                           },
                                         ),
                                       ],
