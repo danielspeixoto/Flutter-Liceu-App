@@ -44,17 +44,17 @@ class ProfilePage extends StatelessWidget {
                     ),
                   ),
                   ListTile(
-                    title: Text('Editar Perfil'),
-                    onTap: viewModel.onEditProfileButtonPressed,
+                    title: Text('Compartilhar Perfil'),
+                    onTap: viewModel.onShareProfilePressed,
                   ),
                   ListTile(
-                    title: Text('Reportar'),
+                    title: Text('Relatar um problema'),
                     onTap: () {
                       showDialog(
                           context: context,
                           builder: (context) {
                             return SimpleDialog(
-                              title: Text("Reporte um feedback"),
+                              title: Text("Relatar um problema"),
                               children: <Widget>[
                                 Container(
                                     padding:
@@ -77,6 +77,7 @@ class ProfilePage extends StatelessWidget {
                                           ),
                                           maxLines: 4,
                                           keyboardType: TextInputType.multiline,
+                                          capitalization: TextCapitalization.sentences,
                                         ),
                                         ListTile(
                                           title: Text(
@@ -146,9 +147,9 @@ class ProfilePage extends StatelessWidget {
                                     ),
                                     FlatButton(
                                       onPressed:
-                                          viewModel.onShareProfilePressed,
+                                          viewModel.onEditProfileButtonPressed,
                                       child: Text(
-                                        "Compartilhe seu perfil",
+                                        "Editar perfil",
                                         style: TextStyle(
                                           color: Color(0xFF0061A1),
                                         ),

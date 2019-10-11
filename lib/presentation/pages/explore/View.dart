@@ -21,6 +21,7 @@ class ExplorePage extends StatelessWidget {
         builder: (BuildContext context, ExploreViewModel viewModel) {
           final user = viewModel.user.content;
           return LiceuScaffold(
+            
             body: SmartRefresher(
               onRefresh: () async {
                 viewModel.refresh();

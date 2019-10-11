@@ -1,5 +1,6 @@
 import 'package:app/presentation/state/actions/PageActions.dart';
 import 'package:app/presentation/state/app_state.dart';
+import 'package:app/presentation/widgets/FetcherWidget.dart';
 import 'package:app/presentation/widgets/LiceuPage.dart';
 import 'package:app/presentation/widgets/TextFieldHighlight.dart';
 import 'package:flutter/material.dart';
@@ -51,127 +52,147 @@ class EditProfilePage extends StatelessWidget {
           ),
         );
         return LiceuPage(
-          actions: <Widget>[
-            FlatButton(
-              onPressed: viewModel.save,
-              child: new Icon(
-                FontAwesomeIcons.save,
-                color: Colors.black,
-              ),
-            ),
-          ],
-          title: "Editar Perfil",
-          body: Column(
-            children: <Widget>[
-              Container(
-                margin: EdgeInsets.all(8),
-                child: Column(
-                  children: [
-                    TextFieldHighlight(
-                      controller: bioTextController,
-                      onChanged: (text) {
-                        viewModel.onBioTextChanged(text);
-                      },
-                      decoration: InputDecoration(
-                        prefixIcon: Icon(FontAwesomeIcons.user),
-                        border: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            width: 0.1,
-                          ),
-                        ),
-                        hintText: "Fale sobre você",
-                      ),
-                      maxLines: 5,
-                      isMasked: false,
-                      keyboardType: TextInputType.multiline,
-                    ),
-                    Container(
-                      margin: EdgeInsets.only(top: 4, bottom: 4, left: 4, right: 16),
-                      alignment: Alignment.centerRight,
-                      child: Text(
-                        viewModel.bio.length.toString() + "/300",
-                        style: TextStyle(fontSize: 12, color: Colors.grey[600]),
-                      ),
-                    ),
-                    Container(
-                      margin: EdgeInsets.all(4),
-                      child: TextFieldHighlight(
-                        controller: instagramTextController,
-                        onChanged: (text) {
-                          viewModel.onInstagramTextChanged(text);
-                        },
-                        isMasked: false,
-                        decoration: InputDecoration(
-                          prefixIcon: Icon(FontAwesomeIcons.instagram),
-                          border: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              width: 0.1,
-                            ),
-                          ),
-                          hintText: "seu.instagram",
-                        ),
-                        keyboardType: TextInputType.multiline,
-                      ),
-                    ),
-                    Container(
-                      margin: EdgeInsets.only(top: 4, bottom: 4, left: 4, right: 16),
-                      alignment: Alignment.centerRight,
-                      child: Text(
-                        viewModel.instagram.length.toString() + "/60",
-                        style: TextStyle(fontSize: 12, color: Colors.grey[600]),
-                      ),
-                    ),
-                    Container(
-                        margin: EdgeInsets.all(4),
-                        child: TextFieldHighlight(
-                          controller: phoneTextController,
-                          onChanged: (text) {
-                            viewModel.onPhoneTextChanged(text);
-                          },
-                          isMasked: true,
-                          decoration: InputDecoration(
-                            prefixIcon: Icon(FontAwesomeIcons.phoneAlt),
-                            border: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                width: 0.1,
-                              ),
-                            ),
-                            hintText: "Telefone",
-                          ),
-                          keyboardType: TextInputType.phone,
-                        )),
-                    Container(
-                        margin: EdgeInsets.all(4),
-                        child: TextFieldHighlight(
-                          controller: desiredCourseTextController,
-                          onChanged: (text) {
-                            viewModel.onDesiredCourseTextChanged(text);
-                          },
-                          isMasked: false,
-                          decoration: InputDecoration(
-                            prefixIcon: Icon(FontAwesomeIcons.book),
-                            border: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                width: 0.1,
-                              ),
-                            ),
-                            hintText: "Curso desejado",
-                          ),
-                          keyboardType: TextInputType.text,
-                        )),
-                    Container(
-                      margin: EdgeInsets.only(top: 4, bottom: 4, left: 4, right: 16),
-                      alignment: Alignment.centerRight,
-                      child: Text(
-                        viewModel.bio.length.toString() + "/100",
-                        style: TextStyle(fontSize: 12, color: Colors.grey[600]),
-                      ),
-                    ),
-                  ],
+            actions: <Widget>[
+              FlatButton(
+                onPressed: viewModel.save,
+                child: new Icon(
+                  FontAwesomeIcons.save,
+                  color: Colors.black,
                 ),
               ),
             ],
-          ),
-        );
+            title: "Editar Perfil",
+            body: FetcherWidget(
+                isLoading: viewModel.isLoading,
+                child: () => SingleChildScrollView(
+                      child: Column(
+                        children: <Widget>[
+                          Container(
+                            margin: EdgeInsets.all(8),
+                            child: Column(
+                              children: [
+                                TextFieldHighlight(
+                                  controller: bioTextController,
+                                  onChanged: (text) {
+                                    viewModel.onBioTextChanged(text);
+                                  },
+                                  decoration: InputDecoration(
+                                    prefixIcon: Icon(FontAwesomeIcons.user),
+                                    border: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        width: 0.1,
+                                      ),
+                                    ),
+                                    hintText: "Fale sobre você",
+                                  ),
+                                  maxLines: 5,
+                                  keyboardType: TextInputType.multiline,
+                                  capitalization: TextCapitalization.sentences,
+
+                                ),
+                                Container(
+                                  margin: EdgeInsets.only(
+                                      top: 4, bottom: 4, left: 4, right: 16),
+                                  alignment: Alignment.centerRight,
+                                  child: Text(
+                                    viewModel.bio.length.toString() + "/300",
+                                    style: TextStyle(
+                                        fontSize: 12, color: Colors.grey[600]),
+                                  ),
+                                ),
+                                Container(
+                                  margin: EdgeInsets.all(4),
+                                  child: TextFieldHighlight(
+                                    controller: instagramTextController,
+                                    onChanged: (text) {
+                                      viewModel.onInstagramTextChanged(text);
+                                    },
+                                    decoration: InputDecoration(
+                                      prefixIcon:
+                                          Icon(FontAwesomeIcons.instagram),
+                                      border: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          width: 0.1,
+                                        ),
+                                      ),
+                                      hintText: "seu.instagram",
+                                    ),
+                                    keyboardType: TextInputType.text,
+                                  ),
+                                ),
+                                Container(
+                                  margin: EdgeInsets.only(
+                                      top: 4, bottom: 4, left: 4, right: 16),
+                                  alignment: Alignment.centerRight,
+                                  child: Text(
+                                    viewModel.instagram.length.toString() +
+                                        "/60",
+                                    style: TextStyle(
+                                        fontSize: 12, color: Colors.grey[600]),
+                                  ),
+                                ),
+                                Container(
+                                    margin: EdgeInsets.all(4),
+                                    child: TextFieldHighlight(
+                                      controller: phoneTextController,
+                                      onChanged: (text) {
+                                        viewModel.onPhoneTextChanged(text);
+                                      },
+                                      isMasked: true,
+                                      decoration: InputDecoration(
+                                        prefixIcon:
+                                            Icon(FontAwesomeIcons.phoneAlt),
+                                        border: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                            width: 0.1,
+                                          ),
+                                        ),
+                                        hintText: "Telefone",
+                                      ),
+                                      keyboardType: TextInputType.phone,
+                                    )),
+                                Container(
+                                    margin: EdgeInsets.all(4),
+                                    child: TextFieldHighlight(
+                                      controller: desiredCourseTextController,
+                                      onChanged: (text) {
+                                        viewModel
+                                            .onDesiredCourseTextChanged(text);
+                                      },
+                                      decoration: InputDecoration(
+                                        prefixIcon: Icon(FontAwesomeIcons.book),
+                                        border: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                            width: 0.1,
+                                          ),
+                                        ),
+                                        hintText: "Curso desejado",
+                                      ),
+                                      keyboardType: TextInputType.text,
+                                      capitalization:
+                                          TextCapitalization.sentences,
+                                    )),
+                                Container(
+                                  margin: EdgeInsets.only(
+                                      top: 4, bottom: 4, left: 4, right: 16),
+                                  alignment: Alignment.centerRight,
+                                  child: Text(
+                                    viewModel.desiredCourse.length.toString() +
+                                        "/100",
+                                    style: TextStyle(
+                                        fontSize: 12, color: Colors.grey[600]),
+                                  ),
+                                ),
+                                Padding(
+                                    padding: EdgeInsets.only(
+                                        bottom: MediaQuery.of(context)
+                                            .viewInsets
+                                            .bottom))
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    )));
       });
 }

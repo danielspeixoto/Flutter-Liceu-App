@@ -12,6 +12,7 @@ class TextFieldHighlight extends StatelessWidget {
   final InputDecoration decoration;
   final Function(String) onChanged;
   final bool isMasked;
+  final TextCapitalization capitalization;
 
   TextFieldHighlight(
       {this.minLines,
@@ -22,14 +23,15 @@ class TextFieldHighlight extends StatelessWidget {
       this.controller,
       this.decoration,
       this.onChanged,
-      this.isMasked});
+      this.isMasked,
+      this.capitalization});
 
   @override
   Widget build(BuildContext context) => Theme(
       data: new ThemeData(
           primaryColor: this.borderHighlightColor,
           hintColor: this.hintTextColor),
-      child: this.isMasked ? MaskedTextField
+      child: this.isMasked == true ? MaskedTextField
 (
     maskedTextFieldController: controller,
     onChange: this.onChanged,
@@ -41,6 +43,7 @@ class TextFieldHighlight extends StatelessWidget {
         controller: this.controller,
           onChanged: this.onChanged,
           minLines: this.minLines,
+          textCapitalization: this.capitalization != null ? this.capitalization : TextCapitalization.none,
           maxLines: this.maxLines,
           decoration: this.decoration,
           keyboardType: this.keyboardType));

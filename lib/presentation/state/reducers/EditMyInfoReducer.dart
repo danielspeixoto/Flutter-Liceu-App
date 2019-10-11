@@ -14,7 +14,7 @@ class EditMyInfoState {
     this.instagram = "",
     this.phone = "",
     this.desiredCourse = "",
-    this.isLoading = true,
+    this.isLoading = false,
   });
 
   factory EditMyInfoState.initial() => EditMyInfoState();

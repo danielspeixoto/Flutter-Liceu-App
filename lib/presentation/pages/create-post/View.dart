@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 import 'ViewModel.dart';
 
@@ -58,6 +57,7 @@ class CreatePostPage extends StatelessWidget {
                           minLines: null,
                           maxLines: 9,
                           keyboardType: TextInputType.multiline,
+                          capitalization: TextCapitalization.sentences,
                         ),
                       ),
                       Container(

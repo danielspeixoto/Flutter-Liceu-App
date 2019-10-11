@@ -68,6 +68,8 @@ class CreateTriviaPage extends StatelessWidget {
                                             maxLines: 3,
                                             keyboardType:
                                                 TextInputType.multiline,
+                                            capitalization:
+                                                TextCapitalization.sentences,
                                           )),
                                       viewModel.question != null
                                           ? Container(
@@ -109,7 +111,8 @@ class CreateTriviaPage extends StatelessWidget {
                                                 .onCorrectAnswerTextChanged(
                                                     text);
                                           },
-                                          borderHighlightColor: Colors.green[400],
+                                          borderHighlightColor:
+                                              Colors.green[400],
                                           decoration: InputDecoration(
                                             prefixIcon:
                                                 Icon(FontAwesomeIcons.check),
@@ -121,6 +124,8 @@ class CreateTriviaPage extends StatelessWidget {
                                             hintText: "Savana",
                                           ),
                                           keyboardType: TextInputType.multiline,
+                                          capitalization:
+                                              TextCapitalization.sentences,
                                         ),
                                       ),
                                       viewModel.correctAnswer != null
@@ -160,8 +165,7 @@ class CreateTriviaPage extends StatelessWidget {
                                         child: TextFieldHighlight(
                                           onChanged: (text) {
                                             viewModel
-                                                .onWrongAnswerTextChanged(
-                                                    text);
+                                                .onWrongAnswerTextChanged(text);
                                           },
                                           borderHighlightColor: Colors.red[400],
                                           decoration: InputDecoration(
@@ -175,6 +179,8 @@ class CreateTriviaPage extends StatelessWidget {
                                             hintText: "Caatinga",
                                           ),
                                           keyboardType: TextInputType.multiline,
+                                          capitalization:
+                                              TextCapitalization.sentences,
                                         ),
                                       ),
                                       viewModel.wrongAnswer != null
@@ -262,6 +268,11 @@ class CreateTriviaPage extends StatelessWidget {
                               ],
                             ),
                           ),
+                           Padding(
+                                    padding: EdgeInsets.only(
+                                        bottom: MediaQuery.of(context)
+                                            .viewInsets
+                                            .bottom))
                         ],
                       ),
                     )));
