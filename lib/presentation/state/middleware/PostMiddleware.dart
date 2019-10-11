@@ -11,13 +11,12 @@ import '../../app.dart';
 import '../app_state.dart';
 
 List<Middleware<AppState>> postMiddleware(
-  ICreateTextPostUseCase createPostUseCase,
-  IDeletePostUseCase deletePostUseCase,
-  IExplorePostUseCase explorePostUseCase,
-  IGetUserByIdUseCase getUserByIdUseCase,
-  ICreateImagePostUseCase createImagePostUseCase,
-  IGetPostByIdUseCase getPostByIdUseCase
-) {
+    ICreateTextPostUseCase createPostUseCase,
+    IDeletePostUseCase deletePostUseCase,
+    IExplorePostUseCase explorePostUseCase,
+    IGetUserByIdUseCase getUserByIdUseCase,
+    ICreateImagePostUseCase createImagePostUseCase,
+    IGetPostByIdUseCase getPostByIdUseCase) {
   void deletePost(Store<AppState> store, DeletePostAction action,
       NextDispatcher next) async {
     next(action);
@@ -98,18 +97,21 @@ List<Middleware<AppState>> postMiddleware(
     store.dispatch(NavigatePushAction(AppRoutes.createPost));
   }
 
-  void navigatePost(Store<AppState> store, NavigatePostAction action, NextDispatcher next) async {
+  void navigatePost(Store<AppState> store, NavigatePostAction action,
+      NextDispatcher next) async {
     next(action);
     store.dispatch(NavigatePushAction(AppRoutes.completePost));
     store.dispatch(SetCompletePostAction(action.post));
   }
 
-  void fetchPostById(Store<AppState> store, FetchPostAction action, NextDispatcher next) async {
+  void fetchPostById(Store<AppState> store, FetchPostAction action,
+      NextDispatcher next) async {
     next(action);
-    try{
+    try {
       final post = await getPostByIdUseCase.run(action.postId);
       final user = await getUserByIdUseCase.run(post.userId);
-      final postData = new PostData(post.id, user, post.type, post.text, post.imageURL);
+      final postData =
+          new PostData(post.id, user, post.type, post.text, post.imageURL);
 
       store.dispatch(NavigatePostAction(postData));
     } catch (error, stackTrace) {
@@ -117,7 +119,13 @@ List<Middleware<AppState>> postMiddleware(
       store.dispatch(
           OnCatchDefaultErrorAction(error.toString(), stackTrace, actionName));
     }
-    
+  }
+
+  void navigatePostImageZoom(Store<AppState> store,
+      NavigatePostImageZoomAction action, NextDispatcher next) async {
+    next(action);
+    store.dispatch(NavigatePushAction(AppRoutes.imagePost));
+    store.dispatch(SetPostImageAction(action.imageURL));
   }
 
   return [
@@ -128,6 +136,7 @@ List<Middleware<AppState>> postMiddleware(
     TypedMiddleware<AppState, SubmitPostSuccessAction>(postCreated),
     TypedMiddleware<AppState, FetchPostsAction>(explorePosts),
     TypedMiddleware<AppState, NavigatePostAction>(navigatePost),
-    TypedMiddleware<AppState, FetchPostAction>(fetchPostById)
+    TypedMiddleware<AppState, FetchPostAction>(fetchPostById),
+    TypedMiddleware<AppState, NavigatePostImageZoomAction>(navigatePostImageZoom)
   ];
 }

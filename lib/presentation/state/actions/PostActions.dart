@@ -13,6 +13,12 @@ class NavigatePostAction {
   NavigatePostAction(this.post);
 }
 
+class NavigatePostImageZoomAction {
+  final String imageURL;
+
+  NavigatePostImageZoomAction(this.imageURL);
+}
+
 //Fetches
 class FetchPostsAction {}
 
@@ -41,6 +47,12 @@ class SetCompletePostAction {
   final PostData post;
 
   SetCompletePostAction(this.post);
+}
+
+class SetPostImageAction {
+  final String imageURL;
+
+  SetPostImageAction(this.imageURL);
 }
 
 //Submits

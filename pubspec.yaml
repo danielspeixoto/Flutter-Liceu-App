@@ -58,6 +58,7 @@ dependencies:
     git:
       url: git://github.com/rmarau/flutter_cached_network_image.git
       ref: fix-getFile_multiplecalls
+  photo_view: ^0.5.0
 
 dev_dependencies:
   flutter_test:

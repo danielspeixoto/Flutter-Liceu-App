@@ -1,4 +1,4 @@
-import 'package:app/presentation/pages/post/ViewModel.dart';
+import 'package:app/presentation/pages/complete-post/ViewModel.dart';
 import 'package:app/presentation/state/actions/PageActions.dart';
 import 'package:app/presentation/state/app_state.dart';
 import 'package:app/presentation/widgets/FetcherWidget.dart';
@@ -12,7 +12,7 @@ class CompletePostPage extends StatelessWidget {
   final _refreshController = RefreshController(initialRefresh: false);
   @override
   Widget build(BuildContext context) => StoreConnector<AppState, CompletePostViewModel>(
-        onInit: (store) => store.dispatch(PageInitAction("Post")),
+        onInit: (store) => store.dispatch(PageInitAction("CompletePost")),
         converter: (store) => CompletePostViewModel.create(store),
         builder: (BuildContext context, CompletePostViewModel viewModel) {
           final post = viewModel.post;

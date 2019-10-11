@@ -6,6 +6,7 @@ import 'package:app/presentation/widgets/LiceuScaffold.dart';
 import 'package:app/presentation/widgets/PostWidget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:photo_view/photo_view.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 import 'ViewModel.dart';
@@ -69,19 +70,29 @@ class ExplorePage extends StatelessWidget {
                                     : null,
                                 imageURL: post.imageURL,
                                 seeMore: post.text.length > 600
-                                  ? FlatButton(
-                                      onPressed: () =>
-                                          viewModel.onSeeMorePressed(post),
-                                      child: Text(
-                                        "Ver mais",
-                                        style: TextStyle(
-                                          color: Color(0xFF0061A1),
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ))
-                                  : null,
+                                    ? FlatButton(
+                                        onPressed: () =>
+                                            viewModel.onSeeMorePressed(post),
+                                        child: Text(
+                                          "Ver mais",
+                                          style: TextStyle(
+                                            color: Color(0xFF0061A1),
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ))
+                                    : null,
+                                expandImage: post.imageURL != null
+                                    ? FlatButton(
+                                        onPressed: () => viewModel.onImageZoomPressed(post.imageURL),
+                                        child: Text(
+                                          "Expandir",
+                                          style: TextStyle(
+                                            color: Color(0xFF0061A1),
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ))
+                                    : null,
                               ),
-                              
                             ]);
                           },
                         ).toList(),
