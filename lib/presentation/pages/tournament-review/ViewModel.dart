@@ -35,7 +35,6 @@ class TournamentReviewViewModel {
           Map<String, dynamic> params = {
             "questionId": questionId,
             "correctAnswer: ": correctAnswer,
-            "selectedAnswer": selectedAnswer
           };
 
           List<String> tags = [

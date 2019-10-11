@@ -38,8 +38,7 @@ class TrainingViewModel {
 
           Map<String, dynamic> params = {
             "questionId": questionId,
-            "correctAnswer": correctAnswer,
-            "selectedAnswer": selectedAnswer
+            "correctAnswer": correctAnswer
           };
 
           List<String> tags = ["generated", "enem", "question", "incorrect", "answer"];
