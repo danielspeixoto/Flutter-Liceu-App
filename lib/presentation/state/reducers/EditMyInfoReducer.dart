@@ -42,6 +42,7 @@ final Reducer<EditMyInfoState> editMyInfoReducer =
   TypedReducer<EditMyInfoState, SetUserAction>(updateEditFieldsOnUserUpdate),
   TypedReducer<EditMyInfoState, SubmitUserProfileChangesAction>(
       setLoadingEditPage),
+      TypedReducer<EditMyInfoState, SubmitUserProfileChangesSuccessAction>(submitUserProfileSuccess)
 ]);
 
 String _limitBioSize(String bio) {
@@ -71,6 +72,13 @@ EditMyInfoState setUserEditFieldAction(
     instagram: _limitInstagramSize(action.instagram),
     phone: _limitPhoneSize(action.phone),
     desiredCourse: _limitDesiredCourseSize(action.desiredCourse),
+  );
+}
+
+EditMyInfoState submitUserProfileSuccess(
+    EditMyInfoState state, SubmitUserProfileChangesSuccessAction action) {
+  return state.copyWith(
+    isLoading: false,
   );
 }
 

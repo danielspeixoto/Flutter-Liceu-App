@@ -27,7 +27,7 @@ List<String> suggestions = [
       "Ciências Naturais - Licenciatura",
       "Ciências Sociais - Bacharelado",
       "Ciências Sociais - Licenciatura",
-      "Cinema e Audiovisual - Bacharelado",
+      "Cinema e Audiovisual - Bacharelado"
 ];
 
 class EditProfilePage extends StatelessWidget {
