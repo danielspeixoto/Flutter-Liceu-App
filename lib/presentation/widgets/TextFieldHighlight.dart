@@ -52,7 +52,8 @@ class TextFieldHighlight extends StatelessWidget {
       controller: this.controller,
       suggestions: suggestions,
       textChanged: (text) => this.onChanged(text),
-      clearOnSubmit: true,
+      clearOnSubmit: false,
+      textSubmitted: (text) => this.onChanged(text)
       )
      : TextField(
         controller: this.controller,
