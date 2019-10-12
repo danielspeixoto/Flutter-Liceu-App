@@ -5,21 +5,31 @@ import 'package:redux/redux.dart';
 class EditMyInfoState {
   final String bio;
   final String instagram;
+  final String phone;
+  final String desiredCourse;
   final bool isLoading;
 
   EditMyInfoState({
     this.bio = "",
     this.instagram = "",
-    this.isLoading = true,
+    this.phone = "",
+    this.desiredCourse = "",
+    this.isLoading = false,
   });
 
   factory EditMyInfoState.initial() => EditMyInfoState();
 
   EditMyInfoState copyWith(
-      {String bio, String instagram, bool isLoading}) {
+      {String bio,
+      String instagram,
+      String phone,
+      String desiredCourse,
+      bool isLoading}) {
     final state = EditMyInfoState(
       bio: bio ?? this.bio,
       instagram: instagram ?? this.instagram,
+      phone: phone ?? this.phone,
+      desiredCourse: desiredCourse ?? this.desiredCourse,
       isLoading: isLoading ?? this.isLoading,
     );
     return state;
@@ -28,12 +38,11 @@ class EditMyInfoState {
 
 final Reducer<EditMyInfoState> editMyInfoReducer =
     combineReducers<EditMyInfoState>([
-  TypedReducer<EditMyInfoState, SetUserEditFieldAction>(
-      setUserEditFieldAction),
-  TypedReducer<EditMyInfoState, SetUserAction>(
-      updateEditFieldsOnUserUpdate),
+  TypedReducer<EditMyInfoState, SetUserEditFieldAction>(setUserEditFieldAction),
+  TypedReducer<EditMyInfoState, SetUserAction>(updateEditFieldsOnUserUpdate),
   TypedReducer<EditMyInfoState, SubmitUserProfileChangesAction>(
       setLoadingEditPage),
+      TypedReducer<EditMyInfoState, SubmitUserProfileChangesSuccessAction>(submitUserProfileSuccess)
 ]);
 
 String _limitBioSize(String bio) {
@@ -46,11 +55,30 @@ String _limitInstagramSize(String instagram) {
       : instagram.substring(0, min(60, instagram.length));
 }
 
+String _limitDesiredCourseSize(String desiredCourse) {
+  return desiredCourse == null
+      ? null
+      : desiredCourse.substring(0, min(100, desiredCourse.length));
+}
+
+String _limitPhoneSize(String phone) {
+  return phone == null ? null : phone.substring(0, min(20, phone.length));
+}
+
 EditMyInfoState setUserEditFieldAction(
     EditMyInfoState state, SetUserEditFieldAction action) {
   return state.copyWith(
     bio: _limitBioSize(action.bio),
     instagram: _limitInstagramSize(action.instagram),
+    phone: _limitPhoneSize(action.phone),
+    desiredCourse: _limitDesiredCourseSize(action.desiredCourse),
+  );
+}
+
+EditMyInfoState submitUserProfileSuccess(
+    EditMyInfoState state, SubmitUserProfileChangesSuccessAction action) {
+  return state.copyWith(
+    isLoading: false,
   );
 }
 
@@ -59,6 +87,8 @@ EditMyInfoState updateEditFieldsOnUserUpdate(
   return state.copyWith(
     bio: _limitBioSize(action.user.bio),
     instagram: _limitInstagramSize(action.user.instagramProfile),
+    phone: _limitPhoneSize(action.user.telephoneNumber),
+    desiredCourse: _limitDesiredCourseSize(action.user.desiredCourse),
   );
 }
 

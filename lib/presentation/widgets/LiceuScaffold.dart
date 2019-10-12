@@ -19,7 +19,9 @@ class LiceuScaffold extends StatelessWidget {
   LiceuScaffold({this.leading, this.body, this.drawer, this.appBar});
 
   @override
-  Widget build(BuildContext context) => Scaffold(
+  Widget build(BuildContext context) => 
+  
+    Scaffold(
         appBar: this.appBar == null
             ? LiceuAppBar(
                 leading: leading,

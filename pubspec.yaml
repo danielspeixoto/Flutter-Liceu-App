@@ -58,7 +58,9 @@ dependencies:
     git:
       url: git://github.com/rmarau/flutter_cached_network_image.git
       ref: fix-getFile_multiplecalls
-
+  masked_text: ^0.0.6
+  autocomplete_textfield: ^1.7.3
+  
 dev_dependencies:
   flutter_test:
     sdk: flutter

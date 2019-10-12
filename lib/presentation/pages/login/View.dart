@@ -158,6 +158,7 @@ class LoginPage extends StatelessWidget {
                                                       keyboardType:
                                                           TextInputType
                                                               .multiline,
+                                                              capitalization: TextCapitalization.sentences,
                                                     ),
                                                     ListTile(
                                                       title: Center(

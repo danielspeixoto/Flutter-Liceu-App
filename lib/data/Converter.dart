@@ -26,6 +26,8 @@ User fromMapToUser(data) {
     data["picture"]["url"],
     data["description"],
     data["instagramProfile"],
+    data["telephoneNumber"],
+    data["desiredCourse"]
   );
 }
 
