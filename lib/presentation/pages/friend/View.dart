@@ -160,7 +160,10 @@ class FriendPage extends StatelessWidget {
                                           fontWeight: FontWeight.bold,
                                         ),
                                       ))
-                                  : null
+                                  : null,
+                                  onImageZoomPressed: () {
+                                    viewModel.onImageZoomPressed(post.imageURL);
+                                  },
                                   ),
                                     
                                   

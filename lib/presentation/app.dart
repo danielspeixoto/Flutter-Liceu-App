@@ -3,9 +3,10 @@ import 'package:app/presentation/pages/create-post/View.dart';
 import 'package:app/presentation/pages/create-trivia/View.dart';
 import 'package:app/presentation/pages/edit-profile/View.dart';
 import 'package:app/presentation/pages/home/View.dart';
+import 'package:app/presentation/pages/image-post/View.dart';
 import 'package:app/presentation/pages/intro/View.dart';
 import 'package:app/presentation/pages/login/View.dart';
-import 'package:app/presentation/pages/post/View.dart';
+import 'package:app/presentation/pages/complete-post/View.dart';
 import 'package:app/presentation/pages/splash/View.dart';
 import 'package:app/presentation/pages/tournament-review/View.dart';
 import 'package:app/presentation/pages/tournament/View.dart';
@@ -57,6 +58,8 @@ class MyApp extends StatelessWidget {
         return MainRoute(IntroPage(), settings: settings);
       case AppRoutes.completePost:
         return MainRoute(CompletePostPage(), settings: settings);
+      case AppRoutes.imagePost:
+        return MainRoute(ImagePostPage(), settings: settings);
       default:
         return MainRoute(SplashPage(), settings: settings);
     }
@@ -96,4 +99,5 @@ class AppRoutes {
   static const friend = "/friend";
   static const createTrivia = "/createTrivia";
   static const completePost = "/completePost";
+  static const imagePost = "/imagePost";
 }

@@ -16,13 +16,15 @@ class CompletePostViewModel {
   final Function(String postId, PostType type, String text) onSharePostPressed;
   final Function(User user) onUserPressed;
   final Function() refresh;
+  final Function(String imageURL) onImageZoomPressed;
 
   CompletePostViewModel({
     this.post,
     this.onDeletePostPressed,
     this.onSharePostPressed,
     this.onUserPressed,
-    this.refresh
+    this.refresh,
+    this.onImageZoomPressed
   });
 
     factory CompletePostViewModel.create(Store<AppState> store) {
@@ -42,6 +44,9 @@ class CompletePostViewModel {
       onUserPressed: (user) {
         store.dispatch(UserClickedAction(user));
       },
+      onImageZoomPressed: (imageURL) {
+        store.dispatch(NavigatePostImageZoomAction(imageURL));
+      }
     );
   }
 }

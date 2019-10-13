@@ -245,6 +245,9 @@ class ProfilePage extends StatelessWidget {
                                         ),
                                       ))
                                   : null,
+                                  onImageZoomPressed: () {
+                                    viewModel.onImageZoomPressed(post.imageURL);
+                                  },
                                   ),
                                   
                                 ]);

@@ -20,6 +20,7 @@ class FriendViewModel {
   final Function(String userId) onChallengeMePressed;
   final Function() onInstagramPressed;
   final Function(Post post, User user) onSeeMorePressed;
+  final Function(String imageURL) onImageZoomPressed;
 
   FriendViewModel({
     this.user,
@@ -29,7 +30,8 @@ class FriendViewModel {
     this.refresh,
     this.onChallengeMePressed,
     this.onInstagramPressed,
-    this.onSeeMorePressed
+    this.onSeeMorePressed,
+    this.onImageZoomPressed
   });
 
   factory FriendViewModel.create(Store<AppState> store) {
@@ -60,6 +62,9 @@ class FriendViewModel {
       onSeeMorePressed: (post, user) {
         final postData = new PostData(post.id, user, post.type, post.text, post.imageURL);
         store.dispatch(NavigatePostAction(postData));
+      },
+      onImageZoomPressed: (imageURL) {
+        store.dispatch(NavigatePostImageZoomAction(imageURL));
       }
     );
   }

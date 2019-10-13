@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:app/presentation/state/actions/PageActions.dart';
 import 'package:app/presentation/state/app_state.dart';
 import 'package:app/presentation/util/text.dart';
@@ -6,13 +8,20 @@ import 'package:app/presentation/widgets/LiceuScaffold.dart';
 import 'package:app/presentation/widgets/PostWidget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:photo_view/photo_view.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 import 'ViewModel.dart';
 
+List<String> tips = [
+  "Atualize a página pra trocar o conteúdo escolhido!",
+  "Clique nas imagens para dar um zoom!"
+];
+
 class ExplorePage extends StatelessWidget {
   final _refreshController = RefreshController(initialRefresh: false);
 
+    final randomTip = tips[new Random().nextInt(tips.length)];
   @override
   Widget build(BuildContext context) =>
       StoreConnector<AppState, ExploreViewModel>(
@@ -40,7 +49,7 @@ class ExplorePage extends StatelessWidget {
                   Container(
                     margin: EdgeInsets.all(8),
                     child: Text(
-                      "Atualize a página pra trocar o conteúdo escolhido!",
+                      randomTip,
                       textAlign: TextAlign.center,
                     ),
                   ),
@@ -70,19 +79,21 @@ class ExplorePage extends StatelessWidget {
                                     : null,
                                 imageURL: post.imageURL,
                                 seeMore: post.text.length > 600
-                                  ? FlatButton(
-                                      onPressed: () =>
-                                          viewModel.onSeeMorePressed(post),
-                                      child: Text(
-                                        "Ver mais",
-                                        style: TextStyle(
-                                          color: Color(0xFF0061A1),
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ))
-                                  : null,
+                                    ? FlatButton(
+                                        onPressed: () =>
+                                            viewModel.onSeeMorePressed(post),
+                                        child: Text(
+                                          "Ver mais",
+                                          style: TextStyle(
+                                            color: Color(0xFF0061A1),
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ))
+                                    : null,
+                                onImageZoomPressed: () {
+                                    viewModel.onImageZoomPressed(post.imageURL);
+                                  },
                               ),
-                              
                             ]);
                           },
                         ).toList(),

@@ -16,6 +16,7 @@ class ExploreViewModel {
   final Function(String postId) onDeletePostPressed;
   final Function(String postId, PostType type, String text) onSharePostPressed;
   final Function(User user) onUserPressed;
+  final Function(String imageURL) onImageZoomPressed;
   final Function(PostData post) onSeeMorePressed;
 
   ExploreViewModel({
@@ -25,7 +26,8 @@ class ExploreViewModel {
     this.posts,
     this.refresh,
     this.onUserPressed,
-    this.onSeeMorePressed
+    this.onSeeMorePressed,
+    this.onImageZoomPressed
   });
 
   factory ExploreViewModel.create(Store<AppState> store) {
@@ -50,6 +52,9 @@ class ExploreViewModel {
       },
       onSeeMorePressed: (post) {
         store.dispatch(NavigatePostAction(post));
+      },
+      onImageZoomPressed: (imageURL) {
+        store.dispatch(NavigatePostImageZoomAction(imageURL));
       }
     );
   }

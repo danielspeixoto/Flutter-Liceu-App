@@ -14,17 +14,19 @@ class PostState {
   final File imageSubmission;
   final String createPostTextErrorMessage;
   final Data<PostData> post;
+  final String imageURL;
   PostState(this.posts, this.isCreatingPost, this.createPostTextErrorMessage,
-      this.imageSubmission, this.post);
+      this.imageSubmission, this.post, this.imageURL);
 
-  factory PostState.initial() => PostState(Data(), true, "", null, Data());
+  factory PostState.initial() => PostState(Data(), true, "", null, Data(), null);
 
   PostState copyWith({
     Data<List<PostData>> posts,
     bool isCreatingPost,
     String createPostTextErrorMessage,
     File imageSubmission,
-    Data<PostData> post
+    Data<PostData> post,
+    String imageURL
   }) {
     final state = PostState(
       posts ?? this.posts,
@@ -32,6 +34,7 @@ class PostState {
       createPostTextErrorMessage ?? this.createPostTextErrorMessage,
       imageSubmission ?? this.imageSubmission,
       post ?? this.post,
+      imageURL ?? this.imageURL
     );
     return state;
   }
@@ -47,7 +50,8 @@ final Reducer<PostState> postReducer = combineReducers<PostState>([
   TypedReducer<PostState, NavigateCreatePostAction>(navigateCreatePost),
   TypedReducer<PostState, SubmitPostErrorTextSizeMismatchAction>(
       onCreatePostTextSizeMismatch),
-  TypedReducer<PostState, SetCompletePostAction>(setPost)
+  TypedReducer<PostState, SetCompletePostAction>(setPost),
+  TypedReducer<PostState, SetPostImageAction>(setImage),
 ]);
 
 PostState deletePost(PostState state, DeletePostAction action) {
@@ -87,6 +91,7 @@ PostState createPost(PostState state, SubmitTextPostAction action) {
     "",
     null,
     state.post,
+    state.imageURL
   );
 }
 
@@ -97,6 +102,7 @@ PostState createImagePost(PostState state, SubmitImagePostAction action) {
     "",
     null,
     state.post,
+    state.imageURL
   );
 }
 
@@ -116,4 +122,10 @@ PostState onCreatePostTextSizeMismatch(
       isCreatingPost: false,
       createPostTextErrorMessage:
           "O tamanho do texto é menor que 100 ou maior que 2000 caracteres.");
+}
+
+PostState setImage(
+    PostState state, SetPostImageAction action) {
+  return state.copyWith(
+      imageURL: action.imageURL);
 }
