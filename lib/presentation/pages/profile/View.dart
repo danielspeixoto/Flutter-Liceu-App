@@ -44,17 +44,17 @@ class ProfilePage extends StatelessWidget {
                     ),
                   ),
                   ListTile(
-                    title: Text('Editar Perfil'),
-                    onTap: viewModel.onEditProfileButtonPressed,
+                    title: Text('Compartilhar perfil'),
+                    onTap: viewModel.onShareProfilePressed,
                   ),
                   ListTile(
-                    title: Text('Reportar'),
+                    title: Text('Relatar um problema'),
                     onTap: () {
                       showDialog(
                           context: context,
                           builder: (context) {
                             return SimpleDialog(
-                              title: Text("Reporte um feedback"),
+                              title: Text("Relatar um problema"),
                               children: <Widget>[
                                 Container(
                                     padding:
@@ -77,15 +77,17 @@ class ProfilePage extends StatelessWidget {
                                           ),
                                           maxLines: 4,
                                           keyboardType: TextInputType.multiline,
+                                          capitalization: TextCapitalization.sentences,
                                         ),
                                         ListTile(
                                           title: Text(
                                             "Enviar",
+                                            textAlign: TextAlign.center,
                                           ),
                                           onTap: () {
                                             Navigator.of(context).pop();
                                             viewModel
-                                                .onSendReportButtonPressed();
+                                                .onSendReportButtonPressed(runtimeType.toString());
                                           },
                                         ),
                                       ],
@@ -146,9 +148,9 @@ class ProfilePage extends StatelessWidget {
                                     ),
                                     FlatButton(
                                       onPressed:
-                                          viewModel.onShareProfilePressed,
+                                          viewModel.onEditProfileButtonPressed,
                                       child: Text(
-                                        "Compartilhe seu perfil",
+                                        "Editar perfil",
                                         style: TextStyle(
                                           color: Color(0xFF0061A1),
                                         ),
@@ -243,17 +245,9 @@ class ProfilePage extends StatelessWidget {
                                         ),
                                       ))
                                   : null,
-                                  expandImage: post.imageURL != null
-                                    ? FlatButton(
-                                        onPressed: () => viewModel.onImageZoomPressed(post.imageURL),
-                                        child: Text(
-                                          "Expandir",
-                                          style: TextStyle(
-                                            color: Color(0xFF0061A1),
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ))
-                                    : null,
+                                  onImageZoomPressed: () {
+                                    viewModel.onImageZoomPressed(post.imageURL);
+                                  },
                                   ),
                                   
                                 ]);

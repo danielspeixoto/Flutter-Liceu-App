@@ -25,7 +25,7 @@ class ProfileViewModel {
   final Function(String postId, PostType type, String text) onSharePostPressed;
   final Function() onInstagramPressed;
   final Function() onLiceuInstagramPressed;
-  final Function() onSendReportButtonPressed;
+  final Function(String page) onSendReportButtonPressed;
   final Function(String text) onFeedbackTextChanged;
   final Function onShareProfilePressed;
   final Function(Post post, User user) onSeeMorePressed;
@@ -87,10 +87,11 @@ class ProfileViewModel {
       onFeedbackTextChanged: (String text) {
         store.dispatch(SetUserReportFieldAction(text));
       },
-      onSendReportButtonPressed: () {
+      onSendReportButtonPressed: (page) {
         Map<String, dynamic> params = {
           "userId": userState.user.content.id,
-          "userName: ": userState.user.content.name
+          "userName": userState.user.content.name,
+          "page": page
         };
 
         List<String> tags = ["created", "feedback"];

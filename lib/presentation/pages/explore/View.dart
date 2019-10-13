@@ -22,6 +22,7 @@ class ExplorePage extends StatelessWidget {
         builder: (BuildContext context, ExploreViewModel viewModel) {
           final user = viewModel.user.content;
           return LiceuScaffold(
+            
             body: SmartRefresher(
               onRefresh: () async {
                 viewModel.refresh();
@@ -81,17 +82,9 @@ class ExplorePage extends StatelessWidget {
                                           ),
                                         ))
                                     : null,
-                                expandImage: post.imageURL != null
-                                    ? FlatButton(
-                                        onPressed: () => viewModel.onImageZoomPressed(post.imageURL),
-                                        child: Text(
-                                          "Expandir",
-                                          style: TextStyle(
-                                            color: Color(0xFF0061A1),
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ))
-                                    : null,
+                                onImageZoomPressed: () {
+                                    viewModel.onImageZoomPressed(post.imageURL);
+                                  },
                               ),
                             ]);
                           },

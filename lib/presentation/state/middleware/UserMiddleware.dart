@@ -20,6 +20,8 @@ List<Middleware<AppState>> userMiddleware(
     IGetUserByIdUseCase fetchUserByIdUseCase,
     ISetUserDescriptionUseCase setUserDescriptionUseCase,
     ISetUserInstagramUseCase setUserInstagramUseCase,
+    ISetUserDesiredCourseUseCase setUserDesiredCourseUseCase,
+    ISetUserPhoneUseCase setUserPhoneUseCase,
     IMyIdUseCase _myIdUseCase,
     ISubmitFcmTokenUseCase _submitFcmTokenUseCase) {
   void fetchUserInfo(Store<AppState> store, FetchUserInfoAction action,
@@ -100,10 +102,14 @@ List<Middleware<AppState>> userMiddleware(
     try {
       await setUserDescriptionUseCase.run(action.bio);
       await setUserInstagramUseCase.run(action.instagram);
+      await setUserDesiredCourseUseCase.run(action.desiredCourse);
+      await setUserPhoneUseCase.run(action.phone);
       store.dispatch(
         SubmitUserProfileChangesSuccessAction(
           action.bio,
           action.instagram,
+          action.desiredCourse,
+          action.phone
         ),
       );
     } catch (error, stackTrace) {

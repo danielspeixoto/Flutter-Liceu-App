@@ -158,18 +158,20 @@ class LoginPage extends StatelessWidget {
                                                       keyboardType:
                                                           TextInputType
                                                               .multiline,
+                                                              capitalization: TextCapitalization.sentences,
                                                     ),
                                                     ListTile(
                                                       title: Center(
                                                         child: Text(
                                                           "Enviar",
+                                                          textAlign: TextAlign.center,
                                                         ),
                                                       ),
                                                       onTap: () {
                                                         Navigator.of(context)
                                                             .pop();
                                                         viewModel
-                                                            .onSendMessageButtonPressed();
+                                                            .onSendMessageButtonPressed(runtimeType.toString());
                                                       },
                                                     ),
                                                   ],

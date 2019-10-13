@@ -34,15 +34,16 @@ class UserRepository implements IUserRepository {
     }
   }
 
-  Future<void> fcmtoken(String accessToken, String fcmToken, String userId) async{
+  Future<void> fcmtoken(
+      String accessToken, String fcmToken, String userId) async {
     try {
-      final response = await http.put(_url + "/" + userId + "/cloudMessaging", 
-      headers: {
-        apiKeyHeader: _apiKey,
-        contentTypeHeader: contentTypeValueForJson,
-        authHeader: accessToken
-      },
-      body: json.encode({"fcmToken": fcmToken}));
+      final response = await http.put(_url + "/" + userId + "/cloudMessaging",
+          headers: {
+            apiKeyHeader: _apiKey,
+            contentTypeHeader: contentTypeValueForJson,
+            authHeader: accessToken
+          },
+          body: json.encode({"fcmToken": fcmToken}));
       if (response.statusCode == 200) {
         return;
       }
@@ -146,6 +147,49 @@ class UserRepository implements IUserRepository {
           authHeader: accessToken
         },
         body: json.encode({"instagramProfile": instagram}));
+    if (response.statusCode == 200) {
+      return;
+    }
+    throw handleNetworkException(response.statusCode, runtimeType.toString());
+  }
+
+  Future<void> setPhone(String accessToken, String id, String phone) async {
+    final response = await http.put(_url + "/" + id + "/telephone",
+        headers: {
+          apiKeyHeader: _apiKey,
+          contentTypeHeader: contentTypeValueForJson,
+          authHeader: accessToken
+        },
+        body: json.encode({"telephoneNumber": phone}));
+    if (response.statusCode == 200) {
+      return;
+    }
+    throw handleNetworkException(response.statusCode, runtimeType.toString());
+  }
+
+  Future<void> setSchool(String accessToken, String id, String school) async {
+    final response = await http.put(_url + "/" + id + "/school",
+        headers: {
+          apiKeyHeader: _apiKey,
+          contentTypeHeader: contentTypeValueForJson,
+          authHeader: accessToken
+        },
+        body: json.encode({"school": school}));
+    if (response.statusCode == 200) {
+      return;
+    }
+    throw handleNetworkException(response.statusCode, runtimeType.toString());
+  }
+
+  Future<void> setDesiredCourse(
+      String accessToken, String id, String desiredCourse) async {
+    final response = await http.put(_url + "/" + id + "/course",
+        headers: {
+          apiKeyHeader: _apiKey,
+          contentTypeHeader: contentTypeValueForJson,
+          authHeader: accessToken
+        },
+        body: json.encode({"desiredCourse": desiredCourse}));
     if (response.statusCode == 200) {
       return;
     }

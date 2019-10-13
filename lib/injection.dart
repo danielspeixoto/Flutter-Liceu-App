@@ -1,5 +1,6 @@
 import 'package:app/data/ReportRepository.dart';
 import 'package:app/data/TriviaRepository.dart';
+import 'package:app/domain/boundary/UserBoundary.dart';
 import 'package:app/domain/usecase/challenge/GetChallengeUseCase.dart';
 import 'package:app/domain/usecase/post/GetPostByIdUseCase.dart';
 import 'package:app/domain/usecase/report/SubmitReportUseCase.dart';
@@ -8,6 +9,9 @@ import 'package:app/domain/usecase/user/IsLoggedInUseCase.dart';
 import 'package:app/domain/usecase/user/LogOutUseCase.dart';
 import 'package:app/domain/usecase/user/LoginUseCase.dart';
 import 'package:app/domain/usecase/user/MyInfoUseCase.dart';
+import 'package:app/domain/usecase/user/SetUserDesiredCourseUseCase.dart';
+import 'package:app/domain/usecase/user/SetUserPhoneUseCase.dart';
+import 'package:app/domain/usecase/user/SetUserSchoolUseCase.dart';
 import 'package:app/domain/usecase/user/SubmitFcmTokenUseCase.dart';
 import 'package:http/http.dart' as http;
 
@@ -40,7 +44,6 @@ import 'domain/usecase/user/SetUserDescriptionUseCase.dart';
 import 'domain/usecase/user/SetUserInstagramUseCase.dart';
 
 class Feature {
-  
   static bool get isDev {
     bool isDev = false;
 
@@ -121,3 +124,9 @@ final submitUserFcmTokenUseCase =
 final submitReportUseCase =
     SubmitReportUseCase(localRepository, reportRepository);
 final getPostByIdUseCase = GetPostByIdUseCase(localRepository, postRepository);
+final setUserPhoneUseCase =
+    SetUserPhoneUseCase(localRepository, userRepository);
+final setUserDesiredCourseUseCase =
+    SetUserDesiredCourseUseCase(localRepository, userRepository);
+final setUserSchooleUseCase =
+    SetUserSchoolUseCase(localRepository, userRepository);

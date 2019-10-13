@@ -10,6 +10,12 @@ abstract class IUserRepository {
 
   Future<void> setInstagram(String accessToken, String id, String instagram);
 
+  Future<void> setSchool(String accessToken, String id, String school);
+
+  Future<void> setDesiredCourse(String accessToken, String id, String desiredCourse);
+
+  Future<void> setPhone(String accessToken, String id, String phone);
+
   Future<List<User>> search(String accessToken, String query, int amount);
 
   Future<void> follow(String accessToken, String producerId);
@@ -55,6 +61,19 @@ abstract class ISetUserDescriptionUseCase {
 
 abstract class ISetUserInstagramUseCase {
   Future<void> run(String instagram);
+}
+
+
+abstract class ISetUserPhoneUseCase {
+  Future<void> run(String phone);
+}
+
+abstract class ISetUserDesiredCourseUseCase {
+  Future<void> run(String desiredCourse);
+}
+
+abstract class ISetUserSchoolUseCase {
+  Future<void> run(String school);
 }
 
 abstract class ISearchForUserUseCase {

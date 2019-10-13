@@ -57,8 +57,10 @@ class CreatePostPage extends StatelessWidget {
                           minLines: null,
                           maxLines: 9,
                           keyboardType: TextInputType.multiline,
+                          capitalization: TextCapitalization.sentences,
                         ),
                       ),
+                      
                       Container(
                         child: Text(
                           viewModel.createPostTextErrorMessage,

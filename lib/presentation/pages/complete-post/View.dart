@@ -42,6 +42,9 @@ class CompletePostPage extends StatelessWidget {
                                 post.content.text
                               );
                             },
+                            onImageZoomPressed: () {
+                                    viewModel.onImageZoomPressed(post.content.imageURL);
+                                  },
                           )),
                 ],
               ),

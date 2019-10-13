@@ -20,18 +20,17 @@ class PostWidget extends StatelessWidget {
   final Function() onSharePressed;
   final Function(User) onUserPressed;
   final FlatButton seeMore;
-  final FlatButton expandImage;
+  final Function onImageZoomPressed;
 
-  PostWidget({
-    @required this.user,
-    @required this.postContent,
-    this.onDeletePressed,
-    @required this.onSharePressed,
-    this.onUserPressed,
-    @required this.imageURL,
-    this.seeMore,
-    this.expandImage
-  });
+  PostWidget(
+      {@required this.user,
+      @required this.postContent,
+      this.onDeletePressed,
+      @required this.onSharePressed,
+      this.onUserPressed,
+      @required this.imageURL,
+      this.seeMore,
+      this.onImageZoomPressed});
 
   @override
   Widget build(BuildContext context) => Card(
@@ -123,15 +122,19 @@ class PostWidget extends StatelessWidget {
                 margin: const EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 8.0),
                 padding: EdgeInsets.only(bottom: 4),
               ),
+              seeMore != null ? seeMore : Container(),
               imageURL == null
                   ? Container()
-                  : FadeInImage.assetNetwork(
-                      image: imageURL,
-                      placeholder: "assets/loading.gif",
-                      repeat: ImageRepeat.repeat,
+                  : FlatButton(
+                      onPressed: () {
+                        this.onImageZoomPressed();
+                      },
+                      child: FadeInImage.assetNetwork(
+                        image: imageURL,
+                        placeholder: "assets/loading.gif",
+                        repeat: ImageRepeat.repeat,
+                      ),
                     ),
-              seeMore != null ? seeMore : Container(),
-              expandImage != null ? expandImage : Container()
             ],
           ),
         ),

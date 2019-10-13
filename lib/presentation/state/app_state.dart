@@ -37,45 +37,42 @@ class AppState {
   final List<String> route;
   final FeatureState featureState;
 
-  AppState({
-    this.userState,
-    this.friendState,
-    this.postState,
-    this.route,
-    this.editMyInfoState,
-    this.loginState,
-    this.enemState,
-    this.triviaState,
-    this.challengeState,
-    this.featureState
-  });
+  AppState(
+      {this.userState,
+      this.friendState,
+      this.postState,
+      this.route,
+      this.editMyInfoState,
+      this.loginState,
+      this.enemState,
+      this.triviaState,
+      this.challengeState,
+      this.featureState});
 
   factory AppState.initial() => AppState(
-        route: ["/"],
-        userState: UserState.initial(),
-        friendState: FriendState.initial(),
-        postState: PostState.initial(),
-        loginState: LoginState.initial(),
-        enemState: ENEMState.initial(),
-        challengeState: ChallengeState.initial(),
-        triviaState: TriviaState.initial(),
-        editMyInfoState: EditMyInfoState.initial(),
-        featureState: FeatureState.initial()
-      );
+      route: ["/"],
+      userState: UserState.initial(),
+      friendState: FriendState.initial(),
+      postState: PostState.initial(),
+      loginState: LoginState.initial(),
+      enemState: ENEMState.initial(),
+      challengeState: ChallengeState.initial(),
+      triviaState: TriviaState.initial(),
+      editMyInfoState: EditMyInfoState.initial(),
+      featureState: FeatureState.initial());
 }
 
 AppState appReducer(AppState state, action) => AppState(
-      route: navigationReducer(state.route, action),
-      userState: userReducer(state.userState, action),
-      friendState: friendReducer(state.friendState, action),
-      postState: postReducer(state.postState, action),
-      loginState: loginReducer(state.loginState, action),
-      enemState: enemReducer(state.enemState, action),
-      challengeState: challengeReducer(state.challengeState, action),
-      triviaState: triviaReducer(state.triviaState, action),
-      editMyInfoState: editMyInfoReducer(state.editMyInfoState, action),
-      featureState: featureReducer(state.featureState, action)
-    );
+    route: navigationReducer(state.route, action),
+    userState: userReducer(state.userState, action),
+    friendState: friendReducer(state.friendState, action),
+    postState: postReducer(state.postState, action),
+    loginState: loginReducer(state.loginState, action),
+    enemState: enemReducer(state.enemState, action),
+    challengeState: challengeReducer(state.challengeState, action),
+    triviaState: triviaReducer(state.triviaState, action),
+    editMyInfoState: editMyInfoReducer(state.editMyInfoState, action),
+    featureState: featureReducer(state.featureState, action));
 
 final Store<AppState> store = Store<AppState>(
   appReducer,
@@ -91,22 +88,24 @@ final Store<AppState> store = Store<AppState>(
       checkUseCase,
     ),
     ...userMiddleware(
-        myInfoUseCase,
-        myPostsUseCase,
-        myChallengesUseCase,
-        getUserByIdUseCase,
-        setUserDescriptionUseCase,
-        setUserInstagramUseCase,
-        myIdUseCase,
-        submitUserFcmTokenUseCase),
-    ...postMiddleware(
-      createTextPostUseCase,
-      deletePostUseCase,
-      getExplorePostsUseCase,
+      myInfoUseCase,
+      myPostsUseCase,
+      myChallengesUseCase,
       getUserByIdUseCase,
-      createImagePostUseCase,
-      getPostByIdUseCase
+      setUserDescriptionUseCase,
+      setUserInstagramUseCase,
+      setUserDesiredCourseUseCase,
+      setUserPhoneUseCase,
+      myIdUseCase,
+      submitUserFcmTokenUseCase,
     ),
+    ...postMiddleware(
+        createTextPostUseCase,
+        deletePostUseCase,
+        getExplorePostsUseCase,
+        getUserByIdUseCase,
+        createImagePostUseCase,
+        getPostByIdUseCase),
     ...ENEMMiddleware(
       getRankingUseCase,
       getUserByIdUseCase,

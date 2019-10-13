@@ -54,6 +54,17 @@ class FetchTournamentQuestionsSuccessAction {
 }
 
 //Setters
+class SetTrainingReportFieldAction {
+  final String text;
+
+  SetTrainingReportFieldAction(this.text);
+}
+
+class SetTournamentReportFieldAction {
+  final String text;
+
+  SetTournamentReportFieldAction(this.text);
+}
 
 //Submits
 class SubmitTournamentGameAction  extends ItemAction {
