@@ -12,6 +12,7 @@ class ImageZoom extends StatelessWidget {
   return Container(
     child: PhotoView(
       minScale: PhotoViewComputedScale.contained,
+      backgroundDecoration: BoxDecoration(color: Colors.white),
       imageProvider: NetworkImage(this.imageURL),
     )
   );

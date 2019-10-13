@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:app/presentation/state/actions/PageActions.dart';
 import 'package:app/presentation/state/app_state.dart';
 import 'package:app/presentation/util/text.dart';
@@ -11,9 +13,15 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 import 'ViewModel.dart';
 
+List<String> tips = [
+  "Atualize a página pra trocar o conteúdo escolhido!",
+  "Clique nas imagens para dar um zoom!"
+];
+
 class ExplorePage extends StatelessWidget {
   final _refreshController = RefreshController(initialRefresh: false);
 
+    final randomTip = tips[new Random().nextInt(tips.length)];
   @override
   Widget build(BuildContext context) =>
       StoreConnector<AppState, ExploreViewModel>(
@@ -41,7 +49,7 @@ class ExplorePage extends StatelessWidget {
                   Container(
                     margin: EdgeInsets.all(8),
                     child: Text(
-                      "Atualize a página pra trocar o conteúdo escolhido!",
+                      randomTip,
                       textAlign: TextAlign.center,
                     ),
                   ),
