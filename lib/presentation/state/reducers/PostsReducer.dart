@@ -12,10 +12,11 @@ class PostState {
   final String createPostTextErrorMessage;
   final Data<PostData> post;
   final String imageURL;
+  final String message;
   PostState(this.posts, this.isCreatingPost, this.createPostTextErrorMessage,
-      this.imageSubmission, this.post, this.imageURL);
+      this.imageSubmission, this.post, this.imageURL, this.message);
 
-  factory PostState.initial() => PostState(Data(), true, "", null, Data(), null);
+  factory PostState.initial() => PostState(Data(), true, "", null, Data(), null, null);
 
   PostState copyWith({
     Data<List<PostData>> posts,
@@ -24,6 +25,7 @@ class PostState {
     File imageSubmission,
     Data<PostData> post,
     String imageURL,
+    String message
   }) {
     final state = PostState(
       posts ?? this.posts,
@@ -32,6 +34,7 @@ class PostState {
       imageSubmission ?? this.imageSubmission,
       post ?? this.post,
       imageURL ?? this.imageURL,
+      message ?? this.message
     );
     return state;
   }
@@ -68,6 +71,7 @@ PostState deletePost(PostState state, DeletePostAction action) {
 
 PostState setSuccessMessage(PostState state, SubmitPostSuccessAction action) {
   return state.copyWith(
+    message: "Seu resumo foi criado com sucesso, e passará por um processo de aprovação antes de ser postado.",
     isCreatingPost: false,
   );
 }
@@ -85,7 +89,7 @@ PostState explorePostsRetrieved(
 
 PostState explorePosts(PostState state, FetchPostsAction action) {
   return state.copyWith(
-      posts: state.posts.copyWith(isLoading: true, errorMessage: ""));
+      posts: state.posts.copyWith(isLoading: true, errorMessage: "",));
 }
 
 PostState createPost(PostState state, SubmitTextPostAction action) {
@@ -96,6 +100,7 @@ PostState createPost(PostState state, SubmitTextPostAction action) {
     null,
     state.post,
     state.imageURL,
+    state.message
   );
 }
 
@@ -107,6 +112,7 @@ PostState createImagePost(PostState state, SubmitImagePostAction action) {
     null,
     state.post,
     state.imageURL,
+    state.message
   );
 }
 
@@ -117,7 +123,7 @@ PostState setImageForSubmission(PostState state, SetImageForSubmission action) {
 }
 
 PostState navigateCreatePost(PostState state, NavigateCreatePostAction action) {
-  return state.copyWith(isCreatingPost: false, createPostTextErrorMessage: "");
+  return state.copyWith(isCreatingPost: false, createPostTextErrorMessage: "", message: "");
 }
 
 PostState onCreatePostTextSizeMismatch(

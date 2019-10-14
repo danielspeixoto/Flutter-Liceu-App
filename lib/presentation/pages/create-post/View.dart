@@ -20,6 +20,13 @@ class CreatePostPage extends StatelessWidget {
           onInit: (store) => store.dispatch(PageInitAction("CreatePost")),
           converter: (store) => CreatePostViewModel.create(store),
           builder: (BuildContext context, CreatePostViewModel viewModel) {
+            if (viewModel.message != "") {
+              return LiceuDialog(
+                dialogContext: context,
+                message: viewModel.message,
+                sendButtonTitle: "OK",
+              );
+            }
             return LiceuPage(
               actions: <Widget>[
                 FlatButton(
@@ -28,18 +35,6 @@ class CreatePostPage extends StatelessWidget {
                       : () {
                           viewModel.onPostSubmitted(
                               inputController.text, viewModel.image);
-
-                          if (!viewModel.isLoading) {
-                            showDialog(
-                                context: context,
-                                builder: (dialogContext) {
-                                  return LiceuDialog(
-                                    dialogContext: dialogContext,
-                                    message: "Seu resumo foi criado com sucesso, e passará por um processo de aprovação antes de ser postado.",
-                                    sendButtonTitle: "OK",
-                                  );
-                                });
-                          }
                         },
                   child: new Icon(
                     FontAwesomeIcons.shareSquare,

@@ -26,6 +26,7 @@ class CreatePostViewModel {
     final isLoading = store.state.postState.isCreatingPost;
     final createPostTextErrorMessage =
         store.state.postState.createPostTextErrorMessage;
+    final message = store.state.postState.message;
 
     return CreatePostViewModel(
       onPostSubmitted: (text, file) async {
@@ -48,6 +49,7 @@ class CreatePostViewModel {
           }
         }
       },
+      message: message,
       isLoading: isLoading,
       createPostTextErrorMessage: createPostTextErrorMessage,
       onImageSet: (file) => store.dispatch(SetImageForSubmission(file)),
