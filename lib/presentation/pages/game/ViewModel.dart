@@ -52,7 +52,7 @@ class GameViewModel {
       onChallengeFriendPressed: () {
         store.dispatch(ChallengeMeAction());
         Share.share(
-            "Você é capaz de acertar mais questões?\nhttps://liceu.co?userId=${store.state.userState.user.content.id}");
+            "Você é capaz de acertar mais questões?\nhttp://liceu.co?userId=${store.state.userState.user.content.id}");
       },
     );
   }

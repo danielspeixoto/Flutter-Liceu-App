@@ -26,7 +26,7 @@ Future<Null> main() async {
     Zone.current.handleUncaughtError(details.exception, details.stack);
   };
 
-  await FlutterCrashlytics().initialize();
+  //await FlutterCrashlytics().initialize();
 
   runZoned<Future<Null>>(() async {
     runApp(new MyApp());
