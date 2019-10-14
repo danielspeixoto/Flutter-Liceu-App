@@ -73,7 +73,7 @@ class ProfileViewModel {
       onSharePostPressed: (postId, type, text) {
         store.dispatch(PostShareAction(postId, type));
         Share.share(summarize(text, 300) +
-            "\n\nConfira mais no nosso app!\nhttps://bit.ly/BaixarLiceu");
+            "\n\nVeja o post que ${store.state.userState.user.content.name} compartilhou com você!\nhttp://liceu.co?postId=$postId");
       },
       onInstagramPressed: () {
         final instagramProfile = userState.user.content.instagramProfile;
@@ -102,7 +102,7 @@ class ProfileViewModel {
       onShareProfilePressed: () {
         store.dispatch(UserProfileShareAction());
         Share.share(
-            "Você já viu o que eu estou fazendo no Liceu? \nhttps://liceu.co?userId=${store.state.userState.user.content.id}");
+            "Você já viu o que eu estou fazendo no Liceu? \nhttp://liceu.co?userId=${store.state.userState.user.content.id}");
       },
       onSeeMorePressed: (post, user) {
         final postData = new PostData(post.id, user, post.type, post.text, post.imageURL);

@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:app/presentation/state/actions/FriendActions.dart';
 import 'package:app/presentation/state/actions/NotificationActions.dart';
+import 'package:app/presentation/state/actions/PostActions.dart';
 import 'package:app/presentation/state/actions/UserActions.dart';
 import 'package:app/presentation/state/app_state.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -58,11 +59,19 @@ class ExternalConnections {
       print(initialLink);
       if (initialLink != null) {
         final userId = initialLink.queryParameters['userId'];
-        Future.delayed(Duration(seconds: 3), () {
-          store.dispatch(NavigateViewFriendAction());
-          store.dispatch(FetchFriendAction(userId));
-          store.dispatch(FetchFriendPostsAction(userId));
-        });
+        final postId = initialLink.queryParameters['postId'];
+
+        if (userId != null) {
+          Future.delayed(Duration(seconds: 3), () {
+            store.dispatch(NavigateViewFriendAction());
+            store.dispatch(FetchFriendAction(userId));
+            store.dispatch(FetchFriendPostsAction(userId));
+          });
+        } else if(postId != null) {
+          Future.delayed(Duration(seconds: 3), () {
+            store.dispatch(FetchPostAction(postId));
+          });
+        }
       }
     } on PlatformException {}
   }

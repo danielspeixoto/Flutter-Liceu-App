@@ -49,7 +49,7 @@ class FriendViewModel {
       onSharePostPressed: (postId, type, text) {
         store.dispatch(PostShareAction(postId, type));
         Share.share(summarize(text, 300) +
-            "\n\nConfira mais no nosso app!\nhttps://bit.ly/BaixarLiceu");
+            "\n\nVeja o post que ${store.state.userState.user.content.name} compartilhou com você!\nhttp://liceu.co?postId=$postId");
       },
       onChallengeMePressed: (String userId) {
         store.dispatch(ChallengeSomeoneAction(userId));
