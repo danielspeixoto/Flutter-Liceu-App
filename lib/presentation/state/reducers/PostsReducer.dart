@@ -1,7 +1,4 @@
 import 'dart:io';
-
-import 'package:app/domain/aggregates/Post.dart';
-import 'package:app/domain/aggregates/User.dart';
 import 'package:app/presentation/state/actions/PostActions.dart';
 import 'package:app/presentation/state/aggregates/PostData.dart';
 import 'package:redux/redux.dart';
@@ -26,7 +23,7 @@ class PostState {
     String createPostTextErrorMessage,
     File imageSubmission,
     Data<PostData> post,
-    String imageURL
+    String imageURL,
   }) {
     final state = PostState(
       posts ?? this.posts,
@@ -34,7 +31,7 @@ class PostState {
       createPostTextErrorMessage ?? this.createPostTextErrorMessage,
       imageSubmission ?? this.imageSubmission,
       post ?? this.post,
-      imageURL ?? this.imageURL
+      imageURL ?? this.imageURL,
     );
     return state;
   }
@@ -52,6 +49,7 @@ final Reducer<PostState> postReducer = combineReducers<PostState>([
       onCreatePostTextSizeMismatch),
   TypedReducer<PostState, SetCompletePostAction>(setPost),
   TypedReducer<PostState, SetPostImageAction>(setImage),
+  TypedReducer<PostState, SubmitPostSuccessAction>(setSuccessMessage)
 ]);
 
 PostState deletePost(PostState state, DeletePostAction action) {
@@ -65,6 +63,12 @@ PostState deletePost(PostState state, DeletePostAction action) {
     posts: state.posts.copyWith(
       content: posts,
     ),
+  );
+}
+
+PostState setSuccessMessage(PostState state, SubmitPostSuccessAction action) {
+  return state.copyWith(
+    isCreatingPost: false,
   );
 }
 
@@ -91,7 +95,7 @@ PostState createPost(PostState state, SubmitTextPostAction action) {
     "",
     null,
     state.post,
-    state.imageURL
+    state.imageURL,
   );
 }
 
@@ -102,7 +106,7 @@ PostState createImagePost(PostState state, SubmitImagePostAction action) {
     "",
     null,
     state.post,
-    state.imageURL
+    state.imageURL,
   );
 }
 

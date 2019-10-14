@@ -63,7 +63,7 @@ List<Middleware<AppState>> postMiddleware(
       NextDispatcher next) async {
     next(action);
     if (store.state.route.last == AppRoutes.createPost) {
-      store.dispatch(NavigatePopAction());
+      //store.dispatch(NavigatePopAction());
     }
   }
 

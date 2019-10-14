@@ -1,6 +1,7 @@
 import 'package:app/presentation/state/actions/PageActions.dart';
 import 'package:app/presentation/state/app_state.dart';
 import 'package:app/presentation/widgets/FetcherWidget.dart';
+import 'package:app/presentation/widgets/LiceuDialog.dart';
 import 'package:app/presentation/widgets/LiceuPage.dart';
 import 'package:app/presentation/widgets/TextFieldHighlight.dart';
 import 'package:flutter/material.dart';
@@ -27,6 +28,18 @@ class CreatePostPage extends StatelessWidget {
                       : () {
                           viewModel.onPostSubmitted(
                               inputController.text, viewModel.image);
+
+                          if (!viewModel.isLoading) {
+                            showDialog(
+                                context: context,
+                                builder: (dialogContext) {
+                                  return LiceuDialog(
+                                    dialogContext: dialogContext,
+                                    message: "Seu resumo foi criado com sucesso, e passará por um processo de aprovação antes de ser postado.",
+                                    sendButtonTitle: "OK",
+                                  );
+                                });
+                          }
                         },
                   child: new Icon(
                     FontAwesomeIcons.shareSquare,
@@ -60,7 +73,6 @@ class CreatePostPage extends StatelessWidget {
                           capitalization: TextCapitalization.sentences,
                         ),
                       ),
-                      
                       Container(
                         child: Text(
                           viewModel.createPostTextErrorMessage,

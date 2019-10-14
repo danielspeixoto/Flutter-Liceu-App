@@ -11,6 +11,7 @@ class CreatePostViewModel {
   final File image;
   final bool isLoading;
   final String createPostTextErrorMessage;
+  final String message;
 
   CreatePostViewModel({
     this.image,
@@ -18,6 +19,7 @@ class CreatePostViewModel {
     this.isLoading,
     this.createPostTextErrorMessage,
     this.onImageSet,
+    this.message
   });
 
   factory CreatePostViewModel.create(Store<AppState> store) {
