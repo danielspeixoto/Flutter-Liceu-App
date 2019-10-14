@@ -76,6 +76,13 @@ PostState setSuccessMessage(PostState state, SubmitPostSuccessAction action) {
   );
 }
 
+PostState setErrorMessage(PostState state, SubmitPostErrorAction action) {
+  return state.copyWith(
+    message: "Algum erro ocorreu ao criar o resumo.",
+    isCreatingPost: false,
+  );
+}
+
 PostState setPost(PostState state, SetCompletePostAction action) {
   return state.copyWith(
     post: Data(content: action.post, isLoading: false),
