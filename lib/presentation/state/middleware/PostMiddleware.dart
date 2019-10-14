@@ -41,6 +41,7 @@ List<Middleware<AppState>> postMiddleware(
       final actionName = action.toString().substring(11);
       store.dispatch(OnCatchDefaultErrorAction(
           error.toString(), stackTrace, actionName, action.itemToJson()));
+      store.dispatch(SubmitPostErrorAction());
     }
   }
 
@@ -63,7 +64,7 @@ List<Middleware<AppState>> postMiddleware(
       NextDispatcher next) async {
     next(action);
     if (store.state.route.last == AppRoutes.createPost) {
-      store.dispatch(NavigatePopAction());
+      //store.dispatch(NavigatePopAction());
     }
   }
 

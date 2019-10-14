@@ -1,7 +1,4 @@
 import 'dart:io';
-
-import 'package:app/domain/aggregates/Post.dart';
-import 'package:app/domain/aggregates/User.dart';
 import 'package:app/presentation/state/actions/PostActions.dart';
 import 'package:app/presentation/state/aggregates/PostData.dart';
 import 'package:redux/redux.dart';
@@ -15,10 +12,11 @@ class PostState {
   final String createPostTextErrorMessage;
   final Data<PostData> post;
   final String imageURL;
+  final String message;
   PostState(this.posts, this.isCreatingPost, this.createPostTextErrorMessage,
-      this.imageSubmission, this.post, this.imageURL);
+      this.imageSubmission, this.post, this.imageURL, this.message);
 
-  factory PostState.initial() => PostState(Data(), true, "", null, Data(), null);
+  factory PostState.initial() => PostState(Data(), true, "", null, Data(), null, null);
 
   PostState copyWith({
     Data<List<PostData>> posts,
@@ -26,7 +24,8 @@ class PostState {
     String createPostTextErrorMessage,
     File imageSubmission,
     Data<PostData> post,
-    String imageURL
+    String imageURL,
+    String message
   }) {
     final state = PostState(
       posts ?? this.posts,
@@ -34,7 +33,8 @@ class PostState {
       createPostTextErrorMessage ?? this.createPostTextErrorMessage,
       imageSubmission ?? this.imageSubmission,
       post ?? this.post,
-      imageURL ?? this.imageURL
+      imageURL ?? this.imageURL,
+      message ?? this.message
     );
     return state;
   }
@@ -52,6 +52,7 @@ final Reducer<PostState> postReducer = combineReducers<PostState>([
       onCreatePostTextSizeMismatch),
   TypedReducer<PostState, SetCompletePostAction>(setPost),
   TypedReducer<PostState, SetPostImageAction>(setImage),
+  TypedReducer<PostState, SubmitPostSuccessAction>(setSuccessMessage)
 ]);
 
 PostState deletePost(PostState state, DeletePostAction action) {
@@ -68,6 +69,20 @@ PostState deletePost(PostState state, DeletePostAction action) {
   );
 }
 
+PostState setSuccessMessage(PostState state, SubmitPostSuccessAction action) {
+  return state.copyWith(
+    message: "Seu resumo foi criado com sucesso, e passará por um processo de aprovação antes de ser postado.",
+    isCreatingPost: false,
+  );
+}
+
+PostState setErrorMessage(PostState state, SubmitPostErrorAction action) {
+  return state.copyWith(
+    message: "Algum erro ocorreu ao criar o resumo.",
+    isCreatingPost: false,
+  );
+}
+
 PostState setPost(PostState state, SetCompletePostAction action) {
   return state.copyWith(
     post: Data(content: action.post, isLoading: false),
@@ -81,7 +96,7 @@ PostState explorePostsRetrieved(
 
 PostState explorePosts(PostState state, FetchPostsAction action) {
   return state.copyWith(
-      posts: state.posts.copyWith(isLoading: true, errorMessage: ""));
+      posts: state.posts.copyWith(isLoading: true, errorMessage: "",));
 }
 
 PostState createPost(PostState state, SubmitTextPostAction action) {
@@ -91,7 +106,8 @@ PostState createPost(PostState state, SubmitTextPostAction action) {
     "",
     null,
     state.post,
-    state.imageURL
+    state.imageURL,
+    state.message
   );
 }
 
@@ -102,7 +118,8 @@ PostState createImagePost(PostState state, SubmitImagePostAction action) {
     "",
     null,
     state.post,
-    state.imageURL
+    state.imageURL,
+    state.message
   );
 }
 
@@ -113,7 +130,7 @@ PostState setImageForSubmission(PostState state, SetImageForSubmission action) {
 }
 
 PostState navigateCreatePost(PostState state, NavigateCreatePostAction action) {
-  return state.copyWith(isCreatingPost: false, createPostTextErrorMessage: "");
+  return state.copyWith(isCreatingPost: false, createPostTextErrorMessage: "", message: "");
 }
 
 PostState onCreatePostTextSizeMismatch(

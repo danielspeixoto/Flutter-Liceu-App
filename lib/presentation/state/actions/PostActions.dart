@@ -83,6 +83,8 @@ class SubmitPostSuccessAction {}
 
 class SubmitPostErrorTextSizeMismatchAction {}
 
+class SubmitPostErrorAction {}
+
 //Deletes
 class DeletePostAction extends ItemAction {
   final String postId;

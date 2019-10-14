@@ -1,6 +1,7 @@
 import 'package:app/presentation/state/actions/PageActions.dart';
 import 'package:app/presentation/state/app_state.dart';
 import 'package:app/presentation/widgets/FetcherWidget.dart';
+import 'package:app/presentation/widgets/LiceuDialog.dart';
 import 'package:app/presentation/widgets/LiceuPage.dart';
 import 'package:app/presentation/widgets/TextFieldHighlight.dart';
 import 'package:flutter/material.dart';
@@ -19,6 +20,13 @@ class CreatePostPage extends StatelessWidget {
           onInit: (store) => store.dispatch(PageInitAction("CreatePost")),
           converter: (store) => CreatePostViewModel.create(store),
           builder: (BuildContext context, CreatePostViewModel viewModel) {
+            if (viewModel.message != "") {
+              return LiceuDialog(
+                dialogContext: context,
+                message: viewModel.message,
+                sendButtonTitle: "OK",
+              );
+            }
             return LiceuPage(
               actions: <Widget>[
                 FlatButton(
@@ -60,7 +68,6 @@ class CreatePostPage extends StatelessWidget {
                           capitalization: TextCapitalization.sentences,
                         ),
                       ),
-                      
                       Container(
                         child: Text(
                           viewModel.createPostTextErrorMessage,

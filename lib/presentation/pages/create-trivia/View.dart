@@ -63,7 +63,7 @@ class CreateTriviaPage extends StatelessWidget {
                                                 ),
                                               ),
                                               hintText:
-                                                  "Em qual bioma se passa o Rei Leão?",
+                                                  "Ex: Em qual bioma se passa o Rei Leão?",
                                             ),
                                             maxLines: 3,
                                             keyboardType:
@@ -124,7 +124,7 @@ class CreateTriviaPage extends StatelessWidget {
                                                 width: 0.1,
                                               ),
                                             ),
-                                            hintText: "Savana",
+                                            hintText: "Ex: Savana",
                                           ),
                                           keyboardType: TextInputType.multiline,
                                           capitalization:
@@ -182,7 +182,7 @@ class CreateTriviaPage extends StatelessWidget {
                                                 width: 0.1,
                                               ),
                                             ),
-                                            hintText: "Caatinga",
+                                            hintText: "Ex: Caatinga",
                                           ),
                                           keyboardType: TextInputType.multiline,
                                           capitalization:
