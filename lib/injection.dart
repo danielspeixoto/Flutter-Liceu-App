@@ -56,7 +56,7 @@ class Feature {
 
 class Information {
 
-  static get appName async {
+  static Future<String> get appName async {
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
 
      return packageInfo.appName;
