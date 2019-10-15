@@ -54,10 +54,7 @@ dependencies:
   path_provider: ^0.5.0
   uni_links: ^0.2.0
   image_picker: ^0.6.1+4
-  cached_network_image:
-    git:
-      url: git://github.com/rmarau/flutter_cached_network_image.git
-      ref: fix-getFile_multiplecalls
+  cached_network_image: ^1.1.1
   photo_view: ^0.5.0
   masked_text: ^0.0.6
   autocomplete_textfield: ^1.7.3

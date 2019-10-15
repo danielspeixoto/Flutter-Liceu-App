@@ -72,7 +72,7 @@ List<Middleware<AppState>> postMiddleware(
       NextDispatcher next) async {
     next(action);
     try {
-      final posts = await explorePostUseCase.run(5);
+      final posts = await explorePostUseCase.run(50);
       final futures = posts.map((post) async {
         final author = await getUserByIdUseCase.run(post.userId);
         return PostData(
@@ -138,6 +138,7 @@ List<Middleware<AppState>> postMiddleware(
     TypedMiddleware<AppState, FetchPostsAction>(explorePosts),
     TypedMiddleware<AppState, NavigatePostAction>(navigatePost),
     TypedMiddleware<AppState, FetchPostAction>(fetchPostById),
-    TypedMiddleware<AppState, NavigatePostImageZoomAction>(navigatePostImageZoom)
+    TypedMiddleware<AppState, NavigatePostImageZoomAction>(
+        navigatePostImageZoom)
   ];
 }
