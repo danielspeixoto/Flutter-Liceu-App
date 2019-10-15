@@ -135,22 +135,26 @@ class PostWidget extends StatelessWidget {
               seeMore != null ? seeMore : Container(),
               imageURL == null
                   ? Container()
-                  : FlatButton(
-                      padding: EdgeInsets.all(0),
-                      onPressed: () {
-                        this.onImageZoomPressed();
-                      },
-                      child: CachedNetworkImage(
-                        width: double.infinity,
-                        height:
-                            (MediaQuery.of(context).size.width - 8) * (9 / 16),
-                        fit: BoxFit.fitWidth,
-                        alignment: Alignment.topCenter,
-                        imageUrl: imageURL,
-                        placeholder: (ctx, x) =>
-                            new CircularProgressIndicator(),
+                  : SizedBox(
+                      width: double.infinity,
+                      height: (MediaQuery.of(context).size.width - 8),
+                      child: FlatButton(
+                        padding: EdgeInsets.all(0),
+                        onPressed: () {
+                          this.onImageZoomPressed();
+                        },
+                        child: CachedNetworkImage(
+                          width: double.infinity,
+                          height: (MediaQuery.of(context).size.width - 8),
+                          fit: BoxFit.fitWidth,
+                          alignment: Alignment.center,
+                          imageUrl: imageURL,
+                          placeholder: (ctx, x) => Image(
+                            image: AssetImage("assets/pencil.gif"),
+                          ),
+                        ),
                       ),
-                    ),
+                    )
             ],
           ),
         ),
