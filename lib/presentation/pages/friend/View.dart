@@ -156,8 +156,6 @@ class FriendPage extends StatelessWidget {
                               post.text,
                             );
                           },
-                          onDeletePressed: () =>
-                              viewModel.onDeletePostPressed(post.id),
                           imageURL: post.imageURL,
                           seeMore: post.text.length > 600
                               ? FlatButton(
