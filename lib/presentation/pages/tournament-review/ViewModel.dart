@@ -1,3 +1,4 @@
+import 'package:app/injection.dart';
 import 'package:app/presentation/state/actions/ENEMActions.dart';
 import 'package:app/presentation/state/actions/ReportActions.dart';
 import 'package:app/presentation/state/aggregates/ENEMQuestionData.dart';
@@ -31,11 +32,14 @@ class TournamentReviewViewModel {
         onFeedbackTextChanged: (text) {
           store.dispatch(SetTournamentReportFieldAction(text));
         },
-        onReportButtonPressed: (String questionId, int correctAnswer, String page) {
+        onReportButtonPressed: (String questionId, int correctAnswer, String page) async{
+          final String version = await Information.version;
+
           Map<String, dynamic> params = {
             "questionId": questionId,
             "correctAnswer": correctAnswer,
-            "page": page
+            "page": page,
+            "version": version
           };
 
           List<String> tags = [

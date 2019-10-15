@@ -41,6 +41,7 @@ import 'domain/usecase/user/MyId.dart';
 import 'domain/usecase/user/MyPostsUseCase.dart';
 import 'domain/usecase/user/SetUserDescriptionUseCase.dart';
 import 'domain/usecase/user/SetUserInstagramUseCase.dart';
+import 'package:package_info/package_info.dart';
 
 class Feature {
   static bool get isDev {
@@ -50,6 +51,16 @@ class Feature {
 
     return isDev;
   }
+}
+
+class Information {
+
+  static Future<String> get version async {
+    PackageInfo packageInfo = await PackageInfo.fromPlatform();
+
+     return packageInfo.version;
+  }
+
 }
 
 final baseURL = Feature.isDev

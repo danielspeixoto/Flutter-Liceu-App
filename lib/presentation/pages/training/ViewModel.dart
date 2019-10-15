@@ -1,3 +1,4 @@
+import 'package:app/injection.dart';
 import 'package:app/presentation/state/actions/ENEMActions.dart';
 import 'package:app/presentation/state/actions/ReportActions.dart';
 import 'package:app/presentation/state/aggregates/ENEMQuestionData.dart';
@@ -34,12 +35,13 @@ class TrainingViewModel {
         onFeedbackTextChanged: (text) {
           store.dispatch(SetTrainingReportFieldAction(text));
         },
-        onReportButtonPressed: (String questionId, int correctAnswer, String page) {
-
+        onReportButtonPressed: (String questionId, int correctAnswer, String page) async{
+          final String version = await Information.version;
           Map<String, dynamic> params = {
             "questionId": questionId,
             "correctAnswer": correctAnswer,
-            "page": page
+            "page": page,
+            "version": version
           };
 
           List<String> tags = ["generated", "enem", "question", "incorrect", "answer"];

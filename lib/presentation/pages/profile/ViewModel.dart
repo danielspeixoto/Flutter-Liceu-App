@@ -1,5 +1,6 @@
 import 'package:app/domain/aggregates/Post.dart';
 import 'package:app/domain/aggregates/User.dart';
+import 'package:app/injection.dart';
 import 'package:app/presentation/state/actions/LiceuActions.dart';
 import 'package:app/presentation/state/actions/LoginActions.dart';
 import 'package:app/presentation/state/actions/PostActions.dart';
@@ -87,17 +88,20 @@ class ProfileViewModel {
       onFeedbackTextChanged: (String text) {
         store.dispatch(SetUserReportFieldAction(text));
       },
-      onSendReportButtonPressed: (page) {
+      onSendReportButtonPressed: (page) async {
+        final String version = await Information.version;
+
         Map<String, dynamic> params = {
           "userId": userState.user.content.id,
           "userName": userState.user.content.name,
-          "page": page
+          "page": page,
+          "version": version
         };
 
         List<String> tags = ["created", "feedback"];
 
         store.dispatch(
-            SubmitReportAction(userState.reportFeedback, tags, params));
+            SubmitReportAction(store.state.userState.reportFeedback, tags, params));
       },
       onShareProfilePressed: () {
         store.dispatch(UserProfileShareAction());
