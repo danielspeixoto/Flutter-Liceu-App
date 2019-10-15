@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:app/data/ReportRepository.dart';
 import 'package:app/data/TriviaRepository.dart';
 import 'package:app/domain/usecase/challenge/GetChallengeUseCase.dart';
@@ -41,6 +43,7 @@ import 'domain/usecase/user/MyId.dart';
 import 'domain/usecase/user/MyPostsUseCase.dart';
 import 'domain/usecase/user/SetUserDescriptionUseCase.dart';
 import 'domain/usecase/user/SetUserInstagramUseCase.dart';
+import 'package:device_info/device_info.dart';
 import 'package:package_info/package_info.dart';
 
 class Feature {
@@ -54,12 +57,58 @@ class Feature {
 }
 
 class Information {
+  
 
-  static Future<String> get version async {
+  static Future<String> get phoneModel async {
+    final DeviceInfoPlugin deviceInfo =  DeviceInfoPlugin();
+
+    String model;
+    if (Platform.isAndroid) {
+      AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
+      model = androidInfo.model;
+    } else if (Platform.isIOS) {
+      IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
+      model = iosInfo.utsname.machine;
+    }
+
+    return model;
+  }
+
+  static Future<String> get appVersion async {
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
 
      return packageInfo.version;
   }
+
+  static Future<String> get brand async {
+    final DeviceInfoPlugin deviceInfo =  DeviceInfoPlugin();
+
+    String brand;
+    if (Platform.isAndroid) {
+      AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
+      brand = androidInfo.brand;
+    } else if (Platform.isIOS) {
+      brand = "Apple";
+    }
+
+    return brand;
+  }
+
+  static Future<String> get osRelease async {
+    final DeviceInfoPlugin deviceInfo =  DeviceInfoPlugin();
+
+    String release;
+    if (Platform.isAndroid) {
+      AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
+      release = androidInfo.version.release;
+    } else if (Platform.isIOS) {
+       IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
+      release = iosInfo.utsname.release;
+    }
+
+    return release;
+  }
+
 
 }
 

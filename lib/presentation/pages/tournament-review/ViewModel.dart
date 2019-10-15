@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:app/injection.dart';
 import 'package:app/presentation/state/actions/ENEMActions.dart';
 import 'package:app/presentation/state/actions/ReportActions.dart';
@@ -10,7 +12,8 @@ class TournamentReviewViewModel {
   final Data<List<ENEMQuestionData>> questions;
   final int timeSpent;
   final int score;
-  final Function(String questionId, int correctAnswer, String page) onReportButtonPressed;
+  final Function(String questionId, int correctAnswer, String page, String width, String height)
+      onReportButtonPressed;
   final String reportFeedback;
   final Function(String text) onFeedbackTextChanged;
 
@@ -32,14 +35,30 @@ class TournamentReviewViewModel {
         onFeedbackTextChanged: (text) {
           store.dispatch(SetTournamentReportFieldAction(text));
         },
-        onReportButtonPressed: (String questionId, int correctAnswer, String page) async{
-          final String version = await Information.version;
+        onReportButtonPressed:
+            (String questionId, int correctAnswer, String page, String width, String height) async {
+          final String version = await Information.appVersion;
+          final String phoneModel = await Information.phoneModel;
+          final String brand = await Information.brand;
+          final String release = await Information.osRelease;
+          String os;
+
+          if (Platform.isAndroid) {
+            os = "Android";
+          } else if (Platform.isIOS) {
+            os = "iOS";
+          }
 
           Map<String, dynamic> params = {
             "questionId": questionId,
             "correctAnswer": correctAnswer,
             "page": page,
-            "version": version
+            "appVersion": version,
+            "platform": os,
+            "brand": brand,
+            "model": phoneModel,
+            "osRelease": release,
+            "screenSize": width + " x " + height
           };
 
           List<String> tags = [
