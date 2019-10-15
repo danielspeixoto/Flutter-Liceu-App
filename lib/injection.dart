@@ -56,17 +56,21 @@ class Feature {
 }
 
 class Information {
+  
+
   static Future<String> get phoneModel async {
-    DeviceInfoPlugin deviceInfo = new DeviceInfoPlugin();
+    final DeviceInfoPlugin deviceInfo =  DeviceInfoPlugin();
+
+    String model;
     if (Platform.isAndroid) {
       AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
-      print(androidInfo);
+      model = androidInfo.model;
     } else if (Platform.isIOS) {
       IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
-      print(iosInfo);
+      model = iosInfo.utsname.machine;
     }
 
-    return "test";
+    return model;
   }
 }
 

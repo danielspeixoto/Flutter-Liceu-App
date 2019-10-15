@@ -95,7 +95,7 @@ class ProfileViewModel {
           "userId": userState.user.content.id,
           "userName": userState.user.content.name,
           "page": page,
-          "phone": phoneModel
+          "phoneModel": phoneModel
         };
 
         List<String> tags = ["created", "feedback"];
