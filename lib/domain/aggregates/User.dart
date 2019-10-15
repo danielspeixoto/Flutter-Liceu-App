@@ -6,6 +6,8 @@ class User {
   final String instagramProfile;
   final String telephoneNumber;
   final String desiredCourse;
+  final bool isFounder;
 
-  User(this.id, this.name, this.picURL, this.bio, this.instagramProfile, this.telephoneNumber, this.desiredCourse);
+  User(this.id, this.name, this.picURL, this.bio, this.instagramProfile,
+      this.telephoneNumber, this.desiredCourse, this.isFounder);
 }
