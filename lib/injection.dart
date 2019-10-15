@@ -17,7 +17,7 @@ import 'package:app/domain/usecase/user/SetUserSchoolUseCase.dart';
 import 'package:app/domain/usecase/user/SubmitFcmTokenUseCase.dart';
 import 'package:device_info/device_info.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:http/http.dart' as http;
+import 'package:http/http.dart';
 import 'package:package_info/package_info.dart';
 
 import 'data/ChallengeRepository.dart';
@@ -189,22 +189,27 @@ class Dependencies {
     if (obj != null) {
       return obj;
     }
-    final client = new http.Client();
+    final client = new Client();
     final baseURL = DotEnv().env['URL'];
     final apiKey = DotEnv().env['API_KEY'];
     // Repositories
-    final loginRepository = LoginRepository(baseURL + "/login", apiKey);
-    final userRepository = UserRepository(baseURL + "/user", apiKey);
-    final postRepository = PostRepository(baseURL + "/post", apiKey);
+    final loginRepository = LoginRepository(baseURL + "/login", apiKey, client);
+    final userRepository = UserRepository(baseURL + "/user", apiKey, client);
+    final postRepository = PostRepository(baseURL + "/post", apiKey, client);
     final questionRepository =
-        ENEMQuestionRepository(baseURL + "/question", apiKey);
-    final gameRepository = ENEMGameRepository(baseURL + "/game", apiKey);
-    final exploreRepository = ExploreRepository(baseURL + "/explore", apiKey);
-    final rankingRepository = RankingRepository(baseURL + "/ranking", apiKey);
+        ENEMQuestionRepository(baseURL + "/question", apiKey, client);
+    final gameRepository =
+        ENEMGameRepository(baseURL + "/game", apiKey, client);
+    final exploreRepository =
+        ExploreRepository(baseURL + "/explore", apiKey, client);
+    final rankingRepository =
+        RankingRepository(baseURL + "/ranking", apiKey, client);
     final challengeRepository =
-        ChallengeRepository(baseURL + "/challenge", apiKey);
-    final triviaRepository = TriviaRepository(baseURL + "/trivia", apiKey);
-    final reportRepository = ReportRepository(baseURL + "/report", apiKey);
+        ChallengeRepository(baseURL + "/challenge", apiKey, client);
+    final triviaRepository =
+        TriviaRepository(baseURL + "/trivia", apiKey, client);
+    final reportRepository =
+        ReportRepository(baseURL + "/report", apiKey, client);
     final localRepository = LocalRepository();
 
     // Use Cases

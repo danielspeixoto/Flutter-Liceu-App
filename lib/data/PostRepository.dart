@@ -4,7 +4,7 @@ import 'package:app/data/Converter.dart';
 import 'package:app/data/util/ExceptionHandler.dart';
 import 'package:app/domain/aggregates/Post.dart';
 import 'package:app/domain/boundary/PostBoundary.dart';
-import 'package:http/http.dart' as http;
+import 'package:http/http.dart';
 
 import 'constants.dart';
 
@@ -12,11 +12,11 @@ class PostRepository implements IPostRepository {
   final String _apiKey;
   final String _url;
 
-  PostRepository(this._url, this._apiKey);
+  PostRepository(this._url, this._apiKey, this._client);
+  final Client _client;
 
   Future<Post> id(String accessToken, String postId) async {
-
-    final response = await http.get("$_url/$postId", headers: {
+    final response = await this._client.get("$_url/$postId", headers: {
       apiKeyHeader: _apiKey,
       contentTypeHeader: contentTypeValueForJson,
       authHeader: accessToken
@@ -29,17 +29,17 @@ class PostRepository implements IPostRepository {
 
   @override
   Future<void> createTextPost(String accessToken, String text) async {
-    final response = await http.post(
-      _url + "/",
-      headers: {
-        apiKeyHeader: _apiKey,
-        contentTypeHeader: contentTypeValueForJson,
-        authHeader: accessToken
-      },
-      body: json.encode(
-        {"type": "text", "description": text},
-      ),
-    );
+    final response = await this._client.post(
+          _url + "/",
+          headers: {
+            apiKeyHeader: _apiKey,
+            contentTypeHeader: contentTypeValueForJson,
+            authHeader: accessToken
+          },
+          body: json.encode(
+            {"type": "text", "description": text},
+          ),
+        );
     if (response.statusCode == 200) {
       return;
     }
@@ -49,22 +49,22 @@ class PostRepository implements IPostRepository {
   @override
   Future<void> createImagePost(String accessToken, String imageData,
       String imageTitle, String text) async {
-    final response = await http.post(
-      _url + "/",
-      headers: {
-        apiKeyHeader: _apiKey,
-        contentTypeHeader: contentTypeValueForJson,
-        authHeader: accessToken
-      },
-      body: json.encode(
-        {
-          "type": "image",
-          "description": text,
-          "imageTitle": imageTitle,
-          "imageData": imageData,
-        },
-      ),
-    );
+    final response = await this._client.post(
+          _url + "/",
+          headers: {
+            apiKeyHeader: _apiKey,
+            contentTypeHeader: contentTypeValueForJson,
+            authHeader: accessToken
+          },
+          body: json.encode(
+            {
+              "type": "image",
+              "description": text,
+              "imageTitle": imageTitle,
+              "imageData": imageData,
+            },
+          ),
+        );
     if (response.statusCode == 200) {
       return;
     }
@@ -73,7 +73,7 @@ class PostRepository implements IPostRepository {
 
   @override
   Future<void> delete(String accessToken, String postId) async {
-    final response = await http.delete(
+    final response = await this._client.delete(
       _url + "/" + postId,
       headers: {
         apiKeyHeader: _apiKey,

@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:app/data/util/ExceptionHandler.dart';
 import 'package:app/domain/aggregates/Trivia.dart';
 import 'package:app/domain/boundary/TriviaBoundary.dart';
-import 'package:http/http.dart' as http;
+import 'package:http/http.dart';
 
 import 'constants.dart';
 
@@ -11,12 +11,13 @@ class TriviaRepository implements ITriviaRepository {
   final String _apiKey;
   final String _url;
 
-  TriviaRepository(this._url, this._apiKey);
+  TriviaRepository(this._url, this._apiKey, this._client);
+  final Client _client;
 
   @override
   Future<void> create(String accessToken, String question, String correctAnswer,
       String wrongAnswer, List<TriviaDomain> tags) async {
-    final response = await http.post(_url + "/",
+    final response = await this._client.post(_url + "/",
         headers: {
           apiKeyHeader: _apiKey,
           contentTypeHeader: contentTypeValueForJson,
