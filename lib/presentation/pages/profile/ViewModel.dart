@@ -90,18 +90,20 @@ class ProfileViewModel {
       },
       onSendReportButtonPressed: (page) async {
         final phoneModel = await Information.phoneModel;
+        final String version = await Information.version;
 
         Map<String, dynamic> params = {
           "userId": userState.user.content.id,
           "userName": userState.user.content.name,
           "page": page,
-          "phoneModel": phoneModel
+          "phoneModel": phoneModel,
+          "version": version
         };
 
         List<String> tags = ["created", "feedback"];
 
         store.dispatch(
-            SubmitReportAction(userState.reportFeedback, tags, params));
+            SubmitReportAction(store.state.userState.reportFeedback, tags, params));
       },
       onShareProfilePressed: () {
         store.dispatch(UserProfileShareAction());

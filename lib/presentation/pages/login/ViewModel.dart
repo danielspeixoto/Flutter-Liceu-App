@@ -1,3 +1,4 @@
+import 'package:app/injection.dart';
 import 'package:app/presentation/state/actions/LoginActions.dart';
 import 'package:app/presentation/state/actions/ReportActions.dart';
 import 'package:app/presentation/state/app_state.dart';
@@ -32,9 +33,11 @@ class LoginViewModel {
         onMessageTextChanged: (String message) {
           store.dispatch(SetLoginReportFieldAction(message));
         },
-        onSendMessageButtonPressed: (page) {
+        onSendMessageButtonPressed: (page) async {
+          final String version = await Information.version;
           Map<String, dynamic> params = {
-            "page": page
+            "page": page,
+            "version": version
           };
 
           List<String> tags = ["created", "message", "login"];
