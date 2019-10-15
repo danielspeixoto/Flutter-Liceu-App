@@ -1,6 +1,5 @@
 import 'package:app/data/ReportRepository.dart';
 import 'package:app/data/TriviaRepository.dart';
-import 'package:app/domain/boundary/UserBoundary.dart';
 import 'package:app/domain/usecase/challenge/GetChallengeUseCase.dart';
 import 'package:app/domain/usecase/post/GetPostByIdUseCase.dart';
 import 'package:app/domain/usecase/report/SubmitReportUseCase.dart';

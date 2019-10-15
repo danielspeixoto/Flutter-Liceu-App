@@ -23,7 +23,7 @@ class ChallengePage extends StatelessWidget {
           builder: (BuildContext context, ChallengeViewModel viewModel) {
             return LiceuPage(
               title: "Liceu",
-              body: FetcherWidget(
+              body: FetcherWidget.build(
                 isLoading: viewModel.isLoading,
                 child: () {
                   return Column(

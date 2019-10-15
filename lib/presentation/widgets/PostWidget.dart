@@ -1,4 +1,5 @@
 import 'package:app/domain/aggregates/User.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -68,6 +69,15 @@ class PostWidget extends StatelessWidget {
                           style: TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 12),
                         ),
+                        user.isFounder
+                            ? Container(
+                                padding: EdgeInsets.all(4),
+                                child: Image(
+                                  image: AssetImage("assets/founder.png"),
+                                  width: 12,
+                                ),
+                              )
+                            : Container(),
                       ],
                     ),
                   ),
@@ -126,13 +136,19 @@ class PostWidget extends StatelessWidget {
               imageURL == null
                   ? Container()
                   : FlatButton(
+                      padding: EdgeInsets.all(0),
                       onPressed: () {
                         this.onImageZoomPressed();
                       },
-                      child: FadeInImage.assetNetwork(
-                        image: imageURL,
-                        placeholder: "assets/loading.gif",
-                        repeat: ImageRepeat.repeat,
+                      child: CachedNetworkImage(
+                        width: double.infinity,
+                        height:
+                            (MediaQuery.of(context).size.width - 8) * (9 / 16),
+                        fit: BoxFit.fitWidth,
+                        alignment: Alignment.topCenter,
+                        imageUrl: imageURL,
+                        placeholder: (ctx, x) =>
+                            new CircularProgressIndicator(),
                       ),
                     ),
             ],

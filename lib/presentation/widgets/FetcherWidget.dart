@@ -6,15 +6,8 @@ class TabData {
   TabData(this.icon);
 }
 
-class FetcherWidget extends StatelessWidget {
-  final bool isLoading;
-  final String errorMessage;
-  final Widget Function() child;
-
-  FetcherWidget({this.isLoading, this.errorMessage="", this.child});
-
-  @override
-  Widget build(BuildContext context) {
+class FetcherWidget {
+  static Widget build({isLoading, errorMessage = "", child}) {
     return isLoading
         ? Container(
             child: Center(
@@ -29,6 +22,6 @@ class FetcherWidget extends StatelessWidget {
                 ),
                 margin: EdgeInsets.all(16),
               )
-            : this.child();
+            : child();
   }
 }

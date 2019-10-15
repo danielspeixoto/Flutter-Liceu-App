@@ -102,15 +102,15 @@ List<Middleware<AppState>> userMiddleware(
     try {
       await setUserDescriptionUseCase.run(action.bio);
       await setUserInstagramUseCase.run(action.instagram);
-      await setUserDesiredCourseUseCase.run(action.desiredCourse);
-      await setUserPhoneUseCase.run(action.phone);
+      if (action.desiredCourse != "") {
+        await setUserDesiredCourseUseCase.run(action.desiredCourse);
+      }
+      if (action.phone != "") {
+        await setUserPhoneUseCase.run(action.phone);
+      }
       store.dispatch(
         SubmitUserProfileChangesSuccessAction(
-          action.bio,
-          action.instagram,
-          action.desiredCourse,
-          action.phone
-        ),
+            action.bio, action.instagram, action.desiredCourse, action.phone),
       );
     } catch (error, stackTrace) {
       final actionName = action.toString().substring(11);
@@ -142,7 +142,7 @@ List<Middleware<AppState>> userMiddleware(
     next(action);
     try {
       final id = await _myIdUseCase.run();
-      print("FCMTOKEN: "+action.fcmtoken);
+      print("FCMTOKEN: " + action.fcmtoken);
       await _submitFcmTokenUseCase.run(action.fcmtoken, id);
     } catch (error, stackTrace) {
       final actionName = action.toString().substring(11);

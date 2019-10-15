@@ -64,7 +64,7 @@ class TournamentReviewPage extends StatelessWidget {
                       ],
                     ),
                   ),
-                  FetcherWidget(
+                  FetcherWidget.build(
                     isLoading: viewModel.questions.isLoading,
                     errorMessage: viewModel.questions.errorMessage,
                     child: () => Container(
@@ -143,11 +143,7 @@ class TournamentReviewPage extends StatelessWidget {
                                                                               ),
                                                                               onTap: () {
                                                                                 Navigator.of(context).pop();
-                                                                                viewModel.onReportButtonPressed(
-                                                                                  question.id,
-                                                                                  question.answer,
-                                                                                  runtimeType.toString()
-                                                                                );
+                                                                                viewModel.onReportButtonPressed(question.id, question.answer, runtimeType.toString());
                                                                               },
                                                                             ),
                                                                           ],
