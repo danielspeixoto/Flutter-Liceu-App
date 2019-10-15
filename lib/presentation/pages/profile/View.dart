@@ -145,15 +145,32 @@ class ProfilePage extends StatelessWidget {
                                     Expanded(
                                       child: Column(
                                         children: <Widget>[
-                                          Container(
-                                            child: Text(
-                                              user.name,
-                                              style: TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 16,
+                                          Row(
+                                            children: [
+                                              Container(
+                                                child: Text(
+                                                  user.name,
+                                                  style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 16,
+                                                  ),
+                                                ),
+                                                margin: EdgeInsets.all(8),
                                               ),
-                                            ),
-                                            margin: EdgeInsets.all(8),
+                                              user.isFounder
+                                                  ? Container(
+                                                      padding:
+                                                          EdgeInsets.all(4),
+                                                      child: Image(
+                                                        image: AssetImage(
+                                                            "assets/founder.png"),
+                                                        width: 16,
+                                                      ),
+                                                    )
+                                                  : Container(),
+                                            ],
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
                                           ),
                                           FlatButton(
                                             onPressed: viewModel

@@ -69,6 +69,15 @@ class PostWidget extends StatelessWidget {
                           style: TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 12),
                         ),
+                        user.isFounder
+                            ? Container(
+                                padding: EdgeInsets.all(4),
+                                child: Image(
+                                  image: AssetImage("assets/founder.png"),
+                                  width: 12,
+                                ),
+                              )
+                            : Container(),
                       ],
                     ),
                   ),

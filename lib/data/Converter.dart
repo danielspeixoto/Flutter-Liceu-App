@@ -27,7 +27,8 @@ User fromMapToUser(data) {
     data["description"],
     data["instagramProfile"],
     data["telephoneNumber"],
-    data["desiredCourse"]
+    data["desiredCourse"],
+    data["founderFlag"] == null ? false : data["founderFlag"],
   );
 }
 
