@@ -1,8 +1,9 @@
-import 'dart:io';
-import 'package:sentry/sentry.dart';
-import '../injection.dart';
-import 'package:yaml/yaml.dart';
 import 'dart:async';
+import 'dart:io';
+
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:sentry/sentry.dart';
+import 'package:yaml/yaml.dart';
 
 class Sentry {
   final SentryClient client = new SentryClient(
@@ -10,13 +11,12 @@ class Sentry {
     environmentAttributes: Event(release: "3.0.15"),
   );
 
-  Future<void> reportError(
-      dynamic error, String message, dynamic stackTrace, [dynamic parameters]) async {
-
+  Future<void> reportError(dynamic error, String message, dynamic stackTrace,
+      [dynamic parameters]) async {
     final Event event = new Event(
         exception: error,
         stackTrace: stackTrace,
-        environment: enviroment,
+        environment: DotEnv().env['ENV'],
         level: SeverityLevel.error,
         extra: parameters,
         message: "Exception in " + message);
@@ -24,17 +24,16 @@ class Sentry {
   }
 
   Future<void> setUserContext(String id, String name) async {
-
     client.userContext = User(id: id, username: name);
   }
 
   Future<void> reportInfo(dynamic action) async {
     //if (!isDev) {
-      final Event event = new Event(
-          environment: enviroment,
-          level: SeverityLevel.info,
-          message: action.toString().substring(11));
-      client.capture(event: event);
+    final Event event = new Event(
+        environment: DotEnv().env['ENV'],
+        level: SeverityLevel.info,
+        message: action.toString().substring(11));
+    client.capture(event: event);
     //}
   }
 
