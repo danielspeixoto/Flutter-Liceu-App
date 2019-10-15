@@ -1,5 +1,6 @@
 import 'package:app/domain/aggregates/Post.dart';
 import 'package:app/domain/aggregates/User.dart';
+import 'package:app/injection.dart';
 import 'package:app/presentation/state/actions/LiceuActions.dart';
 import 'package:app/presentation/state/actions/LoginActions.dart';
 import 'package:app/presentation/state/actions/PostActions.dart';
@@ -87,11 +88,14 @@ class ProfileViewModel {
       onFeedbackTextChanged: (String text) {
         store.dispatch(SetUserReportFieldAction(text));
       },
-      onSendReportButtonPressed: (page) {
+      onSendReportButtonPressed: (page) async {
+        final phoneModel = await Information.phoneModel;
+
         Map<String, dynamic> params = {
           "userId": userState.user.content.id,
           "userName": userState.user.content.name,
-          "page": page
+          "page": page,
+          "phone": phoneModel
         };
 
         List<String> tags = ["created", "feedback"];

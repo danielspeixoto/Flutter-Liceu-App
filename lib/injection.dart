@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:app/data/ReportRepository.dart';
 import 'package:app/data/TriviaRepository.dart';
 import 'package:app/domain/usecase/challenge/GetChallengeUseCase.dart';
@@ -41,6 +43,7 @@ import 'domain/usecase/user/MyId.dart';
 import 'domain/usecase/user/MyPostsUseCase.dart';
 import 'domain/usecase/user/SetUserDescriptionUseCase.dart';
 import 'domain/usecase/user/SetUserInstagramUseCase.dart';
+import 'package:device_info/device_info.dart';
 
 class Feature {
   static bool get isDev {
@@ -49,6 +52,21 @@ class Feature {
     assert(isDev = true);
 
     return isDev;
+  }
+}
+
+class Information {
+  static Future<String> get phoneModel async {
+    DeviceInfoPlugin deviceInfo = new DeviceInfoPlugin();
+    if (Platform.isAndroid) {
+      AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
+      print(androidInfo);
+    } else if (Platform.isIOS) {
+      IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
+      print(iosInfo);
+    }
+
+    return "test";
   }
 }
 
