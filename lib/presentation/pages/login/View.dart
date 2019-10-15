@@ -1,7 +1,6 @@
 import 'dart:io';
 import 'dart:typed_data';
 
-import 'package:app/injection.dart';
 import 'package:app/presentation/state/actions/PageActions.dart';
 import 'package:app/presentation/state/app_state.dart';
 import 'package:app/presentation/widgets/TextFieldHighlight.dart';
@@ -92,31 +91,35 @@ class LoginPage extends StatelessWidget {
                       viewModel.login(accessToken, "google");
                     },
                   ),
-                  SignInButton(Buttons.Facebook,
-                      text: "Entrar com Facebook",
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(16))),
-                      onPressed: () async {
-                    try {
-                      final facebookLogin = FacebookLogin();
-                      final result = await facebookLogin.logIn(['email']);
-                      switch (result.status) {
-                        case FacebookLoginStatus.loggedIn:
-                          var token = result.accessToken.token;
-                          viewModel.login(token, "facebook");
-                          break;
-                        case FacebookLoginStatus.cancelledByUser:
-                          print("cancelled");
-                          break;
-                        case FacebookLoginStatus.error:
-                          print("error");
-                          print(result.errorMessage);
-                          break;
+                  Container(
+                    key: Key("facebookLogin"),
+                    child: SignInButton(Buttons.Facebook,
+                        text: "Entrar com Facebook",
+                        shape: RoundedRectangleBorder(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(16))),
+                        onPressed: () async {
+                      try {
+                        final facebookLogin = FacebookLogin();
+                        final result = await facebookLogin.logIn(['email']);
+                        switch (result.status) {
+                          case FacebookLoginStatus.loggedIn:
+                            var token = result.accessToken.token;
+                            viewModel.login(token, "facebook");
+                            break;
+                          case FacebookLoginStatus.cancelledByUser:
+                            print("cancelled");
+                            break;
+                          case FacebookLoginStatus.error:
+                            print("error");
+                            print(result.errorMessage);
+                            break;
+                        }
+                      } catch (e) {
+                        print(e);
                       }
-                    } catch (e) {
-                      print(e);
-                    }
-                  }),
+                    }),
+                  ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
@@ -158,20 +161,35 @@ class LoginPage extends StatelessWidget {
                                                       keyboardType:
                                                           TextInputType
                                                               .multiline,
-                                                              capitalization: TextCapitalization.sentences,
+                                                      capitalization:
+                                                          TextCapitalization
+                                                              .sentences,
                                                     ),
                                                     ListTile(
                                                       title: Center(
                                                         child: Text(
                                                           "Enviar",
-                                                          textAlign: TextAlign.center,
+                                                          textAlign:
+                                                              TextAlign.center,
                                                         ),
                                                       ),
                                                       onTap: () {
                                                         Navigator.of(context)
                                                             .pop();
                                                         viewModel
-                                                            .onSendMessageButtonPressed(runtimeType.toString(),MediaQuery.of(context).size.width.toString(), MediaQuery.of(context).size.height.toString());
+                                                            .onSendMessageButtonPressed(
+                                                                runtimeType
+                                                                    .toString(),
+                                                                MediaQuery.of(
+                                                                        context)
+                                                                    .size
+                                                                    .width
+                                                                    .toString(),
+                                                                MediaQuery.of(
+                                                                        context)
+                                                                    .size
+                                                                    .height
+                                                                    .toString());
                                                       },
                                                     ),
                                                   ],
