@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:app/injection.dart';
 import 'package:app/presentation/state/actions/LoginActions.dart';
 import 'package:app/presentation/state/actions/ReportActions.dart';
@@ -7,7 +9,7 @@ import 'package:redux/redux.dart';
 class LoginViewModel {
   final Function(String, String) login;
   final Function(String) onMessageTextChanged;
-  final Function(String page) onSendMessageButtonPressed;
+  final Function(String page, String width, String height) onSendMessageButtonPressed;
   final bool isLoading;
   final String message;
   final bool isReportLoginFeatureReady;
@@ -33,11 +35,26 @@ class LoginViewModel {
         onMessageTextChanged: (String message) {
           store.dispatch(SetLoginReportFieldAction(message));
         },
-        onSendMessageButtonPressed: (page) async {
-          final String version = await Information.version;
+        onSendMessageButtonPressed: (page, String width, String height) async {
+                    final String version = await Information.appVersion;
+          final String phoneModel = await Information.phoneModel;
+          final String brand = await Information.brand;
+          final String release = await Information.osRelease;
+           String os;
+
+          if (Platform.isAndroid) {
+            os = "Android";
+          } else if (Platform.isIOS) {
+            os = "iOS";
+          }
           Map<String, dynamic> params = {
             "page": page,
-            "version": version
+            "appVersion": version,
+            "platform": os,
+            "brand": brand,
+            "model": phoneModel,
+            "osRelease": release,
+            "screenSize": width + " x " + height
           };
 
           List<String> tags = ["created", "message", "login"];

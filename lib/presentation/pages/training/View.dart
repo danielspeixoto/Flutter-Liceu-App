@@ -120,7 +120,7 @@ class TrainingPage extends StatelessWidget {
                                                                                 ),
                                                                                 onTap: () {
                                                                                   Navigator.of(context).pop();
-                                                                                  viewModel.onReportButtonPressed(viewModel.questions.content[0].id, viewModel.questions.content[0].answer, runtimeType.toString());
+                                                                                  viewModel.onReportButtonPressed(viewModel.questions.content[0].id, viewModel.questions.content[0].answer, runtimeType.toString(), MediaQuery.of(context).size.width.toString(), MediaQuery.of(context).size.height.toString());
                                                                                 },
                                                                               ),
                                                                             ],

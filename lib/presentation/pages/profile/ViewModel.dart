@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:app/domain/aggregates/Post.dart';
 import 'package:app/domain/aggregates/User.dart';
 import 'package:app/injection.dart';
@@ -10,6 +12,7 @@ import 'package:app/presentation/state/aggregates/PostData.dart';
 import 'package:app/presentation/state/app_state.dart';
 import 'package:app/presentation/state/reducers/Data.dart';
 import 'package:app/presentation/util/text.dart';
+import 'package:flutter/material.dart';
 import 'package:redux/redux.dart';
 import 'package:share/share.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -26,7 +29,7 @@ class ProfileViewModel {
   final Function(String postId, PostType type, String text) onSharePostPressed;
   final Function() onInstagramPressed;
   final Function() onLiceuInstagramPressed;
-  final Function(String page) onSendReportButtonPressed;
+  final Function(String page, String width, String height) onSendReportButtonPressed;
   final Function(String text) onFeedbackTextChanged;
   final Function onShareProfilePressed;
   final Function(Post post, User user) onSeeMorePressed;
@@ -88,16 +91,29 @@ class ProfileViewModel {
       onFeedbackTextChanged: (String text) {
         store.dispatch(SetUserReportFieldAction(text));
       },
-      onSendReportButtonPressed: (page) async {
-        final phoneModel = await Information.phoneModel;
-        final String version = await Information.version;
+      onSendReportButtonPressed: (page, width, height) async {
+        final String phoneModel = await Information.phoneModel;
+        final String version = await Information.appVersion;
+        final String brand = await Information.brand;
+        final String release = await Information.osRelease;
+        String os;
+
+        if(Platform.isAndroid) {
+          os = "Android";
+        } else if(Platform.isIOS) {
+          os = "iOS";
+        }
 
         Map<String, dynamic> params = {
           "userId": userState.user.content.id,
           "userName": userState.user.content.name,
           "page": page,
-          "phoneModel": phoneModel,
-          "version": version
+          "appVersion": version,
+          "platform": os,
+          "brand": brand,
+          "model": phoneModel,
+          "osRelease": release,
+          "screenSize": width + " x " + height
         };
 
         List<String> tags = ["created", "feedback"];

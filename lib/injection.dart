@@ -74,11 +74,41 @@ class Information {
     return model;
   }
 
-  static Future<String> get version async {
+  static Future<String> get appVersion async {
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
 
      return packageInfo.version;
   }
+
+  static Future<String> get brand async {
+    final DeviceInfoPlugin deviceInfo =  DeviceInfoPlugin();
+
+    String brand;
+    if (Platform.isAndroid) {
+      AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
+      brand = androidInfo.brand;
+    } else if (Platform.isIOS) {
+      brand = "Apple";
+    }
+
+    return brand;
+  }
+
+  static Future<String> get osRelease async {
+    final DeviceInfoPlugin deviceInfo =  DeviceInfoPlugin();
+
+    String release;
+    if (Platform.isAndroid) {
+      AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
+      release = androidInfo.version.release;
+    } else if (Platform.isIOS) {
+       IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
+      release = iosInfo.utsname.release;
+    }
+
+    return release;
+  }
+
 
 }
 
