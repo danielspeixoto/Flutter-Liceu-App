@@ -34,7 +34,7 @@ class TrophyPage extends StatelessWidget {
                     textAlign: TextAlign.center,
                   ),
                 ),
-                FetcherWidget(
+                FetcherWidget.build(
                   isLoading: viewModel.rankingData.isLoading,
                   errorMessage: viewModel.rankingData.errorMessage,
                   child: () {

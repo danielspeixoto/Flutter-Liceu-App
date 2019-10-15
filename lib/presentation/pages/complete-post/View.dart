@@ -11,7 +11,8 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 class CompletePostPage extends StatelessWidget {
   final _refreshController = RefreshController(initialRefresh: false);
   @override
-  Widget build(BuildContext context) => StoreConnector<AppState, CompletePostViewModel>(
+  Widget build(BuildContext context) =>
+      StoreConnector<AppState, CompletePostViewModel>(
         onInit: (store) => store.dispatch(PageInitAction("CompletePost")),
         converter: (store) => CompletePostViewModel.create(store),
         builder: (BuildContext context, CompletePostViewModel viewModel) {
@@ -25,26 +26,23 @@ class CompletePostPage extends StatelessWidget {
               controller: _refreshController,
               child: ListView(
                 children: <Widget>[
-                  FetcherWidget(
+                  FetcherWidget.build(
                       isLoading: post.isLoading,
                       errorMessage: post.errorMessage,
                       child: () => PostWidget(
                             user: post.content.user,
                             postContent: post.content.text,
                             imageURL: post.content.imageURL,
-                            onUserPressed: (user) => {
-                              viewModel.onUserPressed(user)
-                            },
+                            onUserPressed: (user) =>
+                                {viewModel.onUserPressed(user)},
                             onSharePressed: () {
-                              viewModel.onSharePostPressed(
-                                post.content.id,
-                                post.content.type,
-                                post.content.text
-                              );
+                              viewModel.onSharePostPressed(post.content.id,
+                                  post.content.type, post.content.text);
                             },
                             onImageZoomPressed: () {
-                                    viewModel.onImageZoomPressed(post.content.imageURL);
-                                  },
+                              viewModel
+                                  .onImageZoomPressed(post.content.imageURL);
+                            },
                           )),
                 ],
               ),
