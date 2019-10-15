@@ -1,4 +1,3 @@
-import 'package:app/injection.dart';
 import 'package:app/presentation/state/actions/PageActions.dart';
 import 'package:app/presentation/state/app_state.dart';
 import 'package:app/presentation/widgets/ActionCard.dart';
@@ -84,7 +83,7 @@ class GamePage extends StatelessWidget {
                                     color: Colors.white),
                               ),
                             ),
-                            FetcherWidget(
+                            FetcherWidget.build(
                                 errorMessage: viewModel.challenges.errorMessage,
                                 isLoading: viewModel.challenges.isLoading,
                                 child: () {

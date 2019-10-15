@@ -77,7 +77,8 @@ class ProfilePage extends StatelessWidget {
                                           ),
                                           maxLines: 4,
                                           keyboardType: TextInputType.multiline,
-                                          capitalization: TextCapitalization.sentences,
+                                          capitalization:
+                                              TextCapitalization.sentences,
                                         ),
                                         ListTile(
                                           title: Text(
@@ -86,8 +87,8 @@ class ProfilePage extends StatelessWidget {
                                           ),
                                           onTap: () {
                                             Navigator.of(context).pop();
-                                            viewModel
-                                                .onSendReportButtonPressed(runtimeType.toString());
+                                            viewModel.onSendReportButtonPressed(
+                                                runtimeType.toString());
                                           },
                                         ),
                                       ],
@@ -118,7 +119,7 @@ class ProfilePage extends StatelessWidget {
               controller: _refreshController,
               child: ListView(
                 children: <Widget>[
-                  FetcherWidget(
+                  FetcherWidget.build(
                     isLoading: viewModel.user.isLoading,
                     errorMessage: viewModel.user.errorMessage,
                     child: () => Container(
@@ -203,7 +204,7 @@ class ProfilePage extends StatelessWidget {
                     ),
                   ),
                   LiceuDivider(),
-                  FetcherWidget(
+                  FetcherWidget.build(
                     isLoading:
                         viewModel.posts.isLoading || viewModel.user.isLoading,
                     errorMessage: viewModel.posts.errorMessage,
@@ -223,7 +224,7 @@ class ProfilePage extends StatelessWidget {
                                 return Column(children: <Widget>[
                                   PostWidget(
                                     user: viewModel.user.content,
-                                    postContent: summarize(post.text,600),
+                                    postContent: summarize(post.text, 600),
                                     onSharePressed: () {
                                       viewModel.onSharePostPressed(
                                         post.id,
@@ -234,22 +235,23 @@ class ProfilePage extends StatelessWidget {
                                     onDeletePressed: () =>
                                         viewModel.onDeletePostPressed(post.id),
                                     imageURL: post.imageURL,
-                                    seeMore: post.text.length > 600 ? FlatButton(
-                                      onPressed: () =>
-                                          viewModel.onSeeMorePressed(post, user),
-                                      child: Text(
-                                        "Ver mais",
-                                        style: TextStyle(
-                                          color: Color(0xFF0061A1),
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ))
-                                  : null,
-                                  onImageZoomPressed: () {
-                                    viewModel.onImageZoomPressed(post.imageURL);
-                                  },
+                                    seeMore: post.text.length > 600
+                                        ? FlatButton(
+                                            onPressed: () => viewModel
+                                                .onSeeMorePressed(post, user),
+                                            child: Text(
+                                              "Ver mais",
+                                              style: TextStyle(
+                                                color: Color(0xFF0061A1),
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ))
+                                        : null,
+                                    onImageZoomPressed: () {
+                                      viewModel
+                                          .onImageZoomPressed(post.imageURL);
+                                    },
                                   ),
-                                  
                                 ]);
                               }).toList(),
                             ),

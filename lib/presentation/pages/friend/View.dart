@@ -31,148 +31,154 @@ class FriendPage extends StatelessWidget {
                 _refreshController.refreshCompleted();
               },
               controller: _refreshController,
-              child: ListView(
-                children: <Widget>[
-                  FetcherWidget(
-                    isLoading: viewModel.user.isLoading,
-                    errorMessage: viewModel.user.errorMessage,
-                    child: () => Container(
-                      child: Column(
+              child: FetcherWidget.build(
+                isLoading:
+                    viewModel.user.isLoading || viewModel.posts.isLoading,
+                errorMessage: viewModel.user.errorMessage,
+                child: () => ListView.builder(
+                  physics: AlwaysScrollableScrollPhysics(),
+                  itemCount: viewModel.posts.content.length + 1,
+                  itemBuilder: (ctx, idx) {
+                    if (idx == 0) {
+                      return Column(
                         children: <Widget>[
-                          Row(
-                            children: <Widget>[
-                              Container(
-                                child: RoundedImage(
-                                  pictureURL:
-                                      user.picURL != null ? user.picURL : null,
-                                  size: 80.0,
-                                ),
-                                margin: EdgeInsets.all(8),
-                              ),
-                              Expanded(
-                                child: Column(
+                          Container(
+                            child: Column(
+                              children: <Widget>[
+                                Row(
                                   children: <Widget>[
                                     Container(
-                                      child: Text(
-                                        user.name,
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 16,
-                                        ),
+                                      child: RoundedImage(
+                                        pictureURL: user.picURL != null
+                                            ? user.picURL
+                                            : null,
+                                        size: 80.0,
                                       ),
                                       margin: EdgeInsets.all(8),
                                     ),
-                                    FlatButton(
-                                      onPressed: () => viewModel
-                                          .onChallengeMePressed(user.id),
-                                      child: Text(
-                                        "Me desafie!",
-                                        style: TextStyle(
-                                          color: Color(0xFF0061A1),
-                                        ),
+                                    Expanded(
+                                      child: Column(
+                                        children: <Widget>[
+                                          Container(
+                                            child: Text(
+                                              user.name,
+                                              style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 16,
+                                              ),
+                                            ),
+                                            margin: EdgeInsets.all(8),
+                                          ),
+                                          FlatButton(
+                                            onPressed: () => viewModel
+                                                .onChallengeMePressed(user.id),
+                                            child: Text(
+                                              "Me desafie!",
+                                              style: TextStyle(
+                                                color: Color(0xFF0061A1),
+                                              ),
+                                            ),
+                                          )
+                                        ],
                                       ),
-                                    )
+                                    ),
                                   ],
                                 ),
-                              ),
-                            ],
-                          ),
-                          user.instagramProfile != null
-                              ? Container(
-                                  child: FlatButton(
-                                    onPressed: () {
-                                      viewModel.onInstagramPressed();
-                                    },
-                                    child: Row(
-                                      children: <Widget>[
-                                        Container(
-                                          child: Icon(
-                                            FontAwesomeIcons.instagram,
-                                            size: 18,
+                                user.instagramProfile != null
+                                    ? Container(
+                                        child: FlatButton(
+                                          onPressed: () {
+                                            viewModel.onInstagramPressed();
+                                          },
+                                          child: Row(
+                                            children: <Widget>[
+                                              Container(
+                                                child: Icon(
+                                                  FontAwesomeIcons.instagram,
+                                                  size: 18,
+                                                ),
+                                                margin:
+                                                    EdgeInsets.only(right: 8),
+                                              ),
+                                              Center(
+                                                child: Text(
+                                                  user.instagramProfile,
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                ),
+                                              ),
+                                            ],
                                           ),
-                                          margin: EdgeInsets.only(right: 8),
                                         ),
-                                        Center(
-                                          child: Text(
-                                            user.instagramProfile,
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.bold),
-                                          ),
+                                      )
+                                    : Container(),
+                                user.bio != null
+                                    ? Container(
+                                        width: double.infinity,
+                                        child: TextWithLinks(
+                                          text: user.bio,
                                         ),
-                                      ],
-                                    ),
-                                  ),
-                                )
-                              : Container(),
-                          user.bio != null
-                              ? Container(
-                                  width: double.infinity,
-                                  child: TextWithLinks(
-                                    text: user.bio,
-                                  ),
-                                  margin: const EdgeInsets.symmetric(
-                                      horizontal: 8.0),
-                                )
-                              : Container(),
-                        ],
-                      ),
-                    ),
-                  ),
-                  LiceuDivider(),
-                  FetcherWidget(
-                    isLoading:
-                        viewModel.posts.isLoading || viewModel.user.isLoading,
-                    errorMessage: viewModel.posts.errorMessage,
-                    child: () => Container(
-                      child: viewModel.posts.content.length == 0
-                          ? Container(
-                              margin: EdgeInsets.all(16),
-                              child: Column(
-                                children: <Widget>[
-                                  Text(
-                                    "${viewModel.user.content.name} ainda não compartilhou nenhum resumo",
-                                    textAlign: TextAlign.center,
-                                  ),
-                                ],
-                              ),
-                            )
-                          : Column(
-                              children: viewModel.posts.content.map((post) {
-                                return Column(children: <Widget>[
-                                  PostWidget(
-                                    user: user,
-                                    postContent: summarize(post.text, 600),
-                                    onSharePressed: () {
-                                      viewModel.onSharePostPressed(
-                                        post.id,
-                                        post.type,
-                                        post.text,
-                                      );
-                                    },
-                                    imageURL: post.imageURL,
-                                    seeMore: post.text.length > 600 ? FlatButton(
-                                      onPressed: () =>
-                                          viewModel.onSeeMorePressed(post, user),
-                                      child: Text(
-                                        "Ver mais",
-                                        style: TextStyle(
-                                          color: Color(0xFF0061A1),
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ))
-                                  : null,
-                                  onImageZoomPressed: () {
-                                    viewModel.onImageZoomPressed(post.imageURL);
-                                  },
-                                  ),
-                                    
-                                  
-                                ]);
-                              }).toList(),
+                                        margin: const EdgeInsets.symmetric(
+                                            horizontal: 8.0),
+                                      )
+                                    : Container(),
+                              ],
                             ),
-                    ),
-                  ),
-                ],
+                          ),
+                          LiceuDivider(),
+                          viewModel.posts.content.length == 0
+                              ? Container(
+                                  margin: EdgeInsets.all(16),
+                                  child: Column(
+                                    children: <Widget>[
+                                      Text(
+                                        "${viewModel.user.content.name} ainda não compartilhou nenhum resumo",
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    ],
+                                  ),
+                                )
+                              : Container()
+                        ],
+                      );
+                    }
+                    final post = viewModel.posts.content[idx - 1];
+                    return Column(
+                      children: <Widget>[
+                        PostWidget(
+                          user: user,
+                          postContent: summarize(post.text, 600),
+                          onSharePressed: () {
+                            viewModel.onSharePostPressed(
+                              post.id,
+                              post.type,
+                              post.text,
+                            );
+                          },
+                          onDeletePressed: () =>
+                              viewModel.onDeletePostPressed(post.id),
+                          imageURL: post.imageURL,
+                          seeMore: post.text.length > 600
+                              ? FlatButton(
+                                  onPressed: () =>
+                                      viewModel.onSeeMorePressed(post, user),
+                                  child: Text(
+                                    "Ver mais",
+                                    style: TextStyle(
+                                      color: Color(0xFF0061A1),
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ))
+                              : null,
+                          onImageZoomPressed: () {
+                            viewModel.onImageZoomPressed(post.imageURL);
+                          },
+                        ),
+                      ],
+                    );
+                  },
+                ),
               ),
             ),
           );

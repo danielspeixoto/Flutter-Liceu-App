@@ -1,4 +1,3 @@
-import 'package:app/injection.dart';
 import 'package:app/presentation/state/actions/PageActions.dart';
 import 'package:app/presentation/state/app_state.dart';
 import 'package:app/presentation/widgets/ENEMQuestion.dart';
@@ -40,7 +39,7 @@ class TrainingPage extends StatelessWidget {
                         textAlign: TextAlign.center,
                       ),
                     ),
-                    FetcherWidget(
+                    FetcherWidget.build(
                       isLoading: viewModel.questions.isLoading,
                       errorMessage: viewModel.questions.errorMessage,
                       child: () => Container(
@@ -70,73 +69,70 @@ class TrainingPage extends StatelessWidget {
                                           child: IconButton(
                                             alignment: Alignment.topRight,
                                             onPressed: () {
-                                                                                          showDialog(
-                                                context: context,
-                                                builder: (context) {
-                                                  return SimpleDialog(
-                                                    children: <Widget>[
-                                                      ListTile(
-                                                        title: Text(
-                                                            "Relatar um problema"),
-                                                        onTap: () {
-                                                          Navigator.of(context)
-                                                              .pop();
-                                                          showDialog(
-                                                              context: context,
-                                                              builder:
-                                                                  (context) {
-                                                                return SimpleDialog(
-                                                                  title: Text(
-                                                                      "Relatar um problema"),
-                                                                  children: <
-                                                                      Widget>[
-                                                                    Container(
-                                                                        padding: EdgeInsets.symmetric(
-                                                                            horizontal:
-                                                                                24),
-                                                                        child:
-                                                                            Column(
-                                                                          children: <
-                                                                              Widget>[
-                                                                            TextFieldHighlight(
-                                                                              onChanged: (text) {
-                                                                                viewModel.onFeedbackTextChanged(text);
-                                                                              },
-                                                                              decoration: InputDecoration(
-                                                                                border: OutlineInputBorder(
-                                                                                  borderSide: BorderSide(
-                                                                                    width: 0.1,
+                                              showDialog(
+                                                  context: context,
+                                                  builder: (context) {
+                                                    return SimpleDialog(
+                                                      children: <Widget>[
+                                                        ListTile(
+                                                          title: Text(
+                                                              "Relatar um problema"),
+                                                          onTap: () {
+                                                            Navigator.of(
+                                                                    context)
+                                                                .pop();
+                                                            showDialog(
+                                                                context:
+                                                                    context,
+                                                                builder:
+                                                                    (context) {
+                                                                  return SimpleDialog(
+                                                                    title: Text(
+                                                                        "Relatar um problema"),
+                                                                    children: <
+                                                                        Widget>[
+                                                                      Container(
+                                                                          padding: EdgeInsets.symmetric(
+                                                                              horizontal:
+                                                                                  24),
+                                                                          child:
+                                                                              Column(
+                                                                            children: <Widget>[
+                                                                              TextFieldHighlight(
+                                                                                onChanged: (text) {
+                                                                                  viewModel.onFeedbackTextChanged(text);
+                                                                                },
+                                                                                decoration: InputDecoration(
+                                                                                  border: OutlineInputBorder(
+                                                                                    borderSide: BorderSide(
+                                                                                      width: 0.1,
+                                                                                    ),
                                                                                   ),
+                                                                                  hintText: "Essa questão não se relaciona com os vídeos.",
                                                                                 ),
-                                                                                hintText: "Essa questão não se relaciona com os vídeos.",
+                                                                                maxLines: 4,
+                                                                                keyboardType: TextInputType.multiline,
                                                                               ),
-                                                                              maxLines: 4,
-                                                                              keyboardType: TextInputType.multiline,
-                                                                            ),
-                                                                            ListTile(
-                                                                              title: Text(
-                                                                                "Enviar",
-                                                                                textAlign: TextAlign.center,
+                                                                              ListTile(
+                                                                                title: Text(
+                                                                                  "Enviar",
+                                                                                  textAlign: TextAlign.center,
+                                                                                ),
+                                                                                onTap: () {
+                                                                                  Navigator.of(context).pop();
+                                                                                  viewModel.onReportButtonPressed(viewModel.questions.content[0].id, viewModel.questions.content[0].answer, runtimeType.toString());
+                                                                                },
                                                                               ),
-                                                                              onTap: () {
-                                                                                Navigator.of(context).pop();
-                                                                                viewModel.onReportButtonPressed(
-                                                                                  viewModel.questions.content[0].id,
-                                                                                  viewModel.questions.content[0].answer,
-                                                                                  runtimeType.toString()
-                                                                                );
-                                                                              },
-                                                                            ),
-                                                                          ],
-                                                                        )),
-                                                                  ],
-                                                                );
-                                                              });
-                                                        },
-                                                      ),
-                                                    ],
-                                                  );
-                                                });
+                                                                            ],
+                                                                          )),
+                                                                    ],
+                                                                  );
+                                                                });
+                                                          },
+                                                        ),
+                                                      ],
+                                                    );
+                                                  });
                                             },
                                             icon: Container(
                                               child: Icon(

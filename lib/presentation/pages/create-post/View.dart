@@ -43,7 +43,7 @@ class CreatePostPage extends StatelessWidget {
                 ),
               ],
               title: "Resumo",
-              body: FetcherWidget(
+              body: FetcherWidget.build(
                 isLoading: viewModel.isLoading,
                 child: () => SingleChildScrollView(
                   child: Column(

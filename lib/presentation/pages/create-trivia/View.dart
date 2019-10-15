@@ -28,7 +28,7 @@ class CreateTriviaPage extends StatelessWidget {
               ),
             ],
             title: "Criar Questão",
-            body: FetcherWidget(
+            body: FetcherWidget.build(
                 isLoading: viewModel.isCreatingTrivia,
                 child: () => SingleChildScrollView(
                       child: Column(
@@ -75,16 +75,20 @@ class CreateTriviaPage extends StatelessWidget {
                                           ? Container(
                                               margin: EdgeInsets.all(4),
                                               alignment: Alignment.centerRight,
-                                              child: Text(viewModel
-                                                      .question.length
-                                                      .toString() +
-                                                  "/200", style: TextStyle(
-                                        fontSize: 12, color: Colors.grey[600])),
+                                              child: Text(
+                                                  viewModel.question.length
+                                                          .toString() +
+                                                      "/200",
+                                                  style: TextStyle(
+                                                      fontSize: 12,
+                                                      color: Colors.grey[600])),
                                             )
                                           : Container(
                                               margin: EdgeInsets.all(4),
-                                              child: Text("0/200", style: TextStyle(
-                                        fontSize: 12, color: Colors.grey[600])),
+                                              child: Text("0/200",
+                                                  style: TextStyle(
+                                                      fontSize: 12,
+                                                      color: Colors.grey[600])),
                                             ),
                                       Container(
                                           child: Text(
@@ -135,16 +139,20 @@ class CreateTriviaPage extends StatelessWidget {
                                           ? Container(
                                               margin: EdgeInsets.all(4),
                                               alignment: Alignment.centerRight,
-                                              child: Text(viewModel
-                                                      .correctAnswer.length
-                                                      .toString() +
-                                                  "/200" , style: TextStyle(
-                                        fontSize: 12, color: Colors.grey[600])),
+                                              child: Text(
+                                                  viewModel.correctAnswer.length
+                                                          .toString() +
+                                                      "/200",
+                                                  style: TextStyle(
+                                                      fontSize: 12,
+                                                      color: Colors.grey[600])),
                                             )
                                           : Container(
                                               margin: EdgeInsets.all(4),
-                                              child: Text("0/200" , style: TextStyle(
-                                        fontSize: 12, color: Colors.grey[600])),
+                                              child: Text("0/200",
+                                                  style: TextStyle(
+                                                      fontSize: 12,
+                                                      color: Colors.grey[600])),
                                             ),
                                       Container(
                                           child: Text(
@@ -189,22 +197,25 @@ class CreateTriviaPage extends StatelessWidget {
                                               TextCapitalization.sentences,
                                         ),
                                       ),
-                                      
                                       viewModel.wrongAnswer != null
                                           ? Container(
                                               margin: EdgeInsets.all(4),
                                               alignment: Alignment.centerRight,
-                                              child: Text(viewModel
-                                                      .wrongAnswer.length
-                                                      .toString() +
-                                                  "/200", style: TextStyle(
-                                        fontSize: 12, color: Colors.grey[600])),
+                                              child: Text(
+                                                  viewModel.wrongAnswer.length
+                                                          .toString() +
+                                                      "/200",
+                                                  style: TextStyle(
+                                                      fontSize: 12,
+                                                      color: Colors.grey[600])),
                                             )
                                           : Container(
                                               margin: EdgeInsets.all(4),
                                               alignment: Alignment.centerRight,
-                                              child: Text("0/200", style: TextStyle(
-                                        fontSize: 12, color: Colors.grey[600])),
+                                              child: Text("0/200",
+                                                  style: TextStyle(
+                                                      fontSize: 12,
+                                                      color: Colors.grey[600])),
                                             ),
                                       Container(
                                           child: Text(
@@ -279,11 +290,10 @@ class CreateTriviaPage extends StatelessWidget {
                               ],
                             ),
                           ),
-                           Padding(
-                                    padding: EdgeInsets.only(
-                                        bottom: MediaQuery.of(context)
-                                            .viewInsets
-                                            .bottom))
+                          Padding(
+                              padding: EdgeInsets.only(
+                                  bottom:
+                                      MediaQuery.of(context).viewInsets.bottom))
                         ],
                       ),
                     )));
