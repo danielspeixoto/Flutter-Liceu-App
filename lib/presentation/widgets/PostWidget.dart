@@ -1,4 +1,5 @@
 import 'package:app/domain/aggregates/User.dart';
+import 'package:app/presentation/widgets/TextFieldHighlight.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_linkify/flutter_linkify.dart';
@@ -21,8 +22,10 @@ class PostWidget extends StatelessWidget {
   final Function() onSharePressed;
   final Function(User) onUserPressed;
   final FlatButton seeMore;
-  final Function onImageZoomPressed;
+  final Function() onImageZoomPressed;
   final String postStatus;
+  final Function() onReportPressed;
+  final Function(String) onReportTextChange;
 
   PostWidget(
       {@required this.user,
@@ -33,7 +36,9 @@ class PostWidget extends StatelessWidget {
       @required this.imageURL,
       this.seeMore,
       this.onImageZoomPressed,
-      @required this.postStatus});
+      @required this.postStatus,
+      this.onReportPressed,
+      this.onReportTextChange});
 
   @override
   Widget build(BuildContext context) => Card(
@@ -112,6 +117,71 @@ class PostWidget extends StatelessWidget {
                                             },
                                           )
                                         : Container(),
+                                    this.postStatus == "approved"
+                                        ? ListTile(
+                                            title: Text("Reportar"),
+                                            onTap: () {
+                                              Navigator.of(context).pop();
+                                              showDialog(
+                                                  context: context,
+                                                  builder: (context) {
+                                                    return SimpleDialog(
+                                                      title: Text(
+                                                          "Reportar"),
+                                                      children: <Widget>[
+                                                        Container(
+                                                            padding: EdgeInsets
+                                                                .symmetric(
+                                                                    horizontal:
+                                                                        24),
+                                                            child: Column(
+                                                              children: <
+                                                                  Widget>[
+                                                                TextFieldHighlight(
+                                                                  onChanged:
+                                                                      (text) {
+                                                                    this.onReportTextChange(text);
+                                                                  },
+                                                                  decoration:
+                                                                      InputDecoration(
+                                                                    border:
+                                                                        OutlineInputBorder(
+                                                                      borderSide:
+                                                                          BorderSide(
+                                                                        width:
+                                                                            0.1,
+                                                                      ),
+                                                                    ),
+                                                                    hintText:
+                                                                        "Ex: O conteúdo do resumo é inadequado",
+                                                                  ),
+                                                                  maxLines: 4,
+                                                                  keyboardType:
+                                                                      TextInputType
+                                                                          .multiline,
+                                                                ),
+                                                                ListTile(
+                                                                  title: Text(
+                                                                    "Enviar",
+                                                                    textAlign:
+                                                                        TextAlign
+                                                                            .center,
+                                                                  ),
+                                                                  onTap: () {
+                                                                    Navigator.of(
+                                                                            context)
+                                                                        .pop();
+                                                                    this.onReportPressed();
+                                                                  },
+                                                                ),
+                                                              ],
+                                                            )),
+                                                      ],
+                                                    );
+                                                  });
+                                            },
+                                          )
+                                        : Container(),
                                     onDeletePressed != null
                                         ? ListTile(
                                             title: Text("Deletar postagem"),
@@ -144,13 +214,15 @@ class PostWidget extends StatelessWidget {
                         style: TextStyle(color: Colors.amber, fontSize: 12),
                       ),
                     )
-                  :  this.postStatus == "approved" ? Container() : Container(
-                      margin: EdgeInsets.only(bottom: 8),
-                      child: Text(
-                        "Infelizmente o resumo não foi aceito",
-                        style: TextStyle(color: Colors.red, fontSize: 12),
-                      ),
-                    ),
+                  : this.postStatus == "approved"
+                      ? Container()
+                      : Container(
+                          margin: EdgeInsets.only(bottom: 8),
+                          child: Text(
+                            "Infelizmente o resumo não foi aceito",
+                            style: TextStyle(color: Colors.red, fontSize: 12),
+                          ),
+                        ),
               Container(
                 alignment: Alignment.centerLeft,
                 child: Opacity(

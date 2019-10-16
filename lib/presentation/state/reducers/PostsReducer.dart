@@ -13,10 +13,11 @@ class PostState {
   final Data<PostData> post;
   final String imageURL;
   final String message;
+  final String reportText;
   PostState(this.posts, this.isCreatingPost, this.createPostTextErrorMessage,
-      this.imageSubmission, this.post, this.imageURL, this.message);
+      this.imageSubmission, this.post, this.imageURL, this.message, this.reportText);
 
-  factory PostState.initial() => PostState(Data(), true, "", null, Data(), null, null);
+  factory PostState.initial() => PostState(Data(), true, "", null, Data(), null, null, null);
 
   PostState copyWith({
     Data<List<PostData>> posts,
@@ -25,7 +26,8 @@ class PostState {
     File imageSubmission,
     Data<PostData> post,
     String imageURL,
-    String message
+    String message,
+    String reportText
   }) {
     final state = PostState(
       posts ?? this.posts,
@@ -34,7 +36,8 @@ class PostState {
       imageSubmission ?? this.imageSubmission,
       post ?? this.post,
       imageURL ?? this.imageURL,
-      message ?? this.message
+      message ?? this.message,
+      reportText ?? this.reportText
     );
     return state;
   }
@@ -52,7 +55,8 @@ final Reducer<PostState> postReducer = combineReducers<PostState>([
       onCreatePostTextSizeMismatch),
   TypedReducer<PostState, SetCompletePostAction>(setPost),
   TypedReducer<PostState, SetPostImageAction>(setImage),
-  TypedReducer<PostState, SubmitPostSuccessAction>(setSuccessMessage)
+  TypedReducer<PostState, SubmitPostSuccessAction>(setSuccessMessage),
+  TypedReducer<PostState, SetPostReportTextFieldAction>(setReportTextField)
 ]);
 
 PostState deletePost(PostState state, DeletePostAction action) {
@@ -89,6 +93,12 @@ PostState setPost(PostState state, SetCompletePostAction action) {
   );
 }
 
+PostState setReportTextField(PostState state, SetPostReportTextFieldAction action) {
+  return state.copyWith(
+    reportText: action.text
+  );
+}
+
 PostState explorePostsRetrieved(
     PostState state, FetchPostsSuccessAction action) {
   return state.copyWith(posts: Data(content: action.post, isLoading: false));
@@ -107,7 +117,8 @@ PostState createPost(PostState state, SubmitTextPostAction action) {
     null,
     state.post,
     state.imageURL,
-    state.message
+    state.message,
+    state.reportText
   );
 }
 
@@ -119,7 +130,8 @@ PostState createImagePost(PostState state, SubmitImagePostAction action) {
     null,
     state.post,
     state.imageURL,
-    state.message
+    state.message,
+    state.reportText
   );
 }
 

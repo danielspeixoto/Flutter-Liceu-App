@@ -74,6 +74,15 @@ class ExplorePage extends StatelessWidget {
                       onImageZoomPressed: () {
                         viewModel.onImageZoomPressed(post.imageURL);
                       },
+                      onReportTextChange: (text) {
+                        viewModel.onReportTextChange(text);
+                      },
+                      onReportPressed: () {
+                        viewModel.onReportPressed(runtimeType.toString(),
+                        MediaQuery.of(context).size.width.toString(), 
+                        MediaQuery.of(context).size.height.toString(),
+                        post.user.id, post.user.name, post.id, post.type.toString());
+                      },
                     );
                   },
                 ),

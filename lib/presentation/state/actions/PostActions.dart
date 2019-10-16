@@ -55,6 +55,12 @@ class SetPostImageAction {
   SetPostImageAction(this.imageURL);
 }
 
+class SetPostReportTextFieldAction {
+  final String text;
+
+  SetPostReportTextFieldAction(this.text);
+}
+
 //Submits
 class SubmitTextPostAction extends ItemAction {
   final String text;
