@@ -6,18 +6,22 @@ import 'package:test/test.dart';
 
 void main() {
   group('Liceu', () {
-    final skipIntroFinder = find.byValueKey('skipIntro');
-
     FlutterDriver driver;
-
-    // Connect to the Flutter driver before running any tests.
+    final skipIntroFinder = find.byValueKey('skipIntro');
     setUpAll(() async {
-      await Process.run('applesimutils', [
-        "--booted YES",
-        "--clearKeychain",
-        "--bundle com.deffish",
-        "--setPermissions",
-        "notifications=YES"
+      await Process.run("adb", [
+        'shell',
+        'pm',
+        'grant',
+        'com.deffish',
+        'android.permission.READ_EXTERNAL_STORAGE'
+      ]);
+      await Process.run("adb", [
+        'shell',
+        'pm',
+        'grant',
+        'com.deffish',
+        'android.permission.ACCESS_NOTIFICATION_POLICY'
       ]);
       driver = await FlutterDriver.connect();
     });
