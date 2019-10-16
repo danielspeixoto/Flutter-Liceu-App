@@ -22,6 +22,7 @@ class PostWidget extends StatelessWidget {
   final Function(User) onUserPressed;
   final FlatButton seeMore;
   final Function onImageZoomPressed;
+  final String postStatus;
 
   PostWidget(
       {@required this.user,
@@ -31,7 +32,8 @@ class PostWidget extends StatelessWidget {
       this.onUserPressed,
       @required this.imageURL,
       this.seeMore,
-      this.onImageZoomPressed});
+      this.onImageZoomPressed,
+      @required this.postStatus});
 
   @override
   Widget build(BuildContext context) => Card(
@@ -56,27 +58,36 @@ class PostWidget extends StatelessWidget {
                     child: Row(
                       children: <Widget>[
                         Container(
-                          margin: EdgeInsets.all(8),
-                          child: RoundedImage(
-                            pictureURL: this.user.picURL != null
-                                ? this.user.picURL
-                                : null,
-                            size: 36,
+                            margin: EdgeInsets.all(8),
+                            child: Opacity(
+                              opacity:
+                                  this.postStatus == "approved" ? 1.0 : 0.5,
+                              child: RoundedImage(
+                                pictureURL: this.user.picURL != null
+                                    ? this.user.picURL
+                                    : null,
+                                size: 36,
+                              ),
+                            )),
+                        Opacity(
+                          opacity: this.postStatus == "approved" ? 1.0 : 0.5,
+                          child: Text(
+                            this.user.name,
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 12),
                           ),
-                        ),
-                        Text(
-                          this.user.name,
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 12),
                         ),
                         user.isFounder
                             ? Container(
                                 padding: EdgeInsets.all(4),
-                                child: Image(
-                                  image: AssetImage("assets/founder.png"),
-                                  width: 12,
-                                ),
-                              )
+                                child: Opacity(
+                                  opacity:
+                                      this.postStatus == "approved" ? 1.0 : 0.5,
+                                  child: Image(
+                                    image: AssetImage("assets/founder.png"),
+                                    width: 12,
+                                  ),
+                                ))
                             : Container(),
                       ],
                     ),
@@ -92,13 +103,15 @@ class PostWidget extends StatelessWidget {
                               builder: (context) {
                                 return SimpleDialog(
                                   children: <Widget>[
-                                    ListTile(
-                                      title: Text("Compartilhar"),
-                                      onTap: () {
-                                        Navigator.of(context).pop();
-                                        onSharePressed();
-                                      },
-                                    ),
+                                    this.postStatus == "approved"
+                                        ? ListTile(
+                                            title: Text("Compartilhar"),
+                                            onTap: () {
+                                              Navigator.of(context).pop();
+                                              onSharePressed();
+                                            },
+                                          )
+                                        : Container(),
                                     onDeletePressed != null
                                         ? ListTile(
                                             title: Text("Deletar postagem"),
@@ -123,11 +136,29 @@ class PostWidget extends StatelessWidget {
                   ),
                 ],
               ),
+              this.postStatus == "inReview"
+                  ? Container(
+                      margin: EdgeInsets.only(bottom: 8),
+                      child: Text(
+                        "O resumo está em processo de avaliação",
+                        style: TextStyle(color: Colors.amber, fontSize: 12),
+                      ),
+                    )
+                  :  this.postStatus == "approved" ? Container() : Container(
+                      margin: EdgeInsets.only(bottom: 8),
+                      child: Text(
+                        "Infelizmente o resumo não foi aceito",
+                        style: TextStyle(color: Colors.red, fontSize: 12),
+                      ),
+                    ),
               Container(
                 alignment: Alignment.centerLeft,
-                child: Linkify(
-                  onOpen: (link) => launch(link.url),
-                  text: this.postContent,
+                child: Opacity(
+                  opacity: this.postStatus == "approved" ? 1.0 : 0.5,
+                  child: Linkify(
+                    onOpen: (link) => launch(link.url),
+                    text: this.postContent,
+                  ),
                 ),
                 margin: const EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 8.0),
                 padding: EdgeInsets.only(bottom: 4),
@@ -139,21 +170,23 @@ class PostWidget extends StatelessWidget {
                       width: double.infinity,
                       height: (MediaQuery.of(context).size.width - 8),
                       child: FlatButton(
-                        padding: EdgeInsets.all(0),
-                        onPressed: () {
-                          this.onImageZoomPressed();
-                        },
-                        child: CachedNetworkImage(
-                          width: double.infinity,
-                          height: (MediaQuery.of(context).size.width - 8),
-                          fit: BoxFit.fitWidth,
-                          alignment: Alignment.center,
-                          imageUrl: imageURL,
-                          placeholder: (ctx, x) => Image(
-                            image: AssetImage("assets/pencil.gif"),
-                          ),
-                        ),
-                      ),
+                          padding: EdgeInsets.all(0),
+                          onPressed: () {
+                            this.onImageZoomPressed();
+                          },
+                          child: Opacity(
+                            opacity: this.postStatus == "approved" ? 1.0 : 0.5,
+                            child: CachedNetworkImage(
+                              width: double.infinity,
+                              height: (MediaQuery.of(context).size.width - 8),
+                              fit: BoxFit.fitWidth,
+                              alignment: Alignment.center,
+                              imageUrl: imageURL,
+                              placeholder: (ctx, x) => Image(
+                                image: AssetImage("assets/pencil.gif"),
+                              ),
+                            ),
+                          )),
                     )
             ],
           ),

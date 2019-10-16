@@ -7,6 +7,8 @@ class PostData {
   final PostType type;
   final String text;
   final String imageURL;
+  final String statusCode;
 
-  PostData(this.id, this.user, this.type, this.text, this.imageURL);
+  PostData(this.id, this.user, this.type, this.text, this.imageURL,
+      this.statusCode);
 }

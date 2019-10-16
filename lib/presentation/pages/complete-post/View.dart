@@ -31,6 +31,7 @@ class CompletePostPage extends StatelessWidget {
                       errorMessage: post.errorMessage,
                       child: () => PostWidget(
                             user: post.content.user,
+                            postStatus: post.content.statusCode,
                             postContent: post.content.text,
                             imageURL: post.content.imageURL,
                             onUserPressed: (user) =>

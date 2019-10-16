@@ -86,6 +86,7 @@ Post fromMapToPost(data) {
     data["type"],
     data["description"],
     data["image"]["imageData"],
+    data["statusCode"]
   );
 }
 

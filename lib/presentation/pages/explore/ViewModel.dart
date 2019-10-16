@@ -18,6 +18,7 @@ class ExploreViewModel {
   final Function(User user) onUserPressed;
   final Function(String imageURL) onImageZoomPressed;
   final Function(PostData post) onSeeMorePressed;
+  
 
   ExploreViewModel({
     this.user,
