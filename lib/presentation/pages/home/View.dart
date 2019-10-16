@@ -30,6 +30,7 @@ class HomePage extends StatelessWidget {
         return DefaultTabController(
           length: 4,
           child: Scaffold(
+            key: Key("homePage"),
             bottomNavigationBar: Container(
               decoration: BoxDecoration(
                 border: BorderDirectional(

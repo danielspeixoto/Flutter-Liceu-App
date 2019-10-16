@@ -67,6 +67,8 @@ dev_dependencies:
   flutter_driver:
     sdk: flutter
   test: 1.6.2
+  process_run: ^0.10.3
+
 
 # For information on the CreatePost Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

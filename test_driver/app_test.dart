@@ -1,15 +1,28 @@
 // Imports the Flutter Driver API.
+import 'dart:io';
+
 import 'package:flutter_driver/flutter_driver.dart';
 import 'package:test/test.dart';
 
 void main() {
   group('Liceu', () {
-    final skipIntroFinder = find.byValueKey('skipIntro');
-
     FlutterDriver driver;
-
-    // Connect to the Flutter driver before running any tests.
+    final skipIntroFinder = find.byValueKey('skipIntro');
     setUpAll(() async {
+      await Process.run("adb", [
+        'shell',
+        'pm',
+        'grant',
+        'com.deffish',
+        'android.permission.READ_EXTERNAL_STORAGE'
+      ]);
+      await Process.run("adb", [
+        'shell',
+        'pm',
+        'grant',
+        'com.deffish',
+        'android.permission.ACCESS_NOTIFICATION_POLICY'
+      ]);
       driver = await FlutterDriver.connect();
     });
 
@@ -22,6 +35,11 @@ void main() {
 
     test('User can login', () async {
       await driver.tap(skipIntroFinder);
+
+      final facebookLoginFinder = find.byValueKey("facebookLogin");
+      await driver.tap(facebookLoginFinder);
+      await driver.waitForAbsent(facebookLoginFinder);
+      find.byValueKey("homePage");
     });
   });
 }

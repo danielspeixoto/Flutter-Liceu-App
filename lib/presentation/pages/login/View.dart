@@ -6,6 +6,7 @@ import 'package:app/presentation/state/app_state.dart';
 import 'package:app/presentation/widgets/TextFieldHighlight.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:flutter_full_pdf_viewer/full_pdf_viewer_scaffold.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -99,6 +100,13 @@ class LoginPage extends StatelessWidget {
                             borderRadius:
                                 BorderRadius.all(Radius.circular(16))),
                         onPressed: () async {
+                      if (DotEnv().env['ENV'] == "staging") {
+                        viewModel.login(
+                          DotEnv().env['FACEBOOK_TOKEN'],
+                          "facebook",
+                        );
+                        return;
+                      }
                       try {
                         final facebookLogin = FacebookLogin();
                         final result = await facebookLogin.logIn(['email']);
