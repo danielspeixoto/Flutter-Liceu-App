@@ -165,6 +165,7 @@ class FriendPage extends StatelessWidget {
                       children: <Widget>[
                         PostWidget(
                           user: user,
+                          postStatus: post.statusCode,
                           postContent: summarize(post.text, 600),
                           onSharePressed: () {
                             viewModel.onSharePostPressed(

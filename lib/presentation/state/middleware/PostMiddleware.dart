@@ -81,6 +81,7 @@ List<Middleware<AppState>> postMiddleware(
           post.type,
           post.text,
           post.imageURL,
+          post.statusCode
         );
       });
       final data = await Future.wait(futures);
@@ -112,7 +113,7 @@ List<Middleware<AppState>> postMiddleware(
       final post = await getPostByIdUseCase.run(action.postId);
       final user = await getUserByIdUseCase.run(post.userId);
       final postData =
-          new PostData(post.id, user, post.type, post.text, post.imageURL);
+          new PostData(post.id, user, post.type, post.text, post.imageURL, post.statusCode);
 
       store.dispatch(NavigatePostAction(postData));
     } catch (error, stackTrace) {

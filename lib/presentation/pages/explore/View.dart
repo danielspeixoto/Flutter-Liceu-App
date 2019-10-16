@@ -46,6 +46,7 @@ class ExplorePage extends StatelessWidget {
                     final post = viewModel.posts.content[idx];
                     return PostWidget(
                       user: post.user,
+                      postStatus: post.statusCode,
                       postContent: summarize(post.text, 600),
                       onUserPressed: (user) => viewModel.onUserPressed(user),
                       onSharePressed: () {
