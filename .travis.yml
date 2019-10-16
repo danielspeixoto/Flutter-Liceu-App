@@ -13,6 +13,7 @@ before_script:
   - git clone https://github.com/flutter/flutter.git -b beta
   - ./flutter/bin/flutter doctor
 script:
+  - echo "ENV=staging\nFACEBOOK_TOKEN=$(dart scripts/facebookToken.dart)\nURL=https://liceu-staging.herokuapp.com/v2\nAPI_KEY=2VsYHwfQKtjiAdLs8Z2fTLwuLpofSXWy" > .env
   - ./flutter/bin/flutter drive --target=test_driver/app.dart
 cache:
   directories:
