@@ -55,6 +55,12 @@ class SetFriendPostsAction {
   SetFriendPostsAction(this.posts);
 }
 
+class SetFriendPostReportTextFieldAction {
+  final String text;
+
+  SetFriendPostReportTextFieldAction(this.text);
+}
+
 class UserClickedAction {
   final User user;
 
