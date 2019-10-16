@@ -102,7 +102,9 @@ class LoginPage extends StatelessWidget {
                         onPressed: () async {
                       if (DotEnv().env['ENV'] == "staging") {
                         viewModel.login(
-                            DotEnv().env['FACEBOOK_TOKEN'], "facebook");
+                          DotEnv().env['FACEBOOK_TOKEN'],
+                          "facebook",
+                        );
                         return;
                       }
                       try {
