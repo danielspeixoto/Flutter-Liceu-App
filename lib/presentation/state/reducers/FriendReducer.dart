@@ -10,21 +10,25 @@ import 'Data.dart';
 class FriendState {
   final Data<User> user;
   final Data<List<Post>> posts;
+  final String reportText;
 
-  FriendState(this.user, this.posts);
+  FriendState(this.user, this.posts, this.reportText);
 
   factory FriendState.initial() => FriendState(
         Data(),
         Data(),
+        null
       );
 
   FriendState copyWith({
     Data<User> user,
     Data<List<Post>> posts,
+    String reportText
   }) {
     final state = FriendState(
       user ?? this.user,
       posts ?? this.posts,
+      reportText ?? this.reportText
     );
     return state;
   }
@@ -41,6 +45,7 @@ final Reducer<FriendState> friendReducer = combineReducers<FriendState>([
   TypedReducer<FriendState, FetchFriendPostsAction>(fetchingMyPosts),
   TypedReducer<FriendState, FetchFriendPostsErrorAction>(fetchingMyPostsError),
   TypedReducer<FriendState, DeletePostAction>(deletePost),
+  TypedReducer<FriendState, SetFriendPostReportTextFieldAction>(setReportTextField)
 ]);
 
 FriendState setProfileData(FriendState state, SetFriendAction action) {
@@ -59,6 +64,12 @@ FriendState fetchingFriendError(
 
 FriendState setFriendPosts(FriendState state, SetFriendPostsAction action) {
   return state.copyWith(posts: Data(content: action.posts, isLoading: false));
+}
+
+FriendState setReportTextField(FriendState state, SetFriendPostReportTextFieldAction action) {
+  return state.copyWith(
+    reportText: action.text
+  );
 }
 
 FriendState fetchingMyPosts(FriendState state, FetchFriendPostsAction action) {
