@@ -174,6 +174,7 @@ class FriendPage extends StatelessWidget {
                               post.text,
                             );
                           },
+                          likes: post.likes == null ? 0 : post.likes,
                           imageURL: post.imageURL,
                           seeMore: post.text.length > 600
                               ? FlatButton(
@@ -202,6 +203,10 @@ class FriendPage extends StatelessWidget {
                                 user.name,
                                 post.id,
                                 post.type.toString());
+                          },
+                          onLikePressed: () {
+                            viewModel.onLikePressed(post.id);
+                            post.likes++;
                           },
                         ),
                       ],

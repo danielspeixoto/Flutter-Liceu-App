@@ -26,6 +26,8 @@ class PostWidget extends StatelessWidget {
   final String postStatus;
   final Function() onReportPressed;
   final Function(String) onReportTextChange;
+  int likes;
+  final Function() onLikePressed;
 
   PostWidget(
       {@required this.user,
@@ -38,7 +40,9 @@ class PostWidget extends StatelessWidget {
       this.onImageZoomPressed,
       @required this.postStatus,
       this.onReportPressed,
-      this.onReportTextChange});
+      this.onReportTextChange,
+      this.likes,
+      this.onLikePressed});
 
   @override
   Widget build(BuildContext context) => Card(
@@ -126,8 +130,7 @@ class PostWidget extends StatelessWidget {
                                                   context: context,
                                                   builder: (context) {
                                                     return SimpleDialog(
-                                                      title: Text(
-                                                          "Reportar"),
+                                                      title: Text("Reportar"),
                                                       children: <Widget>[
                                                         Container(
                                                             padding: EdgeInsets
@@ -140,7 +143,8 @@ class PostWidget extends StatelessWidget {
                                                                 TextFieldHighlight(
                                                                   onChanged:
                                                                       (text) {
-                                                                    this.onReportTextChange(text);
+                                                                    this.onReportTextChange(
+                                                                        text);
                                                                   },
                                                                   decoration:
                                                                       InputDecoration(
@@ -259,7 +263,26 @@ class PostWidget extends StatelessWidget {
                               ),
                             ),
                           )),
-                    )
+                    ),
+                    this.postStatus == "approved" ?
+              Container(
+                alignment: Alignment.centerLeft,
+                child: FlatButton(
+                    onPressed: () {
+                      this.onLikePressed();
+                    },
+                    child: Row(
+                      children: <Widget>[
+                        Icon(
+                          FontAwesomeIcons.solidHeart,
+                          size: 15,
+                        ),
+                        Container(
+                            margin: EdgeInsets.only(left: 4),
+                            child: Text(this.likes.toString()))
+                      ],
+                    )),
+              ) : Container(),
             ],
           ),
         ),

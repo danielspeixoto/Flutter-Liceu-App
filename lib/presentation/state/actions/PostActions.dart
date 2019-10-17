@@ -85,6 +85,12 @@ class SubmitImagePostAction extends ItemAction {
   }
 }
 
+class SubmitPostUpdateRatingAction {
+  final String postId;
+
+  SubmitPostUpdateRatingAction(this.postId);
+}
+
 class SubmitPostSuccessAction {}
 
 class SubmitPostErrorTextSizeMismatchAction {}

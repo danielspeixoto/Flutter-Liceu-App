@@ -34,6 +34,7 @@ class ProfileViewModel {
   final Function onShareProfilePressed;
   final Function(Post post, User user) onSeeMorePressed;
   final Function(String imageURL) onImageZoomPressed;
+  final Function(String postId) onLikePressed;
 
   ProfileViewModel({
     this.user,
@@ -51,7 +52,8 @@ class ProfileViewModel {
     this.reportFeedback,
     this.onShareProfilePressed,
     this.onSeeMorePressed,
-    this.onImageZoomPressed
+    this.onImageZoomPressed,
+    this.onLikePressed
   });
 
   factory ProfileViewModel.create(Store<AppState> store) {
@@ -127,12 +129,15 @@ class ProfileViewModel {
             "Você já viu o que eu estou fazendo no Liceu? \nhttp://liceu.co?userId=${store.state.userState.user.content.id}");
       },
       onSeeMorePressed: (post, user) {
-        final postData = new PostData(post.id, user, post.type, post.text, post.imageURL, post.statusCode);
+        final postData = new PostData(post.id, user, post.type, post.text, post.imageURL, post.statusCode, post.likes);
         store.dispatch(NavigatePostAction(postData));
       }, 
       onImageZoomPressed: (imageURL) {
         store.dispatch(NavigatePostImageZoomAction(imageURL));
-      }
+      },
+       onLikePressed: (postId) {
+          store.dispatch(SubmitPostUpdateRatingAction(postId));
+        }
     );
   }
 }

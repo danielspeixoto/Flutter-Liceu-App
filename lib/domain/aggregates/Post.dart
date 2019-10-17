@@ -5,11 +5,12 @@ class Post {
   final String text;
   final String imageURL;
   final String statusCode;
+  int likes;
 
 
 //  final DateTime submissionDate;
 
-  Post(this.id, this.userId, String type, this.text, this.imageURL, this.statusCode) {
+  Post(this.id, this.userId, String type, this.text, this.imageURL, this.statusCode, this.likes) {
     switch (type) {
       case "text":
         this.type = PostType.TEXT;

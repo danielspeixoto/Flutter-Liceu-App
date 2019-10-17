@@ -6,6 +6,7 @@ abstract class IPostRepository {
       String accessToken, String imageData, String imageTitle, String text);
   Future<void> delete(String accessToken, String postId);
   Future<Post> id(String accessToken, String postId);
+  Future<void> updateRating(String accessToken, String postId);
 }
 
 abstract class ICreateTextPostUseCase {
@@ -30,4 +31,8 @@ abstract class IExplorePostUseCase {
 
 abstract class IGetPostByIdUseCase {
   Future<Post> run(String postId);
+}
+
+abstract class IUpdatePostRatingUseCase {
+  Future<void> run(String postId);
 }

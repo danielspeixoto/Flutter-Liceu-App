@@ -30,6 +30,7 @@ class FriendViewModel {
       String authorName, String postId, String postType) onReportPressed;
   final Function(String text) onReportTextChange;
   final String reportText;
+  final Function(String postId) onLikePressed;
   
 
   FriendViewModel(
@@ -44,7 +45,8 @@ class FriendViewModel {
       this.onImageZoomPressed,
       this.onReportPressed,
       this.onReportTextChange,
-      this.reportText});
+      this.reportText,
+      this.onLikePressed});
 
   factory FriendViewModel.create(Store<AppState> store) {
     final friendState = store.state.friendState;
@@ -75,7 +77,7 @@ class FriendViewModel {
         },
         onSeeMorePressed: (post, user) {
           final postData =
-              new PostData(post.id, user, post.type, post.text, post.imageURL, post.statusCode);
+              new PostData(post.id, user, post.type, post.text, post.imageURL, post.statusCode, post.likes);
           store.dispatch(NavigatePostAction(postData));
         },
         onImageZoomPressed: (imageURL) {
@@ -119,6 +121,9 @@ class FriendViewModel {
           ];
           store.dispatch(SubmitReportAction(
               store.state.friendState.reportText, tags, params));
+        },
+        onLikePressed: (postId) {
+          store.dispatch(SubmitPostUpdateRatingAction(postId));
         });
   }
 }
