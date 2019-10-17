@@ -264,6 +264,7 @@ class ProfilePage extends StatelessWidget {
                           onDeletePressed: () =>
                               viewModel.onDeletePostPressed(post.id),
                           imageURL: post.imageURL,
+                          likes: post.likes == null ? 0 : post.likes,
                           seeMore: post.text.length > 600
                               ? FlatButton(
                                   onPressed: () =>
@@ -278,6 +279,10 @@ class ProfilePage extends StatelessWidget {
                               : null,
                           onImageZoomPressed: () {
                             viewModel.onImageZoomPressed(post.imageURL);
+                          },
+                          onLikePressed: () {
+                            viewModel.onLikePressed(post.id);
+                            post.likes++;
                           },
                         ),
                       ],

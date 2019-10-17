@@ -48,6 +48,7 @@ class ExplorePage extends StatelessWidget {
                       user: post.user,
                       postStatus: post.statusCode,
                       postContent: summarize(post.text, 600),
+                      likes: post.likes == null ? 0 : post.likes,
                       onUserPressed: (user) => viewModel.onUserPressed(user),
                       onSharePressed: () {
                         viewModel.onSharePostPressed(
@@ -82,6 +83,10 @@ class ExplorePage extends StatelessWidget {
                         MediaQuery.of(context).size.width.toString(), 
                         MediaQuery.of(context).size.height.toString(),
                         post.user.id, post.user.name, post.id, post.type.toString());
+                      },
+                      onLikePressed: () {
+                        viewModel.onLikePressed(post.id);
+                        post.likes++;
                       },
                     );
                   },

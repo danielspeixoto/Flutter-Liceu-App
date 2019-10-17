@@ -16,7 +16,9 @@ List<Middleware<AppState>> postMiddleware(
     IExplorePostUseCase explorePostUseCase,
     IGetUserByIdUseCase getUserByIdUseCase,
     ICreateImagePostUseCase createImagePostUseCase,
-    IGetPostByIdUseCase getPostByIdUseCase) {
+    IGetPostByIdUseCase getPostByIdUseCase,
+    IUpdatePostRatingUseCase updatePostRatingUseCase) {
+
   void deletePost(Store<AppState> store, DeletePostAction action,
       NextDispatcher next) async {
     next(action);
@@ -44,6 +46,19 @@ List<Middleware<AppState>> postMiddleware(
       store.dispatch(SubmitPostErrorAction());
     }
   }
+
+  void updateRating(Store<AppState> store, SubmitPostUpdateRatingAction action,
+      NextDispatcher next) async {
+
+        next(action);
+        try{
+          await updatePostRatingUseCase.run(action.postId);
+        } catch (error, stackTrace) {
+      final actionName = action.toString().substring(11);
+      store.dispatch(OnCatchDefaultErrorAction(
+          error.toString(), stackTrace, actionName));
+    }
+      }
 
   void createImagePost(Store<AppState> store, SubmitImagePostAction action,
       NextDispatcher next) async {
@@ -81,7 +96,8 @@ List<Middleware<AppState>> postMiddleware(
           post.type,
           post.text,
           post.imageURL,
-          post.statusCode
+          post.statusCode,
+          post.likes
         );
       });
       final data = await Future.wait(futures);
@@ -113,7 +129,7 @@ List<Middleware<AppState>> postMiddleware(
       final post = await getPostByIdUseCase.run(action.postId);
       final user = await getUserByIdUseCase.run(post.userId);
       final postData =
-          new PostData(post.id, user, post.type, post.text, post.imageURL, post.statusCode);
+          new PostData(post.id, user, post.type, post.text, post.imageURL, post.statusCode, post.likes);
 
       store.dispatch(NavigatePostAction(postData));
     } catch (error, stackTrace) {
@@ -140,6 +156,7 @@ List<Middleware<AppState>> postMiddleware(
     TypedMiddleware<AppState, NavigatePostAction>(navigatePost),
     TypedMiddleware<AppState, FetchPostAction>(fetchPostById),
     TypedMiddleware<AppState, NavigatePostImageZoomAction>(
-        navigatePostImageZoom)
+        navigatePostImageZoom),
+    TypedMiddleware<AppState, SubmitPostUpdateRatingAction>(updateRating),    
   ];
 }
