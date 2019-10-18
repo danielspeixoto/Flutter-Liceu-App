@@ -8,7 +8,7 @@ platform :android do
 
   desc "Submit a new Beta Build"
   lane :beta do
-      sh("source ~/.bashrc && cd .. && flutter build appbundle")
+      sh("source ~/.bashrc && cd .. && flutter build appbundle --build-name=$(git describe --tags --abbrev=0) --build-number=$(git rev-list --count master)")
       upload_to_play_store(track: 'beta', aab: 'build/app/outputs/bundle/release/app.aab')
       slack(message: 'Successfully distributed a new beta build', slack_url: 'https://hooks.slack.com/services/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')
   end
