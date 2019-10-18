@@ -8,6 +8,8 @@ class LiceuDialog extends StatelessWidget {
   final String message;
   final Function() onDialogButtonPressed;
   final BuildContext dialogContext;
+  final double width;
+  final double height;
 
   LiceuDialog(
       {this.dialogTitle,
@@ -15,7 +17,9 @@ class LiceuDialog extends StatelessWidget {
       this.textField,
       this.message,
       this.onDialogButtonPressed,
-      this.dialogContext});
+      this.dialogContext,
+      this.width,
+      this.height});
 
   @override
   Widget build(BuildContext context) => AlertDialog(
@@ -23,8 +27,8 @@ class LiceuDialog extends StatelessWidget {
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(10.0))),
         content: Container(
-            width: 100.0,
-            height: 100.0,
+            width: this.width,
+            height: this.height,
             padding: EdgeInsets.symmetric(horizontal: 24),
             child: Column(
               children: <Widget>[

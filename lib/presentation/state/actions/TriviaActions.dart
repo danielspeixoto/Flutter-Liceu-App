@@ -89,3 +89,5 @@ class SubmitTriviaErrorWrongAnswerSizeMismatchAction {
   SubmitTriviaErrorWrongAnswerSizeMismatchAction(
       this.question, this.correctAnswer, this.wrongAnswer);
 }
+
+class SubmitTriviaErrorAction {}
