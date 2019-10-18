@@ -40,7 +40,6 @@ class ExplorePage extends StatelessWidget {
                 isLoading: viewModel.posts.isLoading,
                 errorMessage: viewModel.posts.errorMessage,
                 child: () => ListView.builder(
-                  physics: AlwaysScrollableScrollPhysics(),
                   itemCount: viewModel.posts.content.length,
                   itemBuilder: (ctx, idx) {
                     final post = viewModel.posts.content[idx];
@@ -79,10 +78,14 @@ class ExplorePage extends StatelessWidget {
                         viewModel.onReportTextChange(text);
                       },
                       onReportPressed: () {
-                        viewModel.onReportPressed(runtimeType.toString(),
-                        MediaQuery.of(context).size.width.toString(), 
-                        MediaQuery.of(context).size.height.toString(),
-                        post.user.id, post.user.name, post.id, post.type.toString());
+                        viewModel.onReportPressed(
+                            runtimeType.toString(),
+                            MediaQuery.of(context).size.width.toString(),
+                            MediaQuery.of(context).size.height.toString(),
+                            post.user.id,
+                            post.user.name,
+                            post.id,
+                            post.type.toString());
                       },
                       onLikePressed: () {
                         viewModel.onLikePressed(post.id);
