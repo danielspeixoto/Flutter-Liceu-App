@@ -1,5 +1,6 @@
 import 'package:app/domain/aggregates/User.dart';
 import 'package:app/presentation/widgets/TextFieldHighlight.dart';
+import 'package:app/util/FeaturesAvailable.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_linkify/flutter_linkify.dart';
@@ -287,7 +288,7 @@ class PostWidget extends StatelessWidget {
                           )),
                     )
                   : Container(),
-              this.postStatus == "approved"
+              this.postStatus == "approved" && FeaturesAvailable.comments
                   ? Row(
                       children: <Widget>[
                         Expanded(
