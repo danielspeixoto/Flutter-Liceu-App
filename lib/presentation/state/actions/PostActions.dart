@@ -97,6 +97,17 @@ class SubmitPostErrorTextSizeMismatchAction {}
 
 class SubmitPostErrorAction {}
 
+class SubmitPostCommentAction {
+  final String postId;
+  final String comment;
+
+  SubmitPostCommentAction(this.postId, this.comment);
+}
+
+class SubmitPostCommentSuccessAction {}
+
+class SubmitPostCommentErrorAction {}
+
 //Deletes
 class DeletePostAction extends ItemAction {
   final String postId;

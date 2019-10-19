@@ -5,6 +5,7 @@ import 'package:app/data/TriviaRepository.dart';
 import 'package:app/domain/boundary/RankingBoundary.dart';
 import 'package:app/domain/usecase/challenge/GetChallengeUseCase.dart';
 import 'package:app/domain/usecase/post/GetPostByIdUseCase.dart';
+import 'package:app/domain/usecase/post/UpdatePostCommentUseCase.dart';
 import 'package:app/domain/usecase/post/UpdatePostRatingUseCase.dart';
 import 'package:app/domain/usecase/report/SubmitReportUseCase.dart';
 import 'package:app/domain/usecase/trivia/CreateTriviaUseCase.dart';
@@ -151,6 +152,7 @@ class Dependencies {
   final ISetUserDesiredCourseUseCase setUserDesiredCourseUseCase;
   final ISetUserSchoolUseCase setUserSchoolUseCase;
   final IUpdatePostRatingUseCase updatePostRatingUseCase;
+  final IUpdatePostCommentUseCase updatePostCommentUseCase;
 
   Dependencies(
       this.loginUseCase,
@@ -184,7 +186,8 @@ class Dependencies {
       this.setUserPhoneUseCase,
       this.setUserDesiredCourseUseCase,
       this.setUserSchoolUseCase,
-      this.updatePostRatingUseCase);
+      this.updatePostRatingUseCase,
+      this.updatePostCommentUseCase);
 
   static Dependencies obj;
 
@@ -272,6 +275,7 @@ class Dependencies {
     final setUserSchooleUseCase =
         SetUserSchoolUseCase(localRepository, userRepository);
     final updatePostRatingUseCase = UpdatePostRatingUseCase(localRepository, postRepository);
+    final updatePostCommentUseCase = UpdatePostCommentUseCase(localRepository, postRepository);
     obj = Dependencies(
       loginUseCase,
       myInfoUseCase,
@@ -304,7 +308,8 @@ class Dependencies {
       setUserPhoneUseCase,
       setUserDesiredCourseUseCase,
       setUserSchooleUseCase,
-      updatePostRatingUseCase
+      updatePostRatingUseCase,
+      updatePostCommentUseCase
     );
     return obj;
   }
