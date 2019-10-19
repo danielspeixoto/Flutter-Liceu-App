@@ -21,7 +21,9 @@ class CreatePostPage extends StatelessWidget {
           converter: (store) => CreatePostViewModel.create(store),
           builder: (BuildContext context, CreatePostViewModel viewModel) {
             if (viewModel.message != "") {
-              return LiceuDialog(
+              return  LiceuDialog(
+                width: 100,
+                height: 100,
                 dialogContext: context,
                 message: viewModel.message,
                 sendButtonTitle: "OK",

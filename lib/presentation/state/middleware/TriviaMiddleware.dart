@@ -51,6 +51,7 @@ List<Middleware<AppState>> triviaMiddleware(
                  final actionName = action.toString().substring(11);
       store.dispatch(OnCatchDefaultErrorAction(
           error.toString(), stackTrace, actionName, action.itemToJson()));
+      store.dispatch(SubmitTriviaErrorAction());
     }
   }
 

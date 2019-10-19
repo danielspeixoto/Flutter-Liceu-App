@@ -56,6 +56,7 @@ final Reducer<PostState> postReducer = combineReducers<PostState>([
   TypedReducer<PostState, SetCompletePostAction>(setPost),
   TypedReducer<PostState, SetPostImageAction>(setImage),
   TypedReducer<PostState, SubmitPostSuccessAction>(setSuccessMessage),
+  TypedReducer<PostState, SubmitPostErrorAction>(setErrorMessage),
   TypedReducer<PostState, SetPostReportTextFieldAction>(setReportTextField)
 ]);
 

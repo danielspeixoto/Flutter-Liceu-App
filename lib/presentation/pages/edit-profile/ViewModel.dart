@@ -13,6 +13,7 @@ class EditProfileViewModel {
   final Function(String text) onPhoneTextChanged;
   final Function(String text) onDesiredCourseTextChanged;
   final Function() save;
+  final String message;
 
   EditProfileViewModel({
     this.isLoading,
@@ -24,7 +25,8 @@ class EditProfileViewModel {
     this.onBioTextChanged,
     this.onInstagramTextChanged,
     this.onPhoneTextChanged,
-    this.onDesiredCourseTextChanged
+    this.onDesiredCourseTextChanged,
+    this.message
   });
 
   factory EditProfileViewModel.create(Store<AppState> store) {
@@ -37,6 +39,7 @@ class EditProfileViewModel {
         instagram: state.instagram,
         desiredCourse: state.desiredCourse,
         phone: state.phone,
+        message: store.state.editMyInfoState.message,
         save: () async {
           store.dispatch(
             SubmitUserProfileChangesAction(

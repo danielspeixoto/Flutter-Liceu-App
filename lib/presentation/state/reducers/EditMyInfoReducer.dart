@@ -8,6 +8,7 @@ class EditMyInfoState {
   final String phone;
   final String desiredCourse;
   final bool isLoading;
+  final String message;
 
   EditMyInfoState({
     this.bio = "",
@@ -15,6 +16,7 @@ class EditMyInfoState {
     this.phone = "",
     this.desiredCourse = "",
     this.isLoading = false,
+    this.message = ""
   });
 
   factory EditMyInfoState.initial() => EditMyInfoState();
@@ -24,13 +26,15 @@ class EditMyInfoState {
       String instagram,
       String phone,
       String desiredCourse,
-      bool isLoading}) {
+      bool isLoading,
+      String message}) {
     final state = EditMyInfoState(
       bio: bio ?? this.bio,
       instagram: instagram ?? this.instagram,
       phone: phone ?? this.phone,
       desiredCourse: desiredCourse ?? this.desiredCourse,
       isLoading: isLoading ?? this.isLoading,
+      message: message ?? this.message
     );
     return state;
   }
@@ -42,7 +46,9 @@ final Reducer<EditMyInfoState> editMyInfoReducer =
   TypedReducer<EditMyInfoState, SetUserAction>(updateEditFieldsOnUserUpdate),
   TypedReducer<EditMyInfoState, SubmitUserProfileChangesAction>(
       setLoadingEditPage),
-      TypedReducer<EditMyInfoState, SubmitUserProfileChangesSuccessAction>(submitUserProfileSuccess)
+      TypedReducer<EditMyInfoState, SubmitUserProfileChangesSuccessAction>(submitUserProfileSuccess),
+  TypedReducer<EditMyInfoState, NavigateUserEditProfileAction>(navigateEditProfile),   
+  TypedReducer<EditMyInfoState, SubmitUserProfileChangesErrorAction>(setErrorMessage),   
 ]);
 
 String _limitBioSize(String bio) {
@@ -79,6 +85,21 @@ EditMyInfoState submitUserProfileSuccess(
     EditMyInfoState state, SubmitUserProfileChangesSuccessAction action) {
   return state.copyWith(
     isLoading: false,
+    message: "Perfil editado com sucesso"
+  );
+}
+
+EditMyInfoState setErrorMessage(
+    EditMyInfoState state, SubmitUserProfileChangesErrorAction action) {
+  return state.copyWith(
+    isLoading: false,
+    message: "Algum erro ocorreu ao tentar editar o perfil."
+  );
+}
+
+EditMyInfoState navigateEditProfile(EditMyInfoState state, NavigateUserEditProfileAction action) {
+  return state.copyWith(
+    message: ""
   );
 }
 
@@ -96,5 +117,6 @@ EditMyInfoState setLoadingEditPage(
     EditMyInfoState state, SubmitUserProfileChangesAction action) {
   return state.copyWith(
     isLoading: true,
+    message: ""
   );
 }
