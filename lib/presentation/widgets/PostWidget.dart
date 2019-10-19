@@ -301,6 +301,8 @@ class PostWidget extends StatelessWidget {
                           ),
                           minLines: null,
                           maxLines: null,
+                          inputStyle: new TextStyle(
+                      fontSize: 16.0, height: 1, color: Colors.black),
                           keyboardType: TextInputType.multiline,
                           capitalization: TextCapitalization.sentences,
                         ),
