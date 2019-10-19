@@ -287,6 +287,8 @@ class PostWidget extends StatelessWidget {
                           )),
                     )
                   : Container(),
+               this.postStatus == "approved"
+                  ?
               Row(children: <Widget>[
                 Expanded(
                   child: TextFieldHighlight(
@@ -314,7 +316,7 @@ class PostWidget extends StatelessWidget {
                           this.onSendCommentPressed(inputController.text);
                         },
                         child: Text("ENVIAR")))
-              ])
+              ]) : Container()
             ],
           ),
         ),
