@@ -17,8 +17,8 @@ List<Middleware<AppState>> postMiddleware(
     IGetUserByIdUseCase getUserByIdUseCase,
     ICreateImagePostUseCase createImagePostUseCase,
     IGetPostByIdUseCase getPostByIdUseCase,
-    IUpdatePostRatingUseCase updatePostRatingUseCase) {
-
+    IUpdatePostRatingUseCase updatePostRatingUseCase,
+    IUpdatePostCommentUseCase updatePostCommentUseCase) {
   void deletePost(Store<AppState> store, DeletePostAction action,
       NextDispatcher next) async {
     next(action);
@@ -49,16 +49,29 @@ List<Middleware<AppState>> postMiddleware(
 
   void updateRating(Store<AppState> store, SubmitPostUpdateRatingAction action,
       NextDispatcher next) async {
-
-        next(action);
-        try{
-          await updatePostRatingUseCase.run(action.postId);
-        } catch (error, stackTrace) {
+    next(action);
+    try {
+      await updatePostRatingUseCase.run(action.postId);
+    } catch (error, stackTrace) {
       final actionName = action.toString().substring(11);
-      store.dispatch(OnCatchDefaultErrorAction(
-          error.toString(), stackTrace, actionName));
+      store.dispatch(
+          OnCatchDefaultErrorAction(error.toString(), stackTrace, actionName));
     }
-      }
+  }
+
+  void updateComment(Store<AppState> store, SubmitPostCommentAction action,
+      NextDispatcher next) async {
+    next(action);
+        try {
+      await updatePostCommentUseCase.run(action.postId, action.comment);
+      store.dispatch(SubmitPostCommentSuccessAction());
+    } catch (error, stackTrace) {
+      final actionName = action.toString().substring(11);
+      store.dispatch(
+          OnCatchDefaultErrorAction(error.toString(), stackTrace, actionName));
+      store.dispatch(SubmitPostCommentErrorAction());
+    }
+  }
 
   void createImagePost(Store<AppState> store, SubmitImagePostAction action,
       NextDispatcher next) async {
@@ -90,15 +103,8 @@ List<Middleware<AppState>> postMiddleware(
       final posts = await explorePostUseCase.run(50);
       final futures = posts.map((post) async {
         final author = await getUserByIdUseCase.run(post.userId);
-        return PostData(
-          post.id,
-          author,
-          post.type,
-          post.text,
-          post.imageURL,
-          post.statusCode,
-          post.likes
-        );
+        return PostData(post.id, author, post.type, post.text, post.imageURL,
+            post.statusCode, post.likes);
       });
       final data = await Future.wait(futures);
       store.dispatch(FetchPostsSuccessAction(data));
@@ -128,8 +134,8 @@ List<Middleware<AppState>> postMiddleware(
     try {
       final post = await getPostByIdUseCase.run(action.postId);
       final user = await getUserByIdUseCase.run(post.userId);
-      final postData =
-          new PostData(post.id, user, post.type, post.text, post.imageURL, post.statusCode, post.likes);
+      final postData = new PostData(post.id, user, post.type, post.text,
+          post.imageURL, post.statusCode, post.likes);
 
       store.dispatch(NavigatePostAction(postData));
     } catch (error, stackTrace) {
@@ -157,6 +163,7 @@ List<Middleware<AppState>> postMiddleware(
     TypedMiddleware<AppState, FetchPostAction>(fetchPostById),
     TypedMiddleware<AppState, NavigatePostImageZoomAction>(
         navigatePostImageZoom),
-    TypedMiddleware<AppState, SubmitPostUpdateRatingAction>(updateRating),    
+    TypedMiddleware<AppState, SubmitPostUpdateRatingAction>(updateRating),
+    TypedMiddleware<AppState, SubmitPostCommentAction>(updateComment),
   ];
 }

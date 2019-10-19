@@ -1,5 +1,6 @@
 import 'package:app/domain/aggregates/User.dart';
 import 'package:app/presentation/widgets/TextFieldHighlight.dart';
+import 'package:app/util/FeaturesAvailable.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_linkify/flutter_linkify.dart';
@@ -28,6 +29,8 @@ class PostWidget extends StatelessWidget {
   final Function(String) onReportTextChange;
   int likes;
   final Function() onLikePressed;
+  final Function(String comment) onSendCommentPressed;
+  final inputController = TextEditingController();
 
   PostWidget(
       {@required this.user,
@@ -41,8 +44,9 @@ class PostWidget extends StatelessWidget {
       @required this.postStatus,
       this.onReportPressed,
       this.onReportTextChange,
-      this.likes,
-      this.onLikePressed});
+      @required this.likes,
+      @required this.onLikePressed,
+      this.onSendCommentPressed});
 
   @override
   Widget build(BuildContext context) => Card(
@@ -264,25 +268,73 @@ class PostWidget extends StatelessWidget {
                             ),
                           )),
                     ),
-                    this.postStatus == "approved" ?
-              Container(
-                alignment: Alignment.centerLeft,
-                child: FlatButton(
-                    onPressed: () {
-                      this.onLikePressed();
-                    },
-                    child: Row(
+              this.postStatus == "approved"
+                  ? Container(
+                      alignment: Alignment.centerLeft,
+                      child: FlatButton(
+                          onPressed: () {
+                            this.onLikePressed();
+                          },
+                          child: Row(
+                            children: <Widget>[
+                              Icon(
+                                FontAwesomeIcons.solidHeart,
+                                size: 15,
+                              ),
+                              Container(
+                                  margin: EdgeInsets.only(left: 4),
+                                  child: Text(this.likes.toString()))
+                            ],
+                          )),
+                    )
+                  : Container(),
+              this.postStatus == "approved" && FeaturesAvailable.comments
+                  ? Row(
                       children: <Widget>[
-                        Icon(
-                          FontAwesomeIcons.solidHeart,
-                          size: 15,
+                        Expanded(
+                          child: Container(
+                            margin: EdgeInsets.only(left: 8, right: 0),
+                            child: TextFieldHighlight(
+                              controller: inputController,
+                              decoration: InputDecoration(
+                                contentPadding: EdgeInsets.symmetric(
+                                    vertical: 8, horizontal: 12),
+                                border: OutlineInputBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(12)),
+                                  borderSide: BorderSide(
+                                    width: 0.00,
+                                  ),
+                                ),
+                                hintText: "Escreva um comentário...",
+                              ),
+                              minLines: null,
+                              maxLines: null,
+                              inputStyle: new TextStyle(
+                                fontSize: 16.0,
+//                                  height: 1,
+                                color: Colors.black,
+                              ),
+                              keyboardType: TextInputType.multiline,
+                              capitalization: TextCapitalization.sentences,
+                            ),
+                          ),
                         ),
                         Container(
-                            margin: EdgeInsets.only(left: 4),
-                            child: Text(this.likes.toString()))
+                          margin: EdgeInsets.only(right: 4),
+                          child: FlatButton(
+                            onPressed: () {
+                              this.onSendCommentPressed(inputController.text);
+                            },
+                            child: Icon(
+                              FontAwesomeIcons.commentAlt,
+                              size: 16,
+                            ),
+                          ),
+                        ),
                       ],
-                    )),
-              ) : Container(),
+                    )
+                  : Container()
             ],
           ),
         ),
