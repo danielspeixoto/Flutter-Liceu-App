@@ -27,7 +27,6 @@ class CreatePostViewModel {
     final createPostTextErrorMessage =
         store.state.postState.createPostTextErrorMessage;
     final message = store.state.postState.message;
-
     return CreatePostViewModel(
       onPostSubmitted: (text, file) async {
         if (!isLoading) {

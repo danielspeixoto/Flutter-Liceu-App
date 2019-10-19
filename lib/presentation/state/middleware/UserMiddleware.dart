@@ -92,7 +92,7 @@ List<Middleware<AppState>> userMiddleware(
     next(action);
     store.dispatch(FetchUserInfoAction());
     if (store.state.route.last == AppRoutes.editProfile) {
-      store.dispatch(NavigatePopAction());
+      //store.dispatch(NavigatePopAction());
     }
   }
 
