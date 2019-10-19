@@ -87,7 +87,7 @@ Post fromMapToPost(data) {
     data["description"],
     data["image"]["imageData"],
     data["statusCode"],
-    data["likes"]
+    data["likes"] == null ? 0 : data["likes"],
   );
 }
 

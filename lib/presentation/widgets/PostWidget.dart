@@ -43,8 +43,8 @@ class PostWidget extends StatelessWidget {
       @required this.postStatus,
       this.onReportPressed,
       this.onReportTextChange,
-      this.likes,
-      this.onLikePressed,
+      @required this.likes,
+      @required this.onLikePressed,
       this.onSendCommentPressed});
 
   @override
@@ -288,37 +288,51 @@ class PostWidget extends StatelessWidget {
                     )
                   : Container(),
               this.postStatus == "approved"
-                  ? Row(children: <Widget>[
-                      Expanded(
+                  ? Row(
+                      children: <Widget>[
+                        Expanded(
                           child: Container(
-                        margin: EdgeInsets.all(8),
-                        child: TextFieldHighlight(
-                          controller: inputController,
-                          decoration: InputDecoration(
-                            border: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                width: 0.1,
+                            margin: EdgeInsets.only(left: 8, right: 0),
+                            child: TextFieldHighlight(
+                              controller: inputController,
+                              decoration: InputDecoration(
+                                contentPadding: EdgeInsets.symmetric(
+                                    vertical: 8, horizontal: 12),
+                                border: OutlineInputBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(12)),
+                                  borderSide: BorderSide(
+                                    width: 0.00,
+                                  ),
+                                ),
+                                hintText: "Escreva um comentário...",
                               ),
+                              minLines: null,
+                              maxLines: null,
+                              inputStyle: new TextStyle(
+                                fontSize: 16.0,
+//                                  height: 1,
+                                color: Colors.black,
+                              ),
+                              keyboardType: TextInputType.multiline,
+                              capitalization: TextCapitalization.sentences,
                             ),
-                            hintText: "Escreva um comentário..",
                           ),
-                          minLines: null,
-                          maxLines: null,
-                          inputStyle: new TextStyle(
-                              fontSize: 16.0, height: 1, color: Colors.black),
-                          keyboardType: TextInputType.multiline,
-                          capitalization: TextCapitalization.sentences,
                         ),
-                      )),
-                      Container(
-                          alignment: Alignment.centerLeft,
-                          margin: EdgeInsets.all(8),
+                        Container(
+                          margin: EdgeInsets.only(right: 4),
                           child: FlatButton(
-                              onPressed: () {
-                                this.onSendCommentPressed(inputController.text);
-                              },
-                              child: Text("ENVIAR")))
-                    ])
+                            onPressed: () {
+                              this.onSendCommentPressed(inputController.text);
+                            },
+                            child: Icon(
+                              FontAwesomeIcons.commentAlt,
+                              size: 16,
+                            ),
+                          ),
+                        ),
+                      ],
+                    )
                   : Container()
             ],
           ),
