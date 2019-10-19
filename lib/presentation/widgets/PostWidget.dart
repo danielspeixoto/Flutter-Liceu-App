@@ -287,11 +287,12 @@ class PostWidget extends StatelessWidget {
                           )),
                     )
                   : Container(),
-               this.postStatus == "approved"
-                  ?
-              Row(children: <Widget>[
-                Expanded(
-                  child: TextFieldHighlight(
+              this.postStatus == "approved"
+                  ? Row(children: <Widget>[
+                      Expanded(
+                          child: Container(
+                        margin: EdgeInsets.all(8),
+                        child: TextFieldHighlight(
                           controller: inputController,
                           decoration: InputDecoration(
                             border: OutlineInputBorder(
@@ -304,19 +305,21 @@ class PostWidget extends StatelessWidget {
                           minLines: null,
                           maxLines: null,
                           inputStyle: new TextStyle(
-                      fontSize: 16.0, height: 1, color: Colors.black),
+                              fontSize: 16.0, height: 1, color: Colors.black),
                           keyboardType: TextInputType.multiline,
                           capitalization: TextCapitalization.sentences,
                         ),
-                ),
-                Container(
-                    alignment: Alignment.centerLeft,
-                    child: FlatButton(
-                        onPressed: () {
-                          this.onSendCommentPressed(inputController.text);
-                        },
-                        child: Text("ENVIAR")))
-              ]) : Container()
+                      )),
+                      Container(
+                          alignment: Alignment.centerLeft,
+                          margin: EdgeInsets.all(8),
+                          child: FlatButton(
+                              onPressed: () {
+                                this.onSendCommentPressed(inputController.text);
+                              },
+                              child: Text("ENVIAR")))
+                    ])
+                  : Container()
             ],
           ),
         ),

@@ -240,7 +240,6 @@ class EditProfilePage extends StatelessWidget {
                                       onChanged: (text) {
                                         viewModel.onPhoneTextChanged(text);
                                       },
-                                      isMasked: true,
                                       decoration: InputDecoration(
                                         prefixIcon:
                                             Icon(FontAwesomeIcons.phoneAlt),
