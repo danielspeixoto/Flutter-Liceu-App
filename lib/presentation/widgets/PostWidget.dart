@@ -28,6 +28,8 @@ class PostWidget extends StatelessWidget {
   final Function(String) onReportTextChange;
   int likes;
   final Function() onLikePressed;
+  final Function(String comment) onSendCommentPressed;
+  final inputController = TextEditingController();
 
   PostWidget(
       {@required this.user,
@@ -42,7 +44,8 @@ class PostWidget extends StatelessWidget {
       this.onReportPressed,
       this.onReportTextChange,
       this.likes,
-      this.onLikePressed});
+      this.onLikePressed,
+      this.onSendCommentPressed});
 
   @override
   Widget build(BuildContext context) => Card(
@@ -264,25 +267,52 @@ class PostWidget extends StatelessWidget {
                             ),
                           )),
                     ),
-                    this.postStatus == "approved" ?
-              Container(
-                alignment: Alignment.centerLeft,
-                child: FlatButton(
-                    onPressed: () {
-                      this.onLikePressed();
-                    },
-                    child: Row(
-                      children: <Widget>[
-                        Icon(
-                          FontAwesomeIcons.solidHeart,
-                          size: 15,
+              this.postStatus == "approved"
+                  ? Container(
+                      alignment: Alignment.centerLeft,
+                      child: FlatButton(
+                          onPressed: () {
+                            this.onLikePressed();
+                          },
+                          child: Row(
+                            children: <Widget>[
+                              Icon(
+                                FontAwesomeIcons.solidHeart,
+                                size: 15,
+                              ),
+                              Container(
+                                  margin: EdgeInsets.only(left: 4),
+                                  child: Text(this.likes.toString()))
+                            ],
+                          )),
+                    )
+                  : Container(),
+              Row(children: <Widget>[
+                Expanded(
+                  child: TextFieldHighlight(
+                          controller: inputController,
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                width: 0.1,
+                              ),
+                            ),
+                            hintText: "Escreva um comentário..",
+                          ),
+                          minLines: null,
+                          maxLines: null,
+                          keyboardType: TextInputType.multiline,
+                          capitalization: TextCapitalization.sentences,
                         ),
-                        Container(
-                            margin: EdgeInsets.only(left: 4),
-                            child: Text(this.likes.toString()))
-                      ],
-                    )),
-              ) : Container(),
+                ),
+                Container(
+                    alignment: Alignment.centerLeft,
+                    child: FlatButton(
+                        onPressed: () {
+                          this.onSendCommentPressed(inputController.text);
+                        },
+                        child: Text("ENVIAR")))
+              ])
             ],
           ),
         ),
