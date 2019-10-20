@@ -56,6 +56,7 @@ class ExplorePage extends StatelessWidget {
                           post.text,
                         );
                       },
+                      images: post.images,
                       onDeletePressed: user.id == post.user.id
                           ? () => viewModel.onDeletePostPressed(post.id)
                           : null,
@@ -72,7 +73,7 @@ class ExplorePage extends StatelessWidget {
                               ))
                           : null,
                       onImageZoomPressed: () {
-                        viewModel.onImageZoomPressed(post.imageURL);
+                        viewModel.onImageZoomPressed(post.images);
                       },
                       onReportTextChange: (text) {
                         viewModel.onReportTextChange(text);

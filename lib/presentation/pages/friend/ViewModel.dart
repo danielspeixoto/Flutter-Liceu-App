@@ -25,14 +25,13 @@ class FriendViewModel {
   final Function(String userId) onChallengeMePressed;
   final Function() onInstagramPressed;
   final Function(Post post, User user) onSeeMorePressed;
-  final Function(String imageURL) onImageZoomPressed;
-    final Function(String page, String width, String height, String authorId,
+  final Function(List<String> imageURL) onImageZoomPressed;
+  final Function(String page, String width, String height, String authorId,
       String authorName, String postId, String postType) onReportPressed;
   final Function(String text) onReportTextChange;
   final String reportText;
   final Function(String postId) onLikePressed;
-    final Function(String postId, String comment) onSendCommentPressed;
-  
+  final Function(String postId, String comment) onSendCommentPressed;
 
   FriendViewModel(
       {this.user,
@@ -78,8 +77,16 @@ class FriendViewModel {
           launch("https://www.instagram.com/" + instagramProfile);
         },
         onSeeMorePressed: (post, user) {
-          final postData =
-              new PostData(post.id, user, post.type, post.text, post.imageURL, post.statusCode, post.likes);
+          final postData = new PostData(
+            post.id,
+            user,
+            post.type,
+            post.text,
+            post.imageURL,
+            post.statusCode,
+            post.likes,
+            post.images,
+          );
           store.dispatch(NavigatePostAction(postData));
         },
         onImageZoomPressed: (imageURL) {
@@ -88,8 +95,13 @@ class FriendViewModel {
         onReportTextChange: (text) {
           store.dispatch(SetFriendPostReportTextFieldAction(text));
         },
-        onReportPressed: (String page, String width, String height,
-            String authorId, String authorName, String postId, String postType) async {
+        onReportPressed: (String page,
+            String width,
+            String height,
+            String authorId,
+            String authorName,
+            String postId,
+            String postType) async {
           final String version = await Information.appVersion;
           final String phoneModel = await Information.phoneModel;
           final String brand = await Information.brand;
@@ -116,11 +128,7 @@ class FriendViewModel {
             "screenSize": width + " x " + height
           };
 
-          List<String> tags = [
-            "created",
-            "report",
-            "post"
-          ];
+          List<String> tags = ["created", "report", "post"];
           store.dispatch(SubmitReportAction(
               store.state.friendState.reportText, tags, params));
         },

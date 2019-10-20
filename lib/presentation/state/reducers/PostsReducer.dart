@@ -1,4 +1,5 @@
 import 'dart:io';
+
 import 'package:app/presentation/state/actions/PostActions.dart';
 import 'package:app/presentation/state/aggregates/PostData.dart';
 import 'package:redux/redux.dart';
@@ -11,34 +12,40 @@ class PostState {
   final File imageSubmission;
   final String createPostTextErrorMessage;
   final Data<PostData> post;
-  final String imageURL;
+  final List<String> imageURL;
   final String message;
   final String reportText;
-  PostState(this.posts, this.isCreatingPost, this.createPostTextErrorMessage,
-      this.imageSubmission, this.post, this.imageURL, this.message, this.reportText);
+  PostState(
+      this.posts,
+      this.isCreatingPost,
+      this.createPostTextErrorMessage,
+      this.imageSubmission,
+      this.post,
+      this.imageURL,
+      this.message,
+      this.reportText);
 
-  factory PostState.initial() => PostState(Data(), true, "", null, Data(), null, null, null);
+  factory PostState.initial() =>
+      PostState(Data(), true, "", null, Data(), null, null, null);
 
-  PostState copyWith({
-    Data<List<PostData>> posts,
-    bool isCreatingPost,
-    String createPostTextErrorMessage,
-    File imageSubmission,
-    Data<PostData> post,
-    String imageURL,
-    String message,
-    String reportText
-  }) {
+  PostState copyWith(
+      {Data<List<PostData>> posts,
+      bool isCreatingPost,
+      String createPostTextErrorMessage,
+      File imageSubmission,
+      Data<PostData> post,
+      List<String> imageURL,
+      String message,
+      String reportText}) {
     final state = PostState(
-      posts ?? this.posts,
-      isCreatingPost ?? this.isCreatingPost,
-      createPostTextErrorMessage ?? this.createPostTextErrorMessage,
-      imageSubmission ?? this.imageSubmission,
-      post ?? this.post,
-      imageURL ?? this.imageURL,
-      message ?? this.message,
-      reportText ?? this.reportText
-    );
+        posts ?? this.posts,
+        isCreatingPost ?? this.isCreatingPost,
+        createPostTextErrorMessage ?? this.createPostTextErrorMessage,
+        imageSubmission ?? this.imageSubmission,
+        post ?? this.post,
+        imageURL ?? this.imageURL,
+        message ?? this.message,
+        reportText ?? this.reportText);
     return state;
   }
 }
@@ -76,7 +83,8 @@ PostState deletePost(PostState state, DeletePostAction action) {
 
 PostState setSuccessMessage(PostState state, SubmitPostSuccessAction action) {
   return state.copyWith(
-    message: "Seu resumo foi criado com sucesso, e passará por um processo de aprovação antes de ser postado.",
+    message:
+        "Seu resumo foi criado com sucesso, e passará por um processo de aprovação antes de ser postado.",
     isCreatingPost: false,
   );
 }
@@ -94,10 +102,9 @@ PostState setPost(PostState state, SetCompletePostAction action) {
   );
 }
 
-PostState setReportTextField(PostState state, SetPostReportTextFieldAction action) {
-  return state.copyWith(
-    reportText: action.text
-  );
+PostState setReportTextField(
+    PostState state, SetPostReportTextFieldAction action) {
+  return state.copyWith(reportText: action.text);
 }
 
 PostState explorePostsRetrieved(
@@ -107,33 +114,20 @@ PostState explorePostsRetrieved(
 
 PostState explorePosts(PostState state, FetchPostsAction action) {
   return state.copyWith(
-      posts: state.posts.copyWith(isLoading: true, errorMessage: "",));
+      posts: state.posts.copyWith(
+    isLoading: true,
+    errorMessage: "",
+  ));
 }
 
 PostState createPost(PostState state, SubmitTextPostAction action) {
-  return PostState(
-    state.posts,
-    true,
-    "",
-    null,
-    state.post,
-    state.imageURL,
-    state.message,
-    state.reportText
-  );
+  return PostState(state.posts, true, "", null, state.post, state.imageURL,
+      state.message, state.reportText);
 }
 
 PostState createImagePost(PostState state, SubmitImagePostAction action) {
-  return PostState(
-    state.posts,
-    true,
-    "",
-    null,
-    state.post,
-    state.imageURL,
-    state.message,
-    state.reportText
-  );
+  return PostState(state.posts, true, "", null, state.post, state.imageURL,
+      state.message, state.reportText);
 }
 
 PostState setImageForSubmission(PostState state, SetImageForSubmission action) {
@@ -143,7 +137,8 @@ PostState setImageForSubmission(PostState state, SetImageForSubmission action) {
 }
 
 PostState navigateCreatePost(PostState state, NavigateCreatePostAction action) {
-  return state.copyWith(isCreatingPost: false, createPostTextErrorMessage: "", message: "");
+  return state.copyWith(
+      isCreatingPost: false, createPostTextErrorMessage: "", message: "");
 }
 
 PostState onCreatePostTextSizeMismatch(
@@ -154,8 +149,6 @@ PostState onCreatePostTextSizeMismatch(
           "O tamanho do texto é menor que 100 ou maior que 2000 caracteres.");
 }
 
-PostState setImage(
-    PostState state, SetPostImageAction action) {
-  return state.copyWith(
-      imageURL: action.imageURL);
+PostState setImage(PostState state, SetPostImageAction action) {
+  return state.copyWith(imageURL: action.imageURL);
 }

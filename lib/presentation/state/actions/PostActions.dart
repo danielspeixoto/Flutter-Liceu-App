@@ -14,7 +14,7 @@ class NavigatePostAction {
 }
 
 class NavigatePostImageZoomAction {
-  final String imageURL;
+  final List<String> imageURL;
 
   NavigatePostImageZoomAction(this.imageURL);
 }
@@ -30,7 +30,7 @@ class FetchPostsSuccessAction {
 
 class FetchPostsErrorAction {}
 
-class FetchPostAction{
+class FetchPostAction {
   final String postId;
 
   FetchPostAction(this.postId);
@@ -50,7 +50,7 @@ class SetCompletePostAction {
 }
 
 class SetPostImageAction {
-  final String imageURL;
+  final List<String> imageURL;
 
   SetPostImageAction(this.imageURL);
 }

@@ -88,7 +88,22 @@ Post fromMapToPost(data) {
     data["image"]["imageData"],
     data["statusCode"],
     data["likes"] == null ? 0 : data["likes"],
+    fromMapToListOfImages(data["multipleImages"]),
   );
+}
+
+List<String> fromMapToListOfImages(content) {
+  if (content != null) {
+    List<String> result = List<String>();
+
+    for (var i = 0; i < content.length; i++) {
+      result.add(content[i]["imageData"]);
+    }
+
+    return result;
+  }
+
+  return [];
 }
 
 Ranking fromJsonToRanking(content) {

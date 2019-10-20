@@ -6,11 +6,12 @@ class Post {
   final String imageURL;
   final String statusCode;
   int likes;
+  final List<String> images;
 
 
 //  final DateTime submissionDate;
 
-  Post(this.id, this.userId, String type, this.text, this.imageURL, this.statusCode, this.likes) {
+  Post(this.id, this.userId, String type, this.text, this.imageURL, this.statusCode, this.likes, this.images) {
     switch (type) {
       case "text":
         this.type = PostType.TEXT;

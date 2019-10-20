@@ -174,6 +174,7 @@ class FriendPage extends StatelessWidget {
                               post.text,
                             );
                           },
+                          images: post.images,
                           likes: post.likes == null ? 0 : post.likes,
                           imageURL: post.imageURL,
                           seeMore: post.text.length > 600
@@ -189,7 +190,7 @@ class FriendPage extends StatelessWidget {
                                   ))
                               : null,
                           onImageZoomPressed: () {
-                            viewModel.onImageZoomPressed(post.imageURL);
+                            viewModel.onImageZoomPressed(post.images);
                           },
                           onReportTextChange: (text) {
                             viewModel.onReportTextChange(text);

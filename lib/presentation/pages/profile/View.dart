@@ -88,8 +88,15 @@ class ProfilePage extends StatelessWidget {
                                           onTap: () {
                                             Navigator.of(context).pop();
                                             viewModel.onSendReportButtonPressed(
-                                                runtimeType.toString(),MediaQuery.of(context).size.width.toString(),
-                                                MediaQuery.of(context).size.height.toString());
+                                                runtimeType.toString(),
+                                                MediaQuery.of(context)
+                                                    .size
+                                                    .width
+                                                    .toString(),
+                                                MediaQuery.of(context)
+                                                    .size
+                                                    .height
+                                                    .toString());
                                           },
                                         ),
                                       ],
@@ -261,6 +268,7 @@ class ProfilePage extends StatelessWidget {
                               post.text,
                             );
                           },
+                          images: post.images,
                           onDeletePressed: () =>
                               viewModel.onDeletePostPressed(post.id),
                           imageURL: post.imageURL,
@@ -278,7 +286,7 @@ class ProfilePage extends StatelessWidget {
                                   ))
                               : null,
                           onImageZoomPressed: () {
-                            viewModel.onImageZoomPressed(post.imageURL);
+                            viewModel.onImageZoomPressed(post.images);
                           },
                           onLikePressed: () {
                             viewModel.onLikePressed(post.id);

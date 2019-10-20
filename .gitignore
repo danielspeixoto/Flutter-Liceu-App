@@ -75,3 +75,4 @@
 
 fastlane/report.xml
 .env
+ios/Flutter/flutter_export_environment.sh

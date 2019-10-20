@@ -7,9 +7,10 @@ class PostData {
   final PostType type;
   final String text;
   final String imageURL;
+  final List<String> images;
   final String statusCode;
   int likes;
 
   PostData(this.id, this.user, this.type, this.text, this.imageURL,
-      this.statusCode, this.likes);
+      this.statusCode, this.likes, this.images);
 }
