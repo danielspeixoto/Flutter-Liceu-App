@@ -12,7 +12,6 @@ import 'package:app/presentation/state/aggregates/PostData.dart';
 import 'package:app/presentation/state/app_state.dart';
 import 'package:app/presentation/state/reducers/Data.dart';
 import 'package:app/presentation/util/text.dart';
-import 'package:flutter/material.dart';
 import 'package:redux/redux.dart';
 import 'package:share/share.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -34,7 +33,7 @@ class ProfileViewModel {
   final Function(String text) onFeedbackTextChanged;
   final Function onShareProfilePressed;
   final Function(Post post, User user) onSeeMorePressed;
-  final Function(String imageURL) onImageZoomPressed;
+  final Function(List<String> imageURL) onImageZoomPressed;
   final Function(String postId) onLikePressed;
   final Function(String postId, String comment) onSendCommentPressed;
 
@@ -131,8 +130,16 @@ class ProfileViewModel {
               "Você já viu o que eu estou fazendo no Liceu? \nhttp://liceu.co?userId=${store.state.userState.user.content.id}");
         },
         onSeeMorePressed: (post, user) {
-          final postData = new PostData(post.id, user, post.type, post.text,
-              post.imageURL, post.statusCode, post.likes);
+          final postData = new PostData(
+            post.id,
+            user,
+            post.type,
+            post.text,
+            post.imageURL,
+            post.statusCode,
+            post.likes,
+            post.images,
+          );
           store.dispatch(NavigatePostAction(postData));
         },
         onImageZoomPressed: (imageURL) {

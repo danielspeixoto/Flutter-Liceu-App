@@ -41,13 +41,14 @@ class CompletePostPage extends StatelessWidget {
                             post.content.type, post.content.text);
                       },
                       onImageZoomPressed: () {
-                        viewModel.onImageZoomPressed(post.content.imageURL);
+                        viewModel.onImageZoomPressed(post.content.images);
                       },
                       likes: post.content.likes,
                       onLikePressed: () {
                         viewModel.onLikePressed(post.content.id);
                         post.content.likes++;
                       },
+                      images: post.content.images,
                     ),
                   ),
                 ],

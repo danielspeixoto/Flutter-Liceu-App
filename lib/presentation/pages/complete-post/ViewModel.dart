@@ -16,7 +16,7 @@ class CompletePostViewModel {
   final Function(User user) onUserPressed;
   final Function() refresh;
   final Function(String postId) onLikePressed;
-  final Function(String imageURL) onImageZoomPressed;
+  final Function(List<String> imageURL) onImageZoomPressed;
 
   CompletePostViewModel({
     this.post,

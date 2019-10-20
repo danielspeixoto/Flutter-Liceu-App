@@ -19,6 +19,7 @@ class PostWidget extends StatelessWidget {
   final User user;
   final String postContent;
   final String imageURL;
+  final List<String> images;
   final Function() onDeletePressed;
   final Function() onSharePressed;
   final Function(User) onUserPressed;
@@ -32,21 +33,23 @@ class PostWidget extends StatelessWidget {
   final Function(String comment) onSendCommentPressed;
   final inputController = TextEditingController();
 
-  PostWidget(
-      {@required this.user,
-      @required this.postContent,
-      this.onDeletePressed,
-      @required this.onSharePressed,
-      this.onUserPressed,
-      @required this.imageURL,
-      this.seeMore,
-      this.onImageZoomPressed,
-      @required this.postStatus,
-      this.onReportPressed,
-      this.onReportTextChange,
-      @required this.likes,
-      @required this.onLikePressed,
-      this.onSendCommentPressed});
+  PostWidget({
+    @required this.user,
+    @required this.postContent,
+    this.onDeletePressed,
+    @required this.onSharePressed,
+    this.onUserPressed,
+    @required this.imageURL,
+    this.seeMore,
+    this.onImageZoomPressed,
+    @required this.postStatus,
+    this.onReportPressed,
+    this.onReportTextChange,
+    @required this.likes,
+    @required this.onLikePressed,
+    this.onSendCommentPressed,
+    @required this.images,
+  });
 
   @override
   Widget build(BuildContext context) => Card(
@@ -246,27 +249,42 @@ class PostWidget extends StatelessWidget {
               seeMore != null ? seeMore : Container(),
               imageURL == null
                   ? Container()
-                  : SizedBox(
-                      width: double.infinity,
-                      height: (MediaQuery.of(context).size.width - 8),
-                      child: FlatButton(
-                          padding: EdgeInsets.all(0),
-                          onPressed: () {
-                            this.onImageZoomPressed();
-                          },
-                          child: Opacity(
-                            opacity: this.postStatus == "approved" ? 1.0 : 0.5,
-                            child: CachedNetworkImage(
-                              width: double.infinity,
-                              height: (MediaQuery.of(context).size.width - 8),
-                              fit: BoxFit.fitWidth,
-                              alignment: Alignment.center,
-                              imageUrl: imageURL,
-                              placeholder: (ctx, x) => Image(
-                                image: AssetImage("assets/pencil.gif"),
+                  : Column(
+                      children: [
+                        SizedBox(
+                          width: double.infinity,
+                          height: (MediaQuery.of(context).size.width - 8),
+                          child: FlatButton(
+                            padding: EdgeInsets.all(0),
+                            onPressed: () {
+                              this.onImageZoomPressed();
+                            },
+                            child: Opacity(
+                              opacity:
+                                  this.postStatus == "approved" ? 1.0 : 0.5,
+                              child: CachedNetworkImage(
+                                width: double.infinity,
+                                height: (MediaQuery.of(context).size.width - 8),
+                                fit: BoxFit.fitWidth,
+                                alignment: Alignment.center,
+                                imageUrl: imageURL,
+                                placeholder: (ctx, x) => Image(
+                                  image: AssetImage("assets/pencil.gif"),
+                                ),
                               ),
                             ),
-                          )),
+                          ),
+                        ),
+                        Container(
+                          margin: EdgeInsets.only(top: 4),
+                          child: Text(
+                            "1/" + images.length.toString(),
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
               this.postStatus == "approved"
                   ? Container(

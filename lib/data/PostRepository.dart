@@ -13,6 +13,7 @@ class PostRepository implements IPostRepository {
   final String _url;
 
   PostRepository(this._url, this._apiKey, this._client);
+
   final Client _client;
 
   Future<Post> id(String accessToken, String postId) async {
@@ -47,12 +48,12 @@ class PostRepository implements IPostRepository {
   }
 
   @override
-  Future<void> createImagePost(String accessToken, String imageData,
-      String imageTitle, String text) async {
-        List<String> images = new List<String>();
-
-        images.add(imageData);
-        images.add(imageData);
+  Future<void> createImagePost(
+    String accessToken,
+    String imageData,
+    String imageTitle,
+    String text,
+  ) async {
     final response = await this._client.post(
           _url + "/",
           headers: {
@@ -64,11 +65,8 @@ class PostRepository implements IPostRepository {
             {
               "type": "multipleImages",
               "description": text,
-              "imagesData": images.map((image) {
-                return {
-                  "imageTitle": imageTitle,
-                  "imageData": image
-                };
+              "imagesData": [imageData].map((image) {
+                return {"imageTitle": imageTitle, "imageData": image};
               }).toList()
             },
           ),
@@ -120,9 +118,7 @@ class PostRepository implements IPostRepository {
             authHeader: accessToken
           },
           body: json.encode(
-            {
-              "comment": comment
-            },
+            {"comment": comment},
           ),
         );
     if (response.statusCode == 200) {

@@ -20,7 +20,7 @@ class ExploreViewModel {
   final Function(String postId) onDeletePostPressed;
   final Function(String postId, PostType type, String text) onSharePostPressed;
   final Function(User user) onUserPressed;
-  final Function(String imageURL) onImageZoomPressed;
+  final Function(List<String> imageURL) onImageZoomPressed;
   final Function(PostData post) onSeeMorePressed;
   final Function(String page, String width, String height, String authorId,
       String authorName, String postId, String postType) onReportPressed;
@@ -74,8 +74,13 @@ class ExploreViewModel {
         onReportTextChange: (text) {
           store.dispatch(SetPostReportTextFieldAction(text));
         },
-        onReportPressed: (String page, String width, String height,
-            String authorId, String authorName, String postId, String postType) async {
+        onReportPressed: (String page,
+            String width,
+            String height,
+            String authorId,
+            String authorName,
+            String postId,
+            String postType) async {
           final String version = await Information.appVersion;
           final String phoneModel = await Information.phoneModel;
           final String brand = await Information.brand;
@@ -102,11 +107,7 @@ class ExploreViewModel {
             "screenSize": width + " x " + height
           };
 
-          List<String> tags = [
-            "created",
-            "report",
-            "post"
-          ];
+          List<String> tags = ["created", "report", "post"];
           store.dispatch(SubmitReportAction(
               store.state.postState.reportText, tags, params));
         },
