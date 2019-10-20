@@ -284,6 +284,9 @@ class ProfilePage extends StatelessWidget {
                             viewModel.onLikePressed(post.id);
                             post.likes++;
                           },
+                          onSendCommentPressed: (comment) {
+                            viewModel.onSendCommentPressed(post.id, comment);
+                          },
                         ),
                       ],
                     );

@@ -81,26 +81,27 @@ List<Post> fromJsonToListOfPosts(String content) {
 
 Post fromMapToPost(data) {
   return Post(
-      data["id"],
-      data["userId"],
-      data["type"],
-      data["description"],
-      data["image"]["imageData"],
-      data["statusCode"],
-      data["likes"],
-      fromMapToListOfImages(data["multipleImages"]));
+    data["id"],
+    data["userId"],
+    data["type"],
+    data["description"],
+    data["image"]["imageData"],
+    data["statusCode"],
+    data["likes"] == null ? 0 : data["likes"],
+    fromMapToListOfImages(data["multipleImages"]),
+  );
 }
 
 List<String> fromMapToListOfImages(content) {
   if (content != null) {
     List<String> result = List<String>();
 
-    for(var i = 0; i < content.length; i++){
+    for (var i = 0; i < content.length; i++) {
       result.add(content[i]["imageData"]);
     }
 
     return result;
-  } 
+  }
 
   return [];
 }

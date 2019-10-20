@@ -28,8 +28,6 @@ class RoundedImage extends StatelessWidget {
         child: new ClipOval(
           child: new CachedNetworkImage(
             imageUrl: pictureURL,
-            height: size / 48,
-            width: size / 48,
             fit: BoxFit.cover,
             errorWidget: (context, url, error) => new Image(
               image: AssetImage(randomAnimal),

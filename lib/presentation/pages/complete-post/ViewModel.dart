@@ -1,4 +1,3 @@
-
 import 'package:app/domain/aggregates/Post.dart';
 import 'package:app/domain/aggregates/User.dart';
 import 'package:app/presentation/state/actions/FriendActions.dart';
@@ -16,6 +15,7 @@ class CompletePostViewModel {
   final Function(String postId, PostType type, String text) onSharePostPressed;
   final Function(User user) onUserPressed;
   final Function() refresh;
+  final Function(String postId) onLikePressed;
   final Function(String imageURL) onImageZoomPressed;
 
   CompletePostViewModel({
@@ -24,15 +24,15 @@ class CompletePostViewModel {
     this.onSharePostPressed,
     this.onUserPressed,
     this.refresh,
-    this.onImageZoomPressed
+    this.onImageZoomPressed,
+    this.onLikePressed,
   });
 
-    factory CompletePostViewModel.create(Store<AppState> store) {
+  factory CompletePostViewModel.create(Store<AppState> store) {
     final postState = store.state.postState;
 
     return CompletePostViewModel(
       post: postState.post,
-     
       onSharePostPressed: (postId, type, text) {
         store.dispatch(PostShareAction(postId, type));
         Share.share(summarize(text, 300) +
@@ -46,7 +46,10 @@ class CompletePostViewModel {
       },
       onImageZoomPressed: (imageURL) {
         store.dispatch(NavigatePostImageZoomAction(imageURL));
-      }
+      },
+      onLikePressed: (postId) {
+        store.dispatch(SubmitPostUpdateRatingAction(postState.post.content.id));
+      },
     );
   }
 }

@@ -27,6 +27,7 @@ class ExploreViewModel {
   final Function(String text) onReportTextChange;
   final String reportText;
   final Function(String postId) onLikePressed;
+  final Function(String postId, String comment) onSendCommentPressed;
 
   ExploreViewModel(
       {this.user,
@@ -40,7 +41,8 @@ class ExploreViewModel {
       this.onReportPressed,
       this.onReportTextChange,
       this.reportText,
-      this.onLikePressed});
+      this.onLikePressed,
+      this.onSendCommentPressed});
 
   factory ExploreViewModel.create(Store<AppState> store) {
     final userState = store.state.userState;
@@ -110,6 +112,9 @@ class ExploreViewModel {
         },
         onLikePressed: (postId) {
           store.dispatch(SubmitPostUpdateRatingAction(postId));
+        },
+        onSendCommentPressed: (postId, comment) {
+          store.dispatch(SubmitPostCommentAction(postId, comment));
         });
   }
 }

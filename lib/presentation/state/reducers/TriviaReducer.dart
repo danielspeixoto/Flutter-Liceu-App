@@ -12,6 +12,7 @@ class TriviaState {
   final String createTriviaQuestionErrorMessage;
   final String createTriviaCorrectAnswerErrorMessage;
   final String createTriviaWrongAnswerErrorMessage;
+  final String message;
 
   TriviaState(
       {this.question,
@@ -22,7 +23,8 @@ class TriviaState {
       this.domainNullErrorMessage: " ",
       this.createTriviaQuestionErrorMessage: "",
       this.createTriviaCorrectAnswerErrorMessage: "",
-      this.createTriviaWrongAnswerErrorMessage: ""});
+      this.createTriviaWrongAnswerErrorMessage: "",
+      this.message: ""});
 
   factory TriviaState.initial() => TriviaState();
 
@@ -35,7 +37,8 @@ class TriviaState {
       String domainNullErrorMessage,
       String createTriviaQuestionErrorMessage,
       String createTriviaCorrectAnswerErrorMessage,
-      String createTriviaWrongAnswerErrorMessage}) {
+      String createTriviaWrongAnswerErrorMessage,
+      String message}) {
     final state = TriviaState(
       question: question ?? this.question,
       correctAnswer: correctAnswer ?? this.correctAnswer,
@@ -52,6 +55,7 @@ class TriviaState {
       createTriviaWrongAnswerErrorMessage:
           createTriviaWrongAnswerErrorMessage ??
               this.createTriviaWrongAnswerErrorMessage,
+      message: message ?? this.message
     );
     return state;
   }
@@ -75,7 +79,9 @@ final Reducer<TriviaState> triviaReducer = combineReducers<TriviaState>([
   TypedReducer<TriviaState, SubmitTriviaErrorCorrectAnswerSizeMismatchAction>(
       onCreateTriviaErrorCorrectAnswerSizeMismatch),
   TypedReducer<TriviaState, SubmitTriviaErrorWrongAnswerSizeMismatchAction>(
-      onCreateTriviaErrorWrongAnswerSizeMismatch)
+      onCreateTriviaErrorWrongAnswerSizeMismatch),
+  TypedReducer<TriviaState, SubmitTriviaErrorAction>(
+      setErrorMessage),    
 ]);
 
 TriviaState createTrivia(TriviaState state, SubmitTriviaAction action) {
@@ -94,7 +100,14 @@ TriviaState triviaCreated(TriviaState state, SubmitTriviaSuccessAction action) {
       domainNullErrorMessage: "",
       createTriviaQuestionErrorMessage: "",
       createTriviaCorrectAnswerErrorMessage: "",
-      createTriviaWrongAnswerErrorMessage: "");
+      createTriviaWrongAnswerErrorMessage: "",
+      message: "Questão criada com sucesso.");
+}
+
+TriviaState setErrorMessage(TriviaState state, SubmitTriviaErrorAction action) {
+  return state.copyWith(
+      isCreatingTrivia: false,
+      message: "Algum erro ocorreu ao criar a questão.");
 }
 
 TriviaState setDomainField(
@@ -132,7 +145,8 @@ TriviaState navigateTrivia(
       domainNullErrorMessage: "",
       createTriviaQuestionErrorMessage: "",
       createTriviaCorrectAnswerErrorMessage: "",
-      createTriviaWrongAnswerErrorMessage: "");
+      createTriviaWrongAnswerErrorMessage: "",
+      message: "");
 }
 
 TriviaState onCreateTriviaErrorTagNull(

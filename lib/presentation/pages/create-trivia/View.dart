@@ -2,6 +2,7 @@ import 'package:app/presentation/pages/create-trivia/ViewModel.dart';
 import 'package:app/presentation/state/actions/PageActions.dart';
 import 'package:app/presentation/state/app_state.dart';
 import 'package:app/presentation/widgets/FetcherWidget.dart';
+import 'package:app/presentation/widgets/LiceuDialog.dart';
 import 'package:app/presentation/widgets/LiceuPage.dart';
 import 'package:app/presentation/widgets/TextFieldHighlight.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +16,15 @@ class CreateTriviaPage extends StatelessWidget {
       onInit: (store) => store.dispatch(PageInitAction("CreateTrivia")),
       converter: (store) => CreateTriviaViewModel.create(store),
       builder: (BuildContext context, CreateTriviaViewModel viewModel) {
+        if (viewModel.message != "") {
+          return LiceuDialog(
+            width: 50,
+            height: 50,
+            dialogContext: context,
+            message: viewModel.message,
+            sendButtonTitle: "OK",
+          );
+        }
         return LiceuPage(
             actions: <Widget>[
               FlatButton(

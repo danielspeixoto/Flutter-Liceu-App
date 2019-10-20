@@ -108,6 +108,8 @@ class SubmitUserProfileChangesSuccessAction {
   SubmitUserProfileChangesSuccessAction(this.bio, this.instagram, this.desiredCourse, this.phone);
 }
 
+class SubmitUserProfileChangesErrorAction {}
+
 class SubmitUserFcmTokenAction extends ItemAction {
   final String fcmtoken;
 

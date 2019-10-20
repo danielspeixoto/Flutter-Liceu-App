@@ -24,6 +24,8 @@ void main() {
         'android.permission.ACCESS_NOTIFICATION_POLICY'
       ]);
       driver = await FlutterDriver.connect();
+      sleep(Duration(seconds: 30));
+      await driver.waitFor(skipIntroFinder);
     });
 
     // Close the connection to the driver after the tests have completed.

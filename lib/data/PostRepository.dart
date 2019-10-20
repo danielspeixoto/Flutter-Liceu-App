@@ -110,6 +110,27 @@ class PostRepository implements IPostRepository {
     throw handleNetworkException(response.statusCode, runtimeType.toString());
   }
 
+  Future<void> updatePostComment(
+      String accessToken, String postId, String comment) async {
+    final response = await this._client.put(
+          _url + "/" + postId + "/comment",
+          headers: {
+            apiKeyHeader: _apiKey,
+            contentTypeHeader: contentTypeValueForJson,
+            authHeader: accessToken
+          },
+          body: json.encode(
+            {
+              "comment": comment
+            },
+          ),
+        );
+    if (response.statusCode == 200) {
+      return;
+    }
+    throw handleNetworkException(response.statusCode, runtimeType.toString());
+  }
+
   String _postTypeToString(PostType postType) {
     switch (postType) {
       case PostType.TEXT:
