@@ -317,23 +317,20 @@ class PostWidget extends StatelessWidget {
                     )
                   : Container(),
               comments != null
-                  ? Container(
+                  ? Column(
 
-                      child: ListView.builder(
-                        shrinkWrap: true,
-                          itemCount: comments.length,
-                          itemBuilder: (ctx, idx) {
-                            final comment = comments[idx];
-                            return CommentWidget(
+                      children: comments.map((comment) {
+                        return CommentWidget(
                               author: comment.author,
                               content: comment.content,
+                              authorPic: comment.user.picURL,
                               onUserPressed: () {
                                 if(this.onUserCommentPressed != null){
                                   this.onUserCommentPressed(comment.userId);
                                 }
                               },
                             );
-                          }),
+                      }).toList()
                     )
                   : Container(),
               this.postStatus == "approved" && FeaturesAvailable.comments

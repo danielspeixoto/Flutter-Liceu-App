@@ -253,7 +253,7 @@ class Dependencies {
     final submitChallengeAnswersUseCase =
         SubmitChallengeAnswersUseCase(localRepository, challengeRepository);
     final getExplorePostsUseCase =
-        ExplorePostsUseCase(exploreRepository, localRepository);
+        ExplorePostsUseCase(exploreRepository, localRepository, userRepository);
     final getENEMQuestionsUseCase =
         GetQuestionsUseCase(localRepository, questionRepository);
     final getENEMQuestionsVideosUseCase =
@@ -267,7 +267,7 @@ class Dependencies {
     final submitReportUseCase =
         SubmitReportUseCase(localRepository, reportRepository);
     final getPostByIdUseCase =
-        GetPostByIdUseCase(localRepository, postRepository);
+        GetPostByIdUseCase(localRepository, postRepository, userRepository);
     final setUserPhoneUseCase =
         SetUserPhoneUseCase(localRepository, userRepository);
     final setUserDesiredCourseUseCase =

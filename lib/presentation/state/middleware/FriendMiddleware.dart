@@ -32,9 +32,7 @@ List<Middleware<AppState>> friendMiddleware(
         next(action);
     try {
       final friend = await getUserById.run(action.userId);
-      store.dispatch(NavigateReplaceAction(AppRoutes.friend));
-      store.dispatch(SetFriendAction(friend));
-      store.dispatch(FetchFriendPostsAction(friend.id));
+      store.dispatch(UserClickedAction(friend));
     } catch (error, stackTrace) {
       final actionName = action.toString().substring(11);
       store.dispatch(

@@ -12,7 +12,17 @@ class MyPostsUseCase implements IMyPostsUseCase {
   Future<List<Post>> run() async {
     final accessToken = await this._localRepository.getCredentials();
     final userId = await this._localRepository.getId();
-    final posts = await this._userRepository.posts(accessToken, userId);
+    List<Post> posts =
+        await this._userRepository.posts(accessToken, userId);
+    for (var i = 0; i < posts.length; i++) {
+      Post post = posts[i];
+      for (var j = 0; j < post.comments.length; j++) {
+        final comment = post.comments[j];
+        final user = await this._userRepository.id(accessToken, comment.userId);
+
+        posts[i].comments[j].user = user;
+      }
+    }
     return posts;
   }
 }

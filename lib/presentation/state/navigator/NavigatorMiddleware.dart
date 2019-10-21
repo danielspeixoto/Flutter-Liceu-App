@@ -28,9 +28,9 @@ _navigatePush(
       " to " +
       store.state.route.toString());
   final routeName = action.routeName;
-  if (store.state.route.last != routeName) {
+ 
     navigatorKey.currentState.pushNamed(routeName);
-  }
+  
   next(action); //This need to be after name checks
 }
 
@@ -39,7 +39,7 @@ _navigatePop(Store<AppState> store, action, NextDispatcher next) {
 
   if (navigatorKey.currentState.canPop()) {
     navigatorKey.currentState.pop();
-//    store.dispatch(NavigatePopStackAction());
+     //store.dispatch(NavigatePopAction());
   }
   next(action); //This need to be after name checks
 }

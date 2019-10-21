@@ -113,7 +113,7 @@ List<Comment> fromMapToListOfComments(content) {
 
     for (var i = 0; i < content.length; i++) {
       result.add(new Comment(content[i]["id"], content[i]["userId"],
-          content[i]["author"], content[i]["comment"]));
+          content[i]["author"], content[i]["comment"], null));
     }
 
     return result;
