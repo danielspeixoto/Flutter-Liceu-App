@@ -316,7 +316,7 @@ class PostWidget extends StatelessWidget {
                           )),
                     )
                   : Container(),
-              comments != null
+              comments != null && FeaturesAvailable.comments
                   ? Column(
 
                       children: comments.map((comment) {
