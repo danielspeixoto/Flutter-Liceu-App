@@ -1,3 +1,4 @@
+import 'package:app/domain/aggregates/Post.dart';
 import 'package:app/presentation/state/actions/PageActions.dart';
 import 'package:app/presentation/state/app_state.dart';
 import 'package:app/presentation/util/text.dart';
@@ -260,7 +261,9 @@ class ProfilePage extends StatelessWidget {
                         PostWidget(
                           user: user,
                           postStatus: post.statusCode,
-                          postContent: summarize(post.text, 600),
+                          postContent: post.type == PostType.TEXT
+                              ? summarize(post.text, 600)
+                              : summarize(post.text, 200),
                           onSharePressed: () {
                             viewModel.onSharePostPressed(
                               post.id,
@@ -273,7 +276,10 @@ class ProfilePage extends StatelessWidget {
                               viewModel.onDeletePostPressed(post.id),
                           imageURL: post.imageURL,
                           likes: post.likes == null ? 0 : post.likes,
-                          seeMore: post.text.length > 600
+                          seeMore: post.type == PostType.TEXT &&
+                                      post.text.length > 600 ||
+                                  post.type == PostType.IMAGE &&
+                                      post.text.length > 200
                               ? FlatButton(
                                   onPressed: () =>
                                       viewModel.onSeeMorePressed(post, user),
@@ -301,149 +307,6 @@ class ProfilePage extends StatelessWidget {
                   },
                 ),
               ),
-
-//              ListView(
-//                children: <Widget>[
-//                  FetcherWidget.build(
-//                    isLoading: viewModel.user.isLoading,
-//                    errorMessage: viewModel.user.errorMessage,
-//                    child: () => Container(
-//                      child: Column(
-//                        children: <Widget>[
-//                          Row(
-//                            children: <Widget>[
-//                              Container(
-//                                child: RoundedImage(
-//                                  pictureURL: user.picURL,
-//                                  size: 80.0,
-//                                ),
-//                                margin: EdgeInsets.all(8),
-//                              ),
-//                              Expanded(
-//                                child: Column(
-//                                  children: <Widget>[
-//                                    Container(
-//                                      child: Text(
-//                                        user.name,
-//                                        style: TextStyle(
-//                                          fontWeight: FontWeight.bold,
-//                                          fontSize: 16,
-//                                        ),
-//                                      ),
-//                                      margin: EdgeInsets.all(8),
-//                                    ),
-//                                    FlatButton(
-//                                      onPressed:
-//                                          viewModel.onEditProfileButtonPressed,
-//                                      child: Text(
-//                                        "Editar perfil",
-//                                        style: TextStyle(
-//                                          color: Color(0xFF0061A1),
-//                                        ),
-//                                      ),
-//                                    ),
-//                                  ],
-//                                ),
-//                              ),
-//                            ],
-//                          ),
-//                          user.instagramProfile != null
-//                              ? Container(
-//                                  child: FlatButton(
-//                                    onPressed: () {
-//                                      viewModel.onInstagramPressed();
-//                                    },
-//                                    child: Row(
-//                                      children: <Widget>[
-//                                        Container(
-//                                          child: Icon(
-//                                            FontAwesomeIcons.instagram,
-//                                            size: 18,
-//                                          ),
-//                                          margin: EdgeInsets.only(right: 8),
-//                                        ),
-//                                        Center(
-//                                          child: Text(
-//                                            user.instagramProfile,
-//                                            style: TextStyle(
-//                                                fontWeight: FontWeight.bold),
-//                                          ),
-//                                        ),
-//                                      ],
-//                                    ),
-//                                  ),
-//                                )
-//                              : Container(),
-//                          user.bio != null
-//                              ? Container(
-//                                  width: double.infinity,
-//                                  child: TextWithLinks(
-//                                    text: user.bio,
-//                                  ),
-//                                  margin: const EdgeInsets.symmetric(
-//                                      horizontal: 8.0),
-//                                )
-//                              : Container(),
-//                        ],
-//                      ),
-//                    ),
-//                  ),
-//                  LiceuDivider(),
-//                  FetcherWidget.build(
-//                    isLoading:
-//                        viewModel.posts.isLoading || viewModel.user.isLoading,
-//                    errorMessage: viewModel.posts.errorMessage,
-//                    child: () => Container(
-//                      child: viewModel.posts.content.length == 0
-//                          ? Container(
-//                              margin: EdgeInsets.all(16),
-//                              child: Column(
-//                                children: <Widget>[
-//                                  Text(
-//                                      "Você ainda não compartilhou nenhum resumo"),
-//                                ],
-//                              ),
-//                            )
-//                          : Column(
-//                              children: viewModel.posts.content.map((post) {
-//                                return Column(children: <Widget>[
-//                                  PostWidget(
-//                                    user: viewModel.user.content,
-//                                    postContent: summarize(post.text, 600),
-//                                    onSharePressed: () {
-//                                      viewModel.onSharePostPressed(
-//                                        post.id,
-//                                        post.type,
-//                                        post.text,
-//                                      );
-//                                    },
-//                                    onDeletePressed: () =>
-//                                        viewModel.onDeletePostPressed(post.id),
-//                                    imageURL: post.imageURL,
-//                                    seeMore: post.text.length > 600
-//                                        ? FlatButton(
-//                                            onPressed: () => viewModel
-//                                                .onSeeMorePressed(post, user),
-//                                            child: Text(
-//                                              "Ver mais",
-//                                              style: TextStyle(
-//                                                color: Color(0xFF0061A1),
-//                                                fontWeight: FontWeight.bold,
-//                                              ),
-//                                            ))
-//                                        : null,
-//                                    onImageZoomPressed: () {
-//                                      viewModel
-//                                          .onImageZoomPressed(post.imageURL);
-//                                    },
-//                                  ),
-//                                ]);
-//                              }).toList(),
-//                            ),
-//                    ),
-//                  ),
-//                ],
-//              ),
             ),
           );
         },

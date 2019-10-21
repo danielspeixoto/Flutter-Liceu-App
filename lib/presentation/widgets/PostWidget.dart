@@ -277,8 +277,13 @@ class PostWidget extends StatelessWidget {
                         ),
                         Container(
                           margin: EdgeInsets.only(top: 4),
-                          child: Text(
+                          child: images.length != 0 ? Text(
                             "1/" + images.length.toString(),
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ) : Text(
+                            "1/1",
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                             ),
