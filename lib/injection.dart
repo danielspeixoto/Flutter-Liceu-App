@@ -47,6 +47,7 @@ import 'domain/usecase/enem/SubmitGameUseCase.dart';
 import 'domain/usecase/post/CreatePostUseCase.dart';
 import 'domain/usecase/post/DeletePostUseCase.dart';
 import 'domain/usecase/post/ExplorePostsUseCase.dart';
+import 'domain/usecase/post/SearchPostUseCase.dart';
 import 'domain/usecase/tournament/GetRankingUseCase.dart';
 import 'domain/usecase/user/CheckUseCase.dart';
 import 'domain/usecase/user/GetUserByIdUseCase.dart';
@@ -153,41 +154,44 @@ class Dependencies {
   final ISetUserSchoolUseCase setUserSchoolUseCase;
   final IUpdatePostRatingUseCase updatePostRatingUseCase;
   final IUpdatePostCommentUseCase updatePostCommentUseCase;
+  final ISearchPostsUseCase searchPostsUseCase;
 
   Dependencies(
-      this.loginUseCase,
-      this.myInfoUseCase,
-      this.getUserByIdUseCase,
-      this.myPostsUseCase,
-      this.getUserPostsUseCase,
-      this.myChallengesUseCase,
-      this.getRankingUseCase,
-      this.isLoggedInUseCase,
-      this.myIdUseCase,
-      this.checkUseCase,
-      this.logoutUseCase,
-      this.createTextPostUseCase,
-      this.createImagePostUseCase,
-      this.deletePostUseCase,
-      this.setUserDescriptionUseCase,
-      this.setUserInstagramUseCase,
-      this.challengeSomeoneUseCase,
-      this.getChallengeUseCase,
-      this.getChallengeByIdUseCase,
-      this.submitChallengeAnswersUseCase,
-      this.getExplorePostsUseCase,
-      this.getENEMQuestionsUseCase,
-      this.getENEMQuestionsVideosUseCase,
-      this.submitENEMGamesUseCase,
-      this.createTriviaUseCase,
-      this.submitUserFcmTokenUseCase,
-      this.submitReportUseCase,
-      this.getPostByIdUseCase,
-      this.setUserPhoneUseCase,
-      this.setUserDesiredCourseUseCase,
-      this.setUserSchoolUseCase,
-      this.updatePostRatingUseCase,
-      this.updatePostCommentUseCase);
+    this.loginUseCase,
+    this.myInfoUseCase,
+    this.getUserByIdUseCase,
+    this.myPostsUseCase,
+    this.getUserPostsUseCase,
+    this.myChallengesUseCase,
+    this.getRankingUseCase,
+    this.isLoggedInUseCase,
+    this.myIdUseCase,
+    this.checkUseCase,
+    this.logoutUseCase,
+    this.createTextPostUseCase,
+    this.createImagePostUseCase,
+    this.deletePostUseCase,
+    this.setUserDescriptionUseCase,
+    this.setUserInstagramUseCase,
+    this.challengeSomeoneUseCase,
+    this.getChallengeUseCase,
+    this.getChallengeByIdUseCase,
+    this.submitChallengeAnswersUseCase,
+    this.getExplorePostsUseCase,
+    this.getENEMQuestionsUseCase,
+    this.getENEMQuestionsVideosUseCase,
+    this.submitENEMGamesUseCase,
+    this.createTriviaUseCase,
+    this.submitUserFcmTokenUseCase,
+    this.submitReportUseCase,
+    this.getPostByIdUseCase,
+    this.setUserPhoneUseCase,
+    this.setUserDesiredCourseUseCase,
+    this.setUserSchoolUseCase,
+    this.updatePostRatingUseCase,
+    this.updatePostCommentUseCase,
+    this.searchPostsUseCase,
+  );
 
   static Dependencies obj;
 
@@ -254,6 +258,8 @@ class Dependencies {
         SubmitChallengeAnswersUseCase(localRepository, challengeRepository);
     final getExplorePostsUseCase =
         ExplorePostsUseCase(exploreRepository, localRepository);
+    final searchPostsUseCase =
+        SearchPostsUseCase(postRepository, localRepository);
     final getENEMQuestionsUseCase =
         GetQuestionsUseCase(localRepository, questionRepository);
     final getENEMQuestionsVideosUseCase =
@@ -274,8 +280,10 @@ class Dependencies {
         SetUserDesiredCourseUseCase(localRepository, userRepository);
     final setUserSchooleUseCase =
         SetUserSchoolUseCase(localRepository, userRepository);
-    final updatePostRatingUseCase = UpdatePostRatingUseCase(localRepository, postRepository);
-    final updatePostCommentUseCase = UpdatePostCommentUseCase(localRepository, postRepository);
+    final updatePostRatingUseCase =
+        UpdatePostRatingUseCase(localRepository, postRepository);
+    final updatePostCommentUseCase =
+        UpdatePostCommentUseCase(localRepository, postRepository);
     obj = Dependencies(
       loginUseCase,
       myInfoUseCase,
@@ -309,7 +317,8 @@ class Dependencies {
       setUserDesiredCourseUseCase,
       setUserSchooleUseCase,
       updatePostRatingUseCase,
-      updatePostCommentUseCase
+      updatePostCommentUseCase,
+      searchPostsUseCase,
     );
     return obj;
   }

@@ -28,94 +28,101 @@ class ExploreViewModel {
   final String reportText;
   final Function(String postId) onLikePressed;
   final Function(String postId, String comment) onSendCommentPressed;
+  final Function(String query) onQueryTextChanged;
 
-  ExploreViewModel(
-      {this.user,
-      this.onDeletePostPressed,
-      this.onSharePostPressed,
-      this.posts,
-      this.refresh,
-      this.onUserPressed,
-      this.onSeeMorePressed,
-      this.onImageZoomPressed,
-      this.onReportPressed,
-      this.onReportTextChange,
-      this.reportText,
-      this.onLikePressed,
-      this.onSendCommentPressed});
+  ExploreViewModel({
+    this.user,
+    this.onDeletePostPressed,
+    this.onSharePostPressed,
+    this.posts,
+    this.refresh,
+    this.onUserPressed,
+    this.onSeeMorePressed,
+    this.onImageZoomPressed,
+    this.onReportPressed,
+    this.onReportTextChange,
+    this.reportText,
+    this.onLikePressed,
+    this.onSendCommentPressed,
+    this.onQueryTextChanged,
+  });
 
   factory ExploreViewModel.create(Store<AppState> store) {
     final userState = store.state.userState;
     final postState = store.state.postState;
     return ExploreViewModel(
-        user: userState.user,
-        posts: postState.posts,
-        reportText: postState.reportText,
-        refresh: () {
-          store.dispatch(FetchPostsAction());
-        },
-        onDeletePostPressed: (String postId) {
-          store.dispatch(DeletePostAction(postId));
-        },
-        onSharePostPressed: (postId, type, text) {
-          store.dispatch(PostShareAction(postId, type));
-          Share.share(summarize(text, 300) +
-              "\n\nVeja o post que ${store.state.userState.user.content.name} compartilhou com você!\nhttp://liceu.co?postId=$postId");
-        },
-        onUserPressed: (user) {
-          store.dispatch(UserClickedAction(user));
-        },
-        onSeeMorePressed: (post) {
-          store.dispatch(NavigatePostAction(post));
-        },
-        onImageZoomPressed: (imageURL) {
-          store.dispatch(NavigatePostImageZoomAction(imageURL));
-        },
-        onReportTextChange: (text) {
-          store.dispatch(SetPostReportTextFieldAction(text));
-        },
-        onReportPressed: (String page,
-            String width,
-            String height,
-            String authorId,
-            String authorName,
-            String postId,
-            String postType) async {
-          final String version = await Information.appVersion;
-          final String phoneModel = await Information.phoneModel;
-          final String brand = await Information.brand;
-          final String release = await Information.osRelease;
-          String os;
+      user: userState.user,
+      posts: postState.query != "" ? postState.searchPosts : postState.posts,
+      reportText: postState.reportText,
+      refresh: () {
+        store.dispatch(FetchPostsAction());
+      },
+      onDeletePostPressed: (String postId) {
+        store.dispatch(DeletePostAction(postId));
+      },
+      onSharePostPressed: (postId, type, text) {
+        store.dispatch(PostShareAction(postId, type));
+        Share.share(summarize(text, 300) +
+            "\n\nVeja o post que ${store.state.userState.user.content.name} compartilhou com você!\nhttp://liceu.co?postId=$postId");
+      },
+      onUserPressed: (user) {
+        store.dispatch(UserClickedAction(user));
+      },
+      onSeeMorePressed: (post) {
+        store.dispatch(NavigatePostAction(post));
+      },
+      onImageZoomPressed: (imageURL) {
+        store.dispatch(NavigatePostImageZoomAction(imageURL));
+      },
+      onReportTextChange: (text) {
+        store.dispatch(SetPostReportTextFieldAction(text));
+      },
+      onReportPressed: (String page,
+          String width,
+          String height,
+          String authorId,
+          String authorName,
+          String postId,
+          String postType) async {
+        final String version = await Information.appVersion;
+        final String phoneModel = await Information.phoneModel;
+        final String brand = await Information.brand;
+        final String release = await Information.osRelease;
+        String os;
 
-          if (Platform.isAndroid) {
-            os = "Android";
-          } else if (Platform.isIOS) {
-            os = "iOS";
-          }
+        if (Platform.isAndroid) {
+          os = "Android";
+        } else if (Platform.isIOS) {
+          os = "iOS";
+        }
 
-          Map<String, dynamic> params = {
-            "postId": postId,
-            "postType": postType,
-            "authorId": authorId,
-            "authorName": authorName,
-            "page": page,
-            "appVersion": version,
-            "platform": os,
-            "brand": brand,
-            "model": phoneModel,
-            "osRelease": release,
-            "screenSize": width + " x " + height
-          };
+        Map<String, dynamic> params = {
+          "postId": postId,
+          "postType": postType,
+          "authorId": authorId,
+          "authorName": authorName,
+          "page": page,
+          "appVersion": version,
+          "platform": os,
+          "brand": brand,
+          "model": phoneModel,
+          "osRelease": release,
+          "screenSize": width + " x " + height
+        };
 
-          List<String> tags = ["created", "report", "post"];
-          store.dispatch(SubmitReportAction(
-              store.state.postState.reportText, tags, params));
-        },
-        onLikePressed: (postId) {
-          store.dispatch(SubmitPostUpdateRatingAction(postId));
-        },
-        onSendCommentPressed: (postId, comment) {
-          store.dispatch(SubmitPostCommentAction(postId, comment));
-        });
+        List<String> tags = ["created", "report", "post"];
+        store.dispatch(
+            SubmitReportAction(store.state.postState.reportText, tags, params));
+      },
+      onLikePressed: (postId) {
+        store.dispatch(SubmitPostUpdateRatingAction(postId));
+      },
+      onSendCommentPressed: (postId, comment) {
+        store.dispatch(SubmitPostCommentAction(postId, comment));
+      },
+      onQueryTextChanged: (query) {
+        store.dispatch(SearchPostAction(query));
+      },
+    );
   }
 }

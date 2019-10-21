@@ -29,6 +29,21 @@ class PostRepository implements IPostRepository {
   }
 
   @override
+  Future<List<Post>> search(String accessToken, String query) async {
+    var uri = _url + "?description=" + query;
+    var encoded = Uri.encodeFull(uri);
+    final response = await this._client.get(encoded, headers: {
+      apiKeyHeader: _apiKey,
+      contentTypeHeader: contentTypeValueForJson,
+      authHeader: accessToken
+    });
+    if (response.statusCode == 200) {
+      return fromJsonToListOfPosts(response.body);
+    }
+    throw handleNetworkException(response.statusCode, runtimeType.toString());
+  }
+
+  @override
   Future<void> createTextPost(String accessToken, String text) async {
     final response = await this._client.post(
           _url + "/",

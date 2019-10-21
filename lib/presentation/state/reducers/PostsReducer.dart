@@ -8,6 +8,8 @@ import 'Data.dart';
 
 class PostState {
   final Data<List<PostData>> posts;
+  final String query;
+  final Data<List<PostData>> searchPosts;
   final bool isCreatingPost;
   final File imageSubmission;
   final String createPostTextErrorMessage;
@@ -15,37 +17,46 @@ class PostState {
   final List<String> imageURL;
   final String message;
   final String reportText;
+
   PostState(
       this.posts,
+      this.searchPosts,
       this.isCreatingPost,
       this.createPostTextErrorMessage,
       this.imageSubmission,
       this.post,
       this.imageURL,
       this.message,
-      this.reportText);
+      this.reportText,
+      this.query);
 
   factory PostState.initial() =>
-      PostState(Data(), true, "", null, Data(), null, null, null);
+      PostState(Data(), Data(), true, "", null, Data(), null, null, null, "");
 
-  PostState copyWith(
-      {Data<List<PostData>> posts,
-      bool isCreatingPost,
-      String createPostTextErrorMessage,
-      File imageSubmission,
-      Data<PostData> post,
-      List<String> imageURL,
-      String message,
-      String reportText}) {
+  PostState copyWith({
+    Data<List<PostData>> posts,
+    Data<List<PostData>> searchPosts,
+    bool isCreatingPost,
+    String createPostTextErrorMessage,
+    File imageSubmission,
+    Data<PostData> post,
+    List<String> imageURL,
+    String message,
+    String reportText,
+    String query,
+  }) {
     final state = PostState(
-        posts ?? this.posts,
-        isCreatingPost ?? this.isCreatingPost,
-        createPostTextErrorMessage ?? this.createPostTextErrorMessage,
-        imageSubmission ?? this.imageSubmission,
-        post ?? this.post,
-        imageURL ?? this.imageURL,
-        message ?? this.message,
-        reportText ?? this.reportText);
+      posts ?? this.posts,
+      searchPosts ?? this.searchPosts,
+      isCreatingPost ?? this.isCreatingPost,
+      createPostTextErrorMessage ?? this.createPostTextErrorMessage,
+      imageSubmission ?? this.imageSubmission,
+      post ?? this.post,
+      imageURL ?? this.imageURL,
+      message ?? this.message,
+      reportText ?? this.reportText,
+      query ?? this.query,
+    );
     return state;
   }
 }
@@ -53,6 +64,8 @@ class PostState {
 final Reducer<PostState> postReducer = combineReducers<PostState>([
   TypedReducer<PostState, DeletePostAction>(deletePost),
   TypedReducer<PostState, FetchPostsSuccessAction>(explorePostsRetrieved),
+  TypedReducer<PostState, SearchPostSuccessAction>(searchPostsRetrieved),
+  TypedReducer<PostState, SearchPostAction>(setQuery),
   TypedReducer<PostState, FetchPostsAction>(explorePosts),
   TypedReducer<PostState, SubmitTextPostAction>(createPost),
   TypedReducer<PostState, SubmitImagePostAction>(createImagePost),
@@ -112,6 +125,12 @@ PostState explorePostsRetrieved(
   return state.copyWith(posts: Data(content: action.post, isLoading: false));
 }
 
+PostState searchPostsRetrieved(
+    PostState state, SearchPostSuccessAction action) {
+  return state.copyWith(
+      searchPosts: Data(content: action.post, isLoading: false));
+}
+
 PostState explorePosts(PostState state, FetchPostsAction action) {
   return state.copyWith(
       posts: state.posts.copyWith(
@@ -121,13 +140,33 @@ PostState explorePosts(PostState state, FetchPostsAction action) {
 }
 
 PostState createPost(PostState state, SubmitTextPostAction action) {
-  return PostState(state.posts, true, "", null, state.post, state.imageURL,
-      state.message, state.reportText);
+  return PostState(
+    state.posts,
+    state.searchPosts,
+    true,
+    "",
+    null,
+    state.post,
+    state.imageURL,
+    state.message,
+    state.reportText,
+    state.query,
+  );
 }
 
 PostState createImagePost(PostState state, SubmitImagePostAction action) {
-  return PostState(state.posts, true, "", null, state.post, state.imageURL,
-      state.message, state.reportText);
+  return PostState(
+    state.posts,
+    state.searchPosts,
+    true,
+    "",
+    null,
+    state.post,
+    state.imageURL,
+    state.message,
+    state.reportText,
+    state.query,
+  );
 }
 
 PostState setImageForSubmission(PostState state, SetImageForSubmission action) {
@@ -151,4 +190,8 @@ PostState onCreatePostTextSizeMismatch(
 
 PostState setImage(PostState state, SetPostImageAction action) {
   return state.copyWith(imageURL: action.imageURL);
+}
+
+PostState setQuery(PostState state, SearchPostAction action) {
+  return state.copyWith(query: action.query);
 }
