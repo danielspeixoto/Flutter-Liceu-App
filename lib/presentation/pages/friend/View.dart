@@ -222,6 +222,9 @@ class FriendPage extends StatelessWidget {
                             viewModel.onSendCommentPressed(post.id, comment);
                           },
                           comments: post.comments,
+                           onUserCommentPressed: (userId) {
+                            viewModel.onUserCommentPressed(userId);
+                          },
                         ),
                       ],
                     );

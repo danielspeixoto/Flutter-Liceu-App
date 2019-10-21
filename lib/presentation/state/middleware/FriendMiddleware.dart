@@ -15,9 +15,26 @@ List<Middleware<AppState>> friendMiddleware(
 ) {
   void fetchFriendInfo(Store<AppState> store, FetchFriendAction action,
       NextDispatcher next) async {
+    next(action);
     try {
       final friend = await getUserById.run(action.id);
       store.dispatch(SetFriendAction(friend));
+    } catch (error, stackTrace) {
+      final actionName = action.toString().substring(11);
+      store.dispatch(
+          OnCatchDefaultErrorAction(error.toString(), stackTrace, actionName));
+      store.dispatch(FetchFriendErrorAction());
+    }
+  }
+
+    void fetchFriendInfoFromComment(Store<AppState> store, FetchFriendFromCommentAction action,
+      NextDispatcher next) async {
+        next(action);
+    try {
+      final friend = await getUserById.run(action.userId);
+      store.dispatch(NavigateReplaceAction(AppRoutes.friend));
+      store.dispatch(SetFriendAction(friend));
+      store.dispatch(FetchFriendPostsAction(friend.id));
     } catch (error, stackTrace) {
       final actionName = action.toString().substring(11);
       store.dispatch(
@@ -61,6 +78,7 @@ List<Middleware<AppState>> friendMiddleware(
     TypedMiddleware<AppState, FetchFriendAction>(fetchFriendInfo),
     TypedMiddleware<AppState, FetchFriendPostsAction>(fetchPosts),
     TypedMiddleware<AppState, NavigateViewFriendAction>(viewFriend),
-    TypedMiddleware<AppState, UserClickedAction>(userClick)
+    TypedMiddleware<AppState, UserClickedAction>(userClick),
+     TypedMiddleware<AppState, FetchFriendFromCommentAction>(fetchFriendInfoFromComment),
   ];
 }

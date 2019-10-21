@@ -302,6 +302,9 @@ class ProfilePage extends StatelessWidget {
                           onSendCommentPressed: (comment) {
                             viewModel.onSendCommentPressed(post.id, comment);
                           },
+                          onUserCommentPressed: (userId) {
+                            viewModel.onUserCommentPressed(userId);
+                          },
                         ),
                       ],
                     );

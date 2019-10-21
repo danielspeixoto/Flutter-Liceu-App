@@ -35,6 +35,7 @@ class PostWidget extends StatelessWidget {
   final Function(String comment) onSendCommentPressed;
   final inputController = TextEditingController();
   final List<Comment> comments;
+  final Function(String) onUserCommentPressed;
 
   PostWidget(
       {@required this.user,
@@ -52,7 +53,8 @@ class PostWidget extends StatelessWidget {
       @required this.onLikePressed,
       this.onSendCommentPressed,
       @required this.images,
-      this.comments});
+      this.comments,
+      this.onUserCommentPressed});
 
   @override
   Widget build(BuildContext context) => Card(
@@ -325,6 +327,11 @@ class PostWidget extends StatelessWidget {
                             return CommentWidget(
                               author: comment.author,
                               content: comment.content,
+                              onUserPressed: () {
+                                if(this.onUserCommentPressed != null){
+                                  this.onUserCommentPressed(comment.userId);
+                                }
+                              },
                             );
                           }),
                     )

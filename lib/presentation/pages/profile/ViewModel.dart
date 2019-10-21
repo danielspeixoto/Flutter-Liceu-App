@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:app/domain/aggregates/Post.dart';
 import 'package:app/domain/aggregates/User.dart';
 import 'package:app/injection.dart';
+import 'package:app/presentation/state/actions/FriendActions.dart';
 import 'package:app/presentation/state/actions/LiceuActions.dart';
 import 'package:app/presentation/state/actions/LoginActions.dart';
 import 'package:app/presentation/state/actions/PostActions.dart';
@@ -36,6 +37,7 @@ class ProfileViewModel {
   final Function(List<String> imageURL) onImageZoomPressed;
   final Function(String postId) onLikePressed;
   final Function(String postId, String comment) onSendCommentPressed;
+  final Function(String userId) onUserCommentPressed;
 
   ProfileViewModel(
       {this.user,
@@ -55,7 +57,8 @@ class ProfileViewModel {
       this.onSeeMorePressed,
       this.onImageZoomPressed,
       this.onLikePressed,
-      this.onSendCommentPressed});
+      this.onSendCommentPressed,
+      this.onUserCommentPressed});
 
   factory ProfileViewModel.create(Store<AppState> store) {
     final userState = store.state.userState;
@@ -151,6 +154,9 @@ class ProfileViewModel {
         },
         onSendCommentPressed: (postId, comment) {
           store.dispatch(SubmitPostCommentAction(postId, comment));
+        },
+        onUserCommentPressed: (userId) {
+          store.dispatch(FetchFriendFromCommentAction(userId));
         });
   }
 }

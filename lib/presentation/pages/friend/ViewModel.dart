@@ -32,6 +32,7 @@ class FriendViewModel {
   final String reportText;
   final Function(String postId) onLikePressed;
   final Function(String postId, String comment) onSendCommentPressed;
+  final Function(String userId) onUserCommentPressed;
 
   FriendViewModel(
       {this.user,
@@ -47,7 +48,8 @@ class FriendViewModel {
       this.onReportTextChange,
       this.reportText,
       this.onLikePressed,
-      this.onSendCommentPressed});
+      this.onSendCommentPressed,
+      this.onUserCommentPressed});
 
   factory FriendViewModel.create(Store<AppState> store) {
     final friendState = store.state.friendState;
@@ -138,6 +140,9 @@ class FriendViewModel {
         },
         onSendCommentPressed: (postId, comment) {
           store.dispatch(SubmitPostCommentAction(postId, comment));
+        },
+         onUserCommentPressed: (userId) {
+          store.dispatch(FetchFriendFromCommentAction(userId));
         });
   }
 }
