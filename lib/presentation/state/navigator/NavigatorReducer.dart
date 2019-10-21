@@ -23,7 +23,7 @@ List<String> _navigatePush(List<String> route, NavigatePushAction action) {
 
 List<String> _navigatePop(List<String> route, NavigatePopStackAction action) {
   var result = List<String>.from(route);
-  while (result.isNotEmpty) {
+  if (result.isNotEmpty) {
     result.removeLast();
   }
   return result;
