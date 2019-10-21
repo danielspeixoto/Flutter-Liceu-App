@@ -95,6 +95,7 @@ class ExplorePage extends StatelessWidget {
                       onSendCommentPressed: (comment) {
                         viewModel.onSendCommentPressed(post.id, comment);
                       },
+                      comments: post.comments,
                     );
                   },
                 ),

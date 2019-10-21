@@ -139,6 +139,7 @@ class ProfileViewModel {
             post.statusCode,
             post.likes,
             post.images,
+            post.comments
           );
           store.dispatch(NavigatePostAction(postData));
         },

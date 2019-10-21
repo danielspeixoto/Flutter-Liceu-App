@@ -49,6 +49,7 @@ class CompletePostPage extends StatelessWidget {
                         post.content.likes++;
                       },
                       images: post.content.images,
+                      //comments: post.content.comments,
                     ),
                   ),
                 ],
