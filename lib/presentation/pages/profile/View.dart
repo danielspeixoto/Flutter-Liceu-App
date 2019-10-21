@@ -269,6 +269,7 @@ class ProfilePage extends StatelessWidget {
                             );
                           },
                           images: post.images,
+                          comments: post.comments,
                           onDeletePressed: () =>
                               viewModel.onDeletePostPressed(post.id),
                           imageURL: post.imageURL,

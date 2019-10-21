@@ -1,4 +1,6 @@
+import 'package:app/domain/aggregates/Comment.dart';
 import 'package:app/domain/aggregates/User.dart';
+import 'package:app/presentation/widgets/CommentWidget.dart';
 import 'package:app/presentation/widgets/TextFieldHighlight.dart';
 import 'package:app/util/FeaturesAvailable.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -32,24 +34,25 @@ class PostWidget extends StatelessWidget {
   final Function() onLikePressed;
   final Function(String comment) onSendCommentPressed;
   final inputController = TextEditingController();
+  final List<Comment> comments;
 
-  PostWidget({
-    @required this.user,
-    @required this.postContent,
-    this.onDeletePressed,
-    @required this.onSharePressed,
-    this.onUserPressed,
-    @required this.imageURL,
-    this.seeMore,
-    this.onImageZoomPressed,
-    @required this.postStatus,
-    this.onReportPressed,
-    this.onReportTextChange,
-    @required this.likes,
-    @required this.onLikePressed,
-    this.onSendCommentPressed,
-    @required this.images,
-  });
+  PostWidget(
+      {@required this.user,
+      @required this.postContent,
+      this.onDeletePressed,
+      @required this.onSharePressed,
+      this.onUserPressed,
+      @required this.imageURL,
+      this.seeMore,
+      this.onImageZoomPressed,
+      @required this.postStatus,
+      this.onReportPressed,
+      this.onReportTextChange,
+      @required this.likes,
+      @required this.onLikePressed,
+      this.onSendCommentPressed,
+      @required this.images,
+      this.comments});
 
   @override
   Widget build(BuildContext context) => Card(
@@ -304,6 +307,21 @@ class PostWidget extends StatelessWidget {
                                   child: Text(this.likes.toString()))
                             ],
                           )),
+                    )
+                  : Container(),
+              comments != null
+                  ? Container(
+
+                      child: ListView.builder(
+                        shrinkWrap: true,
+                          itemCount: comments.length,
+                          itemBuilder: (ctx, idx) {
+                            final comment = comments[idx];
+                            return CommentWidget(
+                              author: comment.author,
+                              content: comment.content,
+                            );
+                          }),
                     )
                   : Container(),
               this.postStatus == "approved" && FeaturesAvailable.comments
