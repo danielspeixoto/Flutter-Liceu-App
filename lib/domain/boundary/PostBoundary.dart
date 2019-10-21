@@ -7,7 +7,13 @@ abstract class IPostRepository {
   Future<void> delete(String accessToken, String postId);
   Future<Post> id(String accessToken, String postId);
   Future<void> updateRating(String accessToken, String postId);
-  Future<void> updatePostComment(String accessToken, String postId, String comment);
+  Future<void> updatePostComment(
+      String accessToken, String postId, String comment);
+  Future<List<Post>> search(String accessToken, String query);
+}
+
+abstract class ISearchPostsUseCase {
+  Future<List<Post>> run(String query);
 }
 
 abstract class ICreateTextPostUseCase {

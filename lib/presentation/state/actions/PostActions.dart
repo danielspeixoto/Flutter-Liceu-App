@@ -36,6 +36,18 @@ class FetchPostAction {
   FetchPostAction(this.postId);
 }
 
+class SearchPostAction {
+  final String query;
+
+  SearchPostAction(this.query);
+}
+
+class SearchPostSuccessAction {
+  final List<PostData> post;
+
+  SearchPostSuccessAction(this.post);
+}
+
 //Setters
 class SetImageForSubmission {
   final File image;

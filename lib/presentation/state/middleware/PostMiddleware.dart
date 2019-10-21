@@ -11,14 +11,16 @@ import '../../app.dart';
 import '../app_state.dart';
 
 List<Middleware<AppState>> postMiddleware(
-    ICreateTextPostUseCase createPostUseCase,
-    IDeletePostUseCase deletePostUseCase,
-    IExplorePostUseCase explorePostUseCase,
-    IGetUserByIdUseCase getUserByIdUseCase,
-    ICreateImagePostUseCase createImagePostUseCase,
-    IGetPostByIdUseCase getPostByIdUseCase,
-    IUpdatePostRatingUseCase updatePostRatingUseCase,
-    IUpdatePostCommentUseCase updatePostCommentUseCase) {
+  ICreateTextPostUseCase createPostUseCase,
+  IDeletePostUseCase deletePostUseCase,
+  IExplorePostUseCase explorePostUseCase,
+  IGetUserByIdUseCase getUserByIdUseCase,
+  ICreateImagePostUseCase createImagePostUseCase,
+  IGetPostByIdUseCase getPostByIdUseCase,
+  IUpdatePostRatingUseCase updatePostRatingUseCase,
+  IUpdatePostCommentUseCase updatePostCommentUseCase,
+  ISearchPostsUseCase searchPostsUseCase,
+) {
   void deletePost(Store<AppState> store, DeletePostAction action,
       NextDispatcher next) async {
     next(action);
@@ -115,6 +117,37 @@ List<Middleware<AppState>> postMiddleware(
     }
   }
 
+  void searchPosts(Store<AppState> store, SearchPostAction action, next) async {
+    next(action);
+    try {
+      if (action.query == "") {
+        store.dispatch(SearchPostSuccessAction([]));
+      } else {
+        final posts = await searchPostsUseCase.run(action.query);
+        final futures = posts.map((post) async {
+          final author = await getUserByIdUseCase.run(post.userId);
+          return PostData(
+            post.id,
+            author,
+            post.type,
+            post.text,
+            post.imageURL,
+            post.statusCode,
+            post.likes,
+            post.images,
+            post.comments
+          );
+        });
+        final data = await Future.wait(futures);
+        store.dispatch(SearchPostSuccessAction(data));
+      }
+    } catch (error, stackTrace) {
+      final actionName = action.toString().substring(11);
+      store.dispatch(
+          OnCatchDefaultErrorAction(error.toString(), stackTrace, actionName));
+    }
+  }
+
   void postCreation(Store<AppState> store, NavigateCreatePostAction action,
       NextDispatcher next) async {
     next(action);
@@ -167,6 +200,7 @@ List<Middleware<AppState>> postMiddleware(
     TypedMiddleware<AppState, SubmitImagePostAction>(createImagePost),
     TypedMiddleware<AppState, SubmitPostSuccessAction>(postCreated),
     TypedMiddleware<AppState, FetchPostsAction>(explorePosts),
+    TypedMiddleware<AppState, SearchPostAction>(searchPosts),
     TypedMiddleware<AppState, NavigatePostAction>(navigatePost),
     TypedMiddleware<AppState, FetchPostAction>(fetchPostById),
     TypedMiddleware<AppState, NavigatePostImageZoomAction>(
