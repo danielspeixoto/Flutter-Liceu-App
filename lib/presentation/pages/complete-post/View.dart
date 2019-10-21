@@ -50,6 +50,9 @@ class CompletePostPage extends StatelessWidget {
                       },
                       images: post.content.images,
                       comments: post.content.comments,
+                      onSendCommentPressed: (comment) {
+                        viewModel.onSendCommentPressed(post.content.id, comment);
+                      },
                     ),
                   ),
                 ],

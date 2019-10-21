@@ -17,39 +17,43 @@ class CompletePostViewModel {
   final Function() refresh;
   final Function(String postId) onLikePressed;
   final Function(List<String> imageURL) onImageZoomPressed;
+  final Function(String postId, String comment) onSendCommentPressed;
 
-  CompletePostViewModel({
-    this.post,
-    this.onDeletePostPressed,
-    this.onSharePostPressed,
-    this.onUserPressed,
-    this.refresh,
-    this.onImageZoomPressed,
-    this.onLikePressed,
-  });
+  CompletePostViewModel(
+      {this.post,
+      this.onDeletePostPressed,
+      this.onSharePostPressed,
+      this.onUserPressed,
+      this.refresh,
+      this.onImageZoomPressed,
+      this.onLikePressed,
+      this.onSendCommentPressed});
 
   factory CompletePostViewModel.create(Store<AppState> store) {
     final postState = store.state.postState;
 
     return CompletePostViewModel(
-      post: postState.post,
-      onSharePostPressed: (postId, type, text) {
-        store.dispatch(PostShareAction(postId, type));
-        Share.share(summarize(text, 300) +
-            "\n\nVeja o post que ${store.state.userState.user.content.name} compartilhou com você!\nhttp://liceu.co?postId=$postId");
-      },
-      onDeletePostPressed: (String postId) {
-        store.dispatch(DeletePostAction(postId));
-      },
-      onUserPressed: (user) {
-        store.dispatch(UserClickedAction(user));
-      },
-      onImageZoomPressed: (imageURL) {
-        store.dispatch(NavigatePostImageZoomAction(imageURL));
-      },
-      onLikePressed: (postId) {
-        store.dispatch(SubmitPostUpdateRatingAction(postState.post.content.id));
-      },
-    );
+        post: postState.post,
+        onSharePostPressed: (postId, type, text) {
+          store.dispatch(PostShareAction(postId, type));
+          Share.share(summarize(text, 300) +
+              "\n\nVeja o post que ${store.state.userState.user.content.name} compartilhou com você!\nhttp://liceu.co?postId=$postId");
+        },
+        onDeletePostPressed: (String postId) {
+          store.dispatch(DeletePostAction(postId));
+        },
+        onUserPressed: (user) {
+          store.dispatch(UserClickedAction(user));
+        },
+        onImageZoomPressed: (imageURL) {
+          store.dispatch(NavigatePostImageZoomAction(imageURL));
+        },
+        onLikePressed: (postId) {
+          store.dispatch(
+              SubmitPostUpdateRatingAction(postState.post.content.id));
+        },
+        onSendCommentPressed: (postId, comment) {
+          store.dispatch(SubmitPostCommentAction(postId, comment));
+        });
   }
 }

@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:app/domain/aggregates/Post.dart';
 import 'package:app/presentation/state/actions/PageActions.dart';
 import 'package:app/presentation/state/app_state.dart';
 import 'package:app/presentation/util/text.dart';
@@ -46,7 +47,11 @@ class ExplorePage extends StatelessWidget {
                     return PostWidget(
                       user: post.user,
                       postStatus: post.statusCode,
-                      postContent: summarize(post.text, 600),
+                      postContent: post.type == PostType.TEXT
+                          ? summarize(post.text, 600)
+                          : '\n'.allMatches(post.text).length + 1 > 15
+                              ? summarize(post.text, 30)
+                              : summarize(post.text, 200),
                       likes: post.likes == null ? 0 : post.likes,
                       onUserPressed: (user) => viewModel.onUserPressed(user),
                       onSharePressed: () {
@@ -61,7 +66,11 @@ class ExplorePage extends StatelessWidget {
                           ? () => viewModel.onDeletePostPressed(post.id)
                           : null,
                       imageURL: post.imageURL,
-                      seeMore: post.text.length > 600
+                      seeMore: post.type == PostType.TEXT &&
+                                  post.text.length > 600 ||
+                              post.type == PostType.IMAGE &&
+                                  post.text.length > 200
+                                  ||  '\n'.allMatches(post.text).length + 1 > 15
                           ? FlatButton(
                               onPressed: () => viewModel.onSeeMorePressed(post),
                               child: Text(
