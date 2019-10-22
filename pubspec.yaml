@@ -61,6 +61,8 @@ dependencies:
   package_info: ^0.4.0+6
   flutter_dotenv: ^2.0.3
   material_search: ^0.2.8
+  animator: ^1.0.0+1
+  states_rebuilder: ^1.6.0+1
 
 dev_dependencies:
   flutter_test:
