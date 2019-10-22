@@ -359,7 +359,7 @@ class PostWidget extends StatelessWidget {
                                   size: 15,
                                 ),
                                 Container(
-                                    margin: EdgeInsets.only(left: 4),
+                                    margin: EdgeInsets.only(left: 8),
                                     child: Text(this.numberOfComments))
                               ],
                             )),
