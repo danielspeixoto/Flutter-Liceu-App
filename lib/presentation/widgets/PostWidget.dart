@@ -1,5 +1,6 @@
 import 'package:animator/animator.dart';
 import 'package:app/domain/aggregates/User.dart';
+import 'package:app/presentation/widgets/ClickAnimation.dart';
 import 'package:app/presentation/widgets/TextFieldHighlight.dart';
 import 'package:app/util/FeaturesAvailable.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -15,14 +16,6 @@ class TabData {
   final IconData icon;
 
   TabData(this.icon);
-}
-
-class AnimationBloc extends StatesRebuilder {
-  bool toggleCurve = true;
-  rebuild() {
-    toggleCurve = !toggleCurve;
-    rebuildStates(['like']);
-  }
 }
 
 final mainBloc = AnimationBloc();
