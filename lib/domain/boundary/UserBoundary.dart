@@ -28,7 +28,9 @@ abstract class IUserRepository {
 
   Future<void> check(String accessToken, String id);
 
-    Future<void> fcmtoken(String accessToken, String fcmtoken, String userId);
+  Future<void> fcmtoken(String accessToken, String fcmtoken, String userId);
+
+  Future<void> savePost(String accessToken, String userId, String postId);
 }
 
 abstract class ICheckUseCase {

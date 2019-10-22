@@ -216,4 +216,20 @@ class UserRepository implements IUserRepository {
     }
     throw handleNetworkException(response.statusCode, runtimeType.toString());
   }
+
+  Future<void> savePost(String accessToken, String userId, String postId) async {
+        final response = await this._client.put(
+      _url + "/" + userId + "/savePost",
+      headers: {
+        apiKeyHeader: _apiKey,
+        contentTypeHeader: contentTypeValueForJson,
+        authHeader: accessToken
+      },
+      body: json.encode({"postId": postId})
+    );
+    if (response.statusCode == 200) {
+      return;
+    }
+    throw handleNetworkException(response.statusCode, runtimeType.toString());
+  }
 }

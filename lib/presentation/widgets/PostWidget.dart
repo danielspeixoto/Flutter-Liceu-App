@@ -308,7 +308,6 @@ class PostWidget extends StatelessWidget {
                       ],
                     ),
               Row(
-                
                 children: <Widget>[
                   this.postStatus == "approved"
                       ? Container(
