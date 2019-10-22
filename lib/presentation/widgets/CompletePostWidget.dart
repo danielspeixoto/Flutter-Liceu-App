@@ -1,5 +1,7 @@
+import 'package:animator/animator.dart';
 import 'package:app/domain/aggregates/Comment.dart';
 import 'package:app/domain/aggregates/User.dart';
+import 'package:app/presentation/widgets/ClickAnimation.dart';
 import 'package:app/presentation/widgets/CommentWidget.dart';
 import 'package:app/presentation/widgets/TextFieldHighlight.dart';
 import 'package:app/util/FeaturesAvailable.dart';
@@ -16,6 +18,8 @@ class TabData {
 
   TabData(this.icon);
 }
+
+final animation = ClickAnimation();
 
 class CompletePostWidget extends StatelessWidget {
   final User user;
@@ -299,13 +303,27 @@ class CompletePostWidget extends StatelessWidget {
                       child: FlatButton(
                           onPressed: () {
                             this.onLikePressed();
+                            animation.rebuild();
                           },
                           child: Row(
                             children: <Widget>[
-                              Icon(
-                                FontAwesomeIcons.solidHeart,
-                                size: 15,
-                              ),
+                              Animator(
+                                  name: "like",
+                                  blocs: [animation],
+                                  tween: Tween<double>(begin: 0.8, end: 1.2),
+                                  curve: Curves.easeInOut,
+                                  duration: Duration(milliseconds: 350),
+                                  cycles: 2,
+                                  builder: (anim) => Center(
+                                    child: Transform.scale(
+                                      scale: anim.value,
+                                      child: Icon(
+                                        FontAwesomeIcons.solidHeart,
+                                        size: 20,
+                                      ),
+                                    ),
+                                  ),
+                                ),
                               Container(
                                   margin: EdgeInsets.only(left: 4),
                                   child: Text(this.likes.toString()))
