@@ -18,7 +18,7 @@ class TabData {
   TabData(this.icon);
 }
 
-final mainBloc = AnimationBloc();
+final animation = ClickAnimation();
 
 class PostWidget extends StatelessWidget {
   final User user;
@@ -318,16 +318,16 @@ class PostWidget extends StatelessWidget {
                         child: FlatButton(
                             onPressed: () {
                               this.onLikePressed();
-                              mainBloc.rebuild();
+                              animation.rebuild();
                             },
                             child: Row(
                               children: <Widget>[
                                 Animator(
                                   name: "like",
-                                  blocs: [mainBloc],
+                                  blocs: [animation],
                                   tween: Tween<double>(begin: 0.8, end: 1.2),
-                                  curve: Curves.elasticInOut,
-                                  duration: Duration(milliseconds: 250),
+                                  curve: Curves.easeInOut,
+                                  duration: Duration(milliseconds: 350),
                                   cycles: 2,
                                   builder: (anim) => Center(
                                     child: Transform.scale(
@@ -348,7 +348,6 @@ class PostWidget extends StatelessWidget {
                     : Container(),
                 this.postStatus == "approved" && FeaturesAvailable.comments
                     ? Container(
-                        alignment: Alignment.centerLeft,
                         child: FlatButton(
                             onPressed: () {
                               this.onSeeMorePressed();

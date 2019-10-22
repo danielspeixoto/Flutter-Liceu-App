@@ -1,6 +1,6 @@
 import 'package:states_rebuilder/states_rebuilder.dart';
 
-class AnimationBloc extends StatesRebuilder {
+class ClickAnimation extends StatesRebuilder {
   bool toggleCurve = true;
   rebuild() {
     toggleCurve = !toggleCurve;
