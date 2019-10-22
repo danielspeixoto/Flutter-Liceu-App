@@ -1,4 +1,6 @@
+import 'package:app/domain/aggregates/Comment.dart';
 import 'package:app/domain/aggregates/User.dart';
+import 'package:app/presentation/widgets/CommentWidget.dart';
 import 'package:app/presentation/widgets/TextFieldHighlight.dart';
 import 'package:app/util/FeaturesAvailable.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -15,7 +17,7 @@ class TabData {
   TabData(this.icon);
 }
 
-class PostWidget extends StatelessWidget {
+class CompletePostWidget extends StatelessWidget {
   final User user;
   final String postContent;
   final String imageURL;
@@ -23,33 +25,34 @@ class PostWidget extends StatelessWidget {
   final Function() onDeletePressed;
   final Function() onSharePressed;
   final Function(User) onUserPressed;
-  final bool seeMore;
   final Function() onImageZoomPressed;
   final String postStatus;
   final Function() onReportPressed;
   final Function(String) onReportTextChange;
   int likes;
   final Function() onLikePressed;
-  final Function() onSeeMorePressed;
-  final String numberOfComments;
+  final Function(String comment) onSendCommentPressed;
+  final inputController = TextEditingController();
+  final List<Comment> comments;
+  final Function(String) onUserCommentPressed;
 
-  PostWidget(
+  CompletePostWidget(
       {@required this.user,
       @required this.postContent,
       this.onDeletePressed,
       @required this.onSharePressed,
       this.onUserPressed,
       @required this.imageURL,
-      this.seeMore,
       this.onImageZoomPressed,
       @required this.postStatus,
       this.onReportPressed,
       this.onReportTextChange,
       @required this.likes,
       @required this.onLikePressed,
+      this.onSendCommentPressed,
       @required this.images,
-      this.onSeeMorePressed,
-      this.numberOfComments});
+      this.comments,
+      this.onUserCommentPressed});
 
   @override
   Widget build(BuildContext context) => Card(
@@ -246,21 +249,6 @@ class PostWidget extends StatelessWidget {
                 margin: const EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 8.0),
                 padding: EdgeInsets.only(bottom: 4),
               ),
-              seeMore != null
-                  ? seeMore == true
-                      ? FlatButton(
-                          onPressed: () {
-                            this.onSeeMorePressed();
-                          },
-                          child: Text(
-                            "Ver mais",
-                            style: TextStyle(
-                              color: Color(0xFF0061A1),
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ))
-                      : Container()
-                  : Container,
               imageURL == null
                   ? Container()
                   : Column(
@@ -291,67 +279,103 @@ class PostWidget extends StatelessWidget {
                         ),
                         Container(
                           margin: EdgeInsets.only(top: 4),
-                          child: images.length != 0
-                              ? Text(
-                                  "1/" + images.length.toString(),
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                )
-                              : Text(
-                                  "1/1",
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
+                          child: images.length != 0 ? Text(
+                            "1/" + images.length.toString(),
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ) : Text(
+                            "1/1",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
                         ),
                       ],
                     ),
-              Row(
-                
-                children: <Widget>[
-                  this.postStatus == "approved"
-                      ? Container(
-                          alignment: Alignment.centerLeft,
-                          child: FlatButton(
-                              onPressed: () {
-                                this.onLikePressed();
+              this.postStatus == "approved"
+                  ? Container(
+                      alignment: Alignment.centerLeft,
+                      child: FlatButton(
+                          onPressed: () {
+                            this.onLikePressed();
+                          },
+                          child: Row(
+                            children: <Widget>[
+                              Icon(
+                                FontAwesomeIcons.solidHeart,
+                                size: 15,
+                              ),
+                              Container(
+                                  margin: EdgeInsets.only(left: 4),
+                                  child: Text(this.likes.toString()))
+                            ],
+                          )),
+                    )
+                  : Container(),
+              comments != null && FeaturesAvailable.comments
+                  ? Column(
+                      children: comments.map((comment) {
+                        return CommentWidget(
+                              author: comment.author,
+                              content: comment.content,
+                              authorPic: comment.user.picURL,
+                              onUserPressed: () {
+                                if(this.onUserCommentPressed != null){
+                                  this.onUserCommentPressed(comment.userId);
+                                }
                               },
-                              child: Row(
-                                children: <Widget>[
-                                  Icon(
-                                    FontAwesomeIcons.solidHeart,
-                                    size: 15,
+                            );
+                      }).toList()
+                    )
+                  : Container(),
+              this.postStatus == "approved" && FeaturesAvailable.comments
+                  ? Row(
+                      children: <Widget>[
+                        Expanded(
+                          child: Container(
+                            margin: EdgeInsets.only(left: 8, right: 0),
+                            child: TextFieldHighlight(
+                              controller: inputController,
+                              decoration: InputDecoration(
+                                contentPadding: EdgeInsets.symmetric(
+                                    vertical: 8, horizontal: 12),
+                                border: OutlineInputBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(12)),
+                                  borderSide: BorderSide(
+                                    width: 0.00,
                                   ),
-                                  Container(
-                                      margin: EdgeInsets.only(left: 4),
-                                      child: Text(this.likes.toString()))
-                                ],
-                              )),
-                        )
-                      : Container(),
-                  this.postStatus == "approved" && FeaturesAvailable.comments
-                      ? Container(
-                          alignment: Alignment.centerLeft,
+                                ),
+                                hintText: "Escreva um comentário...",
+                              ),
+                              minLines: null,
+                              maxLines: null,
+                              inputStyle: new TextStyle(
+                                fontSize: 16.0,
+//                                  height: 1,
+                                color: Colors.black,
+                              ),
+                              keyboardType: TextInputType.multiline,
+                              capitalization: TextCapitalization.sentences,
+                            ),
+                          ),
+                        ),
+                        Container(
+                          margin: EdgeInsets.only(right: 4),
                           child: FlatButton(
-                              onPressed: () {
-                                this.onSeeMorePressed();
-                              },
-                              child: Row(
-                                children: <Widget>[
-                                  Icon(
-                                    FontAwesomeIcons.commentAlt,
-                                    size: 15,
-                                  ),
-                                  Container(
-                                      margin: EdgeInsets.only(left: 4),
-                                      child: Text(this.numberOfComments))
-                                ],
-                              )),
-                        )
-                      : Container(),
-                ],
-              )
+                            onPressed: () {
+                              this.onSendCommentPressed(inputController.text);
+                            },
+                            child: Icon(
+                              FontAwesomeIcons.commentAlt,
+                              size: 16,
+                            ),
+                          ),
+                        ),
+                      ],
+                    )
+                  : Container()
             ],
           ),
         ),

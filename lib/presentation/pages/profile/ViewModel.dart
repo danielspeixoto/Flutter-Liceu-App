@@ -36,104 +36,101 @@ class ProfileViewModel {
   final Function(Post post, User user) onSeeMorePressed;
   final Function(List<String> imageURL) onImageZoomPressed;
   final Function(String postId) onLikePressed;
-  final Function(String postId, String comment) onSendCommentPressed;
-  final Function(String userId) onUserCommentPressed;
 
-  ProfileViewModel(
-      {this.user,
-      this.onCreateButtonPressed,
-      this.onEditProfileButtonPressed,
-      this.onLogoutPressed,
-      this.onDeletePostPressed,
-      this.onSharePostPressed,
-      this.onInstagramPressed,
-      this.onLiceuInstagramPressed,
-      this.posts,
-      this.refresh,
-      this.onSendReportButtonPressed,
-      this.onFeedbackTextChanged,
-      this.reportFeedback,
-      this.onShareProfilePressed,
-      this.onSeeMorePressed,
-      this.onImageZoomPressed,
-      this.onLikePressed,
-      this.onSendCommentPressed,
-      this.onUserCommentPressed});
+  ProfileViewModel({
+    this.user,
+    this.onCreateButtonPressed,
+    this.onEditProfileButtonPressed,
+    this.onLogoutPressed,
+    this.onDeletePostPressed,
+    this.onSharePostPressed,
+    this.onInstagramPressed,
+    this.onLiceuInstagramPressed,
+    this.posts,
+    this.refresh,
+    this.onSendReportButtonPressed,
+    this.onFeedbackTextChanged,
+    this.reportFeedback,
+    this.onShareProfilePressed,
+    this.onSeeMorePressed,
+    this.onImageZoomPressed,
+    this.onLikePressed,
+  });
 
   factory ProfileViewModel.create(Store<AppState> store) {
     final userState = store.state.userState;
     return ProfileViewModel(
-        user: userState.user,
-        posts: userState.posts,
-        reportFeedback: userState.reportFeedback,
-        onCreateButtonPressed: () => store.dispatch(NavigateCreatePostAction()),
-        refresh: () {
-          store.dispatch(FetchUserInfoAction());
-          store.dispatch(FetchUserPostsAction());
-        },
-        onEditProfileButtonPressed: () {
-          store.dispatch(NavigateUserEditProfileAction());
-        },
-        onLogoutPressed: () {
-          store.dispatch(LogOutAction());
-        },
-        onDeletePostPressed: (String postId) {
-          store.dispatch(DeletePostAction(postId));
-        },
-        onSharePostPressed: (postId, type, text) {
-          store.dispatch(PostShareAction(postId, type));
-          Share.share(summarize(text, 300) +
-              "\n\nVeja o post que ${store.state.userState.user.content.name} compartilhou com você!\nhttp://liceu.co?postId=$postId");
-        },
-        onInstagramPressed: () {
-          final instagramProfile = userState.user.content.instagramProfile;
-          store.dispatch(InstagramClickedAction(instagramProfile));
-          launch("https://www.instagram.com/" + instagramProfile);
-        },
-        onLiceuInstagramPressed: () {
-          store.dispatch(LiceuInstagramPageClickedAction());
-          launch("https://www.instagram.com/liceu.co");
-        },
-        onFeedbackTextChanged: (String text) {
-          store.dispatch(SetUserReportFieldAction(text));
-        },
-        onSendReportButtonPressed: (page, width, height) async {
-          final String phoneModel = await Information.phoneModel;
-          final String version = await Information.appVersion;
-          final String brand = await Information.brand;
-          final String release = await Information.osRelease;
-          String os;
+      user: userState.user,
+      posts: userState.posts,
+      reportFeedback: userState.reportFeedback,
+      onCreateButtonPressed: () => store.dispatch(NavigateCreatePostAction()),
+      refresh: () {
+        store.dispatch(FetchUserInfoAction());
+        store.dispatch(FetchUserPostsAction());
+      },
+      onEditProfileButtonPressed: () {
+        store.dispatch(NavigateUserEditProfileAction());
+      },
+      onLogoutPressed: () {
+        store.dispatch(LogOutAction());
+      },
+      onDeletePostPressed: (String postId) {
+        store.dispatch(DeletePostAction(postId));
+      },
+      onSharePostPressed: (postId, type, text) {
+        store.dispatch(PostShareAction(postId, type));
+        Share.share(summarize(text, 300) +
+            "\n\nVeja o post que ${store.state.userState.user.content.name} compartilhou com você!\nhttp://liceu.co?postId=$postId");
+      },
+      onInstagramPressed: () {
+        final instagramProfile = userState.user.content.instagramProfile;
+        store.dispatch(InstagramClickedAction(instagramProfile));
+        launch("https://www.instagram.com/" + instagramProfile);
+      },
+      onLiceuInstagramPressed: () {
+        store.dispatch(LiceuInstagramPageClickedAction());
+        launch("https://www.instagram.com/liceu.co");
+      },
+      onFeedbackTextChanged: (String text) {
+        store.dispatch(SetUserReportFieldAction(text));
+      },
+      onSendReportButtonPressed: (page, width, height) async {
+        final String phoneModel = await Information.phoneModel;
+        final String version = await Information.appVersion;
+        final String brand = await Information.brand;
+        final String release = await Information.osRelease;
+        String os;
 
-          if (Platform.isAndroid) {
-            os = "Android";
-          } else if (Platform.isIOS) {
-            os = "iOS";
-          }
+        if (Platform.isAndroid) {
+          os = "Android";
+        } else if (Platform.isIOS) {
+          os = "iOS";
+        }
 
-          Map<String, dynamic> params = {
-            "userId": userState.user.content.id,
-            "userName": userState.user.content.name,
-            "page": page,
-            "appVersion": version,
-            "platform": os,
-            "brand": brand,
-            "model": phoneModel,
-            "osRelease": release,
-            "screenSize": width + " x " + height
-          };
+        Map<String, dynamic> params = {
+          "userId": userState.user.content.id,
+          "userName": userState.user.content.name,
+          "page": page,
+          "appVersion": version,
+          "platform": os,
+          "brand": brand,
+          "model": phoneModel,
+          "osRelease": release,
+          "screenSize": width + " x " + height
+        };
 
-          List<String> tags = ["created", "feedback"];
+        List<String> tags = ["created", "feedback"];
 
-          store.dispatch(SubmitReportAction(
-              store.state.userState.reportFeedback, tags, params));
-        },
-        onShareProfilePressed: () {
-          store.dispatch(UserProfileShareAction());
-          Share.share(
-              "Você já viu o que eu estou fazendo no Liceu? \nhttp://liceu.co?userId=${store.state.userState.user.content.id}");
-        },
-        onSeeMorePressed: (post, user) {
-          final postData = new PostData(
+        store.dispatch(SubmitReportAction(
+            store.state.userState.reportFeedback, tags, params));
+      },
+      onShareProfilePressed: () {
+        store.dispatch(UserProfileShareAction());
+        Share.share(
+            "Você já viu o que eu estou fazendo no Liceu? \nhttp://liceu.co?userId=${store.state.userState.user.content.id}");
+      },
+      onSeeMorePressed: (post, user) {
+        final postData = new PostData(
             post.id,
             user,
             post.type,
@@ -142,21 +139,15 @@ class ProfileViewModel {
             post.statusCode,
             post.likes,
             post.images,
-            post.comments
-          );
-          store.dispatch(NavigatePostAction(postData));
-        },
-        onImageZoomPressed: (imageURL) {
-          store.dispatch(NavigatePostImageZoomAction(imageURL));
-        },
-        onLikePressed: (postId) {
-          store.dispatch(SubmitPostUpdateRatingAction(postId));
-        },
-        onSendCommentPressed: (postId, comment) {
-          store.dispatch(SubmitPostCommentAction(postId, comment));
-        },
-        onUserCommentPressed: (userId) {
-          store.dispatch(FetchFriendFromCommentAction(userId));
-        });
+            post.comments);
+        store.dispatch(NavigatePostAction(postData));
+      },
+      onImageZoomPressed: (imageURL) {
+        store.dispatch(NavigatePostImageZoomAction(imageURL));
+      },
+      onLikePressed: (postId) {
+        store.dispatch(SubmitPostUpdateRatingAction(postId));
+      },
+    );
   }
 }

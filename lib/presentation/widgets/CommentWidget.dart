@@ -7,46 +7,57 @@ class CommentWidget extends StatelessWidget {
   final String author;
   final String authorPic;
   final Function() onUserPressed;
+  final bool isFounder;
 
   CommentWidget(
       {@required this.content,
       @required this.author,
       this.onUserPressed,
-      this.authorPic});
+      this.authorPic,
+      this.isFounder});
 
-  Widget build(BuildContext context) => Card(
-        elevation: 0,
+  Widget build(BuildContext context) => Container(
+
         child: Column(
           children: <Widget>[
-            Row(
-              children: <Widget>[
-                Container(
-                  child: RoundedImage(
-                    pictureURL: this.authorPic,
-                    size: 24.0,
+            FlatButton(
+              onPressed: () => onUserPressed(),
+              child: Row(
+                
+                children: <Widget>[
+                  Container(
+                    margin: EdgeInsets.only(top: 8, bottom: 8, right: 8),
+                    child: RoundedImage(
+                      pictureURL:
+                          this.authorPic != null ? this.authorPic : null,
+                      size: 30,
+                    ),
                   ),
-                  margin: EdgeInsets.all(4),
-                ),
-                Container(
-                    margin: EdgeInsets.all(2),
-                    child: FlatButton(
-                      onPressed: () {
-                        if (this.onUserPressed != null) {
-                          this.onUserPressed();
-                        }
-                      },
-                      child: Text(
-                        this.author,
-                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
-
-                      ),
-                    )),
-              ],
+                  Text(
+                    this.author,
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
+                  ),
+                  this.isFounder != null
+                      ? this.isFounder == true
+                          ? Container(
+                              padding: EdgeInsets.all(4),
+                              child: Image(
+                                image: AssetImage("assets/founder.png"),
+                                width: 12,
+                              ),
+                            )
+                          : Container()
+                      : Container(),
+                ],
+              ),
             ),
             Container(
               alignment: Alignment.centerLeft,
-              margin: EdgeInsets.symmetric(vertical: 2, horizontal: 16),
-              child: Text(this.content, style: TextStyle(fontSize: 12),),
+              margin: EdgeInsets.only(top: 2, left: 12),
+              child: Text(
+                this.content,
+                style: TextStyle(fontSize: 13),
+              ),
             )
           ],
         ),

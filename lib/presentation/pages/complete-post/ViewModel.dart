@@ -14,10 +14,11 @@ class CompletePostViewModel {
   final Function(String postId) onDeletePostPressed;
   final Function(String postId, PostType type, String text) onSharePostPressed;
   final Function(User user) onUserPressed;
-  final Function() refresh;
+  final Function(String postId) refresh;
   final Function(String postId) onLikePressed;
   final Function(List<String> imageURL) onImageZoomPressed;
   final Function(String postId, String comment) onSendCommentPressed;
+  final Function(String userId) onUserCommentPressed;
 
   CompletePostViewModel(
       {this.post,
@@ -27,7 +28,8 @@ class CompletePostViewModel {
       this.refresh,
       this.onImageZoomPressed,
       this.onLikePressed,
-      this.onSendCommentPressed});
+      this.onSendCommentPressed,
+      this.onUserCommentPressed,});
 
   factory CompletePostViewModel.create(Store<AppState> store) {
     final postState = store.state.postState;
@@ -38,6 +40,9 @@ class CompletePostViewModel {
           store.dispatch(PostShareAction(postId, type));
           Share.share(summarize(text, 300) +
               "\n\nVeja o post que ${store.state.userState.user.content.name} compartilhou com você!\nhttp://liceu.co?postId=$postId");
+        },
+        refresh: (postId) {
+          store.dispatch(FetchPostAction(postId));
         },
         onDeletePostPressed: (String postId) {
           store.dispatch(DeletePostAction(postId));
@@ -54,6 +59,10 @@ class CompletePostViewModel {
         },
         onSendCommentPressed: (postId, comment) {
           store.dispatch(SubmitPostCommentAction(postId, comment));
+          store.dispatch(FetchPostAction(postId));
+        },
+        onUserCommentPressed: (userId) {
+          store.dispatch(FetchFriendFromCommentAction(userId));
         });
   }
 }

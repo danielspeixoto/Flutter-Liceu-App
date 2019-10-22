@@ -159,6 +159,7 @@ List<Middleware<AppState>> postMiddleware(
     next(action);
     store.dispatch(NavigatePushAction(AppRoutes.completePost));
     store.dispatch(SetCompletePostAction(action.post));
+    
   }
 
   void fetchPostById(Store<AppState> store, FetchPostAction action,

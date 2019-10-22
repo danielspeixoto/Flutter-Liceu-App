@@ -1,6 +1,7 @@
 import 'package:app/presentation/pages/complete-post/ViewModel.dart';
 import 'package:app/presentation/state/actions/PageActions.dart';
 import 'package:app/presentation/state/app_state.dart';
+import 'package:app/presentation/widgets/CompletePostWidget.dart';
 import 'package:app/presentation/widgets/FetcherWidget.dart';
 import 'package:app/presentation/widgets/LiceuScaffold.dart';
 import 'package:app/presentation/widgets/PostWidget.dart';
@@ -21,7 +22,7 @@ class CompletePostPage extends StatelessWidget {
           return LiceuScaffold(
             body: SmartRefresher(
               onRefresh: () async {
-                viewModel.refresh();
+                viewModel.refresh(post.content.id);
                 _refreshController.refreshCompleted();
               },
               controller: _refreshController,
@@ -30,7 +31,7 @@ class CompletePostPage extends StatelessWidget {
                   FetcherWidget.build(
                     isLoading: post.isLoading,
                     errorMessage: post.errorMessage,
-                    child: () => PostWidget(
+                    child: () => CompletePostWidget(
                       user: post.content.user,
                       postStatus: post.content.statusCode,
                       postContent: post.content.text,
@@ -52,6 +53,9 @@ class CompletePostPage extends StatelessWidget {
                       comments: post.content.comments,
                       onSendCommentPressed: (comment) {
                         viewModel.onSendCommentPressed(post.content.id, comment);
+                      },
+                      onUserCommentPressed: (userId) {
+                            viewModel.onUserCommentPressed(userId);
                       },
                     ),
                   ),
