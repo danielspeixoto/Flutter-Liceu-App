@@ -179,25 +179,19 @@ class FriendPage extends StatelessWidget {
                               post.text,
                             );
                           },
+                          numberOfComments: post.comments.length.toString(),
                           images: post.images,
                           likes: post.likes == null ? 0 : post.likes,
                           imageURL: post.imageURL,
                           seeMore: post.type == PostType.TEXT &&
-                                  post.text.length > 600 ||
-                              post.type == PostType.IMAGE &&
-                                  post.text.length > 200
-                                  ||  '\n'.allMatches(post.text).length + 1 > 15
-                              ? FlatButton(
-                                  onPressed: () =>
-                                      viewModel.onSeeMorePressed(post, user),
-                                  child: Text(
-                                    "Ver mais",
-                                    style: TextStyle(
-                                      color: Color(0xFF0061A1),
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ))
-                              : null,
+                                      post.text.length > 600 ||
+                                  post.type == PostType.IMAGE &&
+                                      post.text.length > 200
+                              ? true
+                              : false,
+                          onSeeMorePressed: () {
+                            viewModel.onSeeMorePressed(post, user);
+                          },
                           onImageZoomPressed: () {
                             viewModel.onImageZoomPressed(post.images);
                           },
@@ -217,9 +211,6 @@ class FriendPage extends StatelessWidget {
                           onLikePressed: () {
                             viewModel.onLikePressed(post.id);
                             post.likes++;
-                          },
-                          onSendCommentPressed: (comment) {
-                            viewModel.onSendCommentPressed(post.id, comment);
                           },
                         ),
                       ],

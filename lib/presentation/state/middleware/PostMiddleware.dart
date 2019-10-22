@@ -105,16 +105,8 @@ List<Middleware<AppState>> postMiddleware(
       final posts = await explorePostUseCase.run(50);
       final futures = posts.map((post) async {
         final author = await getUserByIdUseCase.run(post.userId);
-        return PostData(
-          post.id,
-          author,
-          post.type,
-          post.text,
-          post.imageURL,
-          post.statusCode,
-          post.likes,
-          post.images,
-        );
+        return PostData(post.id, author, post.type, post.text, post.imageURL,
+            post.statusCode, post.likes, post.images, post.comments);
       });
       final data = await Future.wait(futures);
       store.dispatch(FetchPostsSuccessAction(data));
@@ -143,6 +135,7 @@ List<Middleware<AppState>> postMiddleware(
             post.statusCode,
             post.likes,
             post.images,
+            post.comments
           );
         });
         final data = await Future.wait(futures);
@@ -166,6 +159,7 @@ List<Middleware<AppState>> postMiddleware(
     next(action);
     store.dispatch(NavigatePushAction(AppRoutes.completePost));
     store.dispatch(SetCompletePostAction(action.post));
+    
   }
 
   void fetchPostById(Store<AppState> store, FetchPostAction action,
@@ -175,15 +169,15 @@ List<Middleware<AppState>> postMiddleware(
       final post = await getPostByIdUseCase.run(action.postId);
       final user = await getUserByIdUseCase.run(post.userId);
       final postData = new PostData(
-        post.id,
-        user,
-        post.type,
-        post.text,
-        post.imageURL,
-        post.statusCode,
-        post.likes,
-        post.images,
-      );
+          post.id,
+          user,
+          post.type,
+          post.text,
+          post.imageURL,
+          post.statusCode,
+          post.likes,
+          post.images,
+          post.comments);
 
       store.dispatch(NavigatePostAction(postData));
     } catch (error, stackTrace) {

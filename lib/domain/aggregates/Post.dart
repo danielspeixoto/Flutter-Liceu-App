@@ -1,3 +1,5 @@
+import 'package:app/domain/aggregates/Comment.dart';
+
 class Post {
   final String id;
   final String userId;
@@ -7,11 +9,12 @@ class Post {
   final String statusCode;
   int likes;
   final List<String> images;
-
+  final List<Comment> comments;
 
 //  final DateTime submissionDate;
 
-  Post(this.id, this.userId, String type, this.text, this.imageURL, this.statusCode, this.likes, this.images) {
+  Post(this.id, this.userId, String type, this.text, this.imageURL,
+      this.statusCode, this.likes, this.images, this.comments) {
     switch (type) {
       case "text":
         this.type = PostType.TEXT;

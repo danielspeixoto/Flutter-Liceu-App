@@ -98,21 +98,16 @@ class ExplorePage extends StatelessWidget {
                         ? () => viewModel.onDeletePostPressed(post.id)
                         : null,
                     imageURL: post.imageURL,
+                    numberOfComments: post.comments.length.toString(),
                     seeMore: post.type == PostType.TEXT &&
-                                post.text.length > 600 ||
-                            post.type == PostType.IMAGE &&
-                                post.text.length > 200 ||
-                            '\n'.allMatches(post.text).length + 1 > 15
-                        ? FlatButton(
-                            onPressed: () => viewModel.onSeeMorePressed(post),
-                            child: Text(
-                              "Ver mais",
-                              style: TextStyle(
-                                color: Color(0xFF0061A1),
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ))
-                        : null,
+                                      post.text.length > 600 ||
+                                  post.type == PostType.IMAGE &&
+                                      post.text.length > 200
+                              ? true
+                              : false,
+                          onSeeMorePressed: () {
+                            viewModel.onSeeMorePressed(post);
+                          },
                     onImageZoomPressed: () {
                       viewModel.onImageZoomPressed(post.images);
                     },
@@ -132,9 +127,6 @@ class ExplorePage extends StatelessWidget {
                     onLikePressed: () {
                       viewModel.onLikePressed(post.id);
                       post.likes++;
-                    },
-                    onSendCommentPressed: (comment) {
-                      viewModel.onSendCommentPressed(post.id, comment);
                     },
                   );
                 },

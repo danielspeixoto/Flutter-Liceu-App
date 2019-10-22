@@ -31,53 +31,52 @@ class FriendViewModel {
   final Function(String text) onReportTextChange;
   final String reportText;
   final Function(String postId) onLikePressed;
-  final Function(String postId, String comment) onSendCommentPressed;
 
-  FriendViewModel(
-      {this.user,
-      this.onDeletePostPressed,
-      this.onSharePostPressed,
-      this.posts,
-      this.refresh,
-      this.onChallengeMePressed,
-      this.onInstagramPressed,
-      this.onSeeMorePressed,
-      this.onImageZoomPressed,
-      this.onReportPressed,
-      this.onReportTextChange,
-      this.reportText,
-      this.onLikePressed,
-      this.onSendCommentPressed});
+  FriendViewModel({
+    this.user,
+    this.onDeletePostPressed,
+    this.onSharePostPressed,
+    this.posts,
+    this.refresh,
+    this.onChallengeMePressed,
+    this.onInstagramPressed,
+    this.onSeeMorePressed,
+    this.onImageZoomPressed,
+    this.onReportPressed,
+    this.onReportTextChange,
+    this.reportText,
+    this.onLikePressed,
+  });
 
   factory FriendViewModel.create(Store<AppState> store) {
     final friendState = store.state.friendState;
     final id = friendState.user.content.id;
     return FriendViewModel(
-        user: friendState.user,
-        posts: friendState.posts,
-        reportText: friendState.reportText,
-        refresh: () {
-          store.dispatch(FetchFriendAction(id));
-          store.dispatch(FetchFriendPostsAction(id));
-        },
-        onDeletePostPressed: (String postId) {
-          store.dispatch(DeletePostAction(postId));
-        },
-        onSharePostPressed: (postId, type, text) {
-          store.dispatch(PostShareAction(postId, type));
-          Share.share(summarize(text, 300) +
-              "\n\nVeja o post que ${store.state.userState.user.content.name} compartilhou com você!\nhttp://liceu.co?postId=$postId");
-        },
-        onChallengeMePressed: (String userId) {
-          store.dispatch(ChallengeSomeoneAction(userId));
-        },
-        onInstagramPressed: () {
-          final instagramProfile = friendState.user.content.instagramProfile;
-          store.dispatch(InstagramClickedAction(instagramProfile));
-          launch("https://www.instagram.com/" + instagramProfile);
-        },
-        onSeeMorePressed: (post, user) {
-          final postData = new PostData(
+      user: friendState.user,
+      posts: friendState.posts,
+      reportText: friendState.reportText,
+      refresh: () {
+        store.dispatch(FetchFriendAction(id));
+        store.dispatch(FetchFriendPostsAction(id));
+      },
+      onDeletePostPressed: (String postId) {
+        store.dispatch(DeletePostAction(postId));
+      },
+      onSharePostPressed: (postId, type, text) {
+        store.dispatch(PostShareAction(postId, type));
+        Share.share(summarize(text, 300) +
+            "\n\nVeja o post que ${store.state.userState.user.content.name} compartilhou com você!\nhttp://liceu.co?postId=$postId");
+      },
+      onChallengeMePressed: (String userId) {
+        store.dispatch(ChallengeSomeoneAction(userId));
+      },
+      onInstagramPressed: () {
+        final instagramProfile = friendState.user.content.instagramProfile;
+        store.dispatch(InstagramClickedAction(instagramProfile));
+        launch("https://www.instagram.com/" + instagramProfile);
+      },
+      onSeeMorePressed: (post, user) {
+        final postData = new PostData(
             post.id,
             user,
             post.type,
@@ -86,57 +85,55 @@ class FriendViewModel {
             post.statusCode,
             post.likes,
             post.images,
-          );
-          store.dispatch(NavigatePostAction(postData));
-        },
-        onImageZoomPressed: (imageURL) {
-          store.dispatch(NavigatePostImageZoomAction(imageURL));
-        },
-        onReportTextChange: (text) {
-          store.dispatch(SetFriendPostReportTextFieldAction(text));
-        },
-        onReportPressed: (String page,
-            String width,
-            String height,
-            String authorId,
-            String authorName,
-            String postId,
-            String postType) async {
-          final String version = await Information.appVersion;
-          final String phoneModel = await Information.phoneModel;
-          final String brand = await Information.brand;
-          final String release = await Information.osRelease;
-          String os;
+            post.comments);
+        store.dispatch(NavigatePostAction(postData));
+      },
+      onImageZoomPressed: (imageURL) {
+        store.dispatch(NavigatePostImageZoomAction(imageURL));
+      },
+      onReportTextChange: (text) {
+        store.dispatch(SetFriendPostReportTextFieldAction(text));
+      },
+      onReportPressed: (String page,
+          String width,
+          String height,
+          String authorId,
+          String authorName,
+          String postId,
+          String postType) async {
+        final String version = await Information.appVersion;
+        final String phoneModel = await Information.phoneModel;
+        final String brand = await Information.brand;
+        final String release = await Information.osRelease;
+        String os;
 
-          if (Platform.isAndroid) {
-            os = "Android";
-          } else if (Platform.isIOS) {
-            os = "iOS";
-          }
+        if (Platform.isAndroid) {
+          os = "Android";
+        } else if (Platform.isIOS) {
+          os = "iOS";
+        }
 
-          Map<String, dynamic> params = {
-            "postId": postId,
-            "postType": postType,
-            "authorId": authorId,
-            "authorName": authorName,
-            "page": page,
-            "appVersion": version,
-            "platform": os,
-            "brand": brand,
-            "model": phoneModel,
-            "osRelease": release,
-            "screenSize": width + " x " + height
-          };
+        Map<String, dynamic> params = {
+          "postId": postId,
+          "postType": postType,
+          "authorId": authorId,
+          "authorName": authorName,
+          "page": page,
+          "appVersion": version,
+          "platform": os,
+          "brand": brand,
+          "model": phoneModel,
+          "osRelease": release,
+          "screenSize": width + " x " + height
+        };
 
-          List<String> tags = ["created", "report", "post"];
-          store.dispatch(SubmitReportAction(
-              store.state.friendState.reportText, tags, params));
-        },
-        onLikePressed: (postId) {
-          store.dispatch(SubmitPostUpdateRatingAction(postId));
-        },
-        onSendCommentPressed: (postId, comment) {
-          store.dispatch(SubmitPostCommentAction(postId, comment));
-        });
+        List<String> tags = ["created", "report", "post"];
+        store.dispatch(SubmitReportAction(
+            store.state.friendState.reportText, tags, params));
+      },
+      onLikePressed: (postId) {
+        store.dispatch(SubmitPostUpdateRatingAction(postId));
+      },
+    );
   }
 }

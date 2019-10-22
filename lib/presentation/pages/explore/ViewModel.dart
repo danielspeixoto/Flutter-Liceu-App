@@ -27,7 +27,6 @@ class ExploreViewModel {
   final Function(String text) onReportTextChange;
   final String reportText;
   final Function(String postId) onLikePressed;
-  final Function(String postId, String comment) onSendCommentPressed;
   final Function(String query) onQueryTextChanged;
 
   ExploreViewModel({
@@ -43,7 +42,6 @@ class ExploreViewModel {
     this.onReportTextChange,
     this.reportText,
     this.onLikePressed,
-    this.onSendCommentPressed,
     this.onQueryTextChanged,
   });
 
@@ -116,9 +114,6 @@ class ExploreViewModel {
       },
       onLikePressed: (postId) {
         store.dispatch(SubmitPostUpdateRatingAction(postId));
-      },
-      onSendCommentPressed: (postId, comment) {
-        store.dispatch(SubmitPostCommentAction(postId, comment));
       },
       onQueryTextChanged: (query) {
         store.dispatch(SearchPostAction(query));

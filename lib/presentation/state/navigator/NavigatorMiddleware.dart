@@ -30,7 +30,7 @@ _navigatePush(
   final routeName = action.routeName;
   if (store.state.route.last != routeName) {
     navigatorKey.currentState.pushNamed(routeName);
-  }
+  } 
   next(action); //This need to be after name checks
 }
 

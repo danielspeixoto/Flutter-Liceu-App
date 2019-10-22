@@ -24,6 +24,12 @@ class FetchFriendAction extends ItemAction {
   }
 }
 
+class FetchFriendFromCommentAction {
+  final String userId;
+
+  FetchFriendFromCommentAction(this.userId);
+}
+
 class FetchFriendErrorAction {
   final String error;
 

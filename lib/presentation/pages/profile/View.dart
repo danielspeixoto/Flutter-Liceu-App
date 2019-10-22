@@ -271,6 +271,7 @@ class ProfilePage extends StatelessWidget {
                               post.text,
                             );
                           },
+                          numberOfComments: post.comments.length.toString(),
                           images: post.images,
                           onDeletePressed: () =>
                               viewModel.onDeletePostPressed(post.id),
@@ -280,26 +281,17 @@ class ProfilePage extends StatelessWidget {
                                       post.text.length > 600 ||
                                   post.type == PostType.IMAGE &&
                                       post.text.length > 200
-                              ? FlatButton(
-                                  onPressed: () =>
-                                      viewModel.onSeeMorePressed(post, user),
-                                  child: Text(
-                                    "Ver mais",
-                                    style: TextStyle(
-                                      color: Color(0xFF0061A1),
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ))
-                              : null,
+                              ? true
+                              : false,
+                          onSeeMorePressed: () {
+                            viewModel.onSeeMorePressed(post, user);
+                          },
                           onImageZoomPressed: () {
                             viewModel.onImageZoomPressed(post.images);
                           },
                           onLikePressed: () {
                             viewModel.onLikePressed(post.id);
                             post.likes++;
-                          },
-                          onSendCommentPressed: (comment) {
-                            viewModel.onSendCommentPressed(post.id, comment);
                           },
                         ),
                       ],

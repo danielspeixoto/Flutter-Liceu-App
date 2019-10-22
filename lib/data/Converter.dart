@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:app/domain/aggregates/Challenge.dart';
+import 'package:app/domain/aggregates/Comment.dart';
 import 'package:app/domain/aggregates/ENEMGame.dart';
 import 'package:app/domain/aggregates/ENEMQuestion.dart';
 import 'package:app/domain/aggregates/ENEMVideo.dart';
@@ -81,15 +82,15 @@ List<Post> fromJsonToListOfPosts(String content) {
 
 Post fromMapToPost(data) {
   return Post(
-    data["id"],
-    data["userId"],
-    data["type"],
-    data["description"],
-    data["image"]["imageData"],
-    data["statusCode"],
-    data["likes"] == null ? 0 : data["likes"],
-    fromMapToListOfImages(data["multipleImages"]),
-  );
+      data["id"],
+      data["userId"],
+      data["type"],
+      data["description"],
+      data["image"]["imageData"],
+      data["statusCode"],
+      data["likes"] == null ? 0 : data["likes"],
+      fromMapToListOfImages(data["multipleImages"]),
+      fromMapToListOfComments(data["comments"]));
 }
 
 List<String> fromMapToListOfImages(content) {
@@ -98,6 +99,21 @@ List<String> fromMapToListOfImages(content) {
 
     for (var i = 0; i < content.length; i++) {
       result.add(content[i]["imageData"]);
+    }
+
+    return result;
+  }
+
+  return [];
+}
+
+List<Comment> fromMapToListOfComments(content) {
+  if (content != null) {
+    List<Comment> result = List<Comment>();
+
+    for (var i = 0; i < content.length; i++) {
+      result.add(new Comment(content[i]["id"], content[i]["userId"],
+          content[i]["author"], content[i]["comment"], null));
     }
 
     return result;
