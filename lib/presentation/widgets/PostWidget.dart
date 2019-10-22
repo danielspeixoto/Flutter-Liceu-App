@@ -325,9 +325,9 @@ class PostWidget extends StatelessWidget {
                                 Animator(
                                   name: "like",
                                   blocs: [mainBloc],
-                                  tween: Tween<double>(begin: 0.8, end: 1.4),
+                                  tween: Tween<double>(begin: 0.8, end: 1.2),
                                   curve: Curves.elasticInOut,
-                                  duration: Duration(milliseconds: 200),
+                                  duration: Duration(milliseconds: 250),
                                   cycles: 2,
                                   builder: (anim) => Center(
                                     child: Transform.scale(
