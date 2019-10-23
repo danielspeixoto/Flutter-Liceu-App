@@ -31,6 +31,15 @@ class ExplorePage extends StatelessWidget {
         converter: (store) => ExploreViewModel.create(store),
         builder: (BuildContext context, ExploreViewModel viewModel) {
           final user = viewModel.user.content;
+
+          final TextEditingController _controller = TextEditingController(
+            text: viewModel.query,
+          );
+          _controller.selection = TextSelection.fromPosition(
+            TextPosition(
+              offset: viewModel.query.length,
+            ),
+          );
           return Scaffold(
             appBar: AppBar(
               backgroundColor: Colors.white,
@@ -38,9 +47,10 @@ class ExplorePage extends StatelessWidget {
               iconTheme: IconThemeData(
                 color: Colors.black,
               ),
-              elevation: 1.0,
+              elevation: 2.0,
               title: Container(
                 child: TextFieldHighlight(
+                  controller: _controller,
                   onChanged: (text) {
                     viewModel.onQueryTextChanged(text);
                   },
@@ -51,19 +61,16 @@ class ExplorePage extends StatelessWidget {
                   maxLines: 1,
                   minLines: 1,
                   decoration: InputDecoration(
-                    contentPadding:
-                        EdgeInsets.symmetric(vertical: 6, horizontal: 12),
-                    suffixIcon: Icon(
-                      FontAwesomeIcons.search,
-                      size: 16,
-                    ),
-                    border: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        width: 0.1,
-                        color: Colors.grey,
-                      ),
-                    ),
+                    border: InputBorder.none,
                     hintText: "O que você procura?",
+                    prefixIcon: Icon(Icons.search),
+                    suffixIcon: viewModel.query != null && viewModel.query != ""
+                        ? IconButton(
+                            icon: Icon(Icons.close),
+                            onPressed: () {
+                              viewModel.onQueryTextChanged("");
+                            })
+                        : null,
                   ),
                   keyboardType: TextInputType.text,
                 ),
@@ -99,15 +106,15 @@ class ExplorePage extends StatelessWidget {
                         : null,
                     imageURL: post.imageURL,
                     numberOfComments: post.comments.length.toString(),
-                    seeMore: post.type == PostType.TEXT &&
-                                      post.text.length > 600 ||
-                                  post.type == PostType.IMAGE &&
-                                      post.text.length > 200
-                              ? true
-                              : false,
-                          onSeeMorePressed: () {
-                            viewModel.onSeeMorePressed(post);
-                          },
+                    seeMore:
+                        post.type == PostType.TEXT && post.text.length > 600 ||
+                                post.type == PostType.IMAGE &&
+                                    post.text.length > 200
+                            ? true
+                            : false,
+                    onSeeMorePressed: () {
+                      viewModel.onSeeMorePressed(post);
+                    },
                     onImageZoomPressed: () {
                       viewModel.onImageZoomPressed(post.images);
                     },
