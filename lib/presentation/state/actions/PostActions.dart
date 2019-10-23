@@ -8,9 +8,9 @@ import 'package:app/presentation/state/aggregates/PostData.dart';
 class NavigateCreatePostAction {}
 
 class NavigatePostAction {
-  final PostData post;
+  final String postId;
 
-  NavigatePostAction(this.post);
+  NavigatePostAction(this.postId);
 }
 
 class NavigatePostImageZoomAction {
@@ -34,12 +34,6 @@ class FetchPostAction {
   final String postId;
 
   FetchPostAction(this.postId);
-}
-
-class FetchPostFromNotificationAction {
-  final String postId;
-
-  FetchPostFromNotificationAction(this.postId);
 }
 
 class SearchPostAction {

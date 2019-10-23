@@ -69,7 +69,7 @@ class ExternalConnections {
           });
         } else if(postId != null) {
           Future.delayed(Duration(seconds: 3), () {
-            store.dispatch(FetchPostFromNotificationAction(postId));
+            store.dispatch(NavigatePostAction(postId));
           });
         }
       }

@@ -22,14 +22,14 @@ class CompletePostPage extends StatelessWidget {
           return LiceuScaffold(
             body: SmartRefresher(
               onRefresh: () async {
-                viewModel.refresh(post.content.id);
+                viewModel.refresh();
                 _refreshController.refreshCompleted();
               },
               controller: _refreshController,
               child: ListView(
                 children: <Widget>[
                   FetcherWidget.build(
-                    isLoading: post.isLoading,
+                    isLoading: viewModel.isLoading,
                     errorMessage: post.errorMessage,
                     child: () => CompletePostWidget(
                       user: post.content.user,

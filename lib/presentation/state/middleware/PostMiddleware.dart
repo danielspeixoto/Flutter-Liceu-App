@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:app/domain/aggregates/exceptions/CreatePostExceptions.dart';
 import 'package:app/domain/boundary/PostBoundary.dart';
 import 'package:app/domain/boundary/UserBoundary.dart';
@@ -75,8 +77,9 @@ List<Middleware<AppState>> postMiddleware(
     }
   }
 
-  void updateComment(Store<AppState> store, SubmitPostCommentSuccessAction action, NextDispatcher next) async {
-          store.dispatch(FetchPostAction(action.postId));
+  void updateComment(Store<AppState> store,
+      SubmitPostCommentSuccessAction action, NextDispatcher next) async {
+    store.dispatch(FetchPostAction(action.postId));
   }
 
   void createImagePost(Store<AppState> store, SubmitImagePostAction action,
@@ -152,27 +155,9 @@ List<Middleware<AppState>> postMiddleware(
   void navigatePost(Store<AppState> store, NavigatePostAction action,
       NextDispatcher next) async {
     next(action);
-        try {
-      final post = await getPostByIdUseCase.run(action.post.id);
-      final user = await getUserByIdUseCase.run(post.userId);
-      final postData = new PostData(
-          post.id,
-          user,
-          post.type,
-          post.text,
-          post.imageURL,
-          post.statusCode,
-          post.likes,
-          post.images,
-          post.comments);
-
-      store.dispatch(SetCompletePostAction(postData));
-      store.dispatch(NavigatePushAction(AppRoutes.completePost));
-    } catch (error, stackTrace) {
-      final actionName = action.toString().substring(11);
-      store.dispatch(
-          OnCatchDefaultErrorAction(error.toString(), stackTrace, actionName));
-    }
+    store.dispatch(NavigatePushAction(AppRoutes.completePost));
+    store.dispatch(FetchPostAction(action.postId));
+    
   }
 
   void fetchPostById(Store<AppState> store, FetchPostAction action,
@@ -192,7 +177,6 @@ List<Middleware<AppState>> postMiddleware(
           post.comments);
 
       store.dispatch(SetCompletePostAction(postData));
-      store.dispatch(NavigateReplaceAction(AppRoutes.completePost));
     } catch (error, stackTrace) {
       final actionName = action.toString().substring(11);
       store.dispatch(
@@ -207,32 +191,6 @@ List<Middleware<AppState>> postMiddleware(
     store.dispatch(NavigatePushAction(AppRoutes.imagePost));
     store.dispatch(SetPostImageAction(action.imageURL));
   }
-
-  void fetchPostByIdFromNotification(Store<AppState> store,
-      FetchPostFromNotificationAction action, NextDispatcher next) async {
-        next(action);
-        try {
-      final post = await getPostByIdUseCase.run(action.postId);
-      final user = await getUserByIdUseCase.run(post.userId);
-      final postData = new PostData(
-          post.id,
-          user,
-          post.type,
-          post.text,
-          post.imageURL,
-          post.statusCode,
-          post.likes,
-          post.images,
-          post.comments);
-
-      store.dispatch(SetCompletePostAction(postData));
-      store.dispatch(NavigatePushAction(AppRoutes.completePost));
-    } catch (error, stackTrace) {
-      final actionName = action.toString().substring(11);
-      store.dispatch(
-          OnCatchDefaultErrorAction(error.toString(), stackTrace, actionName));
-    }
-      }
 
   return [
     TypedMiddleware<AppState, DeletePostAction>(deletePost),

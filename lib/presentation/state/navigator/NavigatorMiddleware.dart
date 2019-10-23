@@ -15,7 +15,7 @@ List<Middleware<AppState>> navigationMiddleware() {
 _navigateReplace(Store<AppState> store, action, NextDispatcher next) {
   developer.postEvent("navigate_replace", {"route": store.state.route});
   final routeName = (action as NavigateReplaceAction).routeName;
-  if (store.state.route.last != routeName || routeName == "/completePost") {
+  if (store.state.route.last != routeName) {
     navigatorKey.currentState.pushReplacementNamed(routeName);
   }
   next(action); //This need to be after name checks
@@ -28,7 +28,7 @@ _navigatePush(
       " to " +
       store.state.route.toString());
   final routeName = action.routeName;
-  if (store.state.route.last != routeName || routeName == "/completePost") {
+  if (store.state.route.last != routeName) {
     navigatorKey.currentState.pushNamed(routeName);
   } 
   next(action); //This need to be after name checks

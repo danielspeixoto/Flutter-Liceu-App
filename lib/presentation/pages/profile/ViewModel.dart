@@ -140,7 +140,7 @@ class ProfileViewModel {
             post.likes,
             post.images,
             post.comments);
-        store.dispatch(NavigatePostAction(postData));
+        store.dispatch(NavigatePostAction(postData.id));
       },
       onImageZoomPressed: (imageURL) {
         store.dispatch(NavigatePostImageZoomAction(imageURL));
