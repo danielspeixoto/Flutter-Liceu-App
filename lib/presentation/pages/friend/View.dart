@@ -179,6 +179,7 @@ class FriendPage extends StatelessWidget {
                               post.text,
                             );
                           },
+                          onUserPressed: (user) => viewModel.onUserPressed(user),
                           numberOfComments: post.comments.length.toString(),
                           images: post.images,
                           likes: post.likes == null ? 0 : post.likes,

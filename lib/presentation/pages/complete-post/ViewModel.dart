@@ -59,7 +59,6 @@ class CompletePostViewModel {
         },
         onSendCommentPressed: (postId, comment) {
           store.dispatch(SubmitPostCommentAction(postId, comment));
-          store.dispatch(FetchPostAction(postId));
         },
         onUserCommentPressed: (userId) {
           store.dispatch(FetchFriendFromCommentAction(userId));
