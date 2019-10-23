@@ -36,6 +36,7 @@ class ProfileViewModel {
   final Function(Post post, User user) onSeeMorePressed;
   final Function(List<String> imageURL) onImageZoomPressed;
   final Function(String postId) onLikePressed;
+  final Function() onSavePostPressed;
 
   ProfileViewModel({
     this.user,
@@ -55,6 +56,7 @@ class ProfileViewModel {
     this.onSeeMorePressed,
     this.onImageZoomPressed,
     this.onLikePressed,
+    this.onSavePostPressed
   });
 
   factory ProfileViewModel.create(Store<AppState> store) {
