@@ -67,7 +67,7 @@ class ExploreViewModel {
         store.dispatch(UserClickedAction(user));
       },
       onSeeMorePressed: (post) {
-        store.dispatch(NavigatePostAction(post));
+        store.dispatch(NavigatePostAction(post.id));
       },
       onImageZoomPressed: (imageURL) {
         store.dispatch(NavigatePostImageZoomAction(imageURL));
