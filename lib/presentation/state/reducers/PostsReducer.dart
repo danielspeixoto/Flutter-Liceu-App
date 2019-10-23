@@ -17,7 +17,6 @@ class PostState {
   final List<String> imageURL;
   final String message;
   final String reportText;
-  final bool isCompletePostLoading;
 
   PostState(
       this.posts,
@@ -29,11 +28,10 @@ class PostState {
       this.imageURL,
       this.message,
       this.reportText,
-      this.query,
-      this.isCompletePostLoading);
+      this.query);
 
   factory PostState.initial() =>
-      PostState(Data(), Data(), true, "", null, Data(), null, null, null, "", true);
+      PostState(Data(), Data(), true, "", null, Data(), null, null, null, "");
 
   PostState copyWith({
     Data<List<PostData>> posts,
@@ -46,7 +44,6 @@ class PostState {
     String message,
     String reportText,
     String query,
-    bool isCompletePostLoading
   }) {
     final state = PostState(
       posts ?? this.posts,
@@ -59,7 +56,6 @@ class PostState {
       message ?? this.message,
       reportText ?? this.reportText,
       query ?? this.query,
-      isCompletePostLoading ?? this.isCompletePostLoading
     );
     return state;
   }
@@ -82,8 +78,14 @@ final Reducer<PostState> postReducer = combineReducers<PostState>([
   TypedReducer<PostState, SubmitPostSuccessAction>(setSuccessMessage),
   TypedReducer<PostState, SubmitPostErrorAction>(setErrorMessage),
   TypedReducer<PostState, SetPostReportTextFieldAction>(setReportTextField),
-  TypedReducer<PostState, FetchPostAction>(fetchPost),
+  TypedReducer<PostState, NavigatePostAction>(navigatePost)
 ]);
+
+PostState navigatePost(PostState state, NavigatePostAction action) {
+   return state.copyWith(
+    post: state.post.copyWith(isLoading: true),
+  );
+}
 
 PostState deletePost(PostState state, DeletePostAction action) {
   if (state.posts.content == null) {
@@ -96,13 +98,6 @@ PostState deletePost(PostState state, DeletePostAction action) {
     posts: state.posts.copyWith(
       content: posts,
     ),
-  );
-}
-
-PostState fetchPost(PostState state, FetchPostAction action) {
-  return state.copyWith(
-    post: Data(isLoading: true),
-    isCompletePostLoading: true
   );
 }
 
@@ -122,10 +117,9 @@ PostState setErrorMessage(PostState state, SubmitPostErrorAction action) {
 }
 
 PostState setPost(PostState state, SetCompletePostAction action) {
-  return state.copyWith(
-    post: Data(content: action.post, isLoading: false),
-    isCompletePostLoading: false
-  );
+  final s =
+  state.copyWith(post: Data(content: action.post, isLoading: false));
+  return s;
 }
 
 PostState setReportTextField(
@@ -164,7 +158,6 @@ PostState createPost(PostState state, SubmitTextPostAction action) {
     state.message,
     state.reportText,
     state.query,
-    false
   );
 }
 
@@ -180,7 +173,6 @@ PostState createImagePost(PostState state, SubmitImagePostAction action) {
     state.message,
     state.reportText,
     state.query,
-    false
   );
 }
 

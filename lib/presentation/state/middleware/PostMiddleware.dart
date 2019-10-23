@@ -154,10 +154,27 @@ List<Middleware<AppState>> postMiddleware(
 
   void navigatePost(Store<AppState> store, NavigatePostAction action,
       NextDispatcher next) async {
-    next(action);
+            next(action);
     store.dispatch(NavigatePushAction(AppRoutes.completePost));
-    store.dispatch(FetchPostAction(action.postId));
-    
+    try {
+      final post = await getPostByIdUseCase.run(action.postId);
+      final user = await getUserByIdUseCase.run(post.userId);
+      final postData = new PostData(
+          post.id,
+          user,
+          post.type,
+          post.text,
+          post.imageURL,
+          post.statusCode,
+          post.likes,
+          post.images,
+          post.comments);     
+      store.dispatch(SetCompletePostAction(postData));
+    } catch (error, stackTrace) {
+      final actionName = action.toString().substring(11);
+      store.dispatch(
+          OnCatchDefaultErrorAction(error.toString(), stackTrace, actionName));
+    }
   }
 
   void fetchPostById(Store<AppState> store, FetchPostAction action,

@@ -29,7 +29,7 @@ class CompletePostPage extends StatelessWidget {
               child: ListView(
                 children: <Widget>[
                   FetcherWidget.build(
-                    isLoading: viewModel.isLoading,
+                    isLoading: viewModel.post.isLoading,
                     errorMessage: post.errorMessage,
                     child: () => CompletePostWidget(
                       user: post.content.user,

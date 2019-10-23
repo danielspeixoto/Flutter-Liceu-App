@@ -35,10 +35,10 @@ class CompletePostViewModel {
 
   factory CompletePostViewModel.create(Store<AppState> store) {
     final postState = store.state.postState;
-//
+
     return CompletePostViewModel(
-        post: postState.post,
-        isLoading: store.state.postState.isCompletePostLoading,
+        post: store.state.postState.post,
+        isLoading: store.state.postState.post.isLoading,
         onSharePostPressed: (postId, type, text) {
           store.dispatch(PostShareAction(postId, type));
           Share.share(summarize(text, 300) +
