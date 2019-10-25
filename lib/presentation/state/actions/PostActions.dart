@@ -8,9 +8,9 @@ import 'package:app/presentation/state/aggregates/PostData.dart';
 class NavigateCreatePostAction {}
 
 class NavigatePostAction {
-  final PostData post;
+  final String postId;
 
-  NavigatePostAction(this.post);
+  NavigatePostAction(this.postId);
 }
 
 class NavigatePostImageZoomAction {
@@ -116,7 +116,11 @@ class SubmitPostCommentAction {
   SubmitPostCommentAction(this.postId, this.comment);
 }
 
-class SubmitPostCommentSuccessAction {}
+class SubmitPostCommentSuccessAction {
+  String postId;
+
+  SubmitPostCommentSuccessAction(this.postId);
+}
 
 class SubmitPostCommentErrorAction {}
 

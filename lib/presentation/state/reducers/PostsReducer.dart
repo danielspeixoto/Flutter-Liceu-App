@@ -77,8 +77,15 @@ final Reducer<PostState> postReducer = combineReducers<PostState>([
   TypedReducer<PostState, SetPostImageAction>(setImage),
   TypedReducer<PostState, SubmitPostSuccessAction>(setSuccessMessage),
   TypedReducer<PostState, SubmitPostErrorAction>(setErrorMessage),
-  TypedReducer<PostState, SetPostReportTextFieldAction>(setReportTextField)
+  TypedReducer<PostState, SetPostReportTextFieldAction>(setReportTextField),
+  TypedReducer<PostState, NavigatePostAction>(navigatePost)
 ]);
+
+PostState navigatePost(PostState state, NavigatePostAction action) {
+   return state.copyWith(
+    post: state.post.copyWith(isLoading: true),
+  );
+}
 
 PostState deletePost(PostState state, DeletePostAction action) {
   if (state.posts.content == null) {
@@ -110,9 +117,9 @@ PostState setErrorMessage(PostState state, SubmitPostErrorAction action) {
 }
 
 PostState setPost(PostState state, SetCompletePostAction action) {
-  return state.copyWith(
-    post: Data(content: action.post, isLoading: false),
-  );
+  final s =
+  state.copyWith(post: Data(content: action.post, isLoading: false));
+  return s;
 }
 
 PostState setReportTextField(

@@ -28,6 +28,7 @@ class ExploreViewModel {
   final String reportText;
   final Function(String postId) onLikePressed;
   final Function(String query) onQueryTextChanged;
+  final String query;
 
   ExploreViewModel({
     this.user,
@@ -43,6 +44,7 @@ class ExploreViewModel {
     this.reportText,
     this.onLikePressed,
     this.onQueryTextChanged,
+    this.query
   });
 
   factory ExploreViewModel.create(Store<AppState> store) {
@@ -52,6 +54,7 @@ class ExploreViewModel {
       user: userState.user,
       posts: postState.query != "" ? postState.searchPosts : postState.posts,
       reportText: postState.reportText,
+      query: store.state.postState.query,
       refresh: () {
         store.dispatch(FetchPostsAction());
       },
@@ -67,7 +70,7 @@ class ExploreViewModel {
         store.dispatch(UserClickedAction(user));
       },
       onSeeMorePressed: (post) {
-        store.dispatch(NavigatePostAction(post));
+        store.dispatch(NavigatePostAction(post.id));
       },
       onImageZoomPressed: (imageURL) {
         store.dispatch(NavigatePostImageZoomAction(imageURL));

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:app/domain/aggregates/exceptions/CreatePostExceptions.dart';
 import 'package:app/domain/boundary/PostBoundary.dart';
 import 'package:app/domain/boundary/UserBoundary.dart';
@@ -61,18 +63,23 @@ List<Middleware<AppState>> postMiddleware(
     }
   }
 
-  void updateComment(Store<AppState> store, SubmitPostCommentAction action,
+  void submitComment(Store<AppState> store, SubmitPostCommentAction action,
       NextDispatcher next) async {
     next(action);
     try {
       await updatePostCommentUseCase.run(action.postId, action.comment);
-      store.dispatch(SubmitPostCommentSuccessAction());
+      store.dispatch(SubmitPostCommentSuccessAction(action.postId));
     } catch (error, stackTrace) {
       final actionName = action.toString().substring(11);
       store.dispatch(
           OnCatchDefaultErrorAction(error.toString(), stackTrace, actionName));
       store.dispatch(SubmitPostCommentErrorAction());
     }
+  }
+
+  void updateComment(Store<AppState> store,
+      SubmitPostCommentSuccessAction action, NextDispatcher next) async {
+    store.dispatch(FetchPostAction(action.postId));
   }
 
   void createImagePost(Store<AppState> store, SubmitImagePostAction action,
@@ -126,17 +133,8 @@ List<Middleware<AppState>> postMiddleware(
         final posts = await searchPostsUseCase.run(action.query);
         final futures = posts.map((post) async {
           final author = await getUserByIdUseCase.run(post.userId);
-          return PostData(
-            post.id,
-            author,
-            post.type,
-            post.text,
-            post.imageURL,
-            post.statusCode,
-            post.likes,
-            post.images,
-            post.comments
-          );
+          return PostData(post.id, author, post.type, post.text, post.imageURL,
+              post.statusCode, post.likes, post.images, post.comments);
         });
         final data = await Future.wait(futures);
         store.dispatch(SearchPostSuccessAction(data));
@@ -156,15 +154,31 @@ List<Middleware<AppState>> postMiddleware(
 
   void navigatePost(Store<AppState> store, NavigatePostAction action,
       NextDispatcher next) async {
-    next(action);
+            next(action);
     store.dispatch(NavigatePushAction(AppRoutes.completePost));
-    store.dispatch(SetCompletePostAction(action.post));
-    
+    try {
+      final post = await getPostByIdUseCase.run(action.postId);
+      final user = await getUserByIdUseCase.run(post.userId);
+      final postData = new PostData(
+          post.id,
+          user,
+          post.type,
+          post.text,
+          post.imageURL,
+          post.statusCode,
+          post.likes,
+          post.images,
+          post.comments);     
+      store.dispatch(SetCompletePostAction(postData));
+    } catch (error, stackTrace) {
+      final actionName = action.toString().substring(11);
+      store.dispatch(
+          OnCatchDefaultErrorAction(error.toString(), stackTrace, actionName));
+    }
   }
 
   void fetchPostById(Store<AppState> store, FetchPostAction action,
       NextDispatcher next) async {
-    next(action);
     try {
       final post = await getPostByIdUseCase.run(action.postId);
       final user = await getUserByIdUseCase.run(post.userId);
@@ -179,12 +193,13 @@ List<Middleware<AppState>> postMiddleware(
           post.images,
           post.comments);
 
-      store.dispatch(NavigatePostAction(postData));
+      store.dispatch(SetCompletePostAction(postData));
     } catch (error, stackTrace) {
       final actionName = action.toString().substring(11);
       store.dispatch(
           OnCatchDefaultErrorAction(error.toString(), stackTrace, actionName));
     }
+    next(action);
   }
 
   void navigatePostImageZoom(Store<AppState> store,
@@ -207,6 +222,7 @@ List<Middleware<AppState>> postMiddleware(
     TypedMiddleware<AppState, NavigatePostImageZoomAction>(
         navigatePostImageZoom),
     TypedMiddleware<AppState, SubmitPostUpdateRatingAction>(updateRating),
-    TypedMiddleware<AppState, SubmitPostCommentAction>(updateComment),
+    TypedMiddleware<AppState, SubmitPostCommentAction>(submitComment),
+    TypedMiddleware<AppState, SubmitPostCommentSuccessAction>(updateComment),
   ];
 }
