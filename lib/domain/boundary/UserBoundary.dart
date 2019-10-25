@@ -31,6 +31,8 @@ abstract class IUserRepository {
   Future<void> fcmtoken(String accessToken, String fcmtoken, String userId);
 
   Future<void> savePost(String accessToken, String userId, String postId);
+
+  Future<List<Post>> getSavedPosts(String accessToken, String userId);
 }
 
 abstract class ICheckUseCase {
@@ -104,4 +106,8 @@ abstract class ISubmitFcmTokenUseCase {
 
 abstract class ISavePostUseCase {
   Future<void> run(String postId);
+}
+
+abstract class IGetSavedPostsUseCase {
+  Future<List<Post>> run();
 }

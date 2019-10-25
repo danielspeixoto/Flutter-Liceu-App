@@ -7,6 +7,7 @@ import 'package:app/presentation/pages/image-post/View.dart';
 import 'package:app/presentation/pages/intro/View.dart';
 import 'package:app/presentation/pages/login/View.dart';
 import 'package:app/presentation/pages/complete-post/View.dart';
+import 'package:app/presentation/pages/saved-posts/View.dart';
 import 'package:app/presentation/pages/splash/View.dart';
 import 'package:app/presentation/pages/tournament-review/View.dart';
 import 'package:app/presentation/pages/tournament/View.dart';
@@ -60,6 +61,8 @@ class MyApp extends StatelessWidget {
         return MainRoute(CompletePostPage(), settings: settings);
       case AppRoutes.imagePost:
         return MainRoute(ImagePostPage(), settings: settings);
+      case AppRoutes.savedPosts:
+        return MainRoute(SavedPostsPage(), settings: settings);
       default:
         return MainRoute(SplashPage(), settings: settings);
     }
@@ -100,4 +103,5 @@ class AppRoutes {
   static const createTrivia = "/createTrivia";
   static const completePost = "/completePost";
   static const imagePost = "/imagePost";
+  static const savedPosts = "/savedPosts";
 }

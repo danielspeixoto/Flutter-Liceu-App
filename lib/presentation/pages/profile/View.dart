@@ -197,23 +197,19 @@ class ProfilePage extends StatelessWidget {
                                     ),
                                   ],
                                 ),
-                                SizedBox(
-                                  width: MediaQuery.of(context).size.width * 0.9,
+                                Container(
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.9,
                                   child: FeaturesAvailable.savePosts
                                       ? OutlineButton(
-
                                           child: Row(
                                             mainAxisAlignment:
                                                 MainAxisAlignment.center,
                                             children: <Widget>[
                                               Container(
                                                 margin: EdgeInsets.all(8),
-                                                child: Text("Resumos salvos"),
+                                                child: Text("Resumos Salvos"),
                                               ),
-                                              Icon(
-                                                  FontAwesomeIcons
-                                                      .solidBookmark,
-                                                  size: 10),
                                             ],
                                           ),
                                           onPressed: () {

@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:app/domain/aggregates/Post.dart';
 import 'package:app/domain/aggregates/User.dart';
 import 'package:app/injection.dart';
-import 'package:app/presentation/state/actions/FriendActions.dart';
 import 'package:app/presentation/state/actions/LiceuActions.dart';
 import 'package:app/presentation/state/actions/LoginActions.dart';
 import 'package:app/presentation/state/actions/PostActions.dart';
@@ -156,7 +155,8 @@ class ProfileViewModel {
         store.dispatch(SubmitUserSavePostAction(postId));
       },
       onSavedResumesPressed: () {
-        
+        store.dispatch(FetchUserSavedPostsAction());
+        store.dispatch(NavigateUserSavedPostsAction());
       }
     );
   }
