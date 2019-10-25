@@ -39,6 +39,7 @@ class CompletePostWidget extends StatelessWidget {
   final inputController = TextEditingController();
   final List<Comment> comments;
   final Function(String) onUserCommentPressed;
+    final Function() onSavePostPressed;
 
   CompletePostWidget(
       {@required this.user,
@@ -56,7 +57,8 @@ class CompletePostWidget extends StatelessWidget {
       this.onSendCommentPressed,
       @required this.images,
       this.comments,
-      this.onUserCommentPressed});
+      this.onUserCommentPressed,
+      this.onSavePostPressed});
 
   @override
   Widget build(BuildContext context) => Card(
@@ -283,17 +285,19 @@ class CompletePostWidget extends StatelessWidget {
                         ),
                         Container(
                           margin: EdgeInsets.only(top: 4),
-                          child: images.length != 0 ? Text(
-                            "1/" + images.length.toString(),
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ) : Text(
-                            "1/1",
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
+                          child: images.length != 0
+                              ? Text(
+                                  "1/" + images.length.toString(),
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                )
+                              : Text(
+                                  "1/1",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
                         ),
                       ],
                     ),
@@ -303,30 +307,63 @@ class CompletePostWidget extends StatelessWidget {
                       child: FlatButton(
                           onPressed: () {
                             this.onLikePressed();
-                            animation.rebuild();
+                            animation.rebuildLike();
                           },
                           child: Row(
                             children: <Widget>[
                               Animator(
-                                  name: "like",
-                                  blocs: [animation],
-                                  tween: Tween<double>(begin: 0.8, end: 1.2),
-                                  curve: Curves.easeInOut,
-                                  duration: Duration(milliseconds: 350),
-                                  cycles: 2,
-                                  builder: (anim) => Center(
-                                    child: Transform.scale(
-                                      scale: anim.value,
-                                      child: Icon(
-                                        FontAwesomeIcons.solidHeart,
-                                        size: 20,
-                                      ),
+                                name: "like",
+                                blocs: [animation],
+                                tween: Tween<double>(begin: 0.8, end: 1.2),
+                                curve: Curves.easeInOut,
+                                duration: Duration(milliseconds: 350),
+                                cycles: 2,
+                                builder: (anim) => Center(
+                                  child: Transform.scale(
+                                    scale: anim.value,
+                                    child: Icon(
+                                      FontAwesomeIcons.solidHeart,
+                                      size: 20,
                                     ),
                                   ),
                                 ),
+                              ),
                               Container(
                                   margin: EdgeInsets.only(left: 4),
-                                  child: Text(this.likes.toString()))
+                                  child: Text(this.likes.toString())),
+                              this.postStatus == "approved" &&
+                                      FeaturesAvailable.savePosts
+                                  ? Container(
+                                      child: FlatButton(
+                                          onPressed: () {
+                                            this.onSavePostPressed();
+                                            animation.rebuildSavePost();
+                                          },
+                                          child: Row(
+                                            children: <Widget>[
+                                              Animator(
+                                                name: "savePost",
+                                                blocs: [animation],
+                                                tween: Tween<double>(
+                                                    begin: 0.8, end: 1.2),
+                                                curve: Curves.easeInOut,
+                                                duration:
+                                                    Duration(milliseconds: 350),
+                                                cycles: 2,
+                                                builder: (anim) => Center(
+                                                  child: Transform.scale(
+                                                    scale: anim.value,
+                                                    child: Icon(
+                                                      FontAwesomeIcons.bookmark,
+                                                      size: 20,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          )),
+                                    )
+                                  : Container(),
                             ],
                           )),
                     )
@@ -334,18 +371,17 @@ class CompletePostWidget extends StatelessWidget {
               comments != null && FeaturesAvailable.comments
                   ? Column(
                       children: comments.map((comment) {
-                        return CommentWidget(
-                              author: comment.author,
-                              content: comment.content,
-                              authorPic: comment.user.picURL,
-                              onUserPressed: () {
-                                if(this.onUserCommentPressed != null){
-                                  this.onUserCommentPressed(comment.userId);
-                                }
-                              },
-                            );
-                      }).toList()
-                    )
+                      return CommentWidget(
+                        author: comment.author,
+                        content: comment.content,
+                        authorPic: comment.user.picURL,
+                        onUserPressed: () {
+                          if (this.onUserCommentPressed != null) {
+                            this.onUserCommentPressed(comment.userId);
+                          }
+                        },
+                      );
+                    }).toList())
                   : Container(),
               this.postStatus == "approved" && FeaturesAvailable.comments
                   ? Row(

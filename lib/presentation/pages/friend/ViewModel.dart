@@ -31,24 +31,25 @@ class FriendViewModel {
   final Function(String text) onReportTextChange;
   final String reportText;
   final Function(String postId) onLikePressed;
-    final Function(User user) onUserPressed;
+  final Function(User user) onUserPressed;
+  final Function(String postId) onSavePostPressed;
 
-  FriendViewModel({
-    this.user,
-    this.onDeletePostPressed,
-    this.onSharePostPressed,
-    this.posts,
-    this.refresh,
-    this.onChallengeMePressed,
-    this.onInstagramPressed,
-    this.onSeeMorePressed,
-    this.onImageZoomPressed,
-    this.onReportPressed,
-    this.onReportTextChange,
-    this.reportText,
-    this.onLikePressed,
-    this.onUserPressed
-  });
+  FriendViewModel(
+      {this.user,
+      this.onDeletePostPressed,
+      this.onSharePostPressed,
+      this.posts,
+      this.refresh,
+      this.onChallengeMePressed,
+      this.onInstagramPressed,
+      this.onSeeMorePressed,
+      this.onImageZoomPressed,
+      this.onReportPressed,
+      this.onReportTextChange,
+      this.reportText,
+      this.onLikePressed,
+      this.onUserPressed,
+      this.onSavePostPressed});
 
   factory FriendViewModel.create(Store<AppState> store) {
     final friendState = store.state.friendState;
@@ -139,6 +140,9 @@ class FriendViewModel {
       onLikePressed: (postId) {
         store.dispatch(SubmitPostUpdateRatingAction(postId));
       },
+      onSavePostPressed: (postId) {
+        store.dispatch(SubmitUserSavePostAction(postId));
+      }
     );
   }
 }

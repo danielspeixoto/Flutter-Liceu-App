@@ -2,6 +2,7 @@ import 'package:app/domain/aggregates/Post.dart';
 import 'package:app/domain/aggregates/User.dart';
 import 'package:app/presentation/state/actions/FriendActions.dart';
 import 'package:app/presentation/state/actions/PostActions.dart';
+import 'package:app/presentation/state/actions/UserActions.dart';
 import 'package:app/presentation/state/aggregates/PostData.dart';
 import 'package:app/presentation/state/app_state.dart';
 import 'package:app/presentation/state/reducers/Data.dart';
@@ -20,6 +21,7 @@ class CompletePostViewModel {
   final Function(String postId, String comment) onSendCommentPressed;
   final Function(String userId) onUserCommentPressed;
   final bool isLoading;
+  final Function(String postId) onSavePostPressed;
 
   CompletePostViewModel(
       {this.post,
@@ -31,7 +33,8 @@ class CompletePostViewModel {
       this.onLikePressed,
       this.onSendCommentPressed,
       this.onUserCommentPressed,
-      this.isLoading});
+      this.isLoading,
+      this.onSavePostPressed});
 
   factory CompletePostViewModel.create(Store<AppState> store) {
     final postState = store.state.postState;
@@ -65,6 +68,9 @@ class CompletePostViewModel {
         },
         onUserCommentPressed: (userId) {
           store.dispatch(FetchFriendFromCommentAction(userId));
+        },
+        onSavePostPressed: (postId) {
+          store.dispatch(SubmitUserSavePostAction(postId));
         });
   }
 }

@@ -57,6 +57,9 @@ class CompletePostPage extends StatelessWidget {
                       onUserCommentPressed: (userId) {
                             viewModel.onUserCommentPressed(userId);
                       },
+                      onSavePostPressed: () {
+                        viewModel.onSavePostPressed(post.content.id);
+                      },
                     ),
                   ),
                 ],

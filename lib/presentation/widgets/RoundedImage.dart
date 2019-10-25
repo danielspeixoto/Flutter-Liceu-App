@@ -12,13 +12,13 @@ final List<String> animals = [
   'assets/dog.png',
   'assets/koala.png'
 ];
+  final random = new Random().nextInt(animals.length);
+
 
 class RoundedImage extends StatelessWidget {
   final String pictureURL;
   final double size;
-
-  final randomAnimal = animals[new Random().nextInt(animals.length)];
-
+  final randomAnimal = animals[random];
   RoundedImage({this.pictureURL, this.size});
 
   @override

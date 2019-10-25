@@ -36,7 +36,8 @@ class ProfileViewModel {
   final Function(Post post, User user) onSeeMorePressed;
   final Function(List<String> imageURL) onImageZoomPressed;
   final Function(String postId) onLikePressed;
-  final Function() onSavePostPressed;
+  final Function(String postId) onSavePostPressed;
+  final Function() onSavedResumesPressed;
 
   ProfileViewModel({
     this.user,
@@ -56,7 +57,8 @@ class ProfileViewModel {
     this.onSeeMorePressed,
     this.onImageZoomPressed,
     this.onLikePressed,
-    this.onSavePostPressed
+    this.onSavePostPressed,
+    this.onSavedResumesPressed
   });
 
   factory ProfileViewModel.create(Store<AppState> store) {
@@ -150,6 +152,12 @@ class ProfileViewModel {
       onLikePressed: (postId) {
         store.dispatch(SubmitPostUpdateRatingAction(postId));
       },
+      onSavePostPressed: (postId) {
+        store.dispatch(SubmitUserSavePostAction(postId));
+      },
+      onSavedResumesPressed: () {
+        
+      }
     );
   }
 }

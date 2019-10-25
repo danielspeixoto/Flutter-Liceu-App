@@ -98,6 +98,7 @@ final Store<AppState> store = Store<AppState>(
       Dependencies.get().setUserPhoneUseCase,
       Dependencies.get().myIdUseCase,
       Dependencies.get().submitUserFcmTokenUseCase,
+      Dependencies.get().savePostUseCase
     ),
     ...postMiddleware(
       Dependencies.get().createTextPostUseCase,

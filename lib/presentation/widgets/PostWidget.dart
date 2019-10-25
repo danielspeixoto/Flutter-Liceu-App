@@ -8,7 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:states_rebuilder/states_rebuilder.dart';
 
 import 'RoundedImage.dart';
 
@@ -37,7 +36,7 @@ class PostWidget extends StatelessWidget {
   final Function() onLikePressed;
   final Function() onSeeMorePressed;
   final String numberOfComments;
-  final IconData savePostIcon;
+  final Function() onSavePostPressed;
 
   PostWidget(
       {@required this.user,
@@ -56,11 +55,10 @@ class PostWidget extends StatelessWidget {
       @required this.images,
       this.onSeeMorePressed,
       this.numberOfComments,
-      this.savePostIcon});
+      this.onSavePostPressed});
 
   @override
   Widget build(BuildContext context) {
-    IconData bookMarkIcon = FontAwesomeIcons.bookmark;
     return Card(
       shape: RoundedRectangleBorder(
         side: BorderSide(
@@ -322,7 +320,7 @@ class PostWidget extends StatelessWidget {
                         child: FlatButton(
                             onPressed: () {
                               this.onLikePressed();
-                              animation.rebuild();
+                              animation.rebuildLike();
                             },
                             child: Row(
                               children: <Widget>[
@@ -373,13 +371,27 @@ class PostWidget extends StatelessWidget {
                     ? Container(
                         child: FlatButton(
                             onPressed: () {
-                              
+                              this.onSavePostPressed();
+                              animation.rebuildSavePost();
                             },
                             child: Row(
                               children: <Widget>[
-                                Icon(
-                                  FontAwesomeIcons.bookmark,
-                                  size: 15,
+                                Animator(
+                                  name: "savePost",
+                                  blocs: [animation],
+                                  tween: Tween<double>(begin: 0.8, end: 1.2),
+                                  curve: Curves.easeInOut,
+                                  duration: Duration(milliseconds: 350),
+                                  cycles: 2,
+                                  builder: (anim) => Center(
+                                    child: Transform.scale(
+                                      scale: anim.value,
+                                      child: Icon(
+                                        FontAwesomeIcons.bookmark,
+                                        size: 20,
+                                      ),
+                                    ),
+                                  ),
                                 ),
                               ],
                             )),

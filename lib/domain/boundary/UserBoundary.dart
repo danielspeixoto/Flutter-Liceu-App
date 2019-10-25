@@ -101,3 +101,7 @@ abstract class IMyChallengesUseCase {
 abstract class ISubmitFcmTokenUseCase {
   Future<void> run(String fcmtoken, String userId);
 }
+
+abstract class ISavePostUseCase {
+  Future<void> run(String postId);
+}

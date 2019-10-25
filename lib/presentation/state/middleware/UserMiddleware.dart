@@ -23,7 +23,8 @@ List<Middleware<AppState>> userMiddleware(
     ISetUserDesiredCourseUseCase setUserDesiredCourseUseCase,
     ISetUserPhoneUseCase setUserPhoneUseCase,
     IMyIdUseCase _myIdUseCase,
-    ISubmitFcmTokenUseCase _submitFcmTokenUseCase) {
+    ISubmitFcmTokenUseCase _submitFcmTokenUseCase,
+    ISavePostUseCase savePostUseCase) {
   void fetchUserInfo(Store<AppState> store, FetchUserInfoAction action,
       NextDispatcher next) async {
     next(action);
@@ -151,6 +152,18 @@ List<Middleware<AppState>> userMiddleware(
     }
   }
 
+  void savePost(Store<AppState> store, SubmitUserSavePostAction action,
+      NextDispatcher next) async {
+    next(action);
+    try {
+      await savePostUseCase.run(action.postId);
+    } catch (error, stackTrace) {
+      final actionName = action.toString().substring(11);
+      store.dispatch(OnCatchDefaultErrorAction(
+          error.toString(), stackTrace, actionName));
+    }
+  }
+
   return [
     TypedMiddleware<AppState, FetchUserInfoAction>(fetchUserInfo),
     TypedMiddleware<AppState, FetchUserPostsAction>(fetchUserPosts),
@@ -165,5 +178,6 @@ List<Middleware<AppState>> userMiddleware(
         navigateUserEditProfile),
     TypedMiddleware<AppState, LoginSuccessAction>(loginSuccess),
     TypedMiddleware<AppState, SubmitUserFcmTokenAction>(submitFcmToken),
+    TypedMiddleware<AppState, SubmitUserSavePostAction>(savePost),
   ];
 }

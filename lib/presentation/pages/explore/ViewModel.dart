@@ -6,6 +6,7 @@ import 'package:app/injection.dart';
 import 'package:app/presentation/state/actions/FriendActions.dart';
 import 'package:app/presentation/state/actions/PostActions.dart';
 import 'package:app/presentation/state/actions/ReportActions.dart';
+import 'package:app/presentation/state/actions/UserActions.dart';
 import 'package:app/presentation/state/aggregates/PostData.dart';
 import 'package:app/presentation/state/app_state.dart';
 import 'package:app/presentation/state/reducers/Data.dart';
@@ -29,6 +30,7 @@ class ExploreViewModel {
   final Function(String postId) onLikePressed;
   final Function(String query) onQueryTextChanged;
   final String query;
+  final Function(String postId) onSavePostPressed;
 
   ExploreViewModel({
     this.user,
@@ -44,7 +46,8 @@ class ExploreViewModel {
     this.reportText,
     this.onLikePressed,
     this.onQueryTextChanged,
-    this.query
+    this.query,
+    this.onSavePostPressed
   });
 
   factory ExploreViewModel.create(Store<AppState> store) {
@@ -121,6 +124,9 @@ class ExploreViewModel {
       onQueryTextChanged: (query) {
         store.dispatch(SearchPostAction(query));
       },
+      onSavePostPressed: (postId) {
+        store.dispatch(SubmitUserSavePostAction(postId));
+      }
     );
   }
 }

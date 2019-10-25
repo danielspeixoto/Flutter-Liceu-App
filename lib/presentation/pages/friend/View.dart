@@ -213,6 +213,9 @@ class FriendPage extends StatelessWidget {
                             viewModel.onLikePressed(post.id);
                             post.likes++;
                           },
+                          onSavePostPressed: () {
+                            viewModel.onSavePostPressed(post.id);
+                          },
                         ),
                       ],
                     );

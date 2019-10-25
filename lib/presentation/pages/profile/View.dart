@@ -9,6 +9,7 @@ import 'package:app/presentation/widgets/PostWidget.dart';
 import 'package:app/presentation/widgets/RoundedImage.dart';
 import 'package:app/presentation/widgets/TextFieldHighlight.dart';
 import 'package:app/presentation/widgets/TextWithLinks.dart';
+import 'package:app/util/FeaturesAvailable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -44,6 +45,11 @@ class ProfilePage extends StatelessWidget {
                       ),
                     ),
                   ),
+                  FeaturesAvailable.savePosts ?
+                  ListTile(
+                    title: Text('Resumos salvos'),
+                    onTap: viewModel.onSavedResumesPressed,
+                  ) : null,
                   ListTile(
                     title: Text('Compartilhar perfil'),
                     onTap: viewModel.onShareProfilePressed,
@@ -292,6 +298,9 @@ class ProfilePage extends StatelessWidget {
                           onLikePressed: () {
                             viewModel.onLikePressed(post.id);
                             post.likes++;
+                          },
+                          onSavePostPressed: () {
+                            viewModel.onSavePostPressed(post.id);
                           },
                         ),
                       ],

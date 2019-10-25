@@ -123,6 +123,12 @@ class SubmitUserFcmTokenAction extends ItemAction {
   }
 }
 
+class SubmitUserSavePostAction{
+  final String postId;
+
+  SubmitUserSavePostAction(this.postId);
+}
+
 class InstagramClickedAction {
   final String instagram;
 
