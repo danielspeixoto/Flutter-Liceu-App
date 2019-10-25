@@ -32,7 +32,7 @@ abstract class IUserRepository {
 
   Future<void> savePost(String accessToken, String userId, String postId);
 
-  Future<List<Post>> getSavedPosts(String accessToken, String userId);
+  Future<List<String>> getSavedPosts(String accessToken, String userId);
 }
 
 abstract class ICheckUseCase {
