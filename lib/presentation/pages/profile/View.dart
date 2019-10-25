@@ -45,11 +45,6 @@ class ProfilePage extends StatelessWidget {
                       ),
                     ),
                   ),
-                 FeaturesAvailable.savePosts ?
-                  ListTile(
-                    title: Text('Resumos salvos'),
-                    onTap: viewModel.onSavedResumesPressed,
-                  ) : Container(),
                   ListTile(
                     title: Text('Compartilhar perfil'),
                     onTap: viewModel.onShareProfilePressed,
@@ -201,6 +196,34 @@ class ProfilePage extends StatelessWidget {
                                       ),
                                     ),
                                   ],
+                                ),
+                                SizedBox(
+                                  width: MediaQuery.of(context).size.width * 0.9,
+                                  child: FeaturesAvailable.savePosts
+                                      ? OutlineButton(
+
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: <Widget>[
+                                              Container(
+                                                margin: EdgeInsets.all(8),
+                                                child: Text("Resumos salvos"),
+                                              ),
+                                              Icon(
+                                                  FontAwesomeIcons
+                                                      .solidBookmark,
+                                                  size: 10),
+                                            ],
+                                          ),
+                                          onPressed: () {
+                                            viewModel.onSavedResumesPressed();
+                                          },
+                                          shape: new RoundedRectangleBorder(
+                                              borderRadius:
+                                                  new BorderRadius.circular(
+                                                      10.0)))
+                                      : Container(),
                                 ),
                                 user.instagramProfile != null
                                     ? Container(
