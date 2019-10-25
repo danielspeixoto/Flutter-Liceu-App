@@ -45,11 +45,11 @@ class ProfilePage extends StatelessWidget {
                       ),
                     ),
                   ),
-                  FeaturesAvailable.savePosts ?
+                 FeaturesAvailable.savePosts ?
                   ListTile(
                     title: Text('Resumos salvos'),
                     onTap: viewModel.onSavedResumesPressed,
-                  ) : null,
+                  ) : Container(),
                   ListTile(
                     title: Text('Compartilhar perfil'),
                     onTap: viewModel.onShareProfilePressed,
