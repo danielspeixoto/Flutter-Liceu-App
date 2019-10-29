@@ -19,7 +19,9 @@ class CompletePostViewModel {
   final Function(List<String> imageURL) onImageZoomPressed;
   final Function(String postId, String comment) onSendCommentPressed;
   final Function(String userId) onUserCommentPressed;
+  final Function(String postId, String commentId) onDeleteCommentPressed;
   final bool isLoading;
+  final String userLoggedId;
 
   CompletePostViewModel(
       {this.post,
@@ -31,7 +33,9 @@ class CompletePostViewModel {
       this.onLikePressed,
       this.onSendCommentPressed,
       this.onUserCommentPressed,
-      this.isLoading});
+      this.isLoading,
+      this.onDeleteCommentPressed,
+      this.userLoggedId});
 
   factory CompletePostViewModel.create(Store<AppState> store) {
     final postState = store.state.postState;
@@ -39,6 +43,7 @@ class CompletePostViewModel {
     return CompletePostViewModel(
         post: store.state.postState.post,
         isLoading: store.state.postState.post.isLoading,
+        userLoggedId: store.state.userState.user.content.id,
         onSharePostPressed: (postId, type, text) {
           store.dispatch(PostShareAction(postId, type));
           Share.share(summarize(text, 300) +
@@ -65,6 +70,9 @@ class CompletePostViewModel {
         },
         onUserCommentPressed: (userId) {
           store.dispatch(FetchFriendFromCommentAction(userId));
+        },
+        onDeleteCommentPressed: (postId, commentId) {
+          store.dispatch(DeletePostCommentAction(postId, commentId));
         });
   }
 }

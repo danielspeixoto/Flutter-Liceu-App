@@ -33,6 +33,7 @@ class CompletePostPage extends StatelessWidget {
                     errorMessage: post.errorMessage,
                     child: () => CompletePostWidget(
                       user: post.content.user,
+                      userLoggedId: viewModel.userLoggedId,
                       postStatus: post.content.statusCode,
                       postContent: post.content.text,
                       imageURL: post.content.imageURL,
@@ -56,6 +57,10 @@ class CompletePostPage extends StatelessWidget {
                       },
                       onUserCommentPressed: (userId) {
                             viewModel.onUserCommentPressed(userId);
+                      },
+                      
+                      onDeleteCommentPressed: (commentId) {
+                        viewModel.onDeleteCommentPressed(post.content.id, commentId);
                       },
                     ),
                   ),

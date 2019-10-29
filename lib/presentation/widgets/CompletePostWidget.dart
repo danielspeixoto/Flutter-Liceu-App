@@ -23,6 +23,7 @@ final animation = ClickAnimation();
 
 class CompletePostWidget extends StatelessWidget {
   final User user;
+  final String userLoggedId;
   final String postContent;
   final String imageURL;
   final List<String> images;
@@ -39,9 +40,11 @@ class CompletePostWidget extends StatelessWidget {
   final inputController = TextEditingController();
   final List<Comment> comments;
   final Function(String) onUserCommentPressed;
+  final Function(String commentId) onDeleteCommentPressed;
 
   CompletePostWidget(
       {@required this.user,
+      this.userLoggedId,
       @required this.postContent,
       this.onDeletePressed,
       @required this.onSharePressed,
@@ -56,7 +59,8 @@ class CompletePostWidget extends StatelessWidget {
       this.onSendCommentPressed,
       @required this.images,
       this.comments,
-      this.onUserCommentPressed});
+      this.onUserCommentPressed,
+      this.onDeleteCommentPressed,});
 
   @override
   Widget build(BuildContext context) => Card(
@@ -283,17 +287,19 @@ class CompletePostWidget extends StatelessWidget {
                         ),
                         Container(
                           margin: EdgeInsets.only(top: 4),
-                          child: images.length != 0 ? Text(
-                            "1/" + images.length.toString(),
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ) : Text(
-                            "1/1",
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
+                          child: images.length != 0
+                              ? Text(
+                                  "1/" + images.length.toString(),
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                )
+                              : Text(
+                                  "1/1",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
                         ),
                       ],
                     ),
@@ -308,22 +314,22 @@ class CompletePostWidget extends StatelessWidget {
                           child: Row(
                             children: <Widget>[
                               Animator(
-                                  name: "like",
-                                  blocs: [animation],
-                                  tween: Tween<double>(begin: 0.8, end: 1.2),
-                                  curve: Curves.easeInOut,
-                                  duration: Duration(milliseconds: 350),
-                                  cycles: 2,
-                                  builder: (anim) => Center(
-                                    child: Transform.scale(
-                                      scale: anim.value,
-                                      child: Icon(
-                                        FontAwesomeIcons.solidHeart,
-                                        size: 20,
-                                      ),
+                                name: "like",
+                                blocs: [animation],
+                                tween: Tween<double>(begin: 0.8, end: 1.2),
+                                curve: Curves.easeInOut,
+                                duration: Duration(milliseconds: 350),
+                                cycles: 2,
+                                builder: (anim) => Center(
+                                  child: Transform.scale(
+                                    scale: anim.value,
+                                    child: Icon(
+                                      FontAwesomeIcons.solidHeart,
+                                      size: 20,
                                     ),
                                   ),
                                 ),
+                              ),
                               Container(
                                   margin: EdgeInsets.only(left: 4),
                                   child: Text(this.likes.toString()))
@@ -334,18 +340,24 @@ class CompletePostWidget extends StatelessWidget {
               comments != null && FeaturesAvailable.comments
                   ? Column(
                       children: comments.map((comment) {
-                        return CommentWidget(
-                              author: comment.author,
-                              content: comment.content,
-                              authorPic: comment.user.picURL,
-                              onUserPressed: () {
-                                if(this.onUserCommentPressed != null){
-                                  this.onUserCommentPressed(comment.userId);
-                                }
-                              },
-                            );
-                      }).toList()
-                    )
+                      return CommentWidget(
+                        id: comment.id,
+                        onDeleteCommentPressed: this.userLoggedId == this.user.id ||
+                                this.userLoggedId == comment.userId
+                            ? (id) {
+                                this.onDeleteCommentPressed(id);
+                              }
+                            : null,
+                        author: comment.author,
+                        content: comment.content,
+                        authorPic: comment.user.picURL,
+                        onUserPressed: () {
+                          if (this.onUserCommentPressed != null) {
+                            this.onUserCommentPressed(comment.userId);
+                          }
+                        },
+                      );
+                    }).toList())
                   : Container(),
               this.postStatus == "approved" && FeaturesAvailable.comments
                   ? Row(
