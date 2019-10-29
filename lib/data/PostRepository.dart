@@ -144,14 +144,14 @@ class PostRepository implements IPostRepository {
 
   Future<void> deletePostComment(
       String accessToken, String postId, String commentId) async {
-    var rq = Request('DELETE', Uri.parse(_url + "/" + postId + "/comments"))
-    ..headers.addAll({
-      apiKeyHeader: _apiKey,
-      contentTypeHeader: contentTypeValueForJson,
-      authHeader: accessToken
-    })..bodyFields = {"commentId": commentId};
-
-    final response = await this._client.send(rq);
+        final response = await this._client.delete(
+      _url + "/" + postId + "/" + commentId,
+      headers: {
+        apiKeyHeader: _apiKey,
+        contentTypeHeader: contentTypeValueForJson,
+        authHeader: accessToken
+      },
+    );
     if (response.statusCode == 200) {
       return;
     }
