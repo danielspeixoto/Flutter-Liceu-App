@@ -232,7 +232,7 @@ class UserRepository implements IUserRepository {
     throw handleNetworkException(response.statusCode, runtimeType.toString());
   }
 
-  Future<List<Post>> getSavedPosts(String accessToken, String userId) async {
+  Future<List<String>> getSavedPosts(String accessToken, String userId) async {
     try {
       final response = await this._client.get(_url + "/" + userId + "/savedPosts", headers: {
         apiKeyHeader: _apiKey,
@@ -240,7 +240,7 @@ class UserRepository implements IUserRepository {
         authHeader: accessToken
       });
       if (response.statusCode == 200) {
-        return fromJsonToListOfPosts(response.body);
+        return fromJsonToListOfPostIds(response.body);
       }
       throw handleNetworkException(response.statusCode, runtimeType.toString());
     } catch (e) {

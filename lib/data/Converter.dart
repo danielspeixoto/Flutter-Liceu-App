@@ -80,6 +80,11 @@ List<Post> fromJsonToListOfPosts(String content) {
   return result;
 }
 
+List<String> fromJsonToListOfPostIds(String content) {
+  final data = (json.decode(content)as List<dynamic>).cast<String>();
+  return data;
+}
+
 Post fromMapToPost(data) {
   return Post(
       data["id"],

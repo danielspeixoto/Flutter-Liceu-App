@@ -194,6 +194,7 @@ List<Middleware<AppState>> userMiddleware(
             post.comments));
           
       }
+      store.dispatch(SetUserSavedPostsAction(postsData));
     } catch (error, stackTrace) {
       final actionName = action.toString().substring(11);
       store.dispatch(

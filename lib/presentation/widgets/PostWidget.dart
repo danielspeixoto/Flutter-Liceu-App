@@ -37,6 +37,7 @@ class PostWidget extends StatelessWidget {
   final Function() onSeeMorePressed;
   final String numberOfComments;
   final Function() onSavePostPressed;
+  final bool isPostSaved;
 
   PostWidget(
       {@required this.user,
@@ -55,7 +56,8 @@ class PostWidget extends StatelessWidget {
       @required this.images,
       this.onSeeMorePressed,
       this.numberOfComments,
-      this.onSavePostPressed});
+      this.onSavePostPressed,
+      this.isPostSaved});
 
   @override
   Widget build(BuildContext context) {
@@ -387,7 +389,11 @@ class PostWidget extends StatelessWidget {
                                     child: Transform.scale(
                                       scale: anim.value,
                                       child: Icon(
-                                        FontAwesomeIcons.bookmark,
+                                        this.isPostSaved != null
+                                            ? this.isPostSaved
+                                                ? FontAwesomeIcons.solidBookmark 
+                                                : FontAwesomeIcons.solidBookmark
+                                            : FontAwesomeIcons.bookmark,
                                         size: 20,
                                       ),
                                     ),

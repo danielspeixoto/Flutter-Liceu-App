@@ -24,6 +24,7 @@ class HomePage extends StatelessWidget {
         store.dispatch(FetchUserChallengesAction());
         store.dispatch(FetchRankingAction());
         store.dispatch(FetchPostsAction());
+        store.dispatch(FetchUserSavedPostsAction());
       },
       converter: (store) => HomeViewModel.create(store),
       builder: (BuildContext context, HomeViewModel viewModel) {

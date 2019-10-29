@@ -37,6 +37,7 @@ class ProfileViewModel {
   final Function(String postId) onLikePressed;
   final Function(String postId) onSavePostPressed;
   final Function() onSavedResumesPressed;
+  final Data<List<PostData>> savedPosts;
 
   ProfileViewModel({
     this.user,
@@ -57,7 +58,8 @@ class ProfileViewModel {
     this.onImageZoomPressed,
     this.onLikePressed,
     this.onSavePostPressed,
-    this.onSavedResumesPressed
+    this.onSavedResumesPressed,
+    this.savedPosts
   });
 
   factory ProfileViewModel.create(Store<AppState> store) {
@@ -65,6 +67,7 @@ class ProfileViewModel {
     return ProfileViewModel(
       user: userState.user,
       posts: userState.posts,
+      savedPosts: store.state.userState.savedPosts,
       reportFeedback: userState.reportFeedback,
       onCreateButtonPressed: () => store.dispatch(NavigateCreatePostAction()),
       refresh: () {

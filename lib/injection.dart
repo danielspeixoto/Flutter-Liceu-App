@@ -291,7 +291,7 @@ class Dependencies {
     final updatePostCommentUseCase =
         UpdatePostCommentUseCase(localRepository, postRepository);
     final savePostUseCase = SavePostUseCase(localRepository, userRepository);
-    final getSavedPostsUseCase = GetSavedPostsUseCase(localRepository, userRepository);
+    final getSavedPostsUseCase = GetSavedPostsUseCase(localRepository, userRepository, postRepository);
 
     obj = Dependencies(
       loginUseCase,
