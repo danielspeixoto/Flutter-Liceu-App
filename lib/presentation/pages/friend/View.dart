@@ -167,6 +167,7 @@ class FriendPage extends StatelessWidget {
                         PostWidget(
                           user: user,
                           postStatus: post.statusCode,
+                          savedPostIcon: post.savedIcon,
                           postContent: post.type == PostType.TEXT
                           ? summarize(post.text, 600)
                           : '\n'.allMatches(post.text).length + 1 > 15

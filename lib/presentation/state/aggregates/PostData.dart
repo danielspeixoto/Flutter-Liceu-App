@@ -13,7 +13,8 @@ class PostData {
   int likes;
   final List<String> images;
   final List<Comment> comments;
+  final IconData saveIcon;
 
   PostData(this.id, this.user, this.type, this.text, this.imageURL,
-      this.statusCode, this.likes, this.images, this.comments);
+      this.statusCode, this.likes, this.images, this.comments, this.saveIcon);
 }

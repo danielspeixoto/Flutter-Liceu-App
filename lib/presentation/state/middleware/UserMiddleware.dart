@@ -7,6 +7,7 @@ import 'package:app/presentation/state/aggregates/ChallengeHistoryData.dart';
 import 'package:app/presentation/state/aggregates/PostData.dart';
 import 'package:app/presentation/state/navigator/NavigatorActions.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:redux/redux.dart';
 
 import '../../app.dart';
@@ -46,6 +47,14 @@ List<Middleware<AppState>> userMiddleware(
     next(action);
     try {
       final posts = await fetchUserPostsUseCase.run();
+      // for (var i = 0; i < posts.length; i++) {
+      //   final savedPosts = store.state.userState.savedPosts.content;
+      //   for (var j = 0; j < savedPosts.length; j++) {
+      //     if (savedPosts[j].id == posts[i].id) {
+      //       posts[i].savedIcon = FontAwesomeIcons.solidBookmark;
+      //     }
+      //   }
+      // }
       store.dispatch(SetUserPostsAction(posts));
     } catch (error, stackTrace) {
       final actionName = action.toString().substring(11);
@@ -166,15 +175,14 @@ List<Middleware<AppState>> userMiddleware(
     }
   }
 
-  void navigateSavedPosts(Store<AppState> store, NavigateUserSavedPostsAction action,
-      NextDispatcher next) async {
-        next(action);
-        store.dispatch(NavigatePushAction(AppRoutes.savedPosts));
+  void navigateSavedPosts(Store<AppState> store,
+      NavigateUserSavedPostsAction action, NextDispatcher next) async {
+    next(action);
+    store.dispatch(NavigatePushAction(AppRoutes.savedPosts));
   }
 
   void getSavedPosts(Store<AppState> store, FetchUserSavedPostsAction action,
       NextDispatcher next) async {
-    next(action);
     try {
       final posts = await getSavedPostsUseCase.run();
       List<PostData> postsData = new List<PostData>();
@@ -191,8 +199,8 @@ List<Middleware<AppState>> userMiddleware(
             post.statusCode,
             post.likes,
             post.images,
-            post.comments));
-          
+            post.comments,
+            FontAwesomeIcons.solidBookmark));
       }
       store.dispatch(SetUserSavedPostsAction(postsData));
     } catch (error, stackTrace) {
@@ -200,6 +208,7 @@ List<Middleware<AppState>> userMiddleware(
       store.dispatch(
           OnCatchDefaultErrorAction(error.toString(), stackTrace, actionName));
     }
+        next(action);
   }
 
   return [

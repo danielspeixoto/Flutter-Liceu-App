@@ -288,6 +288,7 @@ class ProfilePage extends StatelessWidget {
                         PostWidget(
                           user: user,
                           postStatus: post.statusCode,
+                          savedPostIcon: post.savedIcon,
                           postContent: post.type == PostType.TEXT
                               ? summarize(post.text, 600)
                               : summarize(post.text, 200),

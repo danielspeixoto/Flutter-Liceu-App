@@ -86,6 +86,7 @@ class ExplorePage extends StatelessWidget {
                   return PostWidget(
                     user: post.user,
                     postStatus: post.statusCode,
+                    savedPostIcon: post.saveIcon,
                     postContent: post.type == PostType.TEXT
                         ? summarize(post.text, 600)
                         : '\n'.allMatches(post.text).length + 1 > 15

@@ -136,17 +136,8 @@ class ProfileViewModel {
             "Você já viu o que eu estou fazendo no Liceu? \nhttp://liceu.co?userId=${store.state.userState.user.content.id}");
       },
       onSeeMorePressed: (post, user) {
-        final postData = new PostData(
-            post.id,
-            user,
-            post.type,
-            post.text,
-            post.imageURL,
-            post.statusCode,
-            post.likes,
-            post.images,
-            post.comments);
-        store.dispatch(NavigatePostAction(postData.id));
+ 
+        store.dispatch(NavigatePostAction(post.id));
       },
       onImageZoomPressed: (imageURL) {
         store.dispatch(NavigatePostImageZoomAction(imageURL));

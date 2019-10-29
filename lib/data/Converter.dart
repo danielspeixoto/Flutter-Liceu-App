@@ -8,6 +8,7 @@ import 'package:app/domain/aggregates/ENEMVideo.dart';
 import 'package:app/domain/aggregates/Post.dart';
 import 'package:app/domain/aggregates/Ranking.dart';
 import 'package:app/domain/aggregates/User.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 User fromJsonToUser(String content) {
   final data = json.decode(content);
@@ -95,7 +96,8 @@ Post fromMapToPost(data) {
       data["statusCode"],
       data["likes"] == null ? 0 : data["likes"],
       fromMapToListOfImages(data["multipleImages"]),
-      fromMapToListOfComments(data["comments"]));
+      fromMapToListOfComments(data["comments"]),
+      FontAwesomeIcons.bookmark);
 }
 
 List<String> fromMapToListOfImages(content) {

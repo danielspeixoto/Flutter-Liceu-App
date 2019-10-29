@@ -12,6 +12,7 @@ import 'package:app/presentation/state/aggregates/PostData.dart';
 import 'package:app/presentation/state/app_state.dart';
 import 'package:app/presentation/state/reducers/Data.dart';
 import 'package:app/presentation/util/text.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:redux/redux.dart';
 import 'package:share/share.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -82,17 +83,7 @@ class FriendViewModel {
         launch("https://www.instagram.com/" + instagramProfile);
       },
       onSeeMorePressed: (post, user) {
-        final postData = new PostData(
-            post.id,
-            user,
-            post.type,
-            post.text,
-            post.imageURL,
-            post.statusCode,
-            post.likes,
-            post.images,
-            post.comments);
-        store.dispatch(NavigatePostAction(postData.id));
+        store.dispatch(NavigatePostAction(post.id));
       },
       onImageZoomPressed: (imageURL) {
         store.dispatch(NavigatePostImageZoomAction(imageURL));
