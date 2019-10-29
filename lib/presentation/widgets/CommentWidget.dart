@@ -53,9 +53,9 @@ class CommentWidget extends StatelessWidget {
                       : Container(),
                   Expanded(
                     child: Align(
-                      alignment: Alignment.centerRight,
+                      alignment: Alignment.bottomRight,
                       child: IconButton(
-                        alignment: Alignment.centerRight,
+                        alignment: Alignment.bottomRight,
                         onPressed: () {
                           showDialog(
                               context: context,
