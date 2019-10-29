@@ -37,7 +37,7 @@ class FriendPage extends StatelessWidget {
                     viewModel.user.isLoading || viewModel.posts.isLoading,
                 errorMessage: viewModel.user.errorMessage,
                 child: () => ListView.builder(
-                  physics: AlwaysScrollableScrollPhysics(),
+                  physics: BouncingScrollPhysics(),
                   itemCount: viewModel.posts.content.length + 1,
                   itemBuilder: (ctx, idx) {
                     if (idx == 0) {
@@ -164,10 +164,10 @@ class FriendPage extends StatelessWidget {
                     final post = viewModel.posts.content[idx - 1];
                     return Column(
                       children: <Widget>[
-                        PostWidget(
+                        AnimatedPost(
                           user: user,
                           postStatus: post.statusCode,
-                          savedPostIcon: post.savedIcon,
+                          savedPostIcon: post.isSaved ? FontAwesomeIcons.solidBookmark : FontAwesomeIcons.bookmark,
                           postContent: post.type == PostType.TEXT
                           ? summarize(post.text, 600)
                           : '\n'.allMatches(post.text).length + 1 > 15
@@ -214,8 +214,12 @@ class FriendPage extends StatelessWidget {
                             viewModel.onLikePressed(post.id);
                             post.likes++;
                           },
-                          onSavePostPressed: () {
-                            viewModel.onSavePostPressed(post.id);
+                          onSavePostPressed: (isSaved) {
+                            if (isSaved) {
+                              viewModel.onDeleteSavedPostPressed(post.id);
+                            } else {
+                              viewModel.onSavePostPressed(post.id);
+                            }
                           },
                         ),
                       ],

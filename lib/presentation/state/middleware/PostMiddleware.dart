@@ -112,14 +112,15 @@ List<Middleware<AppState>> postMiddleware(
     next(action);
     try {
       final posts = await explorePostUseCase.run(50);
-      // final savedPosts = await getSavedPostsUseCase.run();
-      // for (var i = 0; i < posts.length; i++) {
-      //   for (var j = 0; j < savedPosts.length; j++) {
-      //     if (savedPosts[j].id == posts[i].id) {
-      //       posts[i].savedIcon = FontAwesomeIcons.solidBookmark;
-      //     }
-      //   }
-      // }
+      final savedPosts = await getSavedPostsUseCase.run();
+
+      for (var i = 0; i < posts.length; i++) {
+        for (var j = 0; j < savedPosts.length; j++) {
+          if (savedPosts[j].id == posts[i].id) {
+            posts[i].isSaved = true;
+          }
+        }
+      }
       final futures = posts.map((post) async {
         final author = await getUserByIdUseCase.run(post.userId);
         return PostData(
@@ -132,7 +133,7 @@ List<Middleware<AppState>> postMiddleware(
             post.likes,
             post.images,
             post.comments,
-            post.savedIcon);
+            false);
       });
       final data = await Future.wait(futures);
       store.dispatch(FetchPostsSuccessAction(data));
@@ -162,7 +163,7 @@ List<Middleware<AppState>> postMiddleware(
               post.likes,
               post.images,
               post.comments,
-              FontAwesomeIcons.bookmark);
+              false);
         });
         final data = await Future.wait(futures);
         store.dispatch(SearchPostSuccessAction(data));
@@ -197,7 +198,7 @@ List<Middleware<AppState>> postMiddleware(
           post.likes,
           post.images,
           post.comments,
-          FontAwesomeIcons.bookmark);
+          false);
       store.dispatch(SetCompletePostAction(postData));
     } catch (error, stackTrace) {
       final actionName = action.toString().substring(11);
@@ -221,7 +222,7 @@ List<Middleware<AppState>> postMiddleware(
           post.likes,
           post.images,
           post.comments,
-          FontAwesomeIcons.bookmark);
+          false);
 
       store.dispatch(SetCompletePostAction(postData));
     } catch (error, stackTrace) {

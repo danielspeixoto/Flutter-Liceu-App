@@ -144,6 +144,13 @@ class SubmitUserSavePostAction{
   SubmitUserSavePostAction(this.postId);
 }
 
+//Deletes
+class DeleteUserSavedPostAction {
+  final String postId;
+
+  DeleteUserSavedPostAction(this.postId);
+}
+
 class InstagramClickedAction {
   final String instagram;
 

@@ -19,7 +19,6 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return StoreConnector<AppState, HomeViewModel>(
       onInit: (store) {
-        store.dispatch(FetchUserSavedPostsAction());
         store.dispatch(FetchPostsAction());
         store.dispatch(FetchUserInfoAction());
         store.dispatch(FetchUserPostsAction());

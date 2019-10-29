@@ -31,6 +31,7 @@ class ExploreViewModel {
   final Function(String query) onQueryTextChanged;
   final String query;
   final Function(String postId) onSavePostPressed;
+  final Function(String postId) onDeleteSavedPostPressed;
 
   ExploreViewModel({
     this.user,
@@ -47,7 +48,8 @@ class ExploreViewModel {
     this.onLikePressed,
     this.onQueryTextChanged,
     this.query,
-    this.onSavePostPressed
+    this.onSavePostPressed,
+    this.onDeleteSavedPostPressed
   });
 
   factory ExploreViewModel.create(Store<AppState> store) {
@@ -126,6 +128,9 @@ class ExploreViewModel {
       },
       onSavePostPressed: (postId) {
         store.dispatch(SubmitUserSavePostAction(postId));
+      },
+      onDeleteSavedPostPressed: (postId) {
+        store.dispatch(DeleteUserSavedPostAction(postId));
       }
     );
   }

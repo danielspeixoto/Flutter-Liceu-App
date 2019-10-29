@@ -38,6 +38,7 @@ class ProfileViewModel {
   final Function(String postId) onSavePostPressed;
   final Function() onSavedResumesPressed;
   final Data<List<PostData>> savedPosts;
+  final Function(String postId) onDeleteSavedPostPressed;
 
   ProfileViewModel({
     this.user,
@@ -59,7 +60,8 @@ class ProfileViewModel {
     this.onLikePressed,
     this.onSavePostPressed,
     this.onSavedResumesPressed,
-    this.savedPosts
+    this.savedPosts,
+    this.onDeleteSavedPostPressed
   });
 
   factory ProfileViewModel.create(Store<AppState> store) {
@@ -151,6 +153,9 @@ class ProfileViewModel {
       onSavedResumesPressed: () {
         store.dispatch(FetchUserSavedPostsAction());
         store.dispatch(NavigateUserSavedPostsAction());
+      },
+      onDeleteSavedPostPressed: (postId) {
+        store.dispatch(DeleteUserSavedPostAction(postId));
       }
     );
   }

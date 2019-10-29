@@ -99,7 +99,8 @@ final Store<AppState> store = Store<AppState>(
       Dependencies.get().myIdUseCase,
       Dependencies.get().submitUserFcmTokenUseCase,
       Dependencies.get().savePostUseCase,
-      Dependencies.get().getSavedPostsUseCase
+      Dependencies.get().getSavedPostsUseCase,
+      Dependencies.get().deleteSavedPostUseCase
     ),
     ...postMiddleware(
       Dependencies.get().createTextPostUseCase,
@@ -132,6 +133,7 @@ final Store<AppState> store = Store<AppState>(
       Dependencies.get().getUserPostsUseCase,
       Dependencies.get().getUserByIdUseCase,
       Dependencies.get().myIdUseCase,
+      Dependencies.get().getSavedPostsUseCase
     ),
     ...triviaMiddleware(
       Dependencies.get().createTriviaUseCase,

@@ -12,12 +12,12 @@ class Post {
   int likes;
   final List<String> images;
   final List<Comment> comments;
-  IconData savedIcon;
+  bool isSaved;
 
 //  final DateTime submissionDate;
 
   Post(this.id, this.userId, String type, this.text, this.imageURL,
-      this.statusCode, this.likes, this.images, this.comments, this.savedIcon) {
+      this.statusCode, this.likes, this.images, this.comments, this.isSaved) {
     switch (type) {
       case "text":
         this.type = PostType.TEXT;

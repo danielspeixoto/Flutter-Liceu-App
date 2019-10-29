@@ -9,6 +9,7 @@ import 'package:app/domain/usecase/post/UpdatePostCommentUseCase.dart';
 import 'package:app/domain/usecase/post/UpdatePostRatingUseCase.dart';
 import 'package:app/domain/usecase/report/SubmitReportUseCase.dart';
 import 'package:app/domain/usecase/trivia/CreateTriviaUseCase.dart';
+import 'package:app/domain/usecase/user/DeleteSavedPostUseCase.dart';
 import 'package:app/domain/usecase/user/GetSavedPostsUseCase.dart';
 import 'package:app/domain/usecase/user/IsLoggedInUseCase.dart';
 import 'package:app/domain/usecase/user/LogOutUseCase.dart';
@@ -159,6 +160,7 @@ class Dependencies {
   final ISearchPostsUseCase searchPostsUseCase;
   final ISavePostUseCase savePostUseCase;
   final IGetSavedPostsUseCase getSavedPostsUseCase;
+  final IDeleteSavedPostUseCase deleteSavedPostUseCase;
 
   Dependencies(
     this.loginUseCase,
@@ -196,7 +198,8 @@ class Dependencies {
     this.updatePostCommentUseCase,
     this.searchPostsUseCase,
     this.savePostUseCase,
-    this.getSavedPostsUseCase
+    this.getSavedPostsUseCase,
+    this.deleteSavedPostUseCase
   );
 
   static Dependencies obj;
@@ -292,6 +295,7 @@ class Dependencies {
         UpdatePostCommentUseCase(localRepository, postRepository);
     final savePostUseCase = SavePostUseCase(localRepository, userRepository);
     final getSavedPostsUseCase = GetSavedPostsUseCase(localRepository, userRepository, postRepository);
+    final deleteSavedPostUseCase = DeleteSavedPostUseCase(localRepository, userRepository);
 
     obj = Dependencies(
       loginUseCase,
@@ -329,7 +333,8 @@ class Dependencies {
       updatePostCommentUseCase,
       searchPostsUseCase,
       savePostUseCase,
-      getSavedPostsUseCase
+      getSavedPostsUseCase,
+      deleteSavedPostUseCase
     );
     return obj;
   }

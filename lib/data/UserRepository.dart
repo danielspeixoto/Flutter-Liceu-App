@@ -248,4 +248,19 @@ class UserRepository implements IUserRepository {
       throw e;
     }
   }
+
+  Future<void> deleteSavedPost(String accessToken, String userId, String postId) async {
+        final response = await this._client.delete(
+      _url + "/" + userId + "/" + postId,
+      headers: {
+        apiKeyHeader: _apiKey,
+        contentTypeHeader: contentTypeValueForJson,
+        authHeader: accessToken
+      },
+    );
+    if (response.statusCode == 200) {
+      return;
+    }
+    throw handleNetworkException(response.statusCode, runtimeType.toString());
+  }
 }

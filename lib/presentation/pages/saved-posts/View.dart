@@ -22,13 +22,13 @@ class SavedPostsPage extends StatelessWidget {
               body: FetcherWidget.build(
                   isLoading: viewModel.posts.isLoading,
                   child: () => ListView.builder(
-                      physics: AlwaysScrollableScrollPhysics(),
+                      physics: BouncingScrollPhysics(),
                       itemCount: viewModel.posts.content.length,
                       itemBuilder: (ctx, idx) {
                         final post = viewModel.posts.content[idx];
                         return Column(
                           children: <Widget>[
-                            PostWidget(
+                            AnimatedPost(
                               user: post.user,
                               postStatus: post.statusCode,
                               postContent: post.type == PostType.TEXT

@@ -13,6 +13,7 @@ List<Middleware<AppState>> friendMiddleware(
   IGetUserPostsUseCase getUserPostsUseCase,
   IGetUserByIdUseCase getUserById,
   IMyIdUseCase getMyIdUseCase,
+  IGetSavedPostsUseCase getSavedPostsUseCase,
 ) {
   void fetchFriendInfo(Store<AppState> store, FetchFriendAction action,
       NextDispatcher next) async {
@@ -47,15 +48,15 @@ List<Middleware<AppState>> friendMiddleware(
     next(action);
     try {
       final posts = await getUserPostsUseCase.run(action.id);
+      final savedPosts = await getSavedPostsUseCase.run();
+
       for (var i = 0; i < posts.length; i++) {
-        final savedPosts = store.state.userState.savedPosts.content;
         for (var j = 0; j < savedPosts.length; j++) {
           if (savedPosts[j].id == posts[i].id) {
-            posts[i].savedIcon = FontAwesomeIcons.solidBookmark;
+            posts[i].isSaved = true;
           }
         }
       }
-
       store.dispatch(SetFriendPostsAction(posts));
     } catch (error, stackTrace) {
       final actionName = action.toString().substring(11);

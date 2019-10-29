@@ -97,7 +97,7 @@ Post fromMapToPost(data) {
       data["likes"] == null ? 0 : data["likes"],
       fromMapToListOfImages(data["multipleImages"]),
       fromMapToListOfComments(data["comments"]),
-      FontAwesomeIcons.bookmark);
+      false);
 }
 
 List<String> fromMapToListOfImages(content) {

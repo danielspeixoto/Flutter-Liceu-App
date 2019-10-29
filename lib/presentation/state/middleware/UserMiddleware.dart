@@ -27,7 +27,8 @@ List<Middleware<AppState>> userMiddleware(
     IMyIdUseCase _myIdUseCase,
     ISubmitFcmTokenUseCase _submitFcmTokenUseCase,
     ISavePostUseCase savePostUseCase,
-    IGetSavedPostsUseCase getSavedPostsUseCase) {
+    IGetSavedPostsUseCase getSavedPostsUseCase,
+    IDeleteSavedPostUseCase deleteSavedPostUseCase) {
   void fetchUserInfo(Store<AppState> store, FetchUserInfoAction action,
       NextDispatcher next) async {
     next(action);
@@ -47,14 +48,15 @@ List<Middleware<AppState>> userMiddleware(
     next(action);
     try {
       final posts = await fetchUserPostsUseCase.run();
-      // for (var i = 0; i < posts.length; i++) {
-      //   final savedPosts = store.state.userState.savedPosts.content;
-      //   for (var j = 0; j < savedPosts.length; j++) {
-      //     if (savedPosts[j].id == posts[i].id) {
-      //       posts[i].savedIcon = FontAwesomeIcons.solidBookmark;
-      //     }
-      //   }
-      // }
+      final savedPosts = await getSavedPostsUseCase.run();
+
+      for (var i = 0; i < posts.length; i++) {
+        for (var j = 0; j < savedPosts.length; j++) {
+          if (savedPosts[j].id == posts[i].id) {
+            posts[i].isSaved = true;
+          }
+        }
+      }
       store.dispatch(SetUserPostsAction(posts));
     } catch (error, stackTrace) {
       final actionName = action.toString().substring(11);
@@ -200,7 +202,7 @@ List<Middleware<AppState>> userMiddleware(
             post.likes,
             post.images,
             post.comments,
-            FontAwesomeIcons.solidBookmark));
+            true));
       }
       store.dispatch(SetUserSavedPostsAction(postsData));
     } catch (error, stackTrace) {
@@ -208,7 +210,19 @@ List<Middleware<AppState>> userMiddleware(
       store.dispatch(
           OnCatchDefaultErrorAction(error.toString(), stackTrace, actionName));
     }
-        next(action);
+    next(action);
+  }
+
+  void deleteSavedPost(Store<AppState> store, DeleteUserSavedPostAction action,
+      NextDispatcher next) async {
+    next(action);
+    try {
+      await deleteSavedPostUseCase.run(action.postId);
+    } catch (error, stackTrace) {
+      final actionName = action.toString().substring(11);
+      store.dispatch(
+          OnCatchDefaultErrorAction(error.toString(), stackTrace, actionName));
+    }
   }
 
   return [
@@ -228,5 +242,6 @@ List<Middleware<AppState>> userMiddleware(
     TypedMiddleware<AppState, SubmitUserSavePostAction>(savePost),
     TypedMiddleware<AppState, FetchUserSavedPostsAction>(getSavedPosts),
     TypedMiddleware<AppState, NavigateUserSavedPostsAction>(navigateSavedPosts),
+     TypedMiddleware<AppState, DeleteUserSavedPostAction>(deleteSavedPost),
   ];
 }

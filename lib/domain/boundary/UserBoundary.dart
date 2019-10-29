@@ -33,6 +33,8 @@ abstract class IUserRepository {
   Future<void> savePost(String accessToken, String userId, String postId);
 
   Future<List<String>> getSavedPosts(String accessToken, String userId);
+
+  Future<void> deleteSavedPost(String accessToken, String userId, String postId);
 }
 
 abstract class ICheckUseCase {
@@ -110,4 +112,8 @@ abstract class ISavePostUseCase {
 
 abstract class IGetSavedPostsUseCase {
   Future<List<Post>> run();
+}
+
+abstract class IDeleteSavedPostUseCase {
+  Future<void> run(String postId);
 }

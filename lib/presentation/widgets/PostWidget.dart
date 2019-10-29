@@ -19,7 +19,7 @@ class TabData {
 
 final animation = ClickAnimation();
 
-class PostWidget extends StatelessWidget {
+class AnimatedPost extends StatefulWidget {
   final User user;
   final String postContent;
   final String imageURL;
@@ -36,8 +36,71 @@ class PostWidget extends StatelessWidget {
   final Function() onLikePressed;
   final Function() onSeeMorePressed;
   final String numberOfComments;
-  final Function() onSavePostPressed;
-  final IconData savedPostIcon;
+  final Function(bool isSaved) onSavePostPressed;
+  IconData savedPostIcon;
+
+  AnimatedPost(
+      {@required this.user,
+      @required this.postContent,
+      this.onDeletePressed,
+      @required this.onSharePressed,
+      this.onUserPressed,
+      @required this.imageURL,
+      this.seeMore,
+      this.onImageZoomPressed,
+      @required this.postStatus,
+      this.onReportPressed,
+      this.onReportTextChange,
+      @required this.likes,
+      @required this.onLikePressed,
+      @required this.images,
+      this.onSeeMorePressed,
+      this.numberOfComments,
+      this.onSavePostPressed,
+      this.savedPostIcon});
+
+  @override
+  PostWidget createState() => PostWidget(
+      user: user,
+      postContent: postContent,
+      onDeletePressed: onDeletePressed,
+      onSharePressed: onSharePressed,
+      onUserPressed: onUserPressed,
+      imageURL: imageURL,
+      seeMore: seeMore,
+      onImageZoomPressed: onImageZoomPressed,
+      postStatus: postStatus,
+      onReportPressed: onReportPressed,
+      onReportTextChange: onReportTextChange,
+      likes: likes,
+      onLikePressed: onLikePressed,
+      images: images,
+      onSeeMorePressed: onSeeMorePressed,
+      numberOfComments: numberOfComments,
+      onSavePostPressed: onSavePostPressed,
+      savedPostIcon: savedPostIcon);
+}
+
+class PostWidget extends State<AnimatedPost> {
+  final User user;
+  final String postContent;
+  final String imageURL;
+  final List<String> images;
+  final Function() onDeletePressed;
+  final Function() onSharePressed;
+  final Function(User) onUserPressed;
+  final bool seeMore;
+  final Function() onImageZoomPressed;
+  final String postStatus;
+  final Function() onReportPressed;
+  final Function(String) onReportTextChange;
+  int likes;
+  final Function() onLikePressed;
+  final Function() onSeeMorePressed;
+  final String numberOfComments;
+  final Function(bool isSaved) onSavePostPressed;
+  IconData savedPostIcon;
+  bool big = false;
 
   PostWidget(
       {@required this.user,
@@ -322,24 +385,25 @@ class PostWidget extends StatelessWidget {
                         child: FlatButton(
                             onPressed: () {
                               this.onLikePressed();
-                              animation.rebuildLike();
+                              setState(() {
+                                this.likes = this.likes + 1;
+                                this.big = !this.big;
+                                Future.delayed(Duration(milliseconds: 500), () {
+                                  setState(() {
+                                    this.big = !this.big;
+                                  });
+                                });
+                              });
                             },
                             child: Row(
                               children: <Widget>[
-                                Animator(
-                                  name: "like",
-                                  blocs: [animation],
-                                  tween: Tween<double>(begin: 0.8, end: 1.2),
-                                  curve: Curves.easeInOut,
-                                  duration: Duration(milliseconds: 350),
-                                  cycles: 2,
-                                  builder: (anim) => Center(
-                                    child: Transform.scale(
-                                      scale: anim.value,
-                                      child: Icon(
-                                        FontAwesomeIcons.solidHeart,
-                                        size: 20,
-                                      ),
+                                AnimatedContainer(
+                                  duration: Duration(milliseconds: 500),
+                                  curve: Curves.fastOutSlowIn,
+                                  child: Center(
+                                    child: Icon(
+                                      FontAwesomeIcons.solidHeart,
+                                      size: this.big ? 24 : 20,
                                     ),
                                   ),
                                 ),
@@ -373,28 +437,34 @@ class PostWidget extends StatelessWidget {
                     ? Container(
                         child: FlatButton(
                             onPressed: () {
-                              this.onSavePostPressed();
-                              animation.rebuildSavePost();
+                              this.onSavePostPressed(this.savedPostIcon ==
+                                      FontAwesomeIcons.bookmark
+                                  ? false
+                                  : true);
+                              setState(() {
+                                this.savedPostIcon = this.savedPostIcon ==
+                                        FontAwesomeIcons.bookmark
+                                    ? this.savedPostIcon =
+                                        FontAwesomeIcons.solidBookmark
+                                    : this.savedPostIcon =
+                                        FontAwesomeIcons.bookmark;
+                              });
                             },
                             child: Row(
                               children: <Widget>[
-                                Animator(
-                                  name: "savePost",
-                                  blocs: [animation],
-                                  tween: Tween<double>(begin: 0.8, end: 1.2),
-                                  curve: Curves.easeInOut,
-                                  duration: Duration(milliseconds: 350),
-                                  cycles: 2,
-                                  builder: (anim) => Center(
-                                    child: Transform.scale(
-                                      scale: anim.value,
-                                      child: Icon(
-                                        this.savedPostIcon,
-                                        size: 20,
-                                      ),
+                                AnimatedContainer(
+                                  duration: Duration(milliseconds: 500),
+                                  curve: Curves.fastOutSlowIn,
+                                  child: Center(
+                                    child: Icon(
+                                      this.savedPostIcon,
+                                      size: this.savedPostIcon ==
+                                              FontAwesomeIcons.solidBookmark
+                                          ? 24
+                                          : 20,
                                     ),
                                   ),
-                                ),
+                                )
                               ],
                             )),
                       )

@@ -80,13 +80,16 @@ class ExplorePage extends StatelessWidget {
               isLoading: viewModel.posts.isLoading,
               errorMessage: viewModel.posts.errorMessage,
               child: () => ListView.builder(
+                physics: BouncingScrollPhysics(),
                 itemCount: viewModel.posts.content.length,
                 itemBuilder: (ctx, idx) {
                   final post = viewModel.posts.content[idx];
-                  return PostWidget(
+                  return AnimatedPost(
                     user: post.user,
                     postStatus: post.statusCode,
-                    savedPostIcon: post.saveIcon,
+                    savedPostIcon: post.isSaved
+                        ? FontAwesomeIcons.solidBookmark
+                        : FontAwesomeIcons.bookmark,
                     postContent: post.type == PostType.TEXT
                         ? summarize(post.text, 600)
                         : '\n'.allMatches(post.text).length + 1 > 15
@@ -136,8 +139,12 @@ class ExplorePage extends StatelessWidget {
                       viewModel.onLikePressed(post.id);
                       post.likes++;
                     },
-                    onSavePostPressed: () {
-                      viewModel.onSavePostPressed(post.id);
+                    onSavePostPressed: (isSaved) {
+                      if (isSaved) {
+                        viewModel.onDeleteSavedPostPressed(post.id);
+                      } else {
+                        viewModel.onSavePostPressed(post.id);
+                      }
                     },
                   );
                 },
