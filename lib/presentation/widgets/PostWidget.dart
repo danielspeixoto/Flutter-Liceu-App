@@ -7,6 +7,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:simple_code/simple_code.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'RoundedImage.dart';
@@ -124,6 +125,8 @@ class PostWidget extends State<AnimatedPost> {
 
   @override
   Widget build(BuildContext context) {
+    SimpleCode sC = new SimpleCode(context: context);
+
     return Card(
       shape: RoundedRectangleBorder(
         side: BorderSide(
@@ -398,17 +401,16 @@ class PostWidget extends State<AnimatedPost> {
                             child: Row(
                               children: <Widget>[
                                 AnimatedContainer(
-                                  duration: Duration(milliseconds: 500),
-                                  curve: Curves.fastOutSlowIn,
-                                  child: Center(
-                                    child: Icon(
-                                      FontAwesomeIcons.solidHeart,
-                                      size: this.big ? 24 : 20,
-                                    ),
-                                  ),
+                                  width: this.big ? 24 : 20,
+                                  height: this.big ? 24 : 20,
+                                  duration: Duration(milliseconds: 350),
+                                  curve: Curves.easeIn,
+                                  child: sC.expandedIcon(Icon(
+                                    FontAwesomeIcons.solidHeart,
+                                  ),) 
                                 ),
                                 Container(
-                                    margin: EdgeInsets.only(left: 4),
+                                    margin: EdgeInsets.only(left: 8),
                                     child: Text(this.likes.toString()))
                               ],
                             )),
@@ -447,24 +449,23 @@ class PostWidget extends State<AnimatedPost> {
                                     ? this.savedPostIcon =
                                         FontAwesomeIcons.solidBookmark
                                     : this.savedPostIcon =
-                                        FontAwesomeIcons.bookmark;
+                                        FontAwesomeIcons.bookmark;                         
                               });
                             },
                             child: Row(
                               children: <Widget>[
                                 AnimatedContainer(
-                                  duration: Duration(milliseconds: 500),
-                                  curve: Curves.fastOutSlowIn,
-                                  child: Center(
-                                    child: Icon(
-                                      this.savedPostIcon,
-                                      size: this.savedPostIcon ==
-                                              FontAwesomeIcons.solidBookmark
-                                          ? 24
-                                          : 20,
-                                    ),
-                                  ),
-                                )
+                                    width: this.savedPostIcon ==
+                                        FontAwesomeIcons.bookmark ? 20 : 24,
+                                    height: this.savedPostIcon ==
+                                        FontAwesomeIcons.bookmark ? 20 : 24,
+                                    duration: Duration(milliseconds: 500),
+                                    curve: Curves.easeIn,
+                                    child: sC.expandedIcon(
+                                      Icon(
+                                        this.savedPostIcon,
+                                      ),
+                                    )),
                               ],
                             )),
                       )
