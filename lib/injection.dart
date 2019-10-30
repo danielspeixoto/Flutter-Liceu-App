@@ -4,6 +4,7 @@ import 'package:app/data/ReportRepository.dart';
 import 'package:app/data/TriviaRepository.dart';
 import 'package:app/domain/boundary/RankingBoundary.dart';
 import 'package:app/domain/usecase/challenge/GetChallengeUseCase.dart';
+import 'package:app/domain/usecase/post/DeletePostCommentUseCase.dart';
 import 'package:app/domain/usecase/post/GetPostByIdUseCase.dart';
 import 'package:app/domain/usecase/post/UpdatePostCommentUseCase.dart';
 import 'package:app/domain/usecase/post/UpdatePostRatingUseCase.dart';
@@ -155,6 +156,7 @@ class Dependencies {
   final IUpdatePostRatingUseCase updatePostRatingUseCase;
   final IUpdatePostCommentUseCase updatePostCommentUseCase;
   final ISearchPostsUseCase searchPostsUseCase;
+  final IDeletePostCommentUseCase deletePostCommentUseCase;
 
   Dependencies(
     this.loginUseCase,
@@ -191,6 +193,7 @@ class Dependencies {
     this.updatePostRatingUseCase,
     this.updatePostCommentUseCase,
     this.searchPostsUseCase,
+    this.deletePostCommentUseCase
   );
 
   static Dependencies obj;
@@ -284,6 +287,7 @@ class Dependencies {
         UpdatePostRatingUseCase(localRepository, postRepository);
     final updatePostCommentUseCase =
         UpdatePostCommentUseCase(localRepository, postRepository);
+    final deletePostCommentUseCase = DeletePostCommentUseCase(localRepository, postRepository);
     obj = Dependencies(
       loginUseCase,
       myInfoUseCase,
@@ -319,6 +323,7 @@ class Dependencies {
       updatePostRatingUseCase,
       updatePostCommentUseCase,
       searchPostsUseCase,
+      deletePostCommentUseCase
     );
     return obj;
   }

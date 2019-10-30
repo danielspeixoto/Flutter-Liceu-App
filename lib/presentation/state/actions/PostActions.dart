@@ -136,6 +136,14 @@ class DeletePostAction extends ItemAction {
   }
 }
 
+class DeletePostCommentAction {
+  final String postId;
+  final String commentId;
+
+  DeletePostCommentAction(this.postId, this.commentId);
+}
+
+
 class PostShareAction {
   final String postId;
   final PostType type;

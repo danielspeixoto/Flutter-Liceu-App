@@ -13,16 +13,16 @@ import '../../app.dart';
 import '../app_state.dart';
 
 List<Middleware<AppState>> postMiddleware(
-  ICreateTextPostUseCase createPostUseCase,
-  IDeletePostUseCase deletePostUseCase,
-  IExplorePostUseCase explorePostUseCase,
-  IGetUserByIdUseCase getUserByIdUseCase,
-  ICreateImagePostUseCase createImagePostUseCase,
-  IGetPostByIdUseCase getPostByIdUseCase,
-  IUpdatePostRatingUseCase updatePostRatingUseCase,
-  IUpdatePostCommentUseCase updatePostCommentUseCase,
-  ISearchPostsUseCase searchPostsUseCase,
-) {
+    ICreateTextPostUseCase createPostUseCase,
+    IDeletePostUseCase deletePostUseCase,
+    IExplorePostUseCase explorePostUseCase,
+    IGetUserByIdUseCase getUserByIdUseCase,
+    ICreateImagePostUseCase createImagePostUseCase,
+    IGetPostByIdUseCase getPostByIdUseCase,
+    IUpdatePostRatingUseCase updatePostRatingUseCase,
+    IUpdatePostCommentUseCase updatePostCommentUseCase,
+    ISearchPostsUseCase searchPostsUseCase,
+    IDeletePostCommentUseCase deletePostCommentUseCase) {
   void deletePost(Store<AppState> store, DeletePostAction action,
       NextDispatcher next) async {
     next(action);
@@ -154,7 +154,7 @@ List<Middleware<AppState>> postMiddleware(
 
   void navigatePost(Store<AppState> store, NavigatePostAction action,
       NextDispatcher next) async {
-            next(action);
+    next(action);
     store.dispatch(NavigatePushAction(AppRoutes.completePost));
     try {
       final post = await getPostByIdUseCase.run(action.postId);
@@ -168,7 +168,7 @@ List<Middleware<AppState>> postMiddleware(
           post.statusCode,
           post.likes,
           post.images,
-          post.comments);     
+          post.comments);
       store.dispatch(SetCompletePostAction(postData));
     } catch (error, stackTrace) {
       final actionName = action.toString().substring(11);
@@ -209,6 +209,19 @@ List<Middleware<AppState>> postMiddleware(
     store.dispatch(SetPostImageAction(action.imageURL));
   }
 
+  void deleteComment(Store<AppState> store, DeletePostCommentAction action,
+      NextDispatcher next) async {
+    next(action);
+    try {
+      await deletePostCommentUseCase.run(action.postId, action.commentId);
+      store.dispatch(FetchPostAction(action.postId));
+    } catch (error, stackTrace) {
+      final actionName = action.toString().substring(11);
+      store.dispatch(
+          OnCatchDefaultErrorAction(error.toString(), stackTrace, actionName));
+    }
+  }
+
   return [
     TypedMiddleware<AppState, DeletePostAction>(deletePost),
     TypedMiddleware<AppState, NavigateCreatePostAction>(postCreation),
@@ -224,5 +237,6 @@ List<Middleware<AppState>> postMiddleware(
     TypedMiddleware<AppState, SubmitPostUpdateRatingAction>(updateRating),
     TypedMiddleware<AppState, SubmitPostCommentAction>(submitComment),
     TypedMiddleware<AppState, SubmitPostCommentSuccessAction>(updateComment),
+    TypedMiddleware<AppState, DeletePostCommentAction>(deleteComment)
   ];
 }
