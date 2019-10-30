@@ -20,9 +20,11 @@ class CompletePostViewModel {
   final Function(List<String> imageURL) onImageZoomPressed;
   final Function(String postId, String comment) onSendCommentPressed;
   final Function(String userId) onUserCommentPressed;
+  final Function(String postId, String commentId) onDeleteCommentPressed;
   final bool isLoading;
   final Function(String postId) onSavePostPressed;
   final Function(String postId) onDeleteSavedPostPressed;
+  final String userLoggedId;
 
   CompletePostViewModel(
       {this.post,
@@ -36,7 +38,9 @@ class CompletePostViewModel {
       this.onUserCommentPressed,
       this.isLoading,
       this.onSavePostPressed,
-      this.onDeleteSavedPostPressed});
+      this.onDeleteSavedPostPressed,
+      this.onDeleteCommentPressed,
+      this.userLoggedId});
 
   factory CompletePostViewModel.create(Store<AppState> store) {
     final postState = store.state.postState;
@@ -44,6 +48,7 @@ class CompletePostViewModel {
     return CompletePostViewModel(
         post: store.state.postState.post,
         isLoading: store.state.postState.post.isLoading,
+        userLoggedId: store.state.userState.user.content.id,
         onSharePostPressed: (postId, type, text) {
           store.dispatch(PostShareAction(postId, type));
           Share.share(summarize(text, 300) +
@@ -77,6 +82,9 @@ class CompletePostViewModel {
         },
         onDeleteSavedPostPressed: (postId) {
           store.dispatch(DeleteUserSavedPostAction(postId));
+        },
+        onDeleteCommentPressed: (postId, commentId) {
+          store.dispatch(DeletePostCommentAction(postId, commentId));
         });
   }
 }

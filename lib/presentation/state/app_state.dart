@@ -112,7 +112,8 @@ final Store<AppState> store = Store<AppState>(
       Dependencies.get().updatePostRatingUseCase,
       Dependencies.get().updatePostCommentUseCase,
       Dependencies.get().searchPostsUseCase,
-      Dependencies.get().getSavedPostsUseCase
+      Dependencies.get().getSavedPostsUseCase,
+      Dependencies.get().deletePostCommentUseCase
     ),
     ...ENEMMiddleware(
       Dependencies.get().getRankingUseCase,

@@ -142,6 +142,22 @@ class PostRepository implements IPostRepository {
     throw handleNetworkException(response.statusCode, runtimeType.toString());
   }
 
+  Future<void> deletePostComment(
+      String accessToken, String postId, String commentId) async {
+        final response = await this._client.delete(
+      _url + "/" + postId + "/" + commentId,
+      headers: {
+        apiKeyHeader: _apiKey,
+        contentTypeHeader: contentTypeValueForJson,
+        authHeader: accessToken
+      },
+    );
+    if (response.statusCode == 200) {
+      return;
+    }
+    throw handleNetworkException(response.statusCode, runtimeType.toString());
+  }
+
   String _postTypeToString(PostType postType) {
     switch (postType) {
       case PostType.TEXT:

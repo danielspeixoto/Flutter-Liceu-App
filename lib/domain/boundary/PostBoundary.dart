@@ -10,6 +10,8 @@ abstract class IPostRepository {
   Future<void> updatePostComment(
       String accessToken, String postId, String comment);
   Future<List<Post>> search(String accessToken, String query);
+    Future<void> deletePostComment(
+      String accessToken, String postId, String commentId);
 }
 
 abstract class ISearchPostsUseCase {
@@ -46,4 +48,8 @@ abstract class IUpdatePostRatingUseCase {
 
 abstract class IUpdatePostCommentUseCase {
   Future<void> run(String postId, String comment);
+}
+
+abstract class IDeletePostCommentUseCase {
+  Future<void> run(String postId, String commentId);
 }

@@ -34,6 +34,7 @@ class CompletePostPage extends StatelessWidget {
                     errorMessage: post.errorMessage,
                     child: () => CompleteAnimatedPost(
                       user: post.content.user,
+                      userLoggedId: viewModel.userLoggedId,
                       postStatus: post.content.statusCode,
                       postContent: post.content.text,
                       savedPostIcon: post.content.isSaved
@@ -69,6 +70,10 @@ class CompletePostPage extends StatelessWidget {
                               viewModel.onSavePostPressed(post.content.id);
                             }
                           },
+                      
+                      onDeleteCommentPressed: (commentId) {
+                        viewModel.onDeleteCommentPressed(post.content.id, commentId);
+                      },
                     ),
                   ),
                 ],

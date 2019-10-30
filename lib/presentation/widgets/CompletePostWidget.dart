@@ -24,6 +24,7 @@ final animation = ClickAnimation();
 
 class CompleteAnimatedPost extends StatefulWidget {
   final User user;
+  final String userLoggedId;
   final String postContent;
   final String imageURL;
   final List<String> images;
@@ -42,6 +43,7 @@ class CompleteAnimatedPost extends StatefulWidget {
   final Function(String) onUserCommentPressed;
   final Function(bool isSaved) onSavePostPressed;
   IconData savedPostIcon;
+  final Function(String commentId) onDeleteCommentPressed;
 
   CompleteAnimatedPost(
       {@required this.user,
@@ -61,7 +63,9 @@ class CompleteAnimatedPost extends StatefulWidget {
       this.comments,
       this.onUserCommentPressed,
       this.onSavePostPressed,
-      this.savedPostIcon});
+      this.savedPostIcon,
+      this.userLoggedId,
+      this.onDeleteCommentPressed,});
 
   @override
   CompletePostWidget createState() => CompletePostWidget(
@@ -80,7 +84,11 @@ class CompleteAnimatedPost extends StatefulWidget {
       onLikePressed: onLikePressed,
       images: images,
       onSavePostPressed: onSavePostPressed,
-      savedPostIcon: savedPostIcon);
+      savedPostIcon: savedPostIcon,
+      userLoggedId: userLoggedId,
+      onDeleteCommentPressed: onDeleteCommentPressed,
+      onSendCommentPressed: onSendCommentPressed,
+      onUserCommentPressed: onUserCommentPressed);
 }
 
 class CompletePostWidget extends State<CompleteAnimatedPost> {
@@ -103,9 +111,13 @@ class CompletePostWidget extends State<CompleteAnimatedPost> {
   final Function(String) onUserCommentPressed;
   final Function(bool isSaved) onSavePostPressed;
     IconData savedPostIcon;
+  final Function(String commentId) onDeleteCommentPressed;
+  final String userLoggedId;
+
 
   CompletePostWidget(
       {@required this.user,
+      this.userLoggedId,
       @required this.postContent,
       this.onDeletePressed,
       @required this.onSharePressed,
@@ -122,7 +134,8 @@ class CompletePostWidget extends State<CompleteAnimatedPost> {
       this.comments,
       this.onUserCommentPressed,
       this.onSavePostPressed,
-      this.savedPostIcon});
+      this.savedPostIcon,
+      this.onDeleteCommentPressed,});
 
   @override
   Widget build(BuildContext context) {
@@ -449,6 +462,13 @@ class CompletePostWidget extends State<CompleteAnimatedPost> {
                 ? Column(
                     children: comments.map((comment) {
                     return CommentWidget(
+                      id: comment.id,
+                      onDeleteCommentPressed: this.userLoggedId == this.user.id ||
+                                this.userLoggedId == comment.userId
+                            ? (id) {
+                                this.onDeleteCommentPressed(id);
+                              }
+                            : null,
                       author: comment.author,
                       content: comment.content,
                       authorPic: comment.user.picURL,

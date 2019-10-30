@@ -23,7 +23,8 @@ List<Middleware<AppState>> postMiddleware(
   IUpdatePostRatingUseCase updatePostRatingUseCase,
   IUpdatePostCommentUseCase updatePostCommentUseCase,
   ISearchPostsUseCase searchPostsUseCase,
-  IGetSavedPostsUseCase getSavedPostsUseCase
+  IGetSavedPostsUseCase getSavedPostsUseCase,
+  IDeletePostCommentUseCase deletePostCommentUseCase
 ) {
   void deletePost(Store<AppState> store, DeletePostAction action,
       NextDispatcher next) async {
@@ -240,6 +241,19 @@ List<Middleware<AppState>> postMiddleware(
     store.dispatch(SetPostImageAction(action.imageURL));
   }
 
+  void deleteComment(Store<AppState> store, DeletePostCommentAction action,
+      NextDispatcher next) async {
+    next(action);
+    try {
+      await deletePostCommentUseCase.run(action.postId, action.commentId);
+      store.dispatch(FetchPostAction(action.postId));
+    } catch (error, stackTrace) {
+      final actionName = action.toString().substring(11);
+      store.dispatch(
+          OnCatchDefaultErrorAction(error.toString(), stackTrace, actionName));
+    }
+  }
+
   return [
     TypedMiddleware<AppState, DeletePostAction>(deletePost),
     TypedMiddleware<AppState, NavigateCreatePostAction>(postCreation),
@@ -255,5 +269,6 @@ List<Middleware<AppState>> postMiddleware(
     TypedMiddleware<AppState, SubmitPostUpdateRatingAction>(updateRating),
     TypedMiddleware<AppState, SubmitPostCommentAction>(submitComment),
     TypedMiddleware<AppState, SubmitPostCommentSuccessAction>(updateComment),
+    TypedMiddleware<AppState, DeletePostCommentAction>(deleteComment)
   ];
 }
