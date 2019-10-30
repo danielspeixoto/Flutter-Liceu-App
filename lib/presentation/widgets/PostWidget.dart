@@ -390,24 +390,27 @@ class PostWidget extends State<AnimatedPost> {
                               this.onLikePressed();
                               setState(() {
                                 this.likes = this.likes + 1;
-                                this.big = !this.big;
-                                Future.delayed(Duration(milliseconds: 500), () {
-                                  setState(() {
-                                    this.big = !this.big;
-                                  });
-                                });
+                                animation.rebuildLike();
                               });
                             },
                             child: Row(
                               children: <Widget>[
-                                AnimatedContainer(
-                                  width: this.big ? 24 : 20,
-                                  height: this.big ? 24 : 20,
+                                Animator(
+                                  name: "like",
+                                  blocs: [animation],
+                                  tween: Tween<double>(begin: 0.8, end: 1.2),
+                                  curve: Curves.easeInOut,
                                   duration: Duration(milliseconds: 350),
-                                  curve: Curves.easeIn,
-                                  child: sC.expandedIcon(Icon(
-                                    FontAwesomeIcons.solidHeart,
-                                  ),) 
+                                  cycles: 2,
+                                  builder: (anim) => Center(
+                                    child: Transform.scale(
+                                      scale: anim.value,
+                                      child: Icon(
+                                        FontAwesomeIcons.solidHeart,
+                                        size: 20,
+                                      ),
+                                    ),
+                                  ),
                                 ),
                                 Container(
                                     margin: EdgeInsets.only(left: 8),
@@ -449,16 +452,20 @@ class PostWidget extends State<AnimatedPost> {
                                     ? this.savedPostIcon =
                                         FontAwesomeIcons.solidBookmark
                                     : this.savedPostIcon =
-                                        FontAwesomeIcons.bookmark;                         
+                                        FontAwesomeIcons.bookmark;
                               });
                             },
                             child: Row(
                               children: <Widget>[
                                 AnimatedContainer(
                                     width: this.savedPostIcon ==
-                                        FontAwesomeIcons.bookmark ? 20 : 24,
+                                            FontAwesomeIcons.bookmark
+                                        ? 20
+                                        : 24,
                                     height: this.savedPostIcon ==
-                                        FontAwesomeIcons.bookmark ? 20 : 24,
+                                            FontAwesomeIcons.bookmark
+                                        ? 20
+                                        : 24,
                                     duration: Duration(milliseconds: 500),
                                     curve: Curves.easeIn,
                                     child: sC.expandedIcon(

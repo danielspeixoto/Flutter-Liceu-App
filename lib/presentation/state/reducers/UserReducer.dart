@@ -72,12 +72,15 @@ UserState setProfileData(UserState state, SetUserAction action) {
 }
 
 UserState setSavedPosts(UserState state, SetUserSavedPostsAction action) {
-  return state.copyWith(
+  final s =
+  state.copyWith(
       savedPosts: Data(content: action.posts, isLoading: false));
+
+  return s;
 }
 
 UserState fetchSavedPosts(UserState state, FetchUserSavedPostsAction action) {
-  return state.copyWith(savedPosts: Data(isLoading: true));
+   return state.copyWith(savedPosts: Data(isLoading: true));
 }
 
 UserState fetchUser(UserState state, FetchUserInfoAction action) {

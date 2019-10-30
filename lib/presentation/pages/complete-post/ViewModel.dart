@@ -22,6 +22,7 @@ class CompletePostViewModel {
   final Function(String userId) onUserCommentPressed;
   final bool isLoading;
   final Function(String postId) onSavePostPressed;
+  final Function(String postId) onDeleteSavedPostPressed;
 
   CompletePostViewModel(
       {this.post,
@@ -34,7 +35,8 @@ class CompletePostViewModel {
       this.onSendCommentPressed,
       this.onUserCommentPressed,
       this.isLoading,
-      this.onSavePostPressed});
+      this.onSavePostPressed,
+      this.onDeleteSavedPostPressed});
 
   factory CompletePostViewModel.create(Store<AppState> store) {
     final postState = store.state.postState;
@@ -48,7 +50,8 @@ class CompletePostViewModel {
               "\n\nVeja o post que ${store.state.userState.user.content.name} compartilhou com você!\nhttp://liceu.co?postId=$postId");
         },
         refresh: () {
-          store.dispatch(FetchPostAction(store.state.postState.post.content.id));
+          store
+              .dispatch(FetchPostAction(store.state.postState.post.content.id));
         },
         onDeletePostPressed: (String postId) {
           store.dispatch(DeletePostAction(postId));
@@ -71,6 +74,9 @@ class CompletePostViewModel {
         },
         onSavePostPressed: (postId) {
           store.dispatch(SubmitUserSavePostAction(postId));
+        },
+        onDeleteSavedPostPressed: (postId) {
+          store.dispatch(DeleteUserSavedPostAction(postId));
         });
   }
 }

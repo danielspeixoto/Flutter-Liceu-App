@@ -8,6 +8,7 @@ import 'package:app/presentation/widgets/LiceuScaffold.dart';
 import 'package:app/presentation/widgets/PostWidget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class SavedPostsPage extends StatelessWidget {
@@ -19,7 +20,12 @@ class SavedPostsPage extends StatelessWidget {
           converter: (store) => SavedPostsViewModel.create(store),
           builder: (BuildContext context, SavedPostsViewModel viewModel) {
             return LiceuScaffold(
-              body: FetcherWidget.build(
+              body: SmartRefresher(
+              onRefresh: () async {
+                viewModel.refresh();
+                _refreshController.refreshCompleted();
+              },
+              controller: _refreshController, child: FetcherWidget.build(
                   isLoading: viewModel.posts.isLoading,
                   child: () => ListView.builder(
                       physics: BouncingScrollPhysics(),
@@ -31,6 +37,9 @@ class SavedPostsPage extends StatelessWidget {
                             AnimatedPost(
                               user: post.user,
                               postStatus: post.statusCode,
+                              savedPostIcon: post.isSaved
+                                  ? FontAwesomeIcons.solidBookmark
+                                  : FontAwesomeIcons.bookmark,
                               postContent: post.type == PostType.TEXT
                                   ? summarize(post.text, 600)
                                   : '\n'.allMatches(post.text).length + 1 > 15
@@ -84,10 +93,17 @@ class SavedPostsPage extends StatelessWidget {
                                 viewModel.onLikePressed(post.id);
                                 post.likes++;
                               },
+                              onSavePostPressed: (isSaved) {
+                            if (isSaved) {
+                              viewModel.onDeleteSavedPostPressed(post.id);
+                            } else {
+                              viewModel.onSavePostPressed(post.id);
+                            }
+                          },
                             ),
                           ],
                         );
-                      })),
+                      })),)
             );
           });
 }

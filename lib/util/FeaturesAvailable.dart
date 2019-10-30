@@ -1,6 +1,6 @@
 import '../injection.dart';
 
 class FeaturesAvailable {
-  static bool savePosts = Feature.isDev;
+  static bool savePosts = true;
   static bool comments = true;
 }

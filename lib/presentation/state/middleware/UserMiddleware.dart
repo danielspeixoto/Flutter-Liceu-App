@@ -185,6 +185,7 @@ List<Middleware<AppState>> userMiddleware(
 
   void getSavedPosts(Store<AppState> store, FetchUserSavedPostsAction action,
       NextDispatcher next) async {
+    next(action);
     try {
       final posts = await getSavedPostsUseCase.run();
       List<PostData> postsData = new List<PostData>();
@@ -210,7 +211,6 @@ List<Middleware<AppState>> userMiddleware(
       store.dispatch(
           OnCatchDefaultErrorAction(error.toString(), stackTrace, actionName));
     }
-    next(action);
   }
 
   void deleteSavedPost(Store<AppState> store, DeleteUserSavedPostAction action,
@@ -242,6 +242,6 @@ List<Middleware<AppState>> userMiddleware(
     TypedMiddleware<AppState, SubmitUserSavePostAction>(savePost),
     TypedMiddleware<AppState, FetchUserSavedPostsAction>(getSavedPosts),
     TypedMiddleware<AppState, NavigateUserSavedPostsAction>(navigateSavedPosts),
-     TypedMiddleware<AppState, DeleteUserSavedPostAction>(deleteSavedPost),
+    TypedMiddleware<AppState, DeleteUserSavedPostAction>(deleteSavedPost),
   ];
 }
