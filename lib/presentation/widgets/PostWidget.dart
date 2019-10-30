@@ -7,8 +7,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:simple_code/simple_code.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:states_rebuilder/states_rebuilder.dart';
 
 import 'RoundedImage.dart';
 
@@ -20,7 +20,7 @@ class TabData {
 
 final animation = ClickAnimation();
 
-class PostWidget extends StatelessWidget {
+class AnimatedPost extends StatefulWidget {
   final User user;
   final String postContent;
   final String imageURL;
@@ -37,6 +37,71 @@ class PostWidget extends StatelessWidget {
   final Function() onLikePressed;
   final Function() onSeeMorePressed;
   final String numberOfComments;
+  final Function(bool isSaved) onSavePostPressed;
+  IconData savedPostIcon;
+
+  AnimatedPost(
+      {@required this.user,
+      @required this.postContent,
+      this.onDeletePressed,
+      @required this.onSharePressed,
+      this.onUserPressed,
+      @required this.imageURL,
+      this.seeMore,
+      this.onImageZoomPressed,
+      @required this.postStatus,
+      this.onReportPressed,
+      this.onReportTextChange,
+      @required this.likes,
+      @required this.onLikePressed,
+      @required this.images,
+      this.onSeeMorePressed,
+      this.numberOfComments,
+      this.onSavePostPressed,
+      this.savedPostIcon});
+
+  @override
+  PostWidget createState() => PostWidget(
+      user: user,
+      postContent: postContent,
+      onDeletePressed: onDeletePressed,
+      onSharePressed: onSharePressed,
+      onUserPressed: onUserPressed,
+      imageURL: imageURL,
+      seeMore: seeMore,
+      onImageZoomPressed: onImageZoomPressed,
+      postStatus: postStatus,
+      onReportPressed: onReportPressed,
+      onReportTextChange: onReportTextChange,
+      likes: likes,
+      onLikePressed: onLikePressed,
+      images: images,
+      onSeeMorePressed: onSeeMorePressed,
+      numberOfComments: numberOfComments,
+      onSavePostPressed: onSavePostPressed,
+      savedPostIcon: savedPostIcon);
+}
+
+class PostWidget extends State<AnimatedPost> {
+  final User user;
+  final String postContent;
+  final String imageURL;
+  final List<String> images;
+  final Function() onDeletePressed;
+  final Function() onSharePressed;
+  final Function(User) onUserPressed;
+  final bool seeMore;
+  final Function() onImageZoomPressed;
+  final String postStatus;
+  final Function() onReportPressed;
+  final Function(String) onReportTextChange;
+  int likes;
+  final Function() onLikePressed;
+  final Function() onSeeMorePressed;
+  final String numberOfComments;
+  final Function(bool isSaved) onSavePostPressed;
+  IconData savedPostIcon;
+  bool big = false;
 
   PostWidget(
       {@required this.user,
@@ -54,10 +119,14 @@ class PostWidget extends StatelessWidget {
       @required this.onLikePressed,
       @required this.images,
       this.onSeeMorePressed,
-      this.numberOfComments});
+      this.numberOfComments,
+      this.onSavePostPressed,
+      this.savedPostIcon});
 
   @override
   Widget build(BuildContext context) {
+    SimpleCode sC = new SimpleCode(context: context);
+
     return Card(
       shape: RoundedRectangleBorder(
         side: BorderSide(
@@ -311,6 +380,7 @@ class PostWidget extends StatelessWidget {
                     ],
                   ),
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 this.postStatus == "approved"
                     ? Container(
@@ -318,7 +388,10 @@ class PostWidget extends StatelessWidget {
                         child: FlatButton(
                             onPressed: () {
                               this.onLikePressed();
-                              animation.rebuild();
+                              setState(() {
+                                this.likes = this.likes + 1;
+                                animation.rebuildLike();
+                              });
                             },
                             child: Row(
                               children: <Widget>[
@@ -340,7 +413,7 @@ class PostWidget extends StatelessWidget {
                                   ),
                                 ),
                                 Container(
-                                    margin: EdgeInsets.only(left: 4),
+                                    margin: EdgeInsets.only(left: 8),
                                     child: Text(this.likes.toString()))
                               ],
                             )),
@@ -361,6 +434,45 @@ class PostWidget extends StatelessWidget {
                                 Container(
                                     margin: EdgeInsets.only(left: 8),
                                     child: Text(this.numberOfComments))
+                              ],
+                            )),
+                      )
+                    : Container(),
+                this.postStatus == "approved" && FeaturesAvailable.savePosts
+                    ? Container(
+                        child: FlatButton(
+                            onPressed: () {
+                              this.onSavePostPressed(this.savedPostIcon ==
+                                      FontAwesomeIcons.bookmark
+                                  ? false
+                                  : true);
+                              setState(() {
+                                this.savedPostIcon = this.savedPostIcon ==
+                                        FontAwesomeIcons.bookmark
+                                    ? this.savedPostIcon =
+                                        FontAwesomeIcons.solidBookmark
+                                    : this.savedPostIcon =
+                                        FontAwesomeIcons.bookmark;
+                              });
+                            },
+                            child: Row(
+                              children: <Widget>[
+                                AnimatedContainer(
+                                    width: this.savedPostIcon ==
+                                            FontAwesomeIcons.bookmark
+                                        ? 20
+                                        : 24,
+                                    height: this.savedPostIcon ==
+                                            FontAwesomeIcons.bookmark
+                                        ? 20
+                                        : 24,
+                                    duration: Duration(milliseconds: 500),
+                                    curve: Curves.easeIn,
+                                    child: sC.expandedIcon(
+                                      Icon(
+                                        this.savedPostIcon,
+                                      ),
+                                    )),
                               ],
                             )),
                       )

@@ -28,7 +28,13 @@ abstract class IUserRepository {
 
   Future<void> check(String accessToken, String id);
 
-    Future<void> fcmtoken(String accessToken, String fcmtoken, String userId);
+  Future<void> fcmtoken(String accessToken, String fcmtoken, String userId);
+
+  Future<void> savePost(String accessToken, String userId, String postId);
+
+  Future<List<String>> getSavedPosts(String accessToken, String userId);
+
+  Future<void> deleteSavedPost(String accessToken, String userId, String postId);
 }
 
 abstract class ICheckUseCase {
@@ -98,4 +104,16 @@ abstract class IMyChallengesUseCase {
 
 abstract class ISubmitFcmTokenUseCase {
   Future<void> run(String fcmtoken, String userId);
+}
+
+abstract class ISavePostUseCase {
+  Future<void> run(String postId);
+}
+
+abstract class IGetSavedPostsUseCase {
+  Future<List<Post>> run();
+}
+
+abstract class IDeleteSavedPostUseCase {
+  Future<void> run(String postId);
 }

@@ -7,22 +7,25 @@ import 'package:app/presentation/state/actions/PostActions.dart';
 import 'package:app/presentation/state/actions/UtilActions.dart';
 import 'package:app/presentation/state/aggregates/PostData.dart';
 import 'package:app/presentation/state/navigator/NavigatorActions.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:redux/redux.dart';
 
 import '../../app.dart';
 import '../app_state.dart';
 
 List<Middleware<AppState>> postMiddleware(
-    ICreateTextPostUseCase createPostUseCase,
-    IDeletePostUseCase deletePostUseCase,
-    IExplorePostUseCase explorePostUseCase,
-    IGetUserByIdUseCase getUserByIdUseCase,
-    ICreateImagePostUseCase createImagePostUseCase,
-    IGetPostByIdUseCase getPostByIdUseCase,
-    IUpdatePostRatingUseCase updatePostRatingUseCase,
-    IUpdatePostCommentUseCase updatePostCommentUseCase,
-    ISearchPostsUseCase searchPostsUseCase,
-    IDeletePostCommentUseCase deletePostCommentUseCase) {
+  ICreateTextPostUseCase createPostUseCase,
+  IDeletePostUseCase deletePostUseCase,
+  IExplorePostUseCase explorePostUseCase,
+  IGetUserByIdUseCase getUserByIdUseCase,
+  ICreateImagePostUseCase createImagePostUseCase,
+  IGetPostByIdUseCase getPostByIdUseCase,
+  IUpdatePostRatingUseCase updatePostRatingUseCase,
+  IUpdatePostCommentUseCase updatePostCommentUseCase,
+  ISearchPostsUseCase searchPostsUseCase,
+  IGetSavedPostsUseCase getSavedPostsUseCase,
+  IDeletePostCommentUseCase deletePostCommentUseCase
+) {
   void deletePost(Store<AppState> store, DeletePostAction action,
       NextDispatcher next) async {
     next(action);
@@ -110,10 +113,28 @@ List<Middleware<AppState>> postMiddleware(
     next(action);
     try {
       final posts = await explorePostUseCase.run(50);
+      final savedPosts = await getSavedPostsUseCase.run();
+
+      for (var i = 0; i < posts.length; i++) {
+        for (var j = 0; j < savedPosts.length; j++) {
+          if (savedPosts[j].id == posts[i].id) {
+            posts[i].isSaved = true;
+          }
+        }
+      }
       final futures = posts.map((post) async {
         final author = await getUserByIdUseCase.run(post.userId);
-        return PostData(post.id, author, post.type, post.text, post.imageURL,
-            post.statusCode, post.likes, post.images, post.comments);
+        return PostData(
+            post.id,
+            author,
+            post.type,
+            post.text,
+            post.imageURL,
+            post.statusCode,
+            post.likes,
+            post.images,
+            post.comments,
+            false);
       });
       final data = await Future.wait(futures);
       store.dispatch(FetchPostsSuccessAction(data));
@@ -133,8 +154,17 @@ List<Middleware<AppState>> postMiddleware(
         final posts = await searchPostsUseCase.run(action.query);
         final futures = posts.map((post) async {
           final author = await getUserByIdUseCase.run(post.userId);
-          return PostData(post.id, author, post.type, post.text, post.imageURL,
-              post.statusCode, post.likes, post.images, post.comments);
+          return PostData(
+              post.id,
+              author,
+              post.type,
+              post.text,
+              post.imageURL,
+              post.statusCode,
+              post.likes,
+              post.images,
+              post.comments,
+              false);
         });
         final data = await Future.wait(futures);
         store.dispatch(SearchPostSuccessAction(data));
@@ -168,7 +198,8 @@ List<Middleware<AppState>> postMiddleware(
           post.statusCode,
           post.likes,
           post.images,
-          post.comments);
+          post.comments,
+          false);
       store.dispatch(SetCompletePostAction(postData));
     } catch (error, stackTrace) {
       final actionName = action.toString().substring(11);
@@ -191,7 +222,8 @@ List<Middleware<AppState>> postMiddleware(
           post.statusCode,
           post.likes,
           post.images,
-          post.comments);
+          post.comments,
+          false);
 
       store.dispatch(SetCompletePostAction(postData));
     } catch (error, stackTrace) {

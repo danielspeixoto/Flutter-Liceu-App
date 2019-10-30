@@ -2,6 +2,7 @@ import 'package:app/domain/aggregates/Post.dart';
 import 'package:app/domain/aggregates/User.dart';
 import 'package:app/presentation/state/actions/FriendActions.dart';
 import 'package:app/presentation/state/actions/PostActions.dart';
+import 'package:app/presentation/state/actions/UserActions.dart';
 import 'package:app/presentation/state/aggregates/PostData.dart';
 import 'package:app/presentation/state/app_state.dart';
 import 'package:app/presentation/state/reducers/Data.dart';
@@ -21,6 +22,8 @@ class CompletePostViewModel {
   final Function(String userId) onUserCommentPressed;
   final Function(String postId, String commentId) onDeleteCommentPressed;
   final bool isLoading;
+  final Function(String postId) onSavePostPressed;
+  final Function(String postId) onDeleteSavedPostPressed;
   final String userLoggedId;
 
   CompletePostViewModel(
@@ -34,6 +37,8 @@ class CompletePostViewModel {
       this.onSendCommentPressed,
       this.onUserCommentPressed,
       this.isLoading,
+      this.onSavePostPressed,
+      this.onDeleteSavedPostPressed,
       this.onDeleteCommentPressed,
       this.userLoggedId});
 
@@ -50,7 +55,8 @@ class CompletePostViewModel {
               "\n\nVeja o post que ${store.state.userState.user.content.name} compartilhou com você!\nhttp://liceu.co?postId=$postId");
         },
         refresh: () {
-          store.dispatch(FetchPostAction(store.state.postState.post.content.id));
+          store
+              .dispatch(FetchPostAction(store.state.postState.post.content.id));
         },
         onDeletePostPressed: (String postId) {
           store.dispatch(DeletePostAction(postId));
@@ -70,6 +76,12 @@ class CompletePostViewModel {
         },
         onUserCommentPressed: (userId) {
           store.dispatch(FetchFriendFromCommentAction(userId));
+        },
+        onSavePostPressed: (postId) {
+          store.dispatch(SubmitUserSavePostAction(postId));
+        },
+        onDeleteSavedPostPressed: (postId) {
+          store.dispatch(DeleteUserSavedPostAction(postId));
         },
         onDeleteCommentPressed: (postId, commentId) {
           store.dispatch(DeletePostCommentAction(postId, commentId));

@@ -7,6 +7,7 @@ import 'package:app/presentation/widgets/LiceuScaffold.dart';
 import 'package:app/presentation/widgets/PostWidget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class CompletePostPage extends StatelessWidget {
@@ -31,12 +32,16 @@ class CompletePostPage extends StatelessWidget {
                   FetcherWidget.build(
                     isLoading: viewModel.post.isLoading,
                     errorMessage: post.errorMessage,
-                    child: () => CompletePostWidget(
+                    child: () => CompleteAnimatedPost(
                       user: post.content.user,
                       userLoggedId: viewModel.userLoggedId,
                       postStatus: post.content.statusCode,
                       postContent: post.content.text,
+                      savedPostIcon: post.content.isSaved
+                              ? FontAwesomeIcons.solidBookmark
+                              : FontAwesomeIcons.bookmark,
                       imageURL: post.content.imageURL,
+                      
                       onUserPressed: (user) => {viewModel.onUserPressed(user)},
                       onSharePressed: () {
                         viewModel.onSharePostPressed(post.content.id,
@@ -58,6 +63,13 @@ class CompletePostPage extends StatelessWidget {
                       onUserCommentPressed: (userId) {
                             viewModel.onUserCommentPressed(userId);
                       },
+                      onSavePostPressed: (isSaved) {
+                            if (isSaved) {
+                              viewModel.onDeleteSavedPostPressed(post.content.id);
+                            } else {
+                              viewModel.onSavePostPressed(post.content.id);
+                            }
+                          },
                       
                       onDeleteCommentPressed: (commentId) {
                         viewModel.onDeleteCommentPressed(post.content.id, commentId);

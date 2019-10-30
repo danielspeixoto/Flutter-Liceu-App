@@ -2,11 +2,16 @@ import 'package:app/domain/aggregates/Post.dart';
 import 'package:app/domain/aggregates/User.dart';
 import 'package:app/presentation/state/actions/ItemActions.dart';
 import 'package:app/presentation/state/aggregates/ChallengeHistoryData.dart';
+import 'package:app/presentation/state/aggregates/PostData.dart';
 
 import '../../constants.dart';
 
 //Navigates
 class NavigateUserEditProfileAction {}
+
+class NavigatePushUserSavedPostsAction {}
+
+class NavigateReplaceUserSavedPostsAction {}
 
 //Fetches
 class FetchUserErrorAction {
@@ -38,6 +43,12 @@ class FetchUserPostsErrorAction {
 
   FetchUserPostsErrorAction({this.error = DEFAULT_ERROR_MESSAGE});
 }
+
+class FetchUserSavedPostsAction {}
+
+class FetchUserSavedPostsSuccessAction {}
+
+class FetchUserSavedPostsErrorAction {}
 
 //Setters
 class SetUserAction {
@@ -78,8 +89,14 @@ class SetUserFcmTokenAction {
 
   SetUserFcmTokenAction(this.fcmtoken);
 }
-//Submits
 
+class SetUserSavedPostsAction {
+    final List<PostData> posts;
+
+  SetUserSavedPostsAction(this.posts);
+}
+
+//Submits
 class SubmitUserProfileChangesAction extends ItemAction {
   final String bio;
   final String instagram;
@@ -121,6 +138,19 @@ class SubmitUserFcmTokenAction extends ItemAction {
       'fcmtoken': fcmtoken,
     };
   }
+}
+
+class SubmitUserSavePostAction{
+  final String postId;
+
+  SubmitUserSavePostAction(this.postId);
+}
+
+//Deletes
+class DeleteUserSavedPostAction {
+  final String postId;
+
+  DeleteUserSavedPostAction(this.postId);
 }
 
 class InstagramClickedAction {

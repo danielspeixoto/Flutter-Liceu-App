@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:app/domain/aggregates/Post.dart';
 import 'package:app/domain/aggregates/User.dart';
 import 'package:app/injection.dart';
-import 'package:app/presentation/state/actions/FriendActions.dart';
 import 'package:app/presentation/state/actions/LiceuActions.dart';
 import 'package:app/presentation/state/actions/LoginActions.dart';
 import 'package:app/presentation/state/actions/PostActions.dart';
@@ -36,6 +35,10 @@ class ProfileViewModel {
   final Function(Post post, User user) onSeeMorePressed;
   final Function(List<String> imageURL) onImageZoomPressed;
   final Function(String postId) onLikePressed;
+  final Function(String postId) onSavePostPressed;
+  final Function() onSavedResumesPressed;
+  final Data<List<PostData>> savedPosts;
+  final Function(String postId) onDeleteSavedPostPressed;
 
   ProfileViewModel({
     this.user,
@@ -55,6 +58,10 @@ class ProfileViewModel {
     this.onSeeMorePressed,
     this.onImageZoomPressed,
     this.onLikePressed,
+    this.onSavePostPressed,
+    this.onSavedResumesPressed,
+    this.savedPosts,
+    this.onDeleteSavedPostPressed
   });
 
   factory ProfileViewModel.create(Store<AppState> store) {
@@ -62,6 +69,7 @@ class ProfileViewModel {
     return ProfileViewModel(
       user: userState.user,
       posts: userState.posts,
+      savedPosts: store.state.userState.savedPosts,
       reportFeedback: userState.reportFeedback,
       onCreateButtonPressed: () => store.dispatch(NavigateCreatePostAction()),
       refresh: () {
@@ -130,17 +138,8 @@ class ProfileViewModel {
             "Você já viu o que eu estou fazendo no Liceu? \nhttp://liceu.co?userId=${store.state.userState.user.content.id}");
       },
       onSeeMorePressed: (post, user) {
-        final postData = new PostData(
-            post.id,
-            user,
-            post.type,
-            post.text,
-            post.imageURL,
-            post.statusCode,
-            post.likes,
-            post.images,
-            post.comments);
-        store.dispatch(NavigatePostAction(postData.id));
+ 
+        store.dispatch(NavigatePostAction(post.id));
       },
       onImageZoomPressed: (imageURL) {
         store.dispatch(NavigatePostImageZoomAction(imageURL));
@@ -148,6 +147,16 @@ class ProfileViewModel {
       onLikePressed: (postId) {
         store.dispatch(SubmitPostUpdateRatingAction(postId));
       },
+      onSavePostPressed: (postId) {
+        store.dispatch(SubmitUserSavePostAction(postId));
+      },
+      onSavedResumesPressed: () {
+        store.dispatch(FetchUserSavedPostsAction());
+        store.dispatch(NavigatePushUserSavedPostsAction());
+      },
+      onDeleteSavedPostPressed: (postId) {
+        store.dispatch(DeleteUserSavedPostAction(postId));
+      }
     );
   }
 }

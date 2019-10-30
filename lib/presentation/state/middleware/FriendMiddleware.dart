@@ -3,6 +3,7 @@ import 'package:app/presentation/state/actions/FriendActions.dart';
 import 'package:app/presentation/state/actions/UtilActions.dart';
 import 'package:app/presentation/state/aggregates/PostData.dart';
 import 'package:app/presentation/state/navigator/NavigatorActions.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:redux/redux.dart';
 
 import '../../app.dart';
@@ -12,6 +13,7 @@ List<Middleware<AppState>> friendMiddleware(
   IGetUserPostsUseCase getUserPostsUseCase,
   IGetUserByIdUseCase getUserById,
   IMyIdUseCase getMyIdUseCase,
+  IGetSavedPostsUseCase getSavedPostsUseCase,
 ) {
   void fetchFriendInfo(Store<AppState> store, FetchFriendAction action,
       NextDispatcher next) async {
@@ -27,9 +29,9 @@ List<Middleware<AppState>> friendMiddleware(
     }
   }
 
-    void fetchFriendInfoFromComment(Store<AppState> store, FetchFriendFromCommentAction action,
-      NextDispatcher next) async {
-        next(action);
+  void fetchFriendInfoFromComment(Store<AppState> store,
+      FetchFriendFromCommentAction action, NextDispatcher next) async {
+    next(action);
     try {
       final friend = await getUserById.run(action.userId);
       store.dispatch(UserClickedAction(friend));
@@ -46,8 +48,15 @@ List<Middleware<AppState>> friendMiddleware(
     next(action);
     try {
       final posts = await getUserPostsUseCase.run(action.id);
-    
-      
+      final savedPosts = await getSavedPostsUseCase.run();
+
+      for (var i = 0; i < posts.length; i++) {
+        for (var j = 0; j < savedPosts.length; j++) {
+          if (savedPosts[j].id == posts[i].id) {
+            posts[i].isSaved = true;
+          }
+        }
+      }
       store.dispatch(SetFriendPostsAction(posts));
     } catch (error, stackTrace) {
       final actionName = action.toString().substring(11);
@@ -77,6 +86,7 @@ List<Middleware<AppState>> friendMiddleware(
     TypedMiddleware<AppState, FetchFriendPostsAction>(fetchPosts),
     TypedMiddleware<AppState, NavigateViewFriendAction>(viewFriend),
     TypedMiddleware<AppState, UserClickedAction>(userClick),
-     TypedMiddleware<AppState, FetchFriendFromCommentAction>(fetchFriendInfoFromComment),
+    TypedMiddleware<AppState, FetchFriendFromCommentAction>(
+        fetchFriendInfoFromComment),
   ];
 }

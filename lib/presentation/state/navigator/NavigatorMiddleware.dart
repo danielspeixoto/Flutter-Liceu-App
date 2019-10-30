@@ -28,7 +28,7 @@ _navigatePush(
       " to " +
       store.state.route.toString());
   final routeName = action.routeName;
-  if (store.state.route.last != routeName) {
+  if (store.state.route.last != routeName || routeName == "/savedPosts") {
     navigatorKey.currentState.pushNamed(routeName);
   } 
   next(action); //This need to be after name checks

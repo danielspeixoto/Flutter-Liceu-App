@@ -4,6 +4,7 @@ import 'package:app/presentation/state/actions/LoginActions.dart';
 import 'package:app/presentation/state/aggregates/ChallengeHistoryData.dart';
 import 'package:app/presentation/state/actions/PostActions.dart';
 import 'package:app/presentation/state/actions/UserActions.dart';
+import 'package:app/presentation/state/aggregates/PostData.dart';
 import 'package:redux/redux.dart';
 
 import 'Data.dart';
@@ -14,25 +15,28 @@ class UserState {
   final Data<List<ChallengeHistoryData>> challenges;
   final String fcmtoken;
   final String reportFeedback;
+  final Data<List<PostData>> savedPosts;
 
-  UserState(this.user, this.posts, this.challenges, this.fcmtoken, this.reportFeedback);
+  UserState(this.user, this.posts, this.challenges, this.fcmtoken,
+      this.reportFeedback, this.savedPosts);
 
-  factory UserState.initial() => UserState(Data(), Data(), Data(), null, null);
+  factory UserState.initial() =>
+      UserState(Data(), Data(), Data(), null, null, Data());
 
-  UserState copyWith({
-    Data<User> user,
-    Data<List<Post>> posts,
-    Data<List<ChallengeHistoryData>> challenges,
-    String fcmtoken,
-    String reportFeedback
-  }) {
+  UserState copyWith(
+      {Data<User> user,
+      Data<List<Post>> posts,
+      Data<List<ChallengeHistoryData>> challenges,
+      String fcmtoken,
+      String reportFeedback,
+      Data<List<PostData>> savedPosts}) {
     final state = UserState(
-      user ?? this.user,
-      posts ?? this.posts,
-      challenges ?? this.challenges,
-      fcmtoken ?? this.fcmtoken,
-      reportFeedback ?? this.reportFeedback
-    );
+        user ?? this.user,
+        posts ?? this.posts,
+        challenges ?? this.challenges,
+        fcmtoken ?? this.fcmtoken,
+        reportFeedback ?? this.reportFeedback,
+        savedPosts ?? this.savedPosts);
     return state;
   }
 }
@@ -47,6 +51,8 @@ final Reducer<UserState> userReducer = combineReducers<UserState>([
   TypedReducer<UserState, FetchUserPostsAction>(fetchUserPosts),
   TypedReducer<UserState, FetchUserPostsErrorAction>(fetchUserPostsError),
   TypedReducer<UserState, DeletePostAction>(deletePost),
+  TypedReducer<UserState, FetchUserSavedPostsAction>(fetchSavedPosts),
+  TypedReducer<UserState, SetUserSavedPostsAction>(setSavedPosts),
 //  Challenges
   TypedReducer<UserState, SetUserChallengesAction>(setUserChallenges),
   TypedReducer<UserState, FetchUserChallengesAction>(fetchUserChallenges),
@@ -63,6 +69,18 @@ UserState setUserReportField(UserState state, SetUserReportFieldAction action) {
 
 UserState setProfileData(UserState state, SetUserAction action) {
   return state.copyWith(user: Data(content: action.user, isLoading: false));
+}
+
+UserState setSavedPosts(UserState state, SetUserSavedPostsAction action) {
+  final s =
+  state.copyWith(
+      savedPosts: Data(content: action.posts, isLoading: false));
+
+  return s;
+}
+
+UserState fetchSavedPosts(UserState state, FetchUserSavedPostsAction action) {
+   return state.copyWith(savedPosts: Data(isLoading: true));
 }
 
 UserState fetchUser(UserState state, FetchUserInfoAction action) {
@@ -127,7 +145,5 @@ UserState fetchUserChallengesError(
 }
 
 UserState setFcmToken(UserState state, SetUserFcmTokenAction action) {
-  return state.copyWith(
-    fcmtoken: action.fcmtoken
-  );
+  return state.copyWith(fcmtoken: action.fcmtoken);
 }

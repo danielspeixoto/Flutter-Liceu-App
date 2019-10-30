@@ -1,6 +1,8 @@
 import 'package:app/domain/aggregates/Post.dart';
 import 'package:app/presentation/state/actions/PageActions.dart';
+import 'package:app/presentation/state/aggregates/PostData.dart';
 import 'package:app/presentation/state/app_state.dart';
+import 'package:app/presentation/state/reducers/Data.dart';
 import 'package:app/presentation/util/text.dart';
 import 'package:app/presentation/widgets/FetcherWidget.dart';
 import 'package:app/presentation/widgets/LiceuDivider.dart';
@@ -9,6 +11,7 @@ import 'package:app/presentation/widgets/PostWidget.dart';
 import 'package:app/presentation/widgets/RoundedImage.dart';
 import 'package:app/presentation/widgets/TextFieldHighlight.dart';
 import 'package:app/presentation/widgets/TextWithLinks.dart';
+import 'package:app/util/FeaturesAvailable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -131,7 +134,7 @@ class ProfilePage extends StatelessWidget {
                     viewModel.user.isLoading || viewModel.posts.isLoading,
                 errorMessage: viewModel.user.errorMessage,
                 child: () => ListView.builder(
-                  physics: AlwaysScrollableScrollPhysics(),
+                  physics: BouncingScrollPhysics(),
                   itemCount: viewModel.posts.content.length + 1,
                   itemBuilder: (ctx, idx) {
                     if (idx == 0) {
@@ -196,6 +199,30 @@ class ProfilePage extends StatelessWidget {
                                     ),
                                   ],
                                 ),
+                                Container(
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.9,
+                                  child: FeaturesAvailable.savePosts
+                                      ? OutlineButton(
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: <Widget>[
+                                              Container(
+                                                margin: EdgeInsets.all(8),
+                                                child: Text("Resumos Salvos"),
+                                              ),
+                                            ],
+                                          ),
+                                          onPressed: () {
+                                            viewModel.onSavedResumesPressed();
+                                          },
+                                          shape: new RoundedRectangleBorder(
+                                              borderRadius:
+                                                  new BorderRadius.circular(
+                                                      10.0)))
+                                      : Container(),
+                                ),
                                 user.instagramProfile != null
                                     ? Container(
                                         child: FlatButton(
@@ -258,9 +285,12 @@ class ProfilePage extends StatelessWidget {
                     final post = viewModel.posts.content[idx - 1];
                     return Column(
                       children: <Widget>[
-                        PostWidget(
+                        AnimatedPost(
                           user: user,
                           postStatus: post.statusCode,
+                          savedPostIcon: post.isSaved
+                              ? FontAwesomeIcons.solidBookmark
+                              : FontAwesomeIcons.bookmark,
                           postContent: post.type == PostType.TEXT
                               ? summarize(post.text, 600)
                               : summarize(post.text, 200),
@@ -292,6 +322,13 @@ class ProfilePage extends StatelessWidget {
                           onLikePressed: () {
                             viewModel.onLikePressed(post.id);
                             post.likes++;
+                          },
+                          onSavePostPressed: (isSaved) {
+                            if (isSaved) {
+                              viewModel.onDeleteSavedPostPressed(post.id);
+                            } else {
+                              viewModel.onSavePostPressed(post.id);
+                            }
                           },
                         ),
                       ],

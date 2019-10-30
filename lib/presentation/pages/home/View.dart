@@ -19,11 +19,11 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return StoreConnector<AppState, HomeViewModel>(
       onInit: (store) {
+        store.dispatch(FetchPostsAction());
         store.dispatch(FetchUserInfoAction());
         store.dispatch(FetchUserPostsAction());
         store.dispatch(FetchUserChallengesAction());
         store.dispatch(FetchRankingAction());
-        store.dispatch(FetchPostsAction());
       },
       converter: (store) => HomeViewModel.create(store),
       builder: (BuildContext context, HomeViewModel viewModel) {

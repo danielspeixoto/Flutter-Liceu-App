@@ -1,4 +1,6 @@
 import 'package:app/domain/aggregates/Comment.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class Post {
   final String id;
@@ -10,11 +12,12 @@ class Post {
   int likes;
   final List<String> images;
   final List<Comment> comments;
+  bool isSaved;
 
 //  final DateTime submissionDate;
 
   Post(this.id, this.userId, String type, this.text, this.imageURL,
-      this.statusCode, this.likes, this.images, this.comments) {
+      this.statusCode, this.likes, this.images, this.comments, this.isSaved) {
     switch (type) {
       case "text":
         this.type = PostType.TEXT;

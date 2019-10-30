@@ -4,8 +4,10 @@ import 'package:app/presentation/state/actions/PostActions.dart';
 import 'package:app/presentation/state/actions/UserActions.dart';
 import 'package:app/presentation/state/actions/UtilActions.dart';
 import 'package:app/presentation/state/aggregates/ChallengeHistoryData.dart';
+import 'package:app/presentation/state/aggregates/PostData.dart';
 import 'package:app/presentation/state/navigator/NavigatorActions.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:redux/redux.dart';
 
 import '../../app.dart';
@@ -23,7 +25,10 @@ List<Middleware<AppState>> userMiddleware(
     ISetUserDesiredCourseUseCase setUserDesiredCourseUseCase,
     ISetUserPhoneUseCase setUserPhoneUseCase,
     IMyIdUseCase _myIdUseCase,
-    ISubmitFcmTokenUseCase _submitFcmTokenUseCase) {
+    ISubmitFcmTokenUseCase _submitFcmTokenUseCase,
+    ISavePostUseCase savePostUseCase,
+    IGetSavedPostsUseCase getSavedPostsUseCase,
+    IDeleteSavedPostUseCase deleteSavedPostUseCase) {
   void fetchUserInfo(Store<AppState> store, FetchUserInfoAction action,
       NextDispatcher next) async {
     next(action);
@@ -43,6 +48,15 @@ List<Middleware<AppState>> userMiddleware(
     next(action);
     try {
       final posts = await fetchUserPostsUseCase.run();
+      final savedPosts = await getSavedPostsUseCase.run();
+
+      for (var i = 0; i < posts.length; i++) {
+        for (var j = 0; j < savedPosts.length; j++) {
+          if (savedPosts[j].id == posts[i].id) {
+            posts[i].isSaved = true;
+          }
+        }
+      }
       store.dispatch(SetUserPostsAction(posts));
     } catch (error, stackTrace) {
       final actionName = action.toString().substring(11);
@@ -151,6 +165,72 @@ List<Middleware<AppState>> userMiddleware(
     }
   }
 
+  void savePost(Store<AppState> store, SubmitUserSavePostAction action,
+      NextDispatcher next) async {
+    next(action);
+    try {
+      await savePostUseCase.run(action.postId);
+    } catch (error, stackTrace) {
+      final actionName = action.toString().substring(11);
+      store.dispatch(
+          OnCatchDefaultErrorAction(error.toString(), stackTrace, actionName));
+    }
+  }
+
+  void navigateSavedPosts(Store<AppState> store,
+      NavigatePushUserSavedPostsAction action, NextDispatcher next) async {
+    next(action);
+    store.dispatch(NavigatePushAction(AppRoutes.savedPosts));
+  }
+
+    void navigateReplaceSavedPosts(Store<AppState> store,
+      NavigateReplaceUserSavedPostsAction action, NextDispatcher next) async {
+    next(action);
+    store.dispatch(NavigateReplaceAction(AppRoutes.savedPosts));
+  }
+
+  void getSavedPosts(Store<AppState> store, FetchUserSavedPostsAction action,
+      NextDispatcher next) async {
+    next(action);
+    try {
+      final posts = await getSavedPostsUseCase.run();
+      List<PostData> postsData = new List<PostData>();
+
+      for (var i = 0; i < posts.length; i++) {
+        final post = posts[i];
+        final user = await fetchUserByIdUseCase.run(post.userId);
+        postsData.add(new PostData(
+            post.id,
+            user,
+            post.type,
+            post.text,
+            post.imageURL,
+            post.statusCode,
+            post.likes,
+            post.images,
+            post.comments,
+            true));
+      }
+      store.dispatch(SetUserSavedPostsAction(postsData));
+    } catch (error, stackTrace) {
+      final actionName = action.toString().substring(11);
+      store.dispatch(
+          OnCatchDefaultErrorAction(error.toString(), stackTrace, actionName));
+    }
+  }
+
+  void deleteSavedPost(Store<AppState> store, DeleteUserSavedPostAction action,
+      NextDispatcher next) async {
+    next(action);
+    try {
+      await deleteSavedPostUseCase.run(action.postId);
+    } catch (error, stackTrace) {
+      final actionName = action.toString().substring(11);
+      store.dispatch(
+          OnCatchDefaultErrorAction(error.toString(), stackTrace, actionName));
+    }
+  }
+
   return [
     TypedMiddleware<AppState, FetchUserInfoAction>(fetchUserInfo),
     TypedMiddleware<AppState, FetchUserPostsAction>(fetchUserPosts),
@@ -165,5 +245,10 @@ List<Middleware<AppState>> userMiddleware(
         navigateUserEditProfile),
     TypedMiddleware<AppState, LoginSuccessAction>(loginSuccess),
     TypedMiddleware<AppState, SubmitUserFcmTokenAction>(submitFcmToken),
+    TypedMiddleware<AppState, SubmitUserSavePostAction>(savePost),
+    TypedMiddleware<AppState, FetchUserSavedPostsAction>(getSavedPosts),
+    TypedMiddleware<AppState, NavigatePushUserSavedPostsAction>(navigateSavedPosts),
+    TypedMiddleware<AppState, DeleteUserSavedPostAction>(deleteSavedPost),
+    TypedMiddleware<AppState, NavigateReplaceUserSavedPostsAction>(navigateReplaceSavedPosts),
   ];
 }
