@@ -152,7 +152,7 @@ class ProfileViewModel {
       },
       onSavedResumesPressed: () {
         store.dispatch(FetchUserSavedPostsAction());
-        store.dispatch(NavigateUserSavedPostsAction());
+        store.dispatch(NavigatePushUserSavedPostsAction());
       },
       onDeleteSavedPostPressed: (postId) {
         store.dispatch(DeleteUserSavedPostAction(postId));

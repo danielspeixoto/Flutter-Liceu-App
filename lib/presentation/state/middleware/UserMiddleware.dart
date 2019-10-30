@@ -178,9 +178,15 @@ List<Middleware<AppState>> userMiddleware(
   }
 
   void navigateSavedPosts(Store<AppState> store,
-      NavigateUserSavedPostsAction action, NextDispatcher next) async {
+      NavigatePushUserSavedPostsAction action, NextDispatcher next) async {
     next(action);
     store.dispatch(NavigatePushAction(AppRoutes.savedPosts));
+  }
+
+    void navigateReplaceSavedPosts(Store<AppState> store,
+      NavigateReplaceUserSavedPostsAction action, NextDispatcher next) async {
+    next(action);
+    store.dispatch(NavigateReplaceAction(AppRoutes.savedPosts));
   }
 
   void getSavedPosts(Store<AppState> store, FetchUserSavedPostsAction action,
@@ -241,7 +247,8 @@ List<Middleware<AppState>> userMiddleware(
     TypedMiddleware<AppState, SubmitUserFcmTokenAction>(submitFcmToken),
     TypedMiddleware<AppState, SubmitUserSavePostAction>(savePost),
     TypedMiddleware<AppState, FetchUserSavedPostsAction>(getSavedPosts),
-    TypedMiddleware<AppState, NavigateUserSavedPostsAction>(navigateSavedPosts),
+    TypedMiddleware<AppState, NavigatePushUserSavedPostsAction>(navigateSavedPosts),
     TypedMiddleware<AppState, DeleteUserSavedPostAction>(deleteSavedPost),
+    TypedMiddleware<AppState, NavigateReplaceUserSavedPostsAction>(navigateReplaceSavedPosts),
   ];
 }

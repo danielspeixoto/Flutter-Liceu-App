@@ -20,18 +20,36 @@ class SavedPostsPage extends StatelessWidget {
           converter: (store) => SavedPostsViewModel.create(store),
           builder: (BuildContext context, SavedPostsViewModel viewModel) {
             return LiceuScaffold(
-              body: SmartRefresher(
+                body: SmartRefresher(
               onRefresh: () async {
                 viewModel.refresh();
                 _refreshController.refreshCompleted();
               },
-              controller: _refreshController, child: FetcherWidget.build(
+              controller: _refreshController,
+              child: FetcherWidget.build(
                   isLoading: viewModel.posts.isLoading,
                   child: () => ListView.builder(
                       physics: BouncingScrollPhysics(),
-                      itemCount: viewModel.posts.content.length,
+                      itemCount: viewModel.posts.content.length + 1,
                       itemBuilder: (ctx, idx) {
-                        final post = viewModel.posts.content[idx];
+                        
+                        if (idx == 0) {
+                          if (viewModel.posts.content.length == 0) {
+                            return Container(
+                              margin: EdgeInsets.all(16),
+                              child: Column(
+                                children: <Widget>[
+                                  Text(
+                                    "Você ainda não salvou nenhum resumo",
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ],
+                              ),
+                            );
+                          }
+                          return Container();
+                        }
+                        final post = viewModel.posts.content[idx - 1];
                         return Column(
                           children: <Widget>[
                             AnimatedPost(
@@ -94,16 +112,16 @@ class SavedPostsPage extends StatelessWidget {
                                 post.likes++;
                               },
                               onSavePostPressed: (isSaved) {
-                            if (isSaved) {
-                              viewModel.onDeleteSavedPostPressed(post.id);
-                            } else {
-                              viewModel.onSavePostPressed(post.id);
-                            }
-                          },
+                                if (isSaved) {
+                                  viewModel.onDeleteSavedPostPressed(post.id);
+                                } else {
+                                  viewModel.onSavePostPressed(post.id);
+                                }
+                              },
                             ),
                           ],
                         );
-                      })),)
-            );
+                      })),
+            ));
           });
 }

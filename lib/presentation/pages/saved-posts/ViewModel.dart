@@ -53,7 +53,7 @@ class SavedPostsViewModel {
         },
         refresh: () {
           store.dispatch(FetchUserSavedPostsAction());
-          store.dispatch(NavigateUserSavedPostsAction());
+          store.dispatch(NavigateReplaceUserSavedPostsAction());
         },
         onUserPressed: (user) {
           store.dispatch(UserClickedAction(user));

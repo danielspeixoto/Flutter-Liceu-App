@@ -40,6 +40,7 @@ class CompletePostPage extends StatelessWidget {
                               ? FontAwesomeIcons.solidBookmark
                               : FontAwesomeIcons.bookmark,
                       imageURL: post.content.imageURL,
+                      
                       onUserPressed: (user) => {viewModel.onUserPressed(user)},
                       onSharePressed: () {
                         viewModel.onSharePostPressed(post.content.id,

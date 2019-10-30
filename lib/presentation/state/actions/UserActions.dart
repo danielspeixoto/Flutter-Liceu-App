@@ -9,7 +9,9 @@ import '../../constants.dart';
 //Navigates
 class NavigateUserEditProfileAction {}
 
-class NavigateUserSavedPostsAction {}
+class NavigatePushUserSavedPostsAction {}
+
+class NavigateReplaceUserSavedPostsAction {}
 
 //Fetches
 class FetchUserErrorAction {

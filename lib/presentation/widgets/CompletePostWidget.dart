@@ -73,6 +73,7 @@ class CompleteAnimatedPost extends StatefulWidget {
       imageURL: imageURL,
       onImageZoomPressed: onImageZoomPressed,
       postStatus: postStatus,
+      comments: comments,
       onReportPressed: onReportPressed,
       onReportTextChange: onReportTextChange,
       likes: likes,
