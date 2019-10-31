@@ -189,6 +189,68 @@ List<Middleware<AppState>> analyticsMiddleware(IMyIdUseCase myIdUseCase) {
     LiceuAnalytics.logEvent("accept_challenge_from_notification");
   }
 
+  void logPostSubmitLike(Store<AppState> store,
+      SubmitPostUpdateRatingAction action, NextDispatcher next) {
+    next(action);
+    LiceuAnalytics.logEvent("post_like");
+  }
+
+  void logPostClickImageZoom(Store<AppState> store,
+      NavigatePostImageZoomAction action, NextDispatcher next) {
+    next(action);
+    LiceuAnalytics.logEvent("post_image_zoom");
+  }
+
+  void logPostSeeMore(
+      Store<AppState> store, NavigatePostAction action, NextDispatcher next) {
+    next(action);
+    LiceuAnalytics.logEvent("post_see_more");
+  }
+
+  void logSearchPost(
+      Store<AppState> store, SearchPostAction action, NextDispatcher next) {
+    next(action);
+    LiceuAnalytics.logEvent("post_search");
+  }
+
+  void logSavePost(Store<AppState> store, SubmitUserSavePostAction action,
+      NextDispatcher next) {
+    next(action);
+    LiceuAnalytics.logEvent("post_save");
+  }
+
+  void logDeleteSavedPost(Store<AppState> store,
+      DeleteUserSavedPostAction action, NextDispatcher next) {
+    next(action);
+    LiceuAnalytics.logEvent("post_saved_delete");
+  }
+
+  void logCommentPost(Store<AppState> store, SubmitPostCommentAction action,
+      NextDispatcher next) {
+    next(action);
+    LiceuAnalytics.logEvent("post_comment", {
+      "comment": action.comment,
+    });
+  }
+
+  void logFetchFriendFromPostComment(Store<AppState> store,
+      FetchFriendFromCommentAction action, NextDispatcher next) {
+    next(action);
+    LiceuAnalytics.logEvent("post_comment_user_clicked");
+  }
+
+  void logDeletePostComment(Store<AppState> store,
+      DeletePostCommentAction action, NextDispatcher next) {
+    next(action);
+    LiceuAnalytics.logEvent("post_comment_delete");
+  }
+
+  void logNavigateTrainingQuestionsPage(Store<AppState> store,
+      NavigateTrainingQuestionsFilterAction action, NextDispatcher next) {
+    next(action);
+    LiceuAnalytics.logEvent("navigate_training_question_page");
+  }
+
   return [
     TypedMiddleware<AppState, PageInitAction>(setCurrentScreenPageInit),
     TypedMiddleware<AppState, ChallengeSomeoneAction>(logEventChallengeSomeone),
@@ -219,7 +281,18 @@ List<Middleware<AppState>> analyticsMiddleware(IMyIdUseCase myIdUseCase) {
     TypedMiddleware<AppState, SubmitTriviaAction>(logEventSubmitTrivia),
     TypedMiddleware<AppState, ChallengeMeAction>(logChallengeMe),
     TypedMiddleware<AppState, UserProfileShareAction>(logUserProfileShare),
-    TypedMiddleware<AppState, AcceptChallengeFromNotificationAction>(logAcceptChallengeFromNotification)
+    TypedMiddleware<AppState, AcceptChallengeFromNotificationAction>(
+        logAcceptChallengeFromNotification),
+        TypedMiddleware<AppState, SubmitPostUpdateRatingAction>(logPostSubmitLike),
+        TypedMiddleware<AppState, NavigatePostImageZoomAction>(logPostClickImageZoom),
+        TypedMiddleware<AppState, NavigatePostAction>(logPostSeeMore),
+        TypedMiddleware<AppState, SearchPostAction>(logSearchPost),
+        TypedMiddleware<AppState, SubmitUserSavePostAction>(logSavePost),
+        TypedMiddleware<AppState, DeleteUserSavedPostAction>(logDeleteSavedPost),
+        TypedMiddleware<AppState, SubmitPostCommentAction>(logCommentPost),
+        TypedMiddleware<AppState, FetchFriendFromCommentAction>(logFetchFriendFromPostComment),
+        TypedMiddleware<AppState, DeletePostCommentAction>(logDeletePostComment),
+        TypedMiddleware<AppState, NavigateTrainingQuestionsFilterAction>(logNavigateTrainingQuestionsPage),
   ];
 }
 
