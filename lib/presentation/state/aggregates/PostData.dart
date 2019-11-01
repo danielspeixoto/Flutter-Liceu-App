@@ -1,7 +1,6 @@
 import 'package:app/domain/aggregates/Comment.dart';
 import 'package:app/domain/aggregates/Post.dart';
 import 'package:app/domain/aggregates/User.dart';
-import 'package:flutter/widgets.dart';
 
 class PostData {
   final String id;

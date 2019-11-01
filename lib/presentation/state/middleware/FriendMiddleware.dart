@@ -1,9 +1,7 @@
 import 'package:app/domain/boundary/UserBoundary.dart';
 import 'package:app/presentation/state/actions/FriendActions.dart';
 import 'package:app/presentation/state/actions/UtilActions.dart';
-import 'package:app/presentation/state/aggregates/PostData.dart';
 import 'package:app/presentation/state/navigator/NavigatorActions.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:redux/redux.dart';
 
 import '../../app.dart';

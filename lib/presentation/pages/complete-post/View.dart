@@ -4,7 +4,6 @@ import 'package:app/presentation/state/app_state.dart';
 import 'package:app/presentation/widgets/CompletePostWidget.dart';
 import 'package:app/presentation/widgets/FetcherWidget.dart';
 import 'package:app/presentation/widgets/LiceuScaffold.dart';
-import 'package:app/presentation/widgets/PostWidget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';

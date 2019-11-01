@@ -7,7 +7,6 @@ import 'package:app/presentation/state/aggregates/ChallengeHistoryData.dart';
 import 'package:app/presentation/state/aggregates/PostData.dart';
 import 'package:app/presentation/state/navigator/NavigatorActions.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:redux/redux.dart';
 
 import '../../app.dart';

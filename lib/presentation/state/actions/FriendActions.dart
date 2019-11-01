@@ -1,7 +1,6 @@
 import 'package:app/domain/aggregates/Post.dart';
 import 'package:app/domain/aggregates/User.dart';
 import 'package:app/presentation/state/actions/ItemActions.dart';
-import 'package:app/presentation/state/aggregates/PostData.dart';
 
 import '../../constants.dart';
 

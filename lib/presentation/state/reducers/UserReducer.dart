@@ -1,6 +1,5 @@
 import 'package:app/domain/aggregates/Post.dart';
 import 'package:app/domain/aggregates/User.dart';
-import 'package:app/presentation/state/actions/LoginActions.dart';
 import 'package:app/presentation/state/aggregates/ChallengeHistoryData.dart';
 import 'package:app/presentation/state/actions/PostActions.dart';
 import 'package:app/presentation/state/actions/UserActions.dart';

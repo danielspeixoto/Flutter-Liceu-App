@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:app/domain/aggregates/exceptions/CreatePostExceptions.dart';
 import 'package:app/domain/boundary/PostBoundary.dart';
 import 'package:app/domain/boundary/UserBoundary.dart';
@@ -7,7 +5,6 @@ import 'package:app/presentation/state/actions/PostActions.dart';
 import 'package:app/presentation/state/actions/UtilActions.dart';
 import 'package:app/presentation/state/aggregates/PostData.dart';
 import 'package:app/presentation/state/navigator/NavigatorActions.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:redux/redux.dart';
 
 import '../../app.dart';

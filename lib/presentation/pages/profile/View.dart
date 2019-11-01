@@ -1,8 +1,6 @@
 import 'package:app/domain/aggregates/Post.dart';
 import 'package:app/presentation/state/actions/PageActions.dart';
-import 'package:app/presentation/state/aggregates/PostData.dart';
 import 'package:app/presentation/state/app_state.dart';
-import 'package:app/presentation/state/reducers/Data.dart';
 import 'package:app/presentation/util/text.dart';
 import 'package:app/presentation/widgets/FetcherWidget.dart';
 import 'package:app/presentation/widgets/LiceuDivider.dart';

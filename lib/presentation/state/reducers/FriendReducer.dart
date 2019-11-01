@@ -2,7 +2,6 @@ import 'package:app/domain/aggregates/Post.dart';
 import 'package:app/domain/aggregates/User.dart';
 import 'package:app/presentation/state/actions/FriendActions.dart';
 import 'package:app/presentation/state/actions/PostActions.dart';
-import 'package:app/presentation/state/aggregates/PostData.dart';
 import 'package:redux/redux.dart';
 
 import 'Data.dart';
