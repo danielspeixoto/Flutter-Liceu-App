@@ -1,4 +1,4 @@
-import 'package:app/presentation/pages/image-post/ViewModel.dart';
+import 'package:app/presentation/pages_old/image-post/ViewModel.dart';
 import 'package:app/presentation/state/actions/PageActions.dart';
 import 'package:app/presentation/state/app_state.dart';
 import 'package:app/presentation/widgets/ImageZoom.dart';

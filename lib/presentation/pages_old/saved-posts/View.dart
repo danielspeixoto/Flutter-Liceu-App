@@ -1,5 +1,5 @@
 import 'package:app/domain/aggregates/Post.dart';
-import 'package:app/presentation/pages/saved-posts/ViewModel.dart';
+import 'package:app/presentation/pages_old/saved-posts/ViewModel.dart';
 import 'package:app/presentation/state/actions/PageActions.dart';
 import 'package:app/presentation/state/app_state.dart';
 import 'package:app/presentation/util/text.dart';

@@ -1,5 +1,19 @@
-import 'package:app/presentation/app_old.dart';
-import 'package:app/presentation/pages/login/View.dart';
+import 'package:app/presentation/pages_old/challenge/View.dart';
+import 'package:app/presentation/pages_old/create-post/View.dart';
+import 'package:app/presentation/pages_old/create-trivia/View.dart';
+import 'package:app/presentation/pages_old/edit-profile/View.dart';
+import 'package:app/presentation/pages_old/home/View.dart';
+import 'package:app/presentation/pages_old/image-post/View.dart';
+import 'package:app/presentation/pages_old/intro/View.dart';
+import 'package:app/presentation/pages_old/login/View.dart';
+import 'package:app/presentation/pages_old/complete-post/View.dart';
+import 'package:app/presentation/pages_old/saved-posts/View.dart';
+import 'package:app/presentation/pages_old/splash/View.dart';
+import 'package:app/presentation/pages_old/tournament-review/View.dart';
+import 'package:app/presentation/pages_old/tournament/View.dart';
+import 'package:app/presentation/pages_old/training-filter/View.dart';
+import 'package:app/presentation/pages_old/training/View.dart';
+import 'package:app/presentation/pages_old/friend/View.dart';
 import 'package:app/presentation/state/app_state.dart';
 import 'package:app/presentation/state/navigator/RouteObserver.dart';
 import 'package:app/presentation/state/navigator/routes/MainRoute.dart';
@@ -9,10 +23,11 @@ import 'package:flutter_redux/flutter_redux.dart';
 
 import 'background/FirebaseNotifications.dart';
 
+final GlobalKey<NavigatorState> navigatorKey = new GlobalKey<NavigatorState>();
 final analytics = FirebaseAnalytics();
 
-class MyApp extends StatelessWidget {
-  MyApp({Key key}) : super(key: key) {
+class MyAppOld extends StatelessWidget {
+  MyAppOld({Key key}) : super(key: key) {
     ExternalConnections(store);
   }
 
@@ -20,9 +35,7 @@ class MyApp extends StatelessWidget {
     switch (settings.name) {
       case AppRoutes.login:
         return MainRoute(LoginPage(), settings: settings);
-      default:
-        return MainRoute(LoginPage(), settings: settings);
-      /*case AppRoutes.home:
+      case AppRoutes.home:
         return MainRoute(HomePage(), settings: settings);
       case AppRoutes.friend:
         return MainRoute(FriendPage(), settings: settings);
@@ -51,23 +64,26 @@ class MyApp extends StatelessWidget {
       case AppRoutes.savedPosts:
         return MainRoute(SavedPostsPage(), settings: settings);
       default:
-        return MainRoute(SplashPage(), settings: settings);*/
+        return MainRoute(SplashPage(), settings: settings);
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return StoreProvider(
-      store: store,
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'Liceu',
-        theme: ThemeData(scaffoldBackgroundColor: Color(0xfffafafa)),
-        navigatorKey: navigatorKey,
-        navigatorObservers: [routeObserver],
-        onGenerateRoute: (RouteSettings settings) => _getRoute(settings),
-      ),
-    );
+        store: store,
+        child: MaterialApp(
+          debugShowCheckedModeBanner: false,
+          title: 'Liceu',
+          theme: ThemeData(
+            primaryColorDark: Colors.black54,
+            primaryColor: Colors.white,
+            accentColor: Color(0xFF0061A1),
+          ),
+          navigatorKey: navigatorKey,
+          navigatorObservers: [routeObserver],
+          onGenerateRoute: (RouteSettings settings) => _getRoute(settings),
+        ));
   }
 }
 

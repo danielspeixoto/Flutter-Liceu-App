@@ -1,4 +1,4 @@
-import 'package:app/presentation/pages/complete-post/ViewModel.dart';
+import 'package:app/presentation/pages_old/complete-post/ViewModel.dart';
 import 'package:app/presentation/state/actions/PageActions.dart';
 import 'package:app/presentation/state/app_state.dart';
 import 'package:app/presentation/widgets/CompletePostWidget.dart';

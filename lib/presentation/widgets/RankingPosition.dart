@@ -1,4 +1,4 @@
-import 'package:app/presentation/pages/trophy/ViewModel.dart';
+import 'package:app/presentation/pages_old/trophy/ViewModel.dart';
 import 'package:app/presentation/util/text.dart';
 import 'package:app/presentation/widgets/RoundedImage.dart';
 import 'package:flutter/material.dart';
@@ -18,9 +18,7 @@ class RankingPosition extends StatelessWidget {
             Container(
               margin: EdgeInsets.all(8),
               child: RoundedImage(
-                pictureURL: game.user.picURL != null
-                    ? game.user.picURL
-                    : null,
+                pictureURL: game.user.picURL != null ? game.user.picURL : null,
                 size: 36,
               ),
             ),

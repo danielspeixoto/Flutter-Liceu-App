@@ -1,7 +1,7 @@
-import 'package:app/presentation/pages/explore/View.dart';
-import 'package:app/presentation/pages/game/View.dart';
-import 'package:app/presentation/pages/profile/View.dart';
-import 'package:app/presentation/pages/trophy/View.dart';
+import 'package:app/presentation/pages_old/explore/View.dart';
+import 'package:app/presentation/pages_old/game/View.dart';
+import 'package:app/presentation/pages_old/profile/View.dart';
+import 'package:app/presentation/pages_old/trophy/View.dart';
 import 'package:app/presentation/state/actions/ENEMActions.dart';
 import 'package:app/presentation/state/actions/PostActions.dart';
 import 'package:app/presentation/state/actions/UserActions.dart';

@@ -1,6 +1,6 @@
 import 'dart:developer' as developer;
+import 'package:app/presentation/app_old.dart';
 import 'package:redux/redux.dart';
-import '../../app.dart';
 import '../app_state.dart';
 import 'NavigatorActions.dart';
 

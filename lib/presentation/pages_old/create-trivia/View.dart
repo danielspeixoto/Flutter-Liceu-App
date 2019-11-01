@@ -1,4 +1,4 @@
-import 'package:app/presentation/pages/create-trivia/ViewModel.dart';
+import 'package:app/presentation/pages_old/create-trivia/ViewModel.dart';
 import 'package:app/presentation/state/actions/PageActions.dart';
 import 'package:app/presentation/state/app_state.dart';
 import 'package:app/presentation/widgets/FetcherWidget.dart';

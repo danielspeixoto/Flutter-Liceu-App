@@ -8,7 +8,6 @@ class TournamentViewModel {
   final Data<List<ENEMQuestionData>> questions;
   final Function(String questionId, int answer) onAnswer;
   final Function() submit;
-  
 
   TournamentViewModel({
     this.questions,
@@ -22,6 +21,5 @@ class TournamentViewModel {
         onAnswer: (String questionId, int answer) =>
             store.dispatch(AnswerTournamentQuestionAction(questionId, answer)),
         submit: () => store.dispatch(EndTournamentGameAction()));
-        
   }
 }

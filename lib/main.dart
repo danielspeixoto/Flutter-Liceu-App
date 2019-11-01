@@ -1,6 +1,8 @@
 import 'dart:async';
 
 import 'package:app/presentation/app.dart';
+import 'package:app/presentation/app_old.dart';
+import 'package:app/util/FeaturesAvailable.dart';
 import 'package:app/util/StackFilter.dart';
 import 'package:app/util/sentry.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +16,7 @@ Future<Null> main() async {
   };
 
   runZoned<Future<Null>>(() async {
-    runApp(new MyApp());
+    runApp(FeaturesAvailable.newDesign ? new MyApp() : new MyAppOld());
   }, onError: (error, stackTrace) async {
     await _reportError(error, filter(stackTrace));
   });

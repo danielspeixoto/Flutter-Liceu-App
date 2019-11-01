@@ -1,4 +1,4 @@
-import 'package:app/presentation/pages/intro/ViewModel.dart';
+import 'package:app/presentation/pages_old/intro/ViewModel.dart';
 import 'package:app/presentation/state/actions/PageActions.dart';
 import 'package:app/presentation/state/app_state.dart';
 import 'package:flutter/material.dart';
